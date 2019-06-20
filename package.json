@@ -1,7 +1,7 @@
 {
-  "name": "iron-icon",
+  "name": "lit-elements",
   "version": "1.0.0",
-  "main": "iron-icon.js",
+  "main": "index.html",
   "repository": {
     "type": "git",
     "url": "https://voloaca_octavian@bitbucket.org/cbn-it/lit-elements.git"

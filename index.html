@@ -36,6 +36,7 @@
     <script type="module" src="/elements/iron-icon/iron-icon.js"></script>
     <script type="module" src="/elements/paper-button/paper-button.js"></script>
     <script type="module" src="/elements/paper-fab/paper-fab.js"></script>
+    <script type="module" src="/elements/paper-toast/paper-toast.js"></script>
     <script type="module" src="/elements/flex-layout/flex-layout-classes.js"></script>
     <!--<script type="module" src="demo-icons.js"></script>-->
 </head>
@@ -69,5 +70,26 @@
         <!--<paper-fab icon="layers" style="background: var(&#45;&#45;yellow-color)"></paper-fab>-->
         <!--<paper-fab icon="dns" style="background: var(&#45;&#45;grey-color)"></paper-fab>-->
     </div>
+    <div class="container">
+        <div class="title">paper-toast</div>
+        <paper-button icon="assignment" style="background: var(--green-color)" onclick="openToast('success')">Open toast - success</paper-button>
+        <paper-button icon="assignment" style="background: var(--yellow-color)" onclick="openToast('warning')">Open toast - warning</paper-button>
+        <paper-button icon="assignment" style="background: var(--red-color)" onclick="openToast('error')">Open toast - error</paper-button>
+        <paper-toast></paper-toast>
+    </div>
+
+    <script>
+        function openToast(type){
+            this.dispatchEvent(new CustomEvent('display-message',
+                {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        message: `Toast - ${type}`,
+                        type: type
+                    }
+                }));
+        }
+    </script>
 </body>
 </html>
