@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<base href="/" target="_blank">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <style>
+        :root{
+            --teal-color: #1ac6b4;
+            --green-color: #0b8043;
+            --red-color: #d32f2f;
+            --blue-color: #1976d2;
+            --yellow-color: #f57c00;
+            --grey-color:#616161;
+            font-family: Roboto, sans-serif;
+            font-size: 16px;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        .container{
+            margin: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .title{
+            width: 100px;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic" crossorigin="anonymous">
+    <script type="module" src="/elements/iron-icons/iron-icons.js"></script>
+    <script type="module" src="/elements/iron-icon/iron-icon.js"></script>
+    <script type="module" src="/elements/paper-button/paper-button.js"></script>
+    <script type="module" src="/elements/paper-fab/paper-fab.js"></script>
+    <script type="module" src="/elements/flex-layout/flex-layout-classes.js"></script>
+    <!--<script type="module" src="demo-icons.js"></script>-->
+</head>
+<body>
+    <div class="container">
+        <div class="title">iron-icons</div>
+        <iron-icon icon="file-upload"></iron-icon>
+        <iron-icon icon="add"></iron-icon>
+        <iron-icon icon="assignment"></iron-icon>
+        <iron-icon icon="settings"></iron-icon>
+        <iron-icon icon="layers"></iron-icon>
+        <iron-icon icon="dns"></iron-icon>
+    </div>
+    <div class="container">
+        <div class="title">paper-button</div>
+        <paper-button icon="file-upload" style="background: var(--blue-color)">Upload file</paper-button>
+        <paper-button icon="add" style="background: var(--red-color)">Adauga</paper-button>
+        <paper-button icon="assignment" style="background: var(--teal-color)">Asigneaza</paper-button>
+        <paper-button icon="settings" style="background: var(--green-color)">Setari</paper-button>
+        <paper-button icon="layers" style="background: var(--yellow-color)">Sectiuni</paper-button>
+        <paper-button icon="dns" small style="background: var(--grey-color)"></paper-button>
+    </div>
+    <div class="container">
+        <div class="title">paper-fab</div>
+        <div style="position:relative">
+            <paper-fab icon="file-upload" style="background: var(--blue-color);top:-30px"></paper-fab>
+        </div>
+        <!--<paper-fab icon="add" style="background: var(&#45;&#45;red-color)"></paper-fab>-->
+        <!--<paper-fab icon="assignment" style="background: var(&#45;&#45;teal-color)"></paper-fab>-->
+        <!--<paper-fab icon="settings" style="background: var(&#45;&#45;green-color)"></paper-fab>-->
+        <!--<paper-fab icon="layers" style="background: var(&#45;&#45;yellow-color)"></paper-fab>-->
+        <!--<paper-fab icon="dns" style="background: var(&#45;&#45;grey-color)"></paper-fab>-->
+    </div>
+</body>
+</html>
