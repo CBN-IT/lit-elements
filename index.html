@@ -27,16 +27,19 @@
             align-items: center;
         }
         .title{
-            width: 100px;
+            width: 110px;
             font-weight: bold;
         }
     </style>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic" crossorigin="anonymous">
+    <script src="/elements/cbn-utils/CbnUtils.js"></script>
     <script type="module" src="/elements/iron-icons/iron-icons.js"></script>
     <script type="module" src="/elements/iron-icon/iron-icon.js"></script>
     <script type="module" src="/elements/paper-button/paper-button.js"></script>
     <script type="module" src="/elements/paper-fab/paper-fab.js"></script>
+    <script type="module" src="/elements/paper-loading/paper-loading.js"></script>
     <script type="module" src="/elements/paper-toast/paper-toast.js"></script>
+    <script type="module" src="/elements/iron-overlay/iron-overlay.js"></script>
     <script type="module" src="/elements/flex-layout/flex-layout-classes.js"></script>
     <!--<script type="module" src="demo-icons.js"></script>-->
 </head>
@@ -77,6 +80,37 @@
         <paper-button icon="assignment" style="background: var(--red-color)" onclick="openToast('error')">Open toast - error</paper-button>
         <paper-toast></paper-toast>
     </div>
+    <div class="container">
+        <div class="title">iron-overlay</div>
+        <paper-button icon="assignment" style="background: var(--green-color)" onclick="openOverlay(event)">Open overlay</paper-button>
+        <iron-overlay padding="0">
+            <div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+            </div>
+        </iron-overlay>
+        <paper-button icon="assignment" style="background: var(--blue-color)" onclick="openOverlay(event)">Open overlay</paper-button>
+        <iron-overlay padding="0" from="top-left" direction="top-right">
+            <div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+                <div>Overlay content</div>
+            </div>
+        </iron-overlay>
+    </div>
+    <div class="container">
+        <div class="title">paper-loading</div>
+        <paper-button icon="assignment" style="background: var(--green-color)" onclick="startLoading()">Start loading</paper-button>
+        <paper-button icon="assignment" style="background: var(--red-color)" onclick="stopLoading()">Stop loading</paper-button>
+        <paper-loading></paper-loading>
+    </div>
 
     <script>
         function openToast(type){
@@ -88,6 +122,24 @@
                         message: `Toast - ${type}`,
                         type: type
                     }
+                }));
+        }
+        function openOverlay(event){
+
+            event.currentTarget.nextElementSibling.openOverlay();
+        }
+        function startLoading(){
+            this.dispatchEvent(new CustomEvent('start-loading',
+                {
+                    bubbles: true,
+                    composed: true
+                }));
+        }
+        function stopLoading(){
+            this.dispatchEvent(new CustomEvent('stop-loading',
+                {
+                    bubbles: true,
+                    composed: true
                 }));
         }
     </script>
