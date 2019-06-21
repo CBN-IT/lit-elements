@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "lit-element": "2.1.0",
-    "lit-html": "1.0.0"
+    "lit-html": "1.0.0",
+    "moment": "2.24.0",
+    "tiny-date-picker": "^3.2.8"
   }
 }

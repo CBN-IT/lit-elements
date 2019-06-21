@@ -33,17 +33,24 @@
     </style>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic" crossorigin="anonymous">
     <script src="/elements/cbn-utils/CbnUtils.js"></script>
+    <script type="module" src="/demo/demo-app.js"></script>
     <script type="module" src="/elements/iron-icons/iron-icons.js"></script>
     <script type="module" src="/elements/iron-icon/iron-icon.js"></script>
     <script type="module" src="/elements/paper-button/paper-button.js"></script>
     <script type="module" src="/elements/paper-fab/paper-fab.js"></script>
     <script type="module" src="/elements/paper-loading/paper-loading.js"></script>
     <script type="module" src="/elements/paper-toast/paper-toast.js"></script>
+    <script type="module" src="/elements/paper-tabs/paper-tabs.js"></script>
     <script type="module" src="/elements/iron-overlay/iron-overlay.js"></script>
     <script type="module" src="/elements/flex-layout/flex-layout-classes.js"></script>
     <!--<script type="module" src="demo-icons.js"></script>-->
 </head>
 <body>
+    <demo-app></demo-app>
+    <!--<div class="container">
+        <div class="title">paper-table</div>
+        <paper-button icon="file-upload" style="background: var(&#45;&#45;blue-color)" onclick="window.open('/demo/paper-table/index.html')">Demo table</paper-button>
+    </div>
     <div class="container">
         <div class="title">iron-icons</div>
         <iron-icon icon="file-upload"></iron-icon>
@@ -55,34 +62,34 @@
     </div>
     <div class="container">
         <div class="title">paper-button</div>
-        <paper-button icon="file-upload" style="background: var(--blue-color)">Upload file</paper-button>
-        <paper-button icon="add" style="background: var(--red-color)">Adauga</paper-button>
-        <paper-button icon="assignment" style="background: var(--teal-color)">Asigneaza</paper-button>
-        <paper-button icon="settings" style="background: var(--green-color)">Setari</paper-button>
-        <paper-button icon="layers" style="background: var(--yellow-color)">Sectiuni</paper-button>
-        <paper-button icon="dns" small style="background: var(--grey-color)"></paper-button>
+        <paper-button icon="file-upload" style="background: var(&#45;&#45;blue-color)">Upload file</paper-button>
+        <paper-button icon="add" style="background: var(&#45;&#45;red-color)">Adauga</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;teal-color)">Asigneaza</paper-button>
+        <paper-button icon="settings" style="background: var(&#45;&#45;green-color)">Setari</paper-button>
+        <paper-button icon="layers" style="background: var(&#45;&#45;yellow-color)">Sectiuni</paper-button>
+        <paper-button icon="dns" small style="background: var(&#45;&#45;grey-color)"></paper-button>
     </div>
     <div class="container">
         <div class="title">paper-fab</div>
         <div style="position:relative">
-            <paper-fab icon="file-upload" style="background: var(--blue-color);top:-30px"></paper-fab>
+            <paper-fab icon="file-upload" style="background: var(&#45;&#45;blue-color);top:-30px"></paper-fab>
         </div>
-        <!--<paper-fab icon="add" style="background: var(&#45;&#45;red-color)"></paper-fab>-->
-        <!--<paper-fab icon="assignment" style="background: var(&#45;&#45;teal-color)"></paper-fab>-->
-        <!--<paper-fab icon="settings" style="background: var(&#45;&#45;green-color)"></paper-fab>-->
-        <!--<paper-fab icon="layers" style="background: var(&#45;&#45;yellow-color)"></paper-fab>-->
-        <!--<paper-fab icon="dns" style="background: var(&#45;&#45;grey-color)"></paper-fab>-->
+        &lt;!&ndash;<paper-fab icon="add" style="background: var(&#45;&#45;red-color)"></paper-fab>&ndash;&gt;
+        &lt;!&ndash;<paper-fab icon="assignment" style="background: var(&#45;&#45;teal-color)"></paper-fab>&ndash;&gt;
+        &lt;!&ndash;<paper-fab icon="settings" style="background: var(&#45;&#45;green-color)"></paper-fab>&ndash;&gt;
+        &lt;!&ndash;<paper-fab icon="layers" style="background: var(&#45;&#45;yellow-color)"></paper-fab>&ndash;&gt;
+        &lt;!&ndash;<paper-fab icon="dns" style="background: var(&#45;&#45;grey-color)"></paper-fab>&ndash;&gt;
     </div>
     <div class="container">
         <div class="title">paper-toast</div>
-        <paper-button icon="assignment" style="background: var(--green-color)" onclick="openToast('success')">Open toast - success</paper-button>
-        <paper-button icon="assignment" style="background: var(--yellow-color)" onclick="openToast('warning')">Open toast - warning</paper-button>
-        <paper-button icon="assignment" style="background: var(--red-color)" onclick="openToast('error')">Open toast - error</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;green-color)" onclick="openToast('success')">Open toast - success</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;yellow-color)" onclick="openToast('warning')">Open toast - warning</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;red-color)" onclick="openToast('error')">Open toast - error</paper-button>
         <paper-toast></paper-toast>
     </div>
     <div class="container">
         <div class="title">iron-overlay</div>
-        <paper-button icon="assignment" style="background: var(--green-color)" onclick="openOverlay(event)">Open overlay</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;green-color)" onclick="openOverlay(event)">Open overlay</paper-button>
         <iron-overlay padding="0">
             <div>
                 <div>Overlay content</div>
@@ -93,7 +100,7 @@
                 <div>Overlay content</div>
             </div>
         </iron-overlay>
-        <paper-button icon="assignment" style="background: var(--blue-color)" onclick="openOverlay(event)">Open overlay</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;blue-color)" onclick="openOverlay(event)">Open overlay</paper-button>
         <iron-overlay padding="0" from="top-left" direction="top-right">
             <div>
                 <div>Overlay content</div>
@@ -107,11 +114,19 @@
     </div>
     <div class="container">
         <div class="title">paper-loading</div>
-        <paper-button icon="assignment" style="background: var(--green-color)" onclick="startLoading()">Start loading</paper-button>
-        <paper-button icon="assignment" style="background: var(--red-color)" onclick="stopLoading()">Stop loading</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;green-color)" onclick="startLoading()">Start loading</paper-button>
+        <paper-button icon="assignment" style="background: var(&#45;&#45;red-color)" onclick="stopLoading()">Stop loading</paper-button>
         <paper-loading></paper-loading>
     </div>
-
+    <div class="container">
+        <div class="tile">paper-tabs</div>
+        <paper-tabs>
+            <div>page 1</div>
+            <div>page 2</div>
+            <div>page 3</div>
+            <div>page 4</div>
+        </paper-tabs>
+    </div>
     <script>
         function openToast(type){
             this.dispatchEvent(new CustomEvent('display-message',
@@ -142,6 +157,6 @@
                     composed: true
                 }));
         }
-    </script>
+    </script>-->
 </body>
 </html>
