@@ -1,11 +1,11 @@
 "use strict";
-import {LitElement, html, css} from './../../node_modules/lit-element/lit-element.js';
-import {flexLayoutClasses} from "./flex-layout-classes.js";
-import "./iron-form.js";
-import "./paper-table.js";
-import "./paper-fab.js";
-import "./paper-dialog.js";
-import "./paper-reports-dropdown.js";
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
+import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
+import "./../iron-form/iron-form.js";
+import "./../paper-table/paper-table.js";
+import "./../paper-fab/paper-fab.js";
+import "./../paper-dialog/paper-dialog.js";
+import "./../paper-icon-dropdown/paper-reports-dropdown.js";
 
 export class TableViewWithLink extends LitElement {
 
