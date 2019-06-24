@@ -1,5 +1,5 @@
 "use strict";
-import {html, css} from './../../node_modules/lit-element/lit-element.js';
+import {html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from './../paper-input/paper-input-container.js';
 import './../iron-selector/iron-selector.js';
