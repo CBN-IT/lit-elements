@@ -1,6 +1,6 @@
 "use strict";
-import {LitElement, html,css} from './../../node_modules/lit-element/lit-element.js';
-import './../../node_modules/ace-builds/src-min-noconflict/ace.js';
+import {LitElement, html,css} from '/node_modules/lit-element/lit-element.js';
+import '/node_modules/ace-builds/src-min-noconflict/ace.js';
 
 
 class AceEditor extends LitElement {
