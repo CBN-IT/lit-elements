@@ -5,7 +5,7 @@ import "./../iron-form/iron-form.js";
 import "./../paper-table/paper-table.js";
 import "./../paper-fab/paper-fab.js";
 import "./../paper-dialog/paper-dialog.js";
-import "./../paper-reports-dropdown/paper-reports-dropdown.js";
+import "./../paper-icon-dropdown/paper-reports-dropdown.js";
 
 export class TableViewWithLink extends LitElement {
 
