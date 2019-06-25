@@ -1,7 +1,7 @@
 "use strict";
 import {LitElement, html, css, unsafeCSS} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from './../flex-layout/flex-layout-classes.js';
-import './../elements/cbn-utils/CbnUtils.js';
+import './../cbn-utils/CbnUtils.js';
 import './../iron-selector/iron-selector.js';
 import './../iron-icon/iron-icon.js';
 import './../paper-table/paper-table.js';
