@@ -246,6 +246,10 @@ export class IronApp extends LitElement {
         return (/[mM]obi/i.test(ua) || /[tT]ablet/i.test(ua) || /[aA]ndroid/i.test(ua));
     }
 
+    get menuSections(){
+        return [];
+    }
+
     constructor() {
         super();
         this._firms = window.data._firms;
@@ -253,7 +257,6 @@ export class IronApp extends LitElement {
         this._setPages(window.location.pathname);
         window.addEventListener('popstate', this._onPopstate.bind(this));
         window.addEventListener('show-page', this._showPage.bind(this));
-        this.menuSections = [];
 
         //for layout
         this.isMobile = IronApp._isMobile();
