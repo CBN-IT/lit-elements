@@ -18,6 +18,7 @@ export class IronApp extends LitElement {
     static get properties() {
         return {
             base: {type: String},
+            home: {type: String},
             mood: {type: String},
             page: {type: String},
             pages: {type: Array},
