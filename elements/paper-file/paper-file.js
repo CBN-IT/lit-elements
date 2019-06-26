@@ -147,15 +147,20 @@ class PaperFile extends PaperInputContainer {
 
     _onInput(event){
         let file = this.input.files[0];
-        let processedFile = {
-            name: file.name,
-            label: file.name,
-            size: file.size,
-            type: file.type,
-            file: file,
-            blobKey: undefined
-        };
-        this._value = this.multiple ? [...this._value,processedFile] : [processedFile];
+        let processedFiles = [];
+        for (let i = 0; i < this.input.files.length; i++) {
+            let file=this.input.files[i];
+            processedFiles.push({
+                name: file.name,
+                label: file.name,
+                size: file.size,
+                type: file.type,
+                file: file,
+                blobKey: undefined
+            });
+        }
+
+        this._value = this.multiple ? [...this._value,processedFiles] : [processedFiles[0]];
         this.validate(this._value);
         this.clearInput();
     }
