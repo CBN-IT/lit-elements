@@ -61,7 +61,7 @@ class PaperFile extends PaperInputContainer {
                 .input-file{
                     display:none;
                 }
-        `
+        `;
     }
 
     constructor() {
@@ -118,20 +118,13 @@ class PaperFile extends PaperInputContainer {
     }
 
     _processValue(value){
-        if(typeof value === 'string'){
+        if (typeof value === 'string') {
             this._value = JSON.parse(value);
-        } else if(value instanceof Array){
+        } else if (value instanceof Array) {
             this._value = value.map(item => {
-                item === 'string' ? JSON.parse(item) : item;
+                return typeof item === 'string' ? JSON.parse(item) : item
             });
         }
-        this._putLabels();
-    }
-
-    _putLabels(){
-        this._value.forEach(item => {
-            item.label = item.name;
-        });
     }
 
     _deleteItem(event, item, index){
@@ -151,12 +144,11 @@ class PaperFile extends PaperInputContainer {
         for (let i = 0; i < this.input.files.length; i++) {
             let file=this.input.files[i];
             processedFiles.push({
-                name: file.name,
                 label: file.name,
                 size: file.size,
                 type: file.type,
                 file: file,
-                blobKey: undefined
+                url:""
             });
         }
 
