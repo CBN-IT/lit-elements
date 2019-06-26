@@ -38,7 +38,9 @@ class IronAjax extends LitElement {
             let params = this._getParams(this.params);
             let body = this._getBody(this.body);
             this.xhr.open(this.method || this.body ? 'POST' : 'GET', this.url + params, true);
-            this.xhr.setRequestHeader("Content-Type", body instanceof FormData ? 'multipart/form-data' : 'application/x-www-form-urlencoded');
+            if (!body instanceof FormData) {
+                this.xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+            }
             this.xhr.onreadystatechange = () => {
                 if (this.xhr.readyState === XMLHttpRequest.DONE) {
                     if (this.xhr.status === 200) {
