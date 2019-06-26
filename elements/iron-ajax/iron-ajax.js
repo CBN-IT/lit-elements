@@ -109,7 +109,7 @@ class IronAjax extends LitElement {
                             if(subValue['file']){
                                 formData.append(prefix ? `${prefix}.${key}` : key, subValue['file']);
                             } else if(subValue['url']){
-                                formData.append(prefix ? `${prefix}.${key}` : key , subValue['url']);
+                                formData.append(prefix ? `${prefix}.${key}` : key , JSON.stringify(subValue));
                             } else{
                                 this._apendToFormData(subValue, prefix ? `${prefix}.${key}` : key, formData);
                             }
@@ -121,7 +121,7 @@ class IronAjax extends LitElement {
                     if(value['file']){
                         formData.append(prefix ? `${prefix}.${key}` : key, value['file']);
                     } else if(value['url']){
-                        formData.append(prefix ? `${prefix}.${key}` : key, value['url']);
+                        formData.append(prefix ? `${prefix}.${key}` : key, JSON.stringify(value));
                     } else{
                         this._apendToFormData(value, prefix ? `${prefix}.${key}` : key, formData);
                     }
