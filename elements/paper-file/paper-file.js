@@ -81,7 +81,7 @@ class PaperFile extends PaperInputContainer {
                         `)}
                     </div>
                     <iron-icon icon="file-upload"></iron-icon>
-                    <input type="file" class="input input-file" />
+                    <input type="file" class="input input-file" ?multiple="${this.multiple}" />
                 </div>                
 `;
     }
