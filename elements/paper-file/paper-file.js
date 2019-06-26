@@ -160,7 +160,7 @@ class PaperFile extends PaperInputContainer {
             });
         }
 
-        this._value = this.multiple ? [...this._value,processedFiles] : [processedFiles[0]];
+        this._value = this.multiple ? [...this._value,...processedFiles] : [processedFiles[0]];
         this.validate(this._value);
         this.clearInput();
     }
