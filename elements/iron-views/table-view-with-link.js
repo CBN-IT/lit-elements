@@ -13,6 +13,7 @@ export class TableViewWithLink extends LitElement {
         return {
             currentPage: {type: String},
             name: {type: String},
+            getUrl: {type: String},
             collection: {type: String},
             columns: {type: Array},
             items: {type: Array},
