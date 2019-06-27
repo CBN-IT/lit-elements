@@ -71,10 +71,24 @@ export class AddWithLink extends LitElement {
                 :host{
                     display: flex;      
                     min-height: 0;              
-                }                             
+                }     
+                .paper-material{
+                    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                    background: white;
+                    border-radius: 5px;
+                    margin: 10px;
+                    min-height: 0;
+                }   
+                h3{
+                    padding: 10px 10px;
+                    margin: 0;
+                }                     
             </style>     
-            <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>              
-            <iron-form class="flex" .config="${this.config}" .model="${this.model}" url="/SaveDocument" .collection="${this._collection}" @saved-form="${this._onSavedForm}"></iron-form>
+            <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>          
+            <div class="paper-material vertical layout">
+                <h3>Detalii ${this._collection}</h3>                 
+                <iron-form class="flex" .config="${this.config}" .model="${this.model}" url="/SaveDocument" .collection="${this._collection}" @saved-form="${this._onSavedForm}"></iron-form>
+            </div>    
         `;
     }
 

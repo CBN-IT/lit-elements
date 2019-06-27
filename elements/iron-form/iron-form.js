@@ -108,7 +108,7 @@ class IronForm extends LitElement {
 
     render() {
         return html`
-            <iron-ajax id="request" .url="${this.url}"></iron-ajax>
+            <iron-ajax id="request" .url="${this.url}" method="POST"></iron-ajax>
             <div class="form" id="form">
                 ${this.config.elements.map(item => this.getElement(item))}
             </div>    
@@ -208,11 +208,11 @@ class IronForm extends LitElement {
 
     async _submitForm() {
         if (this._validate()) {
-            CBNUtils.startLoading();
             if (this.preventSubmit) {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});
                 return;
             }
+            CBNUtils.startLoading();
             this.request.body = {collection: this.collection, ...this._model, ...this.params};
             let response = await this.request.generateRequest();
             CBNUtils.fireEvent(this, 'saved-form', {response});

@@ -44,6 +44,12 @@ export class TableViewWithLink extends LitElement {
                 right: 10px;
                 background: var(--app-secondary-color)
             }
+            .paper-material{
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                background: white;
+                border-radius: 5px;
+                margin: 10px;
+            }
         `
     }
 
@@ -84,7 +90,7 @@ export class TableViewWithLink extends LitElement {
         return html`           
             <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
             
-            <paper-table class="flex" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}"></paper-table>
+            <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}"></paper-table>
             <paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>
             <paper-fab icon="add" @click="${this._addDocument}"></paper-fab>
             
