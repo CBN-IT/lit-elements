@@ -362,7 +362,8 @@ class PaperTable extends LitElement {
         cell.style.height = this.rowHeight + "px";
         // let container = document.createElement("div");
         if (column.template) {
-            render(column.template(model), cell);
+            let renderFunction = (item) => eval(column.template);
+            render(renderFunction(model), cell);
         } else {
             cell.textContent = this._formatValue(column, model);
         }
@@ -518,7 +519,8 @@ class PaperTable extends LitElement {
 
     _updateCell(cell, column, model) {
         if (column.template) {
-            render(column.template(model), cell)
+            let renderFunction = (item) => eval(column.template);
+            render(renderFunction(model), cell);
         } else {
             cell.textContent = this._formatValue(column, model);
         }
