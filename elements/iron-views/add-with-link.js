@@ -78,7 +78,7 @@ export class AddWithLink extends LitElement {
                     border-radius: 5px;
                     margin: 10px;
                     min-height: 0;
-                    max-width: 100%;
+                    max-width: calc(100% - 20px);
                 }   
                 h3{
                     padding: 10px 10px;
