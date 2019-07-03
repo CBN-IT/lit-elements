@@ -70,7 +70,7 @@ class PaperDialog extends LitElement {
                     <paper-button small class="close-button" small icon="close" @click="${this._onCancelClick}"></paper-button>
                 </div>
                     <div class="body">
-                        <slot name="body" class="vertical layout flex"></slot>
+                        <slot name="body"></slot>
                     </div>
                
                 ${!this.noActions ? html`

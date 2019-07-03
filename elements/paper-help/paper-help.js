@@ -29,6 +29,9 @@ class PaperHelp extends LitElement{
             paper-dialog{
                 --min-dialog-width: 500px; 
             }
+            iron-form{
+                width: 100%;
+            }
         `;
     }
 
@@ -45,10 +48,11 @@ class PaperHelp extends LitElement{
                 <div slot="header" class="header">Help</div>                  
                 <iron-form slot="body" class="flex" url="/SaveHelp" .config="${this.config}" .model="${this.model}" collection="help" @saved-form="${this._onSavedForm}"></iron-form>
             </paper-dialog>
-        `
+        `;
     }
 
     _openDialog(){
+        this.model = {};
         this.shadowRoot.querySelector('paper-dialog').open();
     }
 
