@@ -21,7 +21,7 @@ class PaperHelp extends LitElement{
         // language=CSS
         return css`
             paper-fab{
-                background: var(--red-color);
+                background: var(--blue-color);
                 z-index: 1;
                 right: 10px;
                 bottom: 70px;
