@@ -12,7 +12,7 @@ import './../paper-fab/paper-fab.js';
 import './../paper-button/paper-button.js';
 import './../iron-icons/iron-icons.js';
 import './../get-report/get-report.js';
-
+import './../paper-help/paper-help.js';
 
 export class IronApp extends LitElement {
 
@@ -270,6 +270,7 @@ export class IronApp extends LitElement {
         // language=HTML
 
         return html`
+                <paper-help></paper-help>
                 <paper-toast></paper-toast>
                 <get-report></get-report>
                 <paper-loading></paper-loading>
