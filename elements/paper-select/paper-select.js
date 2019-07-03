@@ -144,7 +144,7 @@ class PaperSelect extends PaperInputContainer {
     get inputElement(){
         return html`
                 <div class="select-container horizontal layout center flex">
-                    <div class=" horizontal layout wrap center flex">
+                    <div class=" horizontal layout wrap center flex" style="overflow: hidden">
                     ${this._value.map((item, index) => {
                         return !this.isDropdownMenu ?
                             html`
