@@ -79,7 +79,7 @@ export class PaperIconDropdown extends LitElement {
     render(){
         return html`
                 <div class="container vertical layout">
-                    <paper-fab icon="${this.icon}" style="background: red" @click="${this._openDropdown}"></paper-fab>
+                    <paper-fab icon="${this.icon}" style="background: var(--red-color)" @click="${this._openDropdown}"></paper-fab>
                     ${this.isNative ? html`
                         <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                             <option disabled selected></option>
