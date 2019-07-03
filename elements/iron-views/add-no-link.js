@@ -91,6 +91,7 @@ export class AddNoLink extends LitElement {
                     border-radius: 5px;
                     margin: 10px;
                     min-height: 0;
+                    max-width: calc(100% - 20px);
                 }                            
             </style>  
             <div class="paper-material vertical layout">

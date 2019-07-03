@@ -88,9 +88,6 @@ class PaperCheckbox extends PaperInputContainer {
     }
 
     set value(value) {
-        if(this._value === value){
-            return;
-        }
         if(!CBNUtils.isNoE(value)){
             this._value = value;
         } else if(this.defaultValue){

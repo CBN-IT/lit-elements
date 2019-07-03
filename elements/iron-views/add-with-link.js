@@ -16,7 +16,8 @@ export class AddWithLink extends LitElement {
             model: {type: Object},
             defaultModel: {type: Object},
             collection: {type: String},
-            listView: {type: String}
+            listView: {type: String},
+            saveUrl: {type: String}
         }
         ;
     }
@@ -41,6 +42,10 @@ export class AddWithLink extends LitElement {
     get listView(){
         return 'table-view-with-link';
     }
+
+  get saveUrl() {
+    return '/SaveDocument';
+  }
 
     constructor() {
         super();
@@ -78,6 +83,7 @@ export class AddWithLink extends LitElement {
                     border-radius: 5px;
                     margin: 10px;
                     min-height: 0;
+                    max-width: calc(100% - 20px);
                 }   
                 h3{
                     padding: 10px 10px;
@@ -87,7 +93,7 @@ export class AddWithLink extends LitElement {
             <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>          
             <div class="paper-material vertical layout">
                 <h3>Detalii ${this._collection}</h3>                 
-                <iron-form class="flex" .config="${this.config}" .model="${this.model}" url="/SaveDocument" .collection="${this._collection}" @saved-form="${this._onSavedForm}"></iron-form>
+                <iron-form class="flex" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this._collection}" @saved-form="${this._onSavedForm}"></iron-form>
             </div>    
         `;
     }
