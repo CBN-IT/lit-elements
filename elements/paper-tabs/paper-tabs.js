@@ -2,6 +2,7 @@
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import './../iron-selector/iron-selector.js'
+import './../cbn-utils/CbnUtils.js'
 //
 class PaperTabs extends LitElement {
 
@@ -63,6 +64,7 @@ class PaperTabs extends LitElement {
     _onPageSelect(event){
         if(this.selectedTab !== event.detail.selected){
             this.selectedTab = event.detail.selected;
+            CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab});
         }
     }
 
