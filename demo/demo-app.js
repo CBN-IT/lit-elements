@@ -67,9 +67,16 @@ class DemoApp extends LitElement {
                 }                   
             </style>
         <div class="container">
-        <div class="title">paper-table</div>
-            <paper-button icon="file-upload" style="background: var(--blue-color)" @click="${() => window.open('/demo/paper-table/index.html')}">Demo table</paper-button>
+            <div class="title">paper-table</div>
+                <paper-button icon="file-upload" style="background: var(--blue-color)" @click="${() => window.open('/demo/paper-table/index.html')}">Demo paper-table</paper-button>
+            </div>
         </div>
+        <div class="container">
+            <div class="title">iron-form</div>
+                <paper-button icon="file-upload" style="background: var(--green-color)" @click="${() => window.open('/demo/iron-form/index.html')}">Demo iron-form</paper-button>
+            </div>
+        </div>
+       
         <div class="container">
             <div class="title">iron-icons</div>
             <iron-icon icon="file-upload"></iron-icon>
