@@ -70,6 +70,7 @@ class PaperTabs extends LitElement {
 
     refresh(){
         this.selectedTab = 0;
+        CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab});
     }
 
 
