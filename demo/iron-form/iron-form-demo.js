@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
+import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
 import "/elements/iron-icons/iron-icons.js";
 import "/elements/iron-form/iron-form.js";
@@ -23,6 +23,16 @@ class IronFormDemo extends LitElement {
         this.model = {};
         this.config = {
             "elements": [
+                {
+                    "type": "address",
+                    "label": "Address",
+                    "name": "address",
+                    "multiple": false,
+                    "class": "col-xs-12 col-sm-4 col-lg-3",
+                    "options": [],
+                    "required": true,
+                    "dbType": "string"
+                },
                 {
                     "label": "String",
                     "type": "text",
@@ -157,7 +167,7 @@ class IronFormDemo extends LitElement {
         return html`
             <style>              
                 :host{
-                    display: flex;                    
+                    display: flex;  
                 }                             
             </style>
             <iron-form .config="${this.config}" .model="${this.model}" url="/SaveForm" collection="collection" @saved-form="${this._savedForm}"></iron-form>

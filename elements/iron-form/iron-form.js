@@ -4,9 +4,11 @@ import {directive} from '/node_modules/lit-html/lit-html.js';
 import './../paper-input/paper-input.js';
 import './../paper-input/paper-textarea.js';
 import './../paper-select/paper-select.js';
+import './../paper-address/paper-address.js';
 import './../paper-checkbox/paper-checkbox.js';
 import './../paper-file/paper-file.js';
 import './../paper-date-picker/paper-date-picker.js';
+import "./../paper-button/paper-button.js";
 // import './paper-date-time-picker.js';
 import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
@@ -114,7 +116,7 @@ class IronForm extends LitElement {
             </div>    
             ${!this.noSubmitButton ? html`
                 <div class="actions">
-                    <paper-button icon="check-circle" @click="${this._submitForm}" style="background: var(--app-secondary-color)">Submit</paper-button>               
+                    <paper-button icon="check-circle" @click="${this._submitForm}" style="background: var(--app-secondary-color, green)">Submit</paper-button>               
                 </div>
             ` : ''}
                                                        
@@ -141,6 +143,9 @@ class IronForm extends LitElement {
             }
             case 'select': {
                 return html`<paper-select class="form-element ${elementConfig.class}" @value-changed="${this._onValueChanged}" .name="${elementConfig.name}" .label="${elementConfig.label}" .required="${elementConfig.required}" .defaultValue="${elementConfig.defaultValue}" .multiple="${elementConfig.multiple}" .freeText="${elementConfig.freeText}" .allowDuplicates="${elementConfig.allowDuplicates}" .itemValueProperty="${elementConfig.itemValueProperty}" .itemLabelProperty="${elementConfig.itemLabelProperty}" .options="${elementConfig.options}" .value="${forceWrite(this._model[elementConfig.name])}"></paper-select>`
+            }
+            case 'address': {
+                return html`<paper-address class="form-element ${elementConfig.class}" @value-changed="${this._onValueChanged}" .name="${elementConfig.name}" .label="${elementConfig.label}" .required="${elementConfig.required}" .defaultValue="${elementConfig.defaultValue}" .multiple="${elementConfig.multiple}" .freeText="${elementConfig.freeText}" .allowDuplicates="${elementConfig.allowDuplicates}" .itemValueProperty="${elementConfig.itemValueProperty}" .itemLabelProperty="${elementConfig.itemLabelProperty}" .options="${elementConfig.options}" .value="${forceWrite(this._model[elementConfig.name])}"></paper-address>`
             }
             case 'textarea': {
                 return html`<paper-textarea class="form-element ${elementConfig.class}" @value-changed="${this._onValueChanged}" .name="${elementConfig.name}" .label="${elementConfig.label}" .required="${elementConfig.required}" .minLength="${elementConfig.minLength}" .maxLength="${elementConfig.maxLength}" .defaultValue="${elementConfig.defaultValue}" .value="${forceWrite(this._model[elementConfig.name])}"></paper-textarea>`;
