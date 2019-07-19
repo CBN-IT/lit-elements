@@ -239,20 +239,8 @@ class PaperAddress extends PaperInputContainer {
     }
 
     _processValue(value){
-        if(typeof value === 'string'){
-            this._value = [{
-                __label: value,
-                __value: value
-            }];
-        } else if(value instanceof Array){
-            this._value = value.map(item => {
-                return {
-                    __label: item,
-                    __value: item
-                }
-            });
-        }
-        this._putLabels();
+        this._value = value;
+        // this._putLabels();
     }
 
     set options(options){
