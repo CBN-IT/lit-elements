@@ -239,7 +239,10 @@ class PaperAddress extends PaperInputContainer {
     }
 
     _processValue(value){
-        this._value = [value];
+        this._value = [{
+            __label: value.label,
+            __value: value
+        }];
         // this._putLabels();
     }
 
