@@ -322,7 +322,7 @@ export class IronApp extends LitElement {
     }
 
     _showPage(event){
-        this._setPages(`/${event.detail.name}` + (event.detail._id ? `/${event.detail._id}` : ''));
+        this._setPages((this.base ? "/" + this.base : "") + `/${event.detail.name}` + (event.detail._id ? `/${event.detail._id}` : ''));
     }
 
     async _selectPage(page) {
