@@ -3,6 +3,7 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {render} from '/node_modules/lit-html/lit-html.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import "./../iron-icon/iron-icon.js";
+import "./../iron-icons/iron-icons.js";
 import "./../paper-checkbox/paper-checkbox.js";
 
 class PaperTable extends LitElement {
