@@ -25,8 +25,8 @@ export class IronApp extends LitElement {
             pages: {type: Array},
             menuSections: {type: Array},
             pathname: {type: String},
-            _firms: {type: Array},
-            _selectedFirm: {type: String},
+            _companies: {type: Array},
+            _selectedCompany: {type: String},
 
             collapsed: {type: Boolean},
             temporaryCollapsed: {type: Boolean},
@@ -222,7 +222,7 @@ export class IronApp extends LitElement {
                     width: 100%;
                     user-select: none;
                 }
-                .firm-dropdown{
+                .company-dropdown{
                     --input-container-padding: 1px;               
                     --input-container-border: 0px;
                     --input-container-min-height: 30px;
@@ -253,8 +253,8 @@ export class IronApp extends LitElement {
 
     constructor() {
         super();
-        this._firms = window.data._firms;
-        this._selectedFirm = window.data._selectedFirm;
+        this._companies = window.data._companies;
+        this._selectedCompany = window.data._selectedCompany;
         this._setPages(window.location.pathname);
         window.addEventListener('popstate', this._onPopstate.bind(this));
         window.addEventListener('show-page', this._showPage.bind(this));
@@ -293,8 +293,8 @@ export class IronApp extends LitElement {
                         <div class="header logo">                                                        
                             <img src="/web/images/logo_square.svg" class="small-logo" slot="small-logo" alt="logo">                                            
                         </div>
-                        <div slot="firm-dropdown" class="horizontal layout">
-                            <paper-select class="firm-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onFirmSelection}" .options="${this._firms}" .value="${this._selectedFirm}" itemLabelProperty="firmName" itemValueProperty="_id"></paper-select>
+                        <div slot="company-dropdown" class="horizontal layout">
+                            <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
                         </div>
                        
                         <div class="vertical layout flex left-menu" @mouseenter="${this._onMouseEnterMenu}" @mouseleave="${this._onMouseLeaveMenu}">      
@@ -355,8 +355,8 @@ export class IronApp extends LitElement {
         this._selectPage(this.pages[0]);
     }
 
-    _onFirmSelection(event){
-        window.open(`/?firmId=${event.detail.value._id}`);
+    _onCompanySelection(event){
+        window.open(`/?companyId=${event.detail.value._id}`);
     }
 
     //layout functions
