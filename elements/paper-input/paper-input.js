@@ -35,7 +35,7 @@ class PaperInput extends PaperInputContainer {
         // if(value !== this.value){
             if(!CBNUtils.isNoE(value)){
                 this._value = value;
-            } else if(CBNUtils.isNoE(value) && this.defaultValue){
+            } else if((value === null || value === undefined) && this.defaultValue){
                 this._value = this.defaultValue;
             } else {
                 this._value = '';
