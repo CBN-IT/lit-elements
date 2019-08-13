@@ -96,8 +96,8 @@ export class PaperDatePicker extends PaperInputContainer {
 
     set value(value) {
         if(value){
-            this._value = new Date(this._parseDate(value).unix() * 1000);
-        } else if(this.defaultValue){
+            this._value = value ? new Date(this._parseDate(value).unix() * 1000) : "";
+        } else if((value === null || value === undefined) && this.defaultValue){
             this._value = new Date(this._parseDate(this.defaultValue).unix() * 1000);
         } else {
             this._value = '';
