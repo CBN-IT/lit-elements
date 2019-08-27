@@ -103,12 +103,13 @@ export class TableView extends LitElement {
     render() {
         return html`            
             <iron-ajax class="request" .url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
+            <iron-ajax id="deleteItem" url="/DeleteItem" .params="${{'collection': this.collection}}"></iron-ajax>
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">Detalii ${this.collection}</div>                  
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
             </paper-dialog>    
             
-            <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}"></paper-table>
+            <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
             <paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>
             <paper-fab icon="add" @click="${this._openDialog}"></paper-fab>
             
@@ -151,6 +152,13 @@ export class TableView extends LitElement {
             CBNUtils.startLoading();
             this._getItems();
         }
+    }
+
+    async _deleteItem(event) {
+      let ironAjax = this.shadowRoot.querySelector('#deleteItem');
+      ironAjax.params._id = event.detail._id;
+      let response = await ironAjax.generateRequest();
+      this.refreshPage();
     }
 
 }
