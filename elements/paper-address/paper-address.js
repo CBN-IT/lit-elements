@@ -219,7 +219,7 @@ class PaperAddress extends PaperInputContainer {
     }
 
     set value(value) {
-    if (!CBNUtils.isNoE(value) && !CBNUtils.isNoE(value._id)) {
+    if (!CBNUtils.isNoE(value) && !CBNUtils.isNoE(value.id)) {
             this._processValue(value);
         } else if(this.defaultValue){
             this._processValue(this.defaultValue);
