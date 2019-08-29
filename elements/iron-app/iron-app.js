@@ -239,7 +239,15 @@ export class IronApp extends LitElement {
                 .full-width{
                     min-width:100%;
                 }
-        `
+                .group-section-title{
+                    color: white;
+                    text-align: center;
+                    font-weight: bold;
+                    background: rgba(255,255,255,0.2);
+                    border-bottom: 2px solid white;
+                    margin-bottom: 5px;
+                }
+        `;
     }
 
     static _isMobile(){
@@ -300,12 +308,15 @@ export class IronApp extends LitElement {
                         <div class="vertical layout flex left-menu" @mouseenter="${this._onMouseEnterMenu}" @mouseleave="${this._onMouseLeaveMenu}">      
                             <div class="flex menu-buttons-container" >
                                 <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap" @iron-select="${this._onPageSelect.bind(this)}">
-                                    ${this.menuSections.map(menuSection => html`
+                                    ${this.menuSections.map(groupSection => html`
+                                        <div class="group-section-title full-width">${groupSection.groupTitle}</div>
+                                        ${groupSection.sections.map(menuSection => html`
                                         <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
                                             <iron-icon icon="${menuSection.icon}"></iron-icon>
                                             ${menuSection.label}
                                         </a>
-                                    `)};
+                                        `)}                                        
+                                    `)}
                                 </iron-selector>
                             </div>                                            
                             <div class="horizontal layout start-justified"> 
