@@ -54,7 +54,7 @@ class IronSelector extends LitElement {
         let items = this._getItems(this.shadowRoot.querySelector("slot"));
         if(!this.isPages){
             items.forEach((item,index) => {
-        if(item.hasAttribute(this.attrForSelected)){
+        if (!this.attrForSelected ||  item.hasAttribute(this.attrForSelected)) {
                 item.addEventListener("click", this._onClick.bind(this, index));
         }
             });
