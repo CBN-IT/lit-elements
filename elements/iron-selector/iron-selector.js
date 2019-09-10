@@ -60,7 +60,7 @@ class IronSelector extends LitElement {
             });
         }
         this.items = items;
-        // this._select(this.selected);
+        this._select(this.selected);
 
     }
 
