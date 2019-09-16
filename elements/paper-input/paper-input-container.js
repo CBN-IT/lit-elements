@@ -12,6 +12,7 @@ export class PaperInputContainer extends LitElement {
             label: {type: String},
             focused: {type: Boolean},
             floated: {type: Boolean},
+            disabled: {type: Boolean},
             isValid: {type: Boolean},
             required: {type: Boolean},
             input: {type: Object},
@@ -35,6 +36,16 @@ export class PaperInputContainer extends LitElement {
                         outline: 0;
                         position: relative;
                     }                  
+                    :host([disabled]){
+                        pointer-events: none;
+                    }
+                    .overlay{
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                    }
                     .form-field{
                         width: 100%;
                         padding: var(--input-padding, 10px);
@@ -58,6 +69,12 @@ export class PaperInputContainer extends LitElement {
                     .focused .input-container{
                         border: var(--input-container-border, 2px solid var(--highlight-color, #6200ee));
                         padding: var(--input-container-padding, 0 0 0 15px);
+                    }
+                    .disabled .input-container > *{
+                        opacity: 0.33;
+                    }
+                    .disabled .input-container{
+                        border-style: dashed;
                     }
                     .invalid .input-container{
                         border: var(--input-container-border, 2px solid #dd2c00);
@@ -120,7 +137,7 @@ export class PaperInputContainer extends LitElement {
 
     render() {
         return html`
-            <div class="form-field ${this.focused ? 'focused': ''} ${this.isValid ? 'valid': 'invalid'}">
+            <div class="form-field ${this.focused ? 'focused': ''} ${this.isValid ? 'valid': 'invalid'} ${this.disabled ? 'disabled' : ''}">
                 
                 <div class="input-container">   
                     ${this.inputElement}                                                                             
@@ -128,7 +145,7 @@ export class PaperInputContainer extends LitElement {
                 
             </div>
             <label class="label ${this.floated ? 'floated': ''}">${this.label}</label>
-           
+            <div class="${this.disabled ? 'overlay' : ''}"></div>
             
         `;
     }

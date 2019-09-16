@@ -70,8 +70,8 @@ class IronAjax extends LitElement {
     }
 
     _getParams(params){
-        let encodedFirmId = window.data !== undefined &&  window.data._selectedFirm !== undefined ? `${encodeURIComponent('_firmId')}=${encodeURIComponent(window.data._selectedFirm)}` : '';
-        return (params !== undefined ? '?' + this._getEncodedObject(params) + '&' + encodedFirmId : '?' + encodedFirmId);
+        let encodedCompanyId = window.data !== undefined &&  window.data._selectedCompany !== undefined ? `${encodeURIComponent('_companyId')}=${encodeURIComponent(window.data._selectedCompany)}` : '';
+        return (params !== undefined ? '?' + this._getEncodedObject(params) + '&' + encodedCompanyId : '?' + encodedCompanyId);
     }
 
     _getEncodedObject(object, prefix){

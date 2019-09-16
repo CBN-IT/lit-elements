@@ -54,11 +54,13 @@ class IronSelector extends LitElement {
         let items = this._getItems(this.shadowRoot.querySelector("slot"));
         if(!this.isPages){
             items.forEach((item,index) => {
+        if (!this.attrForSelected ||  item.hasAttribute(this.attrForSelected)) {
                 item.addEventListener("click", this._onClick.bind(this, index));
+        }
             });
         }
         this.items = items;
-        this._select(this.selected);
+        this._select(this.selected, true);
 
     }
 
@@ -84,7 +86,7 @@ class IronSelector extends LitElement {
         });
     }
 
-    _select(selected){
+    _select(selected, preventEvent){
         if(selected === undefined || !this.items || this.items.length === 0){
             return;
         }
@@ -103,7 +105,9 @@ class IronSelector extends LitElement {
                 }
             }
         });
-        CBNUtils.fireEvent(this, 'iron-select', {selected: this.selected});
+        if(!preventEvent){
+            CBNUtils.fireEvent(this, 'iron-select', {selected: this.selected});
+        }
     }
 
 }

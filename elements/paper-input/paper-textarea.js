@@ -28,9 +28,9 @@ class PaperTextarea extends PaperInputContainer {
     }
 
     set value(value) {
-        if(value){
+        if(!CBNUtils.isNoE(value)){
             this._value = value;
-        } else if(this.defaultValue){
+        } else if((value === null || value === undefined) && this.defaultValue){
             this._value = this.defaultValue;
         } else {
             this._value = '';

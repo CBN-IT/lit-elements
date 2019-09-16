@@ -207,7 +207,7 @@ class PaperSelect extends PaperInputContainer {
     set value(value) {
         if(!CBNUtils.isNoE(value)){
             this._processValue(value);
-        } else if(this.defaultValue){
+        } else if((value === null || value === undefined) && this.defaultValue){
             this._processValue(this.defaultValue);
         } else {
             this._value = [];

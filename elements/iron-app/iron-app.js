@@ -25,8 +25,8 @@ export class IronApp extends LitElement {
             pages: {type: Array},
             menuSections: {type: Array},
             pathname: {type: String},
-            _firms: {type: Array},
-            _selectedFirm: {type: String},
+            _companies: {type: Array},
+            _selectedCompany: {type: String},
 
             collapsed: {type: Boolean},
             temporaryCollapsed: {type: Boolean},
@@ -222,7 +222,7 @@ export class IronApp extends LitElement {
                     width: 100%;
                     user-select: none;
                 }
-                .firm-dropdown{
+                .company-dropdown{
                     --input-container-padding: 1px;               
                     --input-container-border: 0px;
                     --input-container-min-height: 30px;
@@ -239,7 +239,15 @@ export class IronApp extends LitElement {
                 .full-width{
                     min-width:100%;
                 }
-        `
+                .group-section-title{
+                    color: white;
+                    text-align: center;
+                    font-weight: bold;
+                    background: rgba(255,255,255,0.2);
+                    border-bottom: 2px solid white;
+                    margin-bottom: 5px;
+                }
+        `;
     }
 
     static _isMobile(){
@@ -253,8 +261,8 @@ export class IronApp extends LitElement {
 
     constructor() {
         super();
-        this._firms = window.data._firms;
-        this._selectedFirm = window.data._selectedFirm;
+        this._companies = window.data._companies;
+        this._selectedCompany = window.data._selectedCompany;
         this._setPages(window.location.pathname);
         window.addEventListener('popstate', this._onPopstate.bind(this));
         window.addEventListener('show-page', this._showPage.bind(this));
@@ -293,19 +301,22 @@ export class IronApp extends LitElement {
                         <div class="header logo">                                                        
                             <img src="/web/images/logo_square.svg" class="small-logo" slot="small-logo" alt="logo">                                            
                         </div>
-                        <div slot="firm-dropdown" class="horizontal layout">
-                            <paper-select class="firm-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onFirmSelection}" .options="${this._firms}" .value="${this._selectedFirm}" itemLabelProperty="firmName" itemValueProperty="_id"></paper-select>
+                        <div slot="company-dropdown" class="horizontal layout">
+                            <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
                         </div>
                        
                         <div class="vertical layout flex left-menu" @mouseenter="${this._onMouseEnterMenu}" @mouseleave="${this._onMouseLeaveMenu}">      
                             <div class="flex menu-buttons-container" >
                                 <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap" @iron-select="${this._onPageSelect.bind(this)}">
-                                    ${this.menuSections.map(menuSection => html`
+                                    ${this.menuSections.map(groupSection => html`
+                                        <div class="group-section-title full-width">${groupSection.groupTitle}</div>
+                                        ${groupSection.sections.map(menuSection => html`
                                         <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
                                             <iron-icon icon="${menuSection.icon}"></iron-icon>
                                             ${menuSection.label}
                                         </a>
-                                    `)};
+                                        `)}                                        
+                                    `)}
                                 </iron-selector>
                             </div>                                            
                             <div class="horizontal layout start-justified"> 
@@ -355,8 +366,8 @@ export class IronApp extends LitElement {
         this._selectPage(this.pages[0]);
     }
 
-    _onFirmSelection(event){
-        window.open(`/?firmId=${event.detail.value._id}`);
+    _onCompanySelection(event){
+        window.open(`/?companyId=${event.detail.value._id}`);
     }
 
     //layout functions
