@@ -1,12 +1,15 @@
 "use strict";
 window.CBNUtils = {
     fireEvent(element, eventType, detail){
-        element.dispatchEvent(new CustomEvent(eventType,
+        let e =new CustomEvent(eventType,
             {
                 bubbles: true,
                 composed: true,
+                cancelable:true,
                 detail: detail
-            }));
+            });
+        element.dispatchEvent(e);
+        return e;
     },
     isNoE (value){
         return value === undefined || value === null || value === ''
