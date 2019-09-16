@@ -69,6 +69,9 @@ class AddForm extends AddWithLink{
         `;
     }
     _safeParseJson(val){
+        if(typeof val!=="string"){
+            return val;
+        }
         try{
             return JSON.parse(val)
         }catch (e) {
