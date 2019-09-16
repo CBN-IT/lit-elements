@@ -60,6 +60,7 @@ class AddForm extends AddWithLink{
 
     render(){
         return html`
+            <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <paper-tabs .pages="${this.pages}" class="flex" @tab-select="${this._changedTab}">
                 <iron-form class="flex" name="form" .config="${this.config}" .model="${this.model}" url="/SaveForm" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
                 <form-editor class="flex" name="form-editor" .value="${this.model.code}" @submit="${this._saveForm}"></form-editor>

@@ -758,11 +758,19 @@ class FormEditor extends LitElement {
             }
 
             .container {
-                background-color: #eeeeee;
+                /*background-color: #eeeeee;*/
                 display: flex;
                 flex-wrap: wrap;
                 width: 100%;
                 position: relative;
+            }
+
+            .new-items-container{
+                background-color: #818181;
+            }
+            
+            .existing-items-container{
+                /*background-color: #d8d8d8;*/
             }
 
             .elemBox {
@@ -864,9 +872,13 @@ class FormEditor extends LitElement {
             }
 
             .newItems {
+                background-color: white;
+                font-weight: bold;
+                cursor: grab;
+                
                 min-width: 100px;
                 text-align: center;
-                background-color: #d7cbff;
+                /*background-color: #d7cbff;*/
                 border-radius: 10px;
                 margin: 10px;
                 padding: 5px 20px 5px 20px;
