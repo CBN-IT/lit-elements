@@ -72,11 +72,19 @@ class PaperInput extends PaperInputContainer {
     }
 
     _validateNumber(value){
-        return !isNaN(this.min) && !isNaN(this.max) && !CBNUtils.isNoE(value) ? parseFloat(value) >= this.min && parseFloat(value) <= this.max : true;
+        return CBNUtils.isNoE(value) ||
+            (
+                (isNaN(this.min) || parseFloat(value) >= this.min) &&
+                (isNaN(this.max) || parseFloat(value) <= this.max)
+            )
     }
 
     _validateText(value){
-        return !isNaN(this.minLength) && !isNaN(this.maxLength) && !CBNUtils.isNoE(value) ? value.length >= this.minLength && value.length <= this.maxLength : true;
+        return CBNUtils.isNoE(value) ||
+            (
+                (isNaN(this.minLength) || value.length >= this.minLength) &&
+                (isNaN(this.maxLength) || value.length <= this.maxLength)
+            );
     }
 
 }
