@@ -35,9 +35,10 @@ class AddForm extends AddWithLink{
     }
 
     get defaultModel(){
-        return {code:{
-            "elements": []
-        }};
+        return {
+            code:'{"elements": []}',
+            collection:""
+        };
     }
 
     get listView(){
@@ -71,7 +72,7 @@ class AddForm extends AddWithLink{
         try{
             return JSON.parse(val)
         }catch (e) {
-            return this.defaultModel()["code"];
+            return this.defaultModel["code"];
         }
     }
     _changedTab(e){
