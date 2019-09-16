@@ -51,11 +51,12 @@ class DemoApp extends LitElement {
                     display: flex;
                     align-items: center;
                     border-bottom: 1px solid gray;
+                    overflow: auto;
                 }
                 .title{
                     width: 110px;
                     font-weight: bold;
-                       
+                    white-space: nowrap;
                 }         
                 paper-tabs{
                     width: 1000px;
@@ -68,23 +69,23 @@ class DemoApp extends LitElement {
             </style>
         <div class="container">
             <div class="title">paper-table</div>
-                <paper-button icon="file-upload" style="background: var(--blue-color)" @click="${() => window.open('/demo/paper-table/index.html')}">Demo paper-table</paper-button>
+                <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => window.open('/demo/paper-table/index.html')}">Demo paper-table</paper-button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="title">form-editor</div>
+                <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => window.open('/demo/form-editor/index.html')}">Demo form-editor</paper-button>
             </div>
         </div>
         <div class="container">
             <div class="title">iron-form</div>
-                <paper-button icon="file-upload" style="background: var(--green-color)" @click="${() => window.open('/demo/iron-form/index.html')}">Demo iron-form</paper-button>
+                <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => window.open('/demo/iron-form/index.html')}">Demo iron-form</paper-button>
             </div>
         </div>
        
         <div class="container">
             <div class="title">iron-icons</div>
-            <iron-icon icon="file-upload"></iron-icon>
-            <iron-icon icon="add"></iron-icon>
-            <iron-icon icon="assignment"></iron-icon>
-            <iron-icon icon="settings"></iron-icon>
-            <iron-icon icon="layers"></iron-icon>
-            <iron-icon icon="dns"></iron-icon>
+            ${Object.keys(window.icons).map(value => html`<iron-icon title="${value}" icon="${value}"></iron-icon>`)}
         </div>
         <div class="container">
             <div class="title">iron-overlay</div>
@@ -131,8 +132,8 @@ class DemoApp extends LitElement {
         </div>
         <div class="container">
             <div class="title">paper-fab</div>
-            <div style="position:relative">
-                <paper-fab icon="file-upload" style="background: var(--blue-color);top:-37px"></paper-fab>
+            <div style="position:relative;height:64px;width:64px;">
+                <paper-fab icon="file-upload" style="background: var(--blue-color);top:0;"></paper-fab>
             </div>
         </div>
         <div class="container">

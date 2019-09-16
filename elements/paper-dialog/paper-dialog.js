@@ -29,7 +29,6 @@ class PaperDialog extends LitElement {
                     bottom: 0;
                     left: 0;
                     right: 0;
-                    background: rgba(0,0,0,.43);
                     z-index: 20;
                     display: none;
                     align-items: center;
@@ -41,8 +40,8 @@ class PaperDialog extends LitElement {
                     max-width: var(--max-dialog-width);
                     min-width: var(--min-dialog-width);
                     min-height: 0;
-                    border-radius: 5px;                 
-                    /*padding: 0 10px;*/
+                    border-radius: 5px;
+                    z-index: 1;
                 }     
                 .header,.body{
                     padding: 10px 10px;
@@ -61,7 +60,16 @@ class PaperDialog extends LitElement {
                 h3{
                     margin: 0;
                 }
-            </style>     
+                #overlay{
+                    position: absolute;
+                    top:0;
+                    left:0;
+                    bottom:0;
+                    right:0;
+                    background: rgba(0,0,0,.43);
+                }
+            </style>
+            <div id="overlay" @click=${this._onCancelClick}></div>
             <div class="container vertical layout">
                 <div class="header horizontal layout center">
                     <h3 class="flex">
@@ -84,7 +92,6 @@ class PaperDialog extends LitElement {
                                  
         `;
     }
-
     updated(changedProperties){
         if(!CBNUtils.isNoE(this.opened)){
             this._updateStyle();
@@ -92,13 +99,17 @@ class PaperDialog extends LitElement {
     }
 
     _onCancelClick(){
-        this.opened = false;
-        CBNUtils.fireEvent(this, 'cancel-click');
+        let e = CBNUtils.fireEvent(this, 'cancel-click');
+        if(!e.defaultPrevented){
+            this.opened = false;
+        }
     }
 
     _onSaveClick(){
-        this.opened = false;
-        CBNUtils.fireEvent(this, 'save-click');
+        let e = CBNUtils.fireEvent(this, 'save-click');
+        if(!e.defaultPrevented){
+            this.opened = false;
+        }
     }
 
     _updateStyle(){
