@@ -12,7 +12,7 @@ class FormEditor extends LitElement {
 
     static get properties() {
         return {
-            json:{
+            value:{
                 type:Object
             },
             _json:{
@@ -21,6 +21,724 @@ class FormEditor extends LitElement {
             configs:{
                 type:Object
             }
+        };
+    }
+    constructor(){
+        super();
+        this.configs = {
+            "date": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-5 col-lg-5",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-5 col-lg-5",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-12 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "label": "Default value",
+                        "type": "text",
+                        "name": "defaultValue",
+                        "dbType": "string",
+                        "className": "col-xs-3 col-sm-3 col-lg-3",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+
+
+
+                    }
+                ]
+            },
+            "time": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-5 col-lg-5",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-5 col-lg-5",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-12 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "label": "Default value",
+                        "type": "text",
+                        "name": "defaultValue",
+                        "dbType": "string",
+                        "className": "col-xs-3 col-sm-3 col-lg-3",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+
+
+
+                    }
+                ]
+            },
+            "file": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-6 col-lg-4",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-6 col-lg-4",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-6 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Multiple",
+                        "name": "multiple",
+                        "class": "col-xs-6 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    }
+                ]
+            },
+            "checkbox": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "class": "col-xs-12 col-sm-6 col-lg-4",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-6 col-lg-4",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-6 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Default Value",
+                        "name": "defaultValue",
+                        "class": "col-xs-6 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "defaultValue": "12",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "defaultValue": "6",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "defaultValue": "4",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "minLength": 0,
+                        "maxLength": 100
+                    }
+                ]
+            },
+            "select": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-12 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Multiple",
+                        "name": "multiple",
+                        "class": "col-xs-12 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Free Text",
+                        "name": "freeText",
+                        "class": "col-xs-12 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Allow Duplicates",
+                        "name": "allowDuplicates",
+                        "class": "col-xs-12 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Save Label",
+                        "name": "saveLabel",
+                        "class": "col-xs-12 col-sm-6 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-12 col-sm-3 col-lg-3",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-12 col-sm-3 col-lg-3",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-12 col-sm-3 col-lg-3",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-3 col-lg-3",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    },
+                    {
+                        "label": "Item Value Property",
+                        "type": "text",
+                        "name": "itemValueProperty",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
+                        "minLength": 0,
+                        "maxLength": 100,
+                    },
+                    {
+                        "label": "Item Label Property",
+                        "type": "text",
+                        "name": "itemLabelProperty",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
+                        "minLength": 0,
+                        "maxLength": 100,
+                    },
+                    {
+                        "label": "Options",
+                        "type": "select",
+                        "name": "options",
+                        "dbType": "string",
+                        "multiple": true,
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "freeText": true,
+                        "options": [],
+                        "col-xs": "12",
+                        "col-sm": "12",
+                        "col-lg": "12",
+                        "itemValueProperty": "",
+                        "itemLabelProperty": ""
+                    }
+                ]
+            },
+            "address": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-3 col-sm-3 col-lg-3",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-3 col-sm-3 col-lg-3",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-2 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Type",
+                        "name": "type",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "defaultValue": "text",
+                        "required": true,
+                        "options": ["text", "number", "tel", "email", "password", "hidden"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    }
+                ]
+            },
+            "textarea": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-3 col-sm-3 col-lg-3",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-3 col-sm-3 col-lg-3",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-2 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Type",
+                        "name": "type",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "defaultValue": "text",
+                        "required": true,
+                        "options": ["text", "number", "tel", "email", "password", "hidden"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    }
+                ]
+            },
+            "paragraph": {
+                "elements": [
+                    {
+                        "label": "Text",
+                        "type": "textarea",
+                        "name": "text",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 1000000,
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    }
+                ]
+            },
+            "text": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-4 col-lg-4",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-4 col-lg-4",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Type",
+                        "name": "type",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                        "defaultValue": "text",
+                        "required": true,
+                        "options": ["text", "number", "tel", "email", "password", "hidden"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    }
+                ]
+            },
         };
     }
     static get styles(){
@@ -35,7 +753,7 @@ class FormEditor extends LitElement {
                 display: none;
             }
 
-            .pointerNone {
+            .container.pointerNone .box{
                 pointer-events: none;
             }
 
@@ -146,11 +864,11 @@ class FormEditor extends LitElement {
             }
 
             .newItems {
-                width: 100px;
+                min-width: 100px;
                 text-align: center;
                 background-color: #d7cbff;
                 border-radius: 10px;
-                margin: 5px;
+                margin: 10px;
                 padding: 5px 20px 5px 20px;
                 box-sizing: border-box;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -162,11 +880,17 @@ class FormEditor extends LitElement {
         `
     }
 
-    get json() {
+    get value() {
         return this._json;
     }
 
-    set json(val) {
+    set value(val) {
+        if (typeof val === "string") {
+            val = JSON.parse(val);
+        }
+        if (val.elements === undefined) {
+            val = {elements: []};
+        }
         val.elements.forEach((model) => this._cleanModel(model));
         this._json = val;
     }
@@ -176,7 +900,7 @@ class FormEditor extends LitElement {
                 <div id="modelName" slot="header"></div>
                 <iron-form noSubmitButton slot="body"></iron-form> 
             </paper-dialog>
-            <div class="container">
+            <div id="newItemsContainer" class="container">
                 <div class="newItems" type="text" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">Input</div>
                 <div class="newItems" type="select" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">Select</div>
                 <div class="newItems" type="address" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">Address</div>
@@ -184,8 +908,10 @@ class FormEditor extends LitElement {
                 <div class="newItems" type="time" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">Time</div>
                 <div class="newItems" type="checkbox" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">Checkbox</div>
                 <div class="newItems" type="file" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">File</div>
+                <div style="flex:1;"></div>
+                <paper-button icon="check-circle" style="background: var(--app-secondary-color, green);" @click="${this._submit}">Submit</paper-button>
             </div>
-            <div class="container">
+            <div id="existingItemsContainer" class="container">
                 ${repeat(this._json.elements,(el)=>el.name,(el)=>html`
                     <div class="elemBox ${el.class}">
                         <div class="elem ">
@@ -215,7 +941,9 @@ class FormEditor extends LitElement {
             </div>
         `;
     }
-
+    _submit(){
+        CBNUtils.fireEvent(this,"submit");
+    }
     _edit(idx) {
         this._idx = idx;
         this.shadowRoot.querySelector("paper-dialog").opened = true;
@@ -230,7 +958,6 @@ class FormEditor extends LitElement {
         this.shadowRoot.querySelector("iron-form").model = model;
         this.shadowRoot.querySelector("#modelName").innerText = model.label;
     }
-
     _editEvent(e) {
         this._edit(this._getIdx(e));
     }
@@ -333,14 +1060,18 @@ class FormEditor extends LitElement {
         let idx = this._getIdx(e);
         e.dataTransfer.setData("text", idx);
         setTimeout(() => {
-            currentTarget.closest(".elemBox").classList.add("hidden");
-            this.shadowRoot.querySelectorAll(".box").forEach(value => value.classList.add("pointerNone"));
+            if (currentTarget.closest(".elemBox") !== null) {
+                currentTarget.closest(".elemBox").classList.add("hidden");
+            }
+            this.shadowRoot.querySelector("#existingItemsContainer").classList.add("pointerNone");
         }, 0)
     }
 
     _dragend(e) {
-        e.currentTarget.closest(".elemBox").classList.remove("hidden");
-        this.shadowRoot.querySelectorAll(".box").forEach(value => value.classList.remove("pointerNone"));
+        if (e.currentTarget.closest(".elemBox") !== null) {
+            e.currentTarget.closest(".elemBox").classList.remove("hidden");
+        }
+        this.shadowRoot.querySelector("#existingItemsContainer").classList.remove("pointerNone");
     }
 
     _dragover(e) {

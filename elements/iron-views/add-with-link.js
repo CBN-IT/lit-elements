@@ -10,7 +10,7 @@ export class AddWithLink extends LitElement {
 
     static get properties() {
         return {
-            currentPages: {type: String},
+            currentPages: {type: Array},
             name: {type: String},
             config: {type: Object},
             model: {type: Object},
@@ -51,6 +51,7 @@ export class AddWithLink extends LitElement {
         super();
         this.config = {elements: []};
         this.model = this.defaultModel;
+        this._currentPages=[];
     }
 
     firstUpdated(_changedProperties){

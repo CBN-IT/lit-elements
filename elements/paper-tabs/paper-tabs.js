@@ -63,8 +63,9 @@ class PaperTabs extends LitElement {
 
     _onPageSelect(event){
         if(this.selectedTab !== event.detail.selected){
+            let old = this.selectedTab;
             this.selectedTab = event.detail.selected;
-            CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab});
+            CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab, oldTab:old});
         }
     }
 

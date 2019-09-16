@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base href="/" >
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <style>
         :root{
@@ -28,8 +29,27 @@
             height: 100%;
         }
     </style>
-    <script type="module" src="index.js"></script>
+    <script type="module" src="/demo/form-editor/index.js"></script>
     <script src="/elements/cbn-utils/CbnUtils.js"></script>
+    <script>
+        data = {
+            _configs: {
+                form: {
+                    "elements": [{
+                        "label": "Collection",
+                        "type": "select",
+                        "name": "collection",
+                        "options": ["document", "report", "form"],
+                        "required": true,
+                        "multiple": false,
+                        "freeText": true,
+                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "dbType": "string"
+                    }]
+                }
+            }
+        }
+    </script>
 </head>
 <body>
 <form-editor-demo></form-editor-demo>
