@@ -148,6 +148,8 @@ export class IronApp extends LitElement {
 
             .menu-buttons-container {
                 min-width: 200px;
+                overflow-y: auto;
+                overflow-x: hidden;
             }
 
             .overlay {
