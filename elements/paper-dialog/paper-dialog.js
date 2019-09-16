@@ -92,13 +92,17 @@ class PaperDialog extends LitElement {
     }
 
     _onCancelClick(){
-        this.opened = false;
-        CBNUtils.fireEvent(this, 'cancel-click');
+        let e = CBNUtils.fireEvent(this, 'cancel-click');
+        if(!e.defaultPrevented){
+            this.opened = false;
+        }
     }
 
     _onSaveClick(){
-        this.opened = false;
-        CBNUtils.fireEvent(this, 'save-click');
+        let e = CBNUtils.fireEvent(this, 'save-click');
+        if(!e.defaultPrevented){
+            this.opened = false;
+        }
     }
 
     _updateStyle(){
