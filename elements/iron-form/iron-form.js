@@ -212,7 +212,7 @@ class IronForm extends LitElement {
     }
 
     async _submitForm() {
-        if (this._validate()) {
+        if (this.validate()) {
             if (this.preventSubmit) {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});
                 return;
@@ -229,7 +229,7 @@ class IronForm extends LitElement {
         }
     }
 
-    _validate() {
+    validate() {
         let formElements = this.shadowRoot.querySelectorAll('.form-element');
         return !Array.from(formElements).some(formElement => !formElement['isValid']);
     }
