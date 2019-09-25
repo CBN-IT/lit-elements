@@ -369,8 +369,8 @@ export class IronApp extends LitElement {
     }
 
     _onCompanySelection(event){
-        window.open(`/?companyId=${event.detail.value._id}`);
-    }
+    window.open(this.base ? `/${this.base}?_companyId=${event.detail.value._id}` : `?_companyId=${event.detail.value._id}`);
+  } //layout functions
 
     //layout functions
     _toggle(){

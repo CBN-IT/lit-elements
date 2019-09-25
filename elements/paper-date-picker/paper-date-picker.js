@@ -131,12 +131,16 @@ export class PaperDatePicker extends PaperInputContainer {
     _selectedDate(dp){
         if(CBNUtils.isNoE(dp.state.selectedDate) && !CBNUtils.isNoE(this._value)){
             this._value = '';
+            this.validate(this._value, true);
         } else if(!CBNUtils.isNoE(dp.state.selectedDate) && CBNUtils.isNoE(this._value)){
             this._value = dp.state.selectedDate;
+            this.validate(this._value, true);
         } else if(!CBNUtils.isNoE(this._value) && !CBNUtils.isNoE(dp.state.selectedDate) && this._value.getTime() !== dp.state.selectedDate.getTime()){
             this._value = dp.state.selectedDate;
+            this.validate(this._value, true);
         }
-        this.validate(this._value, true);
+
+
         this.blur();
 
 
