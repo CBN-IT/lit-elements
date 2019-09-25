@@ -664,7 +664,7 @@ class FormEditor extends LitElement {
                         "type": "text",
                         "name": "label",
                         "defaultValue": "",
-                        "class": "col-xs-12 col-sm-4 col-lg-4",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
                         "required": true,
                         "minLength": 1,
                         "maxLength": 250,
@@ -674,15 +674,34 @@ class FormEditor extends LitElement {
                         "type": "text",
                         "name": "name",
                         "dbType": "string",
-                        "class": "col-xs-12 col-sm-4 col-lg-4",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
                         "required": true,
                         "minLength": 1,
                         "maxLength": 30,
                     },
                     {
+                        "label": "Default Value",
+                        "type": "text",
+                        "name": "defaultValue",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-4 col-lg-4"
+                    },
+                    {
                         "type": "checkbox",
                         "label": "Required",
                         "name": "required",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Is CNP",
+                        "name": "isCNP",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Is CIF",
+                        "name": "isCIF",
                         "class": "col-xs-6 col-sm-2 col-lg-2",
                     },
                     {
@@ -701,7 +720,7 @@ class FormEditor extends LitElement {
                         "multiple": false,
                         "defaultValue": "12",
                         "info": "",
-                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
                         "required": true,
                         "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
                     },
@@ -712,7 +731,7 @@ class FormEditor extends LitElement {
                         "multiple": false,
                         "defaultValue": "6",
                         "info": "",
-                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
                         "required": true,
                         "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
                     },
@@ -723,7 +742,7 @@ class FormEditor extends LitElement {
                         "multiple": false,
                         "defaultValue": "4",
                         "info": "",
-                        "class": "col-xs-4 col-sm-4 col-lg-4",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
                         "required": true,
                         "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
                     },
@@ -732,7 +751,108 @@ class FormEditor extends LitElement {
                         "type": "text",
                         "name": "class",
                         "defaultValue": "",
-                        "class": "col-xs-12 col-sm-12 col-lg-12",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
+                        "required": false,
+                        "minLength": 0,
+                        "maxLength": 100,
+                    }
+                ]
+            },
+            "number": {
+                "elements": [
+                    {
+                        "label": "Label",
+                        "type": "text",
+                        "name": "label",
+                        "defaultValue": "",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 250,
+                    },
+                    {
+                        "label": "Name",
+                        "type": "text",
+                        "name": "name",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-6 col-lg-6",
+                        "required": true,
+                        "minLength": 1,
+                        "maxLength": 30,
+                    },
+                    {
+                        "label": "Default Value",
+                        "type": "text",
+                        "name": "defaultValue",
+                        "dbType": "string",
+                        "class": "col-xs-12 col-sm-4 col-lg-4"
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Required",
+                        "name": "required",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Is CNP",
+                        "name": "isCNP",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "checkbox",
+                        "label": "Is CIF",
+                        "name": "isCIF",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                    },
+                    {
+                        "type": "select",
+                        "label": "Type",
+                        "name": "type",
+                        "class": "col-xs-6 col-sm-2 col-lg-2",
+                        "defaultValue": "text",
+                        "required": true,
+                        "options": ["text", "number", "tel", "email", "password", "hidden"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-xs",
+                        "name": "col-xs",
+                        "multiple": false,
+                        "defaultValue": "12",
+                        "info": "",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-sm",
+                        "name": "col-sm",
+                        "multiple": false,
+                        "defaultValue": "6",
+                        "info": "",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "type": "select",
+                        "label": "Col-lg",
+                        "name": "col-lg",
+                        "multiple": false,
+                        "defaultValue": "4",
+                        "info": "",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
+                        "required": true,
+                        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+                        "label": "Extra Classes",
+                        "type": "text",
+                        "name": "class",
+                        "defaultValue": "",
+                        "class": "col-xs-6 col-sm-3 col-lg-3",
                         "required": false,
                         "minLength": 0,
                         "maxLength": 100,
@@ -765,12 +885,8 @@ class FormEditor extends LitElement {
                 position: relative;
             }
 
-            .new-items-container{
+            #newItemsContainer{
                 background-color: #818181;
-            }
-            
-            .existing-items-container{
-                /*background-color: #d8d8d8;*/
             }
 
             .elemBox {

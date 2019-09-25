@@ -88,7 +88,7 @@ class AddForm extends AddWithLink{
             } catch (ignored) {
             }
         }
-        if(e.detail.oldTab===0){
+        if(e.detail.oldTab===1){
             try {
                 let val = this.shadowRoot.querySelector("form-editor").value;
                 this.model.code = JSON.stringify(val,null,4);

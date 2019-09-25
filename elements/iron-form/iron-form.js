@@ -154,7 +154,7 @@ class IronForm extends LitElement {
                 return html`<p class="${elementConfig.class}">${elementConfig.text}</p>`
             }
             default: {
-                return html`<paper-input class="form-element ${elementConfig.class}" @value-changed="${this._onValueChanged}" .type="${elementConfig.type}" .name="${elementConfig.name}" .label="${elementConfig.label}" .required="${elementConfig.required}" .disabled="${elementConfig.disabled}" .minLength="${elementConfig.minLength}" .maxLength="${elementConfig.maxLength}" .min="${elementConfig.min}" .max="${elementConfig.max}" .defaultValue="${elementConfig.defaultValue}" .value="${forceWrite(this._model[elementConfig.name])}"></paper-input>`
+                return html`<paper-input class="form-element ${elementConfig.class}" @value-changed="${this._onValueChanged}" .type="${elementConfig.type}" .name="${elementConfig.name}" .label="${elementConfig.label}" .required="${elementConfig.required}" .disabled="${elementConfig.disabled}" .minLength="${elementConfig.minLength}" .maxLength="${elementConfig.maxLength}" .min="${elementConfig.min}" .max="${elementConfig.max}" .isCNP="${elementConfig.isCNP}" .isCIF="${elementConfig.isCIF}" .defaultValue="${elementConfig.defaultValue}" .value="${forceWrite(this._model[elementConfig.name])}"></paper-input>`
             }
         }
     }
