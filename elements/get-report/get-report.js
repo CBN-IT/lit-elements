@@ -88,7 +88,7 @@ class GetReport extends LitElement {
 
         let html = "<!DOCTYPE html><html><head><title></title></head><body><form id='formRaport' action='" + url + "' target=\"_blank\" method='GET'>";
 
-        html += "<input type='hidden' name='namespace' value='" + window.data._selectedCompany + "'/>";
+        html += "<input type='hidden' name='_companyId' value='" + window.data._selectedCompany + "'/>";
         html += "<input type='hidden' name='hashReport' value='" + hashReport + "'/>";
         html += "<input type='hidden' name='download' value='inline'/>";
 
