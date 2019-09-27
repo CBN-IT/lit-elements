@@ -88,6 +88,14 @@ class PaperButton extends LitElement {
                 margin: 0;
             }
 
+            :hoste([margin-left-right]){
+                margin: 0 10px;
+            }
+            
+            :host([smallest][margin-left-right]) {
+                margin: 0 5px;
+            }
+
             :host([no-background]) {
                 background: none;
             }
