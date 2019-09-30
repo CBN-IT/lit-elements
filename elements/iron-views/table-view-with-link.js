@@ -18,7 +18,8 @@ export class TableViewWithLink extends LitElement {
             columns: {type: Array},
             items: {type: Array},
             reports: {type: Array},
-            addView: {type: String}
+            addView: {type: String},
+            deleteUrl: {type: String},
         };
     }
 
@@ -58,6 +59,7 @@ export class TableViewWithLink extends LitElement {
         this.items = [];
         this.getUrl = '/GetDocuments';
         this.addView = 'add-with-link';
+        this.deleteUrl = "/DeleteItem";
     }
 
     set collection(value){
@@ -89,8 +91,8 @@ export class TableViewWithLink extends LitElement {
     render() {
         return html`           
             <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
-            
-            <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}"></paper-table>
+            <iron-ajax id="deleteItem" .url="${this.deleteUrl}" .params="${{'collection': this.collection}}"></iron-ajax>
+            <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
             <paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>
             <paper-fab icon="add" @click="${this._addDocument}"></paper-fab>
             
@@ -121,6 +123,13 @@ export class TableViewWithLink extends LitElement {
             CBNUtils.startLoading();
             this.request.generateRequest();
         }
+    }
+
+    async _deleteItem(event) {
+        let ironAjax = this.shadowRoot.querySelector('#deleteItem');
+        ironAjax.params = event.detail;
+        let response = await ironAjax.generateRequest();
+        this.refreshPage();
     }
 
 }
