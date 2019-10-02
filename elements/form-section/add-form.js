@@ -76,7 +76,7 @@ class AddForm extends AddWithLink{
         try{
             return JSON.parse(val)
         }catch (e) {
-            return this.defaultModel["code"];
+            return JSON.parse(this.defaultModel["code"]);
         }
     }
     _changedTab(e){
@@ -131,6 +131,11 @@ class AddForm extends AddWithLink{
         }else{
             window.removeEventListener("keydown",this._bindedSaveFormFromKeyDown);
         }
+    }
+
+    _onIronResponse(event) {
+        this.model = {...event.detail.response, code: JSON.stringify(JSON.parse(event.detail.response.code), null,  "\t")};
+        CBNUtils.stopLoading();
     }
 
 }
