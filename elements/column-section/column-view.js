@@ -10,7 +10,7 @@ class ColumnView extends TableViewWithLink{
     constructor(){
         super();
         this.collection = 'column';
-        this.addView = 'add-colomn';
+    this.addView = 'add-column';
         this.getUrl = '/GetColumns';
         this.columns = [
             {
