@@ -32,7 +32,8 @@ class IronIcon extends LitElement {
             <style>
                 :host{
                     display: inline-block;     
-                    flex-shrink: 0;           
+                    flex-shrink: 0;
+                    vertical-align: middle;
                 }
                 svg{
                     fill: var(--iron-icon-color, currentColor);
