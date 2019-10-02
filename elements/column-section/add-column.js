@@ -7,6 +7,7 @@ import './../iron-form/iron-form.js';
 import './../ace-editor/ace-editor.js';
 import './../form-editor/form-editor.js';
 import {css} from "/node_modules/lit-element/lit-element.js";
+import {_stringify} from "/node_modules/node-js-server/utils/Utils.js";
 
 class AddColumn extends AddWithLink{
 
