@@ -75,7 +75,7 @@ class AddColumn extends AddWithLink{
         try{
             return JSON.parse(val)
         }catch (e) {
-            return this.defaultModel["code"];
+            return JSON.parse(this.defaultModel["code"]);
         }
     }
     _changedTab(e){
