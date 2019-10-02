@@ -250,7 +250,7 @@ class PaperTable extends LitElement {
     set columns(config) {
     if(config){
         let columns = config.columns ? config.columns : config;
-        this._rowStyle = config.style;
+      this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
         this._columns = columns.map(column => {
             return {...column, icon: 'unfold-more', sortType: 0}
         });
