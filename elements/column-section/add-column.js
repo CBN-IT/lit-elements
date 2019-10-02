@@ -2,6 +2,7 @@
 import {AddWithLink} from "./../iron-views/add-with-link.js";
 import {html} from '/node_modules/lit-element/lit-element.js';
 import './../paper-tabs/paper-tabs.js';
+import './../paper-table/paper-table.js';
 import './../iron-form/iron-form.js';
 import './../ace-editor/ace-editor.js';
 import './../form-editor/form-editor.js';
@@ -63,7 +64,7 @@ class AddColumn extends AddWithLink{
             <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <paper-tabs .pages="${this.pages}" class="flex" @tab-select="${this._changedTab}">
                 <iron-form class="flex" name="form" .config="${this.config}" .model="${this.model}" url="/SaveColumn" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
-                <div-form class="flex" name="demo" .config="${this._safeParseJson(this.model.code)}" .model="${{}}" noSubmitButton></div-form>
+                <paper-table class="flex paper-material" name="demo" .columns="${this._safeParseJson(this.model.code)}" .items="${[]}"></paper-table>              
                 <ace-editor class="flex" name="code" .value="${this.model.code}" mode="ace/mode/json" theme="ace/theme/dracula" fontSize="14"></ace-editor>
             </paper-tabs>
         `;
