@@ -54,5 +54,24 @@ window.CBNUtils = {
         properties.forEach(key => {
             to[key] = from[key];
         });
+    },
+    updateInArray(array, itemToUpdate, propertiesToKeep, atTheBeginning) {
+        let index = array.findIndex(item => item._id === itemToUpdate._id);
+        if (index === -1) {
+            if (atTheBeginning) {
+                array.unshift(itemToUpdate);
+            } else {
+                array.push(itemToUpdate);
+            }
+        } else {
+            if (propertiesToKeep) {
+                propertiesToKeep.forEach(property => {
+                    if (itemToUpdate[property]) {
+                        itemToUpdate[property] = array[index][property]
+                    }
+                })
+            }
+            array.splice(index, 1, itemToUpdate);
+        }
     }
 };
