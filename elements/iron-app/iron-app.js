@@ -353,13 +353,12 @@ export class IronApp extends LitElement {
     }
 
     _pushState(pathname){
-        window.history.pushState({}, '', pathname);
+    window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
     }
 
     _setPages(pathname){
-        pathname = (this.base && pathname.replace('/', '') !== this.base)
-        || (!this.base && pathname.replace('/', '').length > 0)
-            ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
+    pathname = this.base && pathname.replace('/', '') !== this.base || !this.base && pathname.replace('/', '').length > 0 ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
+
         if(this.pathname !== pathname){
             this._pushState(pathname);
         }
