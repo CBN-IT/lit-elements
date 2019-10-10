@@ -18,6 +18,7 @@ export class TableView extends LitElement {
             columns: {type: Array},
             items: {type: Array},
             reports: {type: Array},
+            formTitle: {type: String},
             saveUrl: {type: String},
             getUrl: {type: String},
             deleteUrl: {type: String},
@@ -107,7 +108,7 @@ export class TableView extends LitElement {
             <iron-ajax class="request" .url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
             <iron-ajax id="deleteItem" .url="${this.deleteUrl}" .params="${{'collection': this.collection}}"></iron-ajax>
             <paper-dialog class="dialog" .noActions="${true}"> 
-                <div slot="header" class="header">Detalii ${this.collection}</div>                  
+                <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>                  
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
             </paper-dialog>    
             
