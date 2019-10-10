@@ -113,6 +113,10 @@ export class IronApp extends LitElement {
                 right: 0;
                 background: rgb(216, 216, 216);
             }
+            
+            .right-side-bottom{
+                overflow: auto;
+            }
 
             .collapsed-icon {
                 transform: rotateZ(+90deg);
@@ -289,7 +293,7 @@ export class IronApp extends LitElement {
                         <div class="header toolbar horizontal layout center" style="display:none">
                             <slot name="toolbar"></slot>
                         </div>
-                        <div class="flex vertical layout">
+                        <div class="flex vertical layout right-side-bottom">
                             <iron-selector class="flex vertical layout" attrForSelected="name" .selected="${this.page}" slot="pages" isPages>
                                 ${this.views}
                             </iron-selector>
