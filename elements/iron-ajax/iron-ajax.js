@@ -49,7 +49,7 @@ class IronAjax extends LitElement {
                             response: this.xhr.response
                         });
                     } else if (this.xhr.status === 401) {
-                        window.location = "/login";
+                        window.location = "/logout/unauthorized";
                     } else {
                         reject(this.xhr.response);
                         CBNUtils.displayMessage('Invalid request', 'error');
