@@ -15,7 +15,7 @@ export class AddNoLink extends LitElement {
             config: {type: Object},
             model: {type: Object},
             collection: {type: String},
-            _collection: {type: String}
+            formTitle: {type: String}
         };
     }
 
@@ -95,7 +95,7 @@ export class AddNoLink extends LitElement {
                 }                            
             </style>  
             <div class="paper-material vertical layout">
-                <h3>Detalii ${this._collection}</h3>                 
+                <h3>${this.formTitle ? this.formTitle : this.collection}</h3>                 
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.url}" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
             </div>
             

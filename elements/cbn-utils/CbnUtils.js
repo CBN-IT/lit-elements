@@ -18,7 +18,7 @@ window.CBNUtils = {
         setTimeout(() => {callback();}, ms || 1);
     },
     wait(ms) {
-        new Promise((resolve)=>{
+        return new Promise((resolve)=>{
             setTimeout(() => {resolve();}, ms||1);
         });
     },
@@ -54,5 +54,46 @@ window.CBNUtils = {
         properties.forEach(key => {
             to[key] = from[key];
         });
+    },
+    updateInArray(array, itemToUpdate, propertiesToKeep, atTheBeginning) {
+        let index = array.findIndex(item => item._id === itemToUpdate._id);
+        if (index === -1) {
+            if (atTheBeginning) {
+                array.unshift(itemToUpdate);
+            } else {
+                array.push(itemToUpdate);
+            }
+        } else {
+            if (propertiesToKeep) {
+                propertiesToKeep.forEach(property => {
+                    if (itemToUpdate[property]) {
+                        itemToUpdate[property] = array[index][property]
+                    }
+                })
+            }
+            array.splice(index, 1, itemToUpdate);
+        }
+        return array;
+    },
+
+    updateOptionsInConfig(config, inputName, items) {
+        config.elements.forEach(item => {
+            if (item.name === inputName) {
+                item.options = items;
     }
+        });
+    },
+
+    updateOptions(config, inputName, items, newItem){
+        let newItems = this.updateInArray(items, newItem);
+        this.updateOptionsInConfig(config, inputName, newItems)
+    },
+
+    deleteFromArray(array, itemToDelete) {
+        let index = array.findIndex(item => item._id === itemToDelete._id);
+        array.splice(index, 1);
+        return [...array];
+    }
+
+
 };

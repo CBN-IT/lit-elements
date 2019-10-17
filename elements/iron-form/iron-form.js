@@ -112,7 +112,7 @@ class IronForm extends LitElement {
         return html`
             <iron-ajax id="request" .url="${this.url}" method="POST"></iron-ajax>
             <div class="form" id="form">
-                ${this.config.elements.map(item => this.getElement(item))}
+                ${this.config ? this.config.elements.map(item => this.getElement(item)) : ''}
             </div>    
             ${!this.noSubmitButton ? html`
                 <div class="actions">
