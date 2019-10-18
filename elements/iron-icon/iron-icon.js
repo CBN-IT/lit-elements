@@ -1,6 +1,5 @@
 "use strict";
-import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
-import {unsafeHTML} from '/node_modules/lit-html/directives/unsafe-html.js';
+import {LitElement,css} from '/node_modules/lit-element/lit-element.js';
 
 class IronIcon extends LitElement {
 
@@ -22,25 +21,30 @@ class IronIcon extends LitElement {
         super();
         this.size = 24;
     }
+    static get styles() {
+        return [this.styleElement]
+    }
+
+    static get styleElement() {
+        // language=CSS
+        return css`
+            :host{
+                display: inline-block;
+                flex-shrink: 0;
+                vertical-align: middle;
+            }
+            svg{
+                fill: var(--iron-icon-color, currentColor);
+            }
+        `
+    }
 
     get svgIcon(){
         return window.icons[this.icon] || "";
     }
 
     render() {
-        return html`  
-            <style>
-                :host{
-                    display: inline-block;     
-                    flex-shrink: 0;
-                    vertical-align: middle;
-                }
-                svg{
-                    fill: var(--iron-icon-color, currentColor);
-                }
-            </style>         
-            ${unsafeHTML(this.svgIcon)}
-        `;
+        return this.svgIcon;
     }
 
     updated(changedProperties){
