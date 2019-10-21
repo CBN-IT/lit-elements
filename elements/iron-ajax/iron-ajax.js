@@ -52,6 +52,10 @@ class IronAjax extends LitElement {
                         window.location = "/logout/unauthorized";
                     } else {
                         reject(this.xhr.response);
+                        CBNUtils.stopLoading();
+                        CBNUtils.fireEvent(this, 'iron-error', {
+                            error: this.xhr.response
+                        });
                         CBNUtils.displayMessage('Invalid request', 'error');
                     }
                 }
