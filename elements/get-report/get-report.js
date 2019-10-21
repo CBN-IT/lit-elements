@@ -85,8 +85,7 @@ class GetReport extends LitElement {
         let iframe = document.createElement("iframe");
         iframe.style.display = "none";
         document.body.appendChild(iframe);
-        let url = report.generator === "nodejs" ? "https://raport-test.cbn-it.ro/" : "/do/Raport";
-
+    let url = "https://raport-test.cbn-it.ro/";
         let html = "<!DOCTYPE html><html><head><title></title></head><body><form id='formRaport' action='" + url + "' target=\"_blank\" method='GET'>";
 
         html += "<input type='hidden' name='_companyId' value='" + window.data._selectedCompany + "'/>";
