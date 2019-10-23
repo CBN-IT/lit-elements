@@ -51,7 +51,7 @@ class ConfirmDelete extends LitElement{
 
     render(){
         return html`
-            <iron-ajax .url="${this.url}" .body="${this.body}" @iron-response="${this.callback}"></iron-ajax>
+            <iron-ajax .url="${this.url}" .body="${this.body}" @iron-response="${this._onIronResponse}"></iron-ajax>
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">Confirm</div>                  
                 <div slot="body">${this.message}</div>
@@ -80,6 +80,10 @@ class ConfirmDelete extends LitElement{
     confirmDelete(){
         CBNUtils.startLoading();
         this.shadowRoot.querySelector('iron-ajax').generateRequest();
+    }
+    _onIronResponse(){
+        this._closeDialog();
+        this.callback();
     }
 
 }
