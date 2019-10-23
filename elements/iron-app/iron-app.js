@@ -13,7 +13,7 @@ import './../paper-button/paper-button.js';
 import './../iron-icons/iron-icons.js';
 import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
-
+import "../confirm-delete/confirm-delete.js";
 export class IronApp extends LitElement {
 
     static get properties() {
@@ -288,6 +288,7 @@ export class IronApp extends LitElement {
         // language=HTML
 
         return html`
+                <confirm-delete></confirm-delete>
                 <paper-help></paper-help>
                 <paper-toast></paper-toast>
                 <get-report></get-report>

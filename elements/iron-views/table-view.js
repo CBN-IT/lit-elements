@@ -106,7 +106,6 @@ export class TableView extends LitElement {
     render() {
         return html`            
             <iron-ajax class="request" .url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
-            <iron-ajax id="deleteItem" .url="${this.deleteUrl}" .params="${{'collection': this.collection}}"></iron-ajax>
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>                  
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
@@ -158,9 +157,18 @@ export class TableView extends LitElement {
     }
 
     async _deleteItem(event) {
-      let ironAjax = this.shadowRoot.querySelector('#deleteItem');
-      ironAjax.params._id = event.detail._id;
-      let response = await ironAjax.generateRequest();
+    CBNUtils.fireEvent(this, 'confirm-delete', {
+      message: 'Esti sigur ca doresti sa stergi aceasta inregistrare?',
+      url: this.deleteUrl,
+      body: {
+        _id: event.detail._id,
+        collection: this.collection
+      },
+      callback: this._deletedItem.bind(this)
+    });
+  }
+
+  _deletedItem(){
       this.refreshPage();
     }
 
