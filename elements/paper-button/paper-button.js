@@ -21,8 +21,6 @@ class PaperButton extends LitElement {
         // language=CSS
         return css`
             :host {
-                /*display: inline-block;*/
-                /*display: block;*/
                 display: inline-flex;
                 position: relative;
                 overflow: hidden;
@@ -32,8 +30,6 @@ class PaperButton extends LitElement {
                 font-size: inherit;
                 padding: 2px 5px;
                 color: white;
-                /*outline: 0;*/
-                /*border: 0;*/
                 border-radius: 3px;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -88,7 +84,7 @@ class PaperButton extends LitElement {
                 margin: 0;
             }
 
-            :hoste([margin-left-right]){
+            :host([margin-left-right]){
                 margin: auto 10px;
             }
             

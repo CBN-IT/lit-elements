@@ -86,7 +86,11 @@ class PaperDialog extends LitElement {
                         <paper-button icon="close" style="background: var(--grey-color)" @click="${this._onCancelClick}">Cancel</paper-button>
                         <paper-button icon="check" style="background: var(--green-color)" @click="${this._onSaveClick}">Save</paper-button>
                     </div>
-                ` : ``}
+                ` : html`
+                    <div class="buttons horizontal layout justified">
+                        <slot name="button"></slot>
+                    </div>
+                `}
                 
             </div>      
                                  
