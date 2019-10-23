@@ -2,7 +2,7 @@
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 
-class EmptyView extends LitElement {
+export class EmptyView extends LitElement {
 
     static get properties() {
         return {
@@ -45,9 +45,6 @@ class EmptyView extends LitElement {
     }
 
     refreshPage(){
-        if(this.request !== undefined && this.name === this.currentPage){
-            this.request.generateRequest();
-        }
     }
 
 }
