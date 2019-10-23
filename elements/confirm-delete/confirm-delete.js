@@ -81,9 +81,9 @@ class ConfirmDelete extends LitElement{
         CBNUtils.startLoading();
         this.shadowRoot.querySelector('iron-ajax').generateRequest();
     }
-    _onIronResponse(){
+    _onIronResponse(event){
         this._closeDialog();
-        this.callback();
+        this.callback(event);
     }
 
 }
