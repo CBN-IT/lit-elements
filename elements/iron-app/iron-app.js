@@ -261,6 +261,10 @@ export class IronApp extends LitElement {
         return (/[mM]obi/i.test(ua) || /[tT]ablet/i.test(ua) || /[aA]ndroid/i.test(ua));
     }
 
+  get importDependencies(){
+    return {}
+  }
+
     get menuSections(){
         return [];
     }
@@ -347,7 +351,23 @@ export class IronApp extends LitElement {
         this.onPageSelection();
     }
 
-    onPageSelection(){}
+  async onPageSelection(){
+    let dependencies = this.importDependencies[this.page];
+    if(dependencies){
+      for(let dependency of dependencies){
+        let webComponentName = IronApp.getWebComponentName(dependency);
+        if(!window.customElements.get(webComponentName)){
+          CBNUtils.startLoading();
+          await import(dependency);
+        }
+      }
+    }
+  }
+
+  static getWebComponentName(path){
+    let splits = path.split('.js')[0].split('/');
+    return splits[splits.length - 1];
+  }
 
     _onPageSelect(event) {
         if(this.page !== event.detail.selected){
