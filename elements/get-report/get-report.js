@@ -62,7 +62,7 @@ class GetReport extends LitElement {
     }
 
     _getReport(event) {
-    this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => report._id === event.detail.report);
+    this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => report._path === event.detail.report);
     this.keys = event.detail.keys.map(item => typeof item === 'object' ? item._id : item);
 
         if (this.report.params) {
@@ -81,7 +81,7 @@ class GetReport extends LitElement {
     }
 
     _generateReport(report, keys, params) {
-        let hashReport = `${window.data._appId}/${report.path}/${report._id}`;
+    let hashReport = report._path;
         let iframe = document.createElement("iframe");
         iframe.style.display = "none";
         document.body.appendChild(iframe);
