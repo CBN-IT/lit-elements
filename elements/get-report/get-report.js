@@ -63,7 +63,7 @@ class GetReport extends LitElement {
 
     _getReport(event) {
     this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => report._path === event.detail.report);
-    this.keys = event.detail.keys.map(item => typeof item === 'object' ? item._id : item);
+    this.keys = event.detail.keys.map(item => typeof item === 'object' ? item._path : item);
 
         if (this.report.params) {
             this.config = JSON.parse(this.report.params);
