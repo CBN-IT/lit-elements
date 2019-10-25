@@ -355,13 +355,14 @@ export class IronApp extends LitElement {
   async onPageSelection(){
     let dependencies = this.importDependencies[this.page];
     if(dependencies){
-      for(let dependency of dependencies){
+      dependencies();
+      /*for (let dependency of dependencies) {
         let webComponentName = IronApp.getWebComponentName(dependency);
         if(!window.customElements.get(webComponentName)){
           CBNUtils.startLoading();
           await import(dependency);
         }
-      }
+      }*/
     }
   }
 
