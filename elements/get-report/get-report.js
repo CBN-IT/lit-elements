@@ -81,7 +81,7 @@ class GetReport extends LitElement {
     }
 
     _generateReport(report, keys, params) {
-    let hashReport = report._path;
+    let hashReport = `${window.data._appId}/${report._path}`;
         let iframe = document.createElement("iframe");
         iframe.style.display = "none";
         document.body.appendChild(iframe);
