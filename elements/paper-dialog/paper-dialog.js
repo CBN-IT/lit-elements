@@ -8,7 +8,8 @@ class PaperDialog extends LitElement {
     static get properties() {
         return {
             opened: {type: Boolean},
-            noActions: {type: Boolean}
+            noActions: {type: Boolean},
+            preventClosing: {type:Boolean}
         };
     }
 
@@ -111,7 +112,7 @@ class PaperDialog extends LitElement {
 
     _onSaveClick(){
         let e = CBNUtils.fireEvent(this, 'save-click');
-        if(!e.defaultPrevented){
+        if(!e.defaultPrevented && !this.preventClosing){
             this.opened = false;
         }
     }
