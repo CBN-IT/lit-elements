@@ -30,7 +30,10 @@ export class IronApp extends LitElement {
 
             collapsed: {type: Boolean},
             temporaryCollapsed: {type: Boolean},
-            isMobile: {type: Boolean}
+            isMobile: {type: Boolean},
+            hideMenu: {type: Boolean},
+            noHelp: {type: Boolean}
+
         };
     }
 
@@ -278,7 +281,7 @@ export class IronApp extends LitElement {
         window.addEventListener('show-page', this._showPage.bind(this));
 
         //for layout
-        this.isMobile = IronApp._isMobile();
+        this.isMobile = this.constructor._isMobile();
         this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
         this.temporaryCollapsed = this.collapsed;
         window.addEventListener('click', this._onClick.bind(this));
@@ -289,7 +292,7 @@ export class IronApp extends LitElement {
 
         return html`
                 <confirm-delete></confirm-delete>
-                <paper-help></paper-help>
+                ${!this.noHelp ? html`<paper-help></paper-help>` : ''}
                 <paper-toast></paper-toast>
                 <get-report></get-report>
                 <paper-loading></paper-loading>
@@ -304,7 +307,7 @@ export class IronApp extends LitElement {
                             </iron-selector>
                         </div>    
                         
-                        <paper-fab icon="menu" style="display:${this.isMobile ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
+                        <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                             
                     </div>  
                     <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
