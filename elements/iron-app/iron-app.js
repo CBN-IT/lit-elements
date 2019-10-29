@@ -32,7 +32,8 @@ export class IronApp extends LitElement {
             temporaryCollapsed: {type: Boolean},
             isMobile: {type: Boolean},
             hideMenu: {type: Boolean},
-            noHelp: {type: Boolean}
+            noHelp: {type: Boolean},
+            siteUrl: { type: String}
 
         };
     }
@@ -231,6 +232,9 @@ export class IronApp extends LitElement {
                     width: 100%;
                     user-select: none;
                 }
+                .small-logo:hover{
+                    cursor: pointer;
+                }
                 .company-dropdown{
                     --input-container-padding: 1px;               
                     --input-container-border: 0px;
@@ -313,7 +317,7 @@ export class IronApp extends LitElement {
                     <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
                     <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ?  'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
                         <div class="header logo">                                                        
-                            <img src="/web/images/logo_square.svg" class="small-logo" slot="small-logo" alt="logo">                                            
+                            <img src="/web/images/logo_square.svg" class="small-logo" slot="small-logo" alt="logo" @click="${this._openSite}">                                            
                         </div>
                         <div slot="company-dropdown" class="horizontal layout">
                             <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
@@ -428,6 +432,12 @@ export class IronApp extends LitElement {
     _showMenu(event){
         event.stopPropagation();
         this.collapsed = false;
+    }
+
+    _openSite(){
+        if(this.siteUrl){
+            window.open(this.siteUrl);
+        }
     }
 
 }
