@@ -15,7 +15,7 @@ export class CompanyView extends TableView {
                 {
                     "label": "Blocare access",
                     "type": "checkbox",
-                    "name": "blockedAccess",
+                    "name": "blockedAccessCompany",
                     "dbType": "boolean",
                     "class": "col-xs-12 col-sm-4 col-lg-4",
                     "required": false
