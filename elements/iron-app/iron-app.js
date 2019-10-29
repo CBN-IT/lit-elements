@@ -177,11 +177,11 @@ export class IronApp extends LitElement {
                 z-index: 40;
             }
             
-            .menu-button:hover,.menu-button.iron-selected {
-                    color: white;
-                    background-color: rgba(255,255,255,0.30);
-                    border-left: 3px solid white;
-                    cursor: pointer;
+                .menu-button:hover,.menu-button.iron-selected {
+                    color: var(--selected-menu-color, white);
+                    background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
+                    border-left: 3px solid var(--selected-menu-color, white);
+                    cursor: pointer; 
                                        
                 }
                 .menu-button:hover{
@@ -200,11 +200,13 @@ export class IronApp extends LitElement {
                     border-top-right-radius: 25px;
                     border-bottom-right-radius: 25px;
                     box-sizing: border-box;
+                    color: var(--menu-color, white)!important;
                 }
                 
                 .menu-button>iron-icon{
                     margin-right: 12px;
-                    color: white;
+                    color: var(--menu-color, white);
+
                 }
                 
              
@@ -214,7 +216,7 @@ export class IronApp extends LitElement {
                 }
                 
                 .menu-button:hover>iron-icon,.menu-button.iron-selected>iron-icon{
-                    color: white;
+                    color: var(--menu-color, white);
                 }
                 
               
@@ -253,12 +255,13 @@ export class IronApp extends LitElement {
                     min-width:100%;
                 }
                 .group-section-title{
-                    color: white;
-                    text-align: center;
+                    color: var(--group-section-color, white);
+                    /*text-align: center;*/
                     font-weight: bold;
                     background: rgba(255,255,255,0.2);
-                    border-bottom: 2px solid white;
-                    margin-bottom: 5px;
+                    border-top: 2px solid var(--menu-color, white);
+                    padding-top: 5px;
+                    padding-left: 15px;
                 }
         `;
     }
