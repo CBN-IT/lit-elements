@@ -53,7 +53,7 @@ export class IronApp extends LitElement {
                     font-size: 16px;
                     --app-primary-color: #431a82;
                     --app-secondary-color: var(--teal-color);
-    
+                    ----selected-menu-border-color: white;
                     --selected-menu-color: #1ac6b4;
                     --border-menu-color: #cecece;
                     --background-menu-color: #f0f0f0;
@@ -180,7 +180,7 @@ export class IronApp extends LitElement {
                 .menu-button:hover,.menu-button.iron-selected {
                     color: var(--selected-menu-color, white);
                     background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
-                    border-left: 3px solid var(--selected-menu-color, white);
+                    border-left: 3px solid var(--selected-menu-border-color, white);
                     cursor: pointer; 
                                        
                 }
@@ -260,8 +260,7 @@ export class IronApp extends LitElement {
                     font-weight: bold;
                     background: rgba(255,255,255,0.2);
                     border-top: 2px solid var(--menu-color, white);
-                    padding-top: 5px;
-                    padding-left: 15px;
+                    padding: 5px 0 5px 15px;
                 }
         `;
     }
