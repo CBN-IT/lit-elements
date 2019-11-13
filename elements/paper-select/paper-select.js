@@ -394,7 +394,7 @@ class PaperSelect extends PaperInputContainer {
             _filteredOptions = [...this._options];
         } else {
             _filteredOptions = this._options.filter((item) => {
-                return item.__label.includes(value.toLowerCase())
+                return item.__label.toLowerCase().includes(value.toLowerCase())
             });
         }
         if(!this.allowDuplicates && this._value && value){
@@ -405,7 +405,7 @@ class PaperSelect extends PaperInputContainer {
             })
         }
         this._filteredOptions = _filteredOptions;
-        this._selectedOption = 0;
+        this._selectedOption = undefined;
     }
 
     validate(value, fromUser){
