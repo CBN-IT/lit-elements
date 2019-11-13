@@ -39,8 +39,12 @@ class IronSelector extends LitElement {
 
     set selected(value){
         this._selected = value;
+    if(value === undefined || value === ''){
+      this.deselect();
+    } else {
         this._select(value);
     }
+  }
 
     get selected(){
         return this._selected;
@@ -81,10 +85,12 @@ class IronSelector extends LitElement {
     }
 
     deselect(){
+    if(this.items){
         this.items.forEach((item, index) => {
             item.classList.remove('iron-selected');
         });
     }
+  }
 
     _select(selected, preventEvent){
         if(selected === undefined || !this.items || this.items.length === 0){

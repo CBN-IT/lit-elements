@@ -296,6 +296,7 @@ class PaperSelect extends PaperInputContainer {
         }
         this.validate(this._value, true);
         this.requestUpdate();
+    CBNUtils.async(() => this.floated = true, 1);
     }
 
     _selectOption(event, item, index){
@@ -341,7 +342,7 @@ class PaperSelect extends PaperInputContainer {
 
     _onBlur(event){
         super._onBlur(event);
-        this.clearInput();
+        this._selectFreeTextValue();
     }
 
     _onInput(event){
@@ -352,24 +353,19 @@ class PaperSelect extends PaperInputContainer {
         let key = event.which || event.keyCode;
         switch (key){
             case 40 : {
-                this._selectedOption = this._filteredOptions.length > this._selectedOption + 1 ? this._selectedOption + 1 : 0;
+          this._selectedOption = this._selectedOption === undefined || this._selectedOption + 1 >= this._filteredOptions.length ? 0 : this._selectedOption + 1;
                 break;
             }
             case 38 : {
-                this._selectedOption = this._selectedOption > 0 ? this._selectedOption - 1 : this._filteredOptions.length -1;
+          this._selectedOption = this._selectedOption === undefined || this._selectedOption - 1 < 0 ? this._filteredOptions.length - 1 : this._selectedOption - 1;
                 break;
             }
             case 13 : {
                 if(this._filteredOptions.length > this._selectedOption){
                     this._selectOptionByIndex(this._selectedOption);
-                } else if(this.freeText && !CBNUtils.isNoE(this.input.value)){
-                    this._selectedOptionByValue(
-                        {
-                            __label: this.input.value,
-                            __value: this.input.value
-                        }
-                    );
-                }
+                } else {
+                    this._selectFreeTextValue();
+                    }
                 break;
             }
             case 8 : {
@@ -380,6 +376,17 @@ class PaperSelect extends PaperInputContainer {
             }
         }
     }
+
+  _selectFreeTextValue(){
+    if (this.freeText && !CBNUtils.isNoE(this.input.value)) {
+      this._selectedOptionByValue({
+        __label: this.input.value,
+        __value: this.input.value
+      });
+    } else {
+      this.clearInput();
+    }
+  }
 
     _filterOptions(value){
         let _filteredOptions = [];
