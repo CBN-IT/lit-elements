@@ -160,7 +160,7 @@ class PaperSelect extends PaperInputContainer {
                         <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" />
                     </div>
                     
-                    ${this.isDropdownMenu ? html`<iron-icon icon="arrow-drop-down"></iron-icon>` : ''}
+                   <iron-icon icon="arrow-drop-down"></iron-icon>
                     
                     ${this.isNative ? html`
                         <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}">
