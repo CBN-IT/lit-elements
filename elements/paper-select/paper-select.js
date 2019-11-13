@@ -135,9 +135,6 @@ class PaperSelect extends PaperInputContainer {
                     border:none;
                     font-size: 16px;
                 }
-                iron-icon{
-                    color: white; 
-                }
         `
     }
 
@@ -341,8 +338,8 @@ class PaperSelect extends PaperInputContainer {
     }
 
     _onBlur(event){
-        super._onBlur(event);
         this._selectFreeTextValue();
+        super._onBlur(event);
     }
 
     _onInput(event){
