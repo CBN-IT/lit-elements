@@ -22,7 +22,8 @@ export class TableView extends LitElement {
             saveUrl: {type: String},
             getUrl: {type: String},
             deleteUrl: {type: String},
-            getItemsOnFirstRender: {type: Boolean}
+            getItemsOnFirstRender: {type: Boolean},
+            disabledRequest: {type: Boolean}
         };
     }
 
@@ -139,11 +140,12 @@ export class TableView extends LitElement {
     }
 
     async _getItems() {
-        if (this.request) {
+    if (this.request && !this.disabledRequest) {
+      CBNUtils.startLoading();
             await this.request.generateRequest();
+    }
             CBNUtils.stopLoading();
         }
-    }
 
     onValueChanged(){
 
@@ -151,7 +153,6 @@ export class TableView extends LitElement {
 
     refreshPage(){
         if(this.name === this.currentPage){
-            CBNUtils.startLoading();
             this._getItems();
         }
     }
