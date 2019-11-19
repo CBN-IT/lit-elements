@@ -28,6 +28,14 @@ class PaperReportsDropdown extends PaperIconDropdown {
         });
     }
 
+  _openDropdown() {
+    if(!this.options || this.options.length === 0){
+      CBNUtils.displayMessage('Nu exista rapoarte pentru aceasta sectiune', 'warning');
+      return;
+    }
+    this.ironOverlay.openOverlay();
+  }
+
 }
 
 customElements.define('paper-reports-dropdown', PaperReportsDropdown);
