@@ -19,57 +19,49 @@ export class AddNoLink extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses]
     }
 
-    set collection(value){
+    set collection(value) {
         this._collection = value;
         this.config = window.data._configs[this._collection];
     }
 
-    get collection(){
+    get collection() {
         return this._collection;
     }
 
-    get url(){
+    get url() {
         return '/SaveDocument';
     }
 
-    get defaultModel(){
+    get defaultModel() {
         return {};
     }
 
-    get listView(){
+    get listView() {
         return 'table-view-no-link';
     }
 
     constructor() {
         super();
         this.model = this.defaultModel;
-        window.addEventListener(this.name, this._showPage.bind(this));
     }
 
-    firstUpdated(_changedProperties){
+    firstUpdated(_changedProperties) {
         this.form = this.shadowRoot.querySelector('iron-form');
-    }
-
-    _showPage(event){
-        this._currentPage = this.name;
-        if(event.detail){
-            this.model = event.detail.item;
-        } else {
-            this.model = this.defaultModel;
+        if (this.currentPage.page === this.name) {
+            CBNUtils.async(() => this.newOrEditDocument(this.currentPage));
         }
-        CBNUtils.fireEvent(this, 'show-page', {name: this.name});
     }
 
-    set currentPage(page){
-        this.refreshPage(this._currentPage, page);
+    set currentPage(page) {
+        this.refreshPage(page, this._currentPage);
         this._currentPage = page;
     }
 
-    get currentPage(){
+    get currentPage() {
         return this._currentPage;
     }
 
@@ -102,17 +94,22 @@ export class AddNoLink extends LitElement {
         `;
     }
 
-    async _onSavedForm(){
+    async _onSavedForm() {
         CBNUtils.fireEvent(this, 'show-page', {name: this.listView});
     }
 
-    refreshPage(oldValue, newValue){
-        if(oldValue !== newValue){
-            this.model = this.defaultModel;
+    refreshPage(newPage, oldPage) {
+        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
+            this.newOrEditDocument(newPage);
         }
     }
 
+    newOrEditDocument(newPage) {
+        this.model = newPage.model ? newPage.model : this.defaultModel;
+    }
+
 }
+
 customElements.define("add-no-link", AddNoLink);
 
 

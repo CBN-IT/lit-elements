@@ -85,8 +85,8 @@ export class TableView extends LitElement {
     }
 
     set currentPage(page){
+        this.refreshPage(page, this._currentPage);
         this._currentPage = page;
-        this.refreshPage();
     }
 
     get currentPage(){
@@ -98,8 +98,7 @@ export class TableView extends LitElement {
         this.dialog = this.shadowRoot.querySelector('.dialog');
         this.form = this.shadowRoot.querySelector('iron-form');
         this.request = this.shadowRoot.querySelector('.request');
-        this.refreshPage();
-        if(this.getItemsOnFirstRender){
+        if (this.getItemsOnFirstRender || this._currentPage.page === this.name) {
             this._getItems();
         }
     }
@@ -131,7 +130,7 @@ export class TableView extends LitElement {
 
     async _onSavedForm(){
         this.dialog.close();
-        this.refreshPage();
+        this._getItems();
     }
 
     _onIronResponse(event){
@@ -147,12 +146,10 @@ export class TableView extends LitElement {
             CBNUtils.stopLoading();
         }
 
-    onValueChanged(){
+  onValueChanged() {}
 
-    }
-
-    refreshPage(){
-        if(this.name === this.currentPage){
+  refreshPage(newPage, oldPage) {
+    if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
             this._getItems();
         }
     }
@@ -170,7 +167,7 @@ export class TableView extends LitElement {
   }
 
   _deletedItem(){
-      this.refreshPage();
+    this._getItems();
     }
 
 }

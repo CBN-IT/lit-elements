@@ -10,7 +10,7 @@ export class AddWithLink extends LitElement {
 
     static get properties() {
         return {
-            currentPages: {type: Array},
+            currentPage: {type: Array},
             name: {type: String},
             config: {type: Object},
             model: {type: Object},
@@ -47,20 +47,19 @@ export class AddWithLink extends LitElement {
         return '/SaveDocument';
     }
 
-    set currentPages(pages) {
-        this.refreshPage(this._currentPages, pages);
-        this._currentPages = pages;
+  set currentPage(page) {
+    this.refreshPage(page, this._currentPage);
+    this._currentPage = page;
     }
 
-    get currentPages() {
-        return this._currentPages;
+  get currentPage() {
+    return this._currentPage;
     }
 
     constructor() {
         super();
         this.config = {elements: []};
         this.model = this.defaultModel;
-        this._currentPages = [];
     }
 
     requestUpdate() {
@@ -68,10 +67,9 @@ export class AddWithLink extends LitElement {
     }
 
     firstUpdated(_changedProperties) {
-        window.addEventListener(this.name, this._showPage.bind(this));
         this.request = this.shadowRoot.querySelector('.request');
-        if (this.currentPages[1] !== undefined) {
-            this._getDocument(this.currentPages[1])
+        if(this.currentPage.page === this.name){
+            CBNUtils.async(() => this.newOrEditDocument(this.currentPage));
         }
     }
 
@@ -103,37 +101,25 @@ export class AddWithLink extends LitElement {
         `;
     }
 
-    _showPage(event) {
-        CBNUtils.startLoading();
-        if (event.detail) {
-            if (event.detail._id) {
-                CBNUtils.fireEvent(this, 'show-page', {name: this.name, _id: event.detail._id});
-                return;
-            } else {
-                this._currentPages = [this.name];
-                this.model = event.detail;
-                CBNUtils.stopLoading();
-            }
-        }
-        CBNUtils.fireEvent(this, 'show-page', {name: this.name});
-
-    }
-
     _onSavedForm(event) {
         this.model._id = event.detail.response._id;
         CBNUtils.stopLoading();
         // CBNUtils.fireEvent(this, 'show-page', {name: this.listView});
     }
 
-    refreshPage(oldValue, newValue) {
-        if ((!oldValue || oldValue[0] !== newValue[0]) && newValue[0] === this.name) {
-            if (newValue[1] !== undefined) {
-                this._getDocument(newValue[1])
+  refreshPage(newPage, oldPage) {
+    if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
+      this.newOrEditDocument(newPage);
+    }
+  }
+
+  newOrEditDocument(newPage){
+    if (newPage._id) {
+      this._getDocument(newPage._id);
             } else {
                 this._onNewDocument();
             }
         }
-    }
 
     _onNewDocument() {
         this.model = this.defaultModel;

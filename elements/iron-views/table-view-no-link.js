@@ -75,8 +75,8 @@ class TableViewNoLink extends LitElement {
     }
 
     set currentPage(page){
+        this.refreshPage(page, this.currentPage);
         this._currentPage = page;
-        this.refreshPage();
     }
 
     get currentPage(){
@@ -85,7 +85,9 @@ class TableViewNoLink extends LitElement {
 
     firstUpdated(){
         this.request = this.shadowRoot.querySelector('.request');
-        this.refreshPage();
+        if (this._currentPage.page === this.name) {
+            this._getItems();
+        }
     }
 
     render() {
@@ -99,21 +101,29 @@ class TableViewNoLink extends LitElement {
     }
 
     _addDocument(){
-        CBNUtils.fireEvent(this, 'add-no-link');
+        CBNUtils.fireEvent(this, 'show-page', {page: 'add-no-link'});
     }
 
     _onDblClick(event){
-        CBNUtils.fireEvent(this, 'add-no-link', {item: event.detail.item});
+        CBNUtils.fireEvent(this, 'add-no-link', {page: 'add-no-link', model: event.detail.item});
     }
 
     _onIronResponse(event){
         this.items = event.detail.response;
     }
 
-    refreshPage(){
-        if(this.request !== undefined && this.name === this.currentPage){
-            this.request.generateRequest();
+    refreshPage(newPage, oldPage){
+        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
+            this._getItems();
         }
+    }
+
+    async _getItems() {
+        if (this.request) {
+            CBNUtils.startLoading();
+            this.items = await this.request.generateRequest();
+        }
+        CBNUtils.stopLoading();
     }
 
 }

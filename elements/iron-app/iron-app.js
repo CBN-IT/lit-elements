@@ -22,7 +22,7 @@ export class IronApp extends LitElement {
             home: {type: String},
             mood: {type: String},
             page: {type: String},
-            pages: {type: Array},
+            currentPage: {type: Object},
             menuSections: {type: Array},
             pathname: {type: String},
             _companies: {type: Array},
@@ -280,17 +280,19 @@ export class IronApp extends LitElement {
 
     constructor() {
         super();
+        this._setPages(window.location.pathname);
         this._companies = window.data._companies;
         this._selectedCompany = window.data._selectedCompany;
-        this._setPages(window.location.pathname);
-        window.addEventListener('popstate', this._onPopstate.bind(this));
-        window.addEventListener('show-page', this._showPage.bind(this));
 
-        //for layout
+        window.addEventListener('popstate', this._onPopstate.bind(this));
+        window.addEventListener('show-page', this._showPage.bind(this)); //for layout
+        window.addEventListener('click', this._onClick.bind(this));
+
         this.isMobile = this.constructor._isMobile();
         this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
         this.temporaryCollapsed = this.collapsed;
-        window.addEventListener('click', this._onClick.bind(this));
+
+
     }
 
     render() {
@@ -357,21 +359,14 @@ export class IronApp extends LitElement {
     }
 
     async _selectPage(page) {
+    this.onPageSelection(page);
         this.page = page;
-        this.onPageSelection();
     }
 
-  async onPageSelection(){
-    let dependencies = this.importDependencies[this.page];
+  async onPageSelection(page) {
+    let dependencies = this.importDependencies[page];
     if(dependencies){
-      dependencies();
-      /*for (let dependency of dependencies) {
-        let webComponentName = IronApp.getWebComponentName(dependency);
-        if(!window.customElements.get(webComponentName)){
-          CBNUtils.startLoading();
-          await import(dependency);
-        }
-      }*/
+      await dependencies();
     }
   }
 
@@ -391,7 +386,7 @@ export class IronApp extends LitElement {
     window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
     }
 
-    _setPages(pathname){
+  async _setPages(pathname, model) {
     pathname = this.base && pathname.replace('/', '') !== this.base || !this.base && pathname.replace('/', '').length > 0 ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
 
         if(this.pathname !== pathname){
@@ -399,7 +394,18 @@ export class IronApp extends LitElement {
         }
         this.pathname = pathname;
         this.pages = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
-        this._selectPage(this.pages[0]);
+    let currentPage = this.getCurrentPageFromPath(pathname, model);
+    this._selectPage(currentPage.page);
+    this.currentPage = currentPage;
+  }
+
+  getCurrentPageFromPath(path, model){
+    let splits = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
+    return {
+      page: splits[0],
+      _id: splits[1],
+      model: model
+    };
     }
 
     _onCompanySelection(event){
