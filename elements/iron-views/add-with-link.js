@@ -108,7 +108,7 @@ export class AddWithLink extends LitElement {
     }
 
   refreshPage(newPage, oldPage) {
-    if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
+    if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)) {
       this.newOrEditDocument(newPage);
     }
   }

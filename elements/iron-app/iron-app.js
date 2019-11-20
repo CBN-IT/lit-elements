@@ -363,7 +363,7 @@ export class IronApp extends LitElement {
         this.page = page;
     }
 
-  async onPageSelection(page) {
+  async checkAndImportDependencies(page) {
     let dependencies = this.importDependencies[page];
     if(dependencies){
       await dependencies();
@@ -393,10 +393,11 @@ export class IronApp extends LitElement {
             this._pushState(pathname);
         }
         this.pathname = pathname;
-        this.pages = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
     let currentPage = this.getCurrentPageFromPath(pathname, model);
-    this._selectPage(currentPage.page);
+
+    this.checkAndImportDependencies(currentPage.page);
     this.currentPage = currentPage;
+    this.page = this.currentPage.page;
   }
 
   getCurrentPageFromPath(path, model){
