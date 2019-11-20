@@ -212,7 +212,7 @@ class IronForm extends LitElement {
     }
 
     async _submitForm() {
-        if (this.validate()) {
+    if (this.request && this.validate()) {
             if (this.preventSubmit) {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});
                 return;
