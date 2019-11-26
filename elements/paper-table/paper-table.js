@@ -5,6 +5,7 @@ import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import "./../iron-icon/iron-icon.js";
 import "./../iron-icons/iron-icons.js";
 import "./../paper-checkbox/paper-checkbox.js";
+window.html = html;
 
 class PaperTable extends LitElement {
     static get properties() {

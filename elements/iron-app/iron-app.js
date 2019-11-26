@@ -359,7 +359,7 @@ export class IronApp extends LitElement {
     }
 
     async _selectPage(page) {
-    this.onPageSelection(page);
+        this.onPageSelection(page);
         this.page = page;
     }
 
