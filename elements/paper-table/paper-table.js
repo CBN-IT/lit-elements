@@ -393,6 +393,9 @@ class PaperTable extends LitElement {
 
         let rows = this.rowGroup.querySelectorAll(".row");
         rows = Array.prototype.slice.call(rows, 0);
+        if(rows.length === 0){
+            return;
+        }
         let rowsParams = this._getRowsParams(rows,viewHeight,containerScrollTop);
 
         if (rowsParams.rowsTopNr === this._rowsNr || rowsParams.rowsBottomNr === this._rowsNr) {
