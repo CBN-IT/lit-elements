@@ -14,6 +14,7 @@ import './../iron-icons/iron-icons.js';
 import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
+import logo from '/web/images/logo_square.svg';
 export class IronApp extends LitElement {
 
     static get properties() {
@@ -321,7 +322,7 @@ export class IronApp extends LitElement {
                     <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
                     <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ?  'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
                         <div class="header logo">                                                        
-                            <img src="/web/images/logo_square.svg" class="small-logo" slot="small-logo" alt="logo" @click="${this._openSite}">                                            
+                            <img src="${logo}" class="small-logo" slot="small-logo" alt="logo" @click="${this._openSite}">                                            
                         </div>
                         <div slot="company-dropdown" class="horizontal layout">
                             <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
