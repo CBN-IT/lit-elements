@@ -65,7 +65,7 @@ class AddReport extends AddWithLink{
 
     refreshPage(oldValue, newValue){
         super.refreshPage(oldValue, newValue);
-        if(newValue[0] === this.name){
+        if(newValue && newValue.page === this.name){
             if(this.tabs){
                 this.tabs.refresh();
             }

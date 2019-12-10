@@ -123,7 +123,7 @@ class AddForm extends AddWithLink{
 
     refreshPage(oldValue, newValue){
         super.refreshPage(oldValue, newValue);
-        if(newValue[0] === this.name){
+        if(newValue && newValue.page === this.name){
             window.addEventListener("keydown",this._bindedSaveFormFromKeyDown);
             if(this.tabs){
                 this.tabs.refresh();
