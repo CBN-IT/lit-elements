@@ -19,6 +19,9 @@ class IronAjax extends LitElement {
             },
             body: {
                 type: Object
+            },
+            noAjaxHeader: {
+                type: Boolean
             }
         };
     }
@@ -38,6 +41,9 @@ class IronAjax extends LitElement {
             let params = this._getParams(this.params);
             let body = this._getBody(this.body);
             this.xhr.open(this.method || this.body ? 'POST' : 'GET', this.url + params, true);
+            if(!this.noAjaxHeader){
+            this.xhr.setRequestHeader("X-Requested-With", 'XMLHttpRequest');
+            }
             if (!(body instanceof FormData)) {
                 this.xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
             }
@@ -56,7 +62,7 @@ class IronAjax extends LitElement {
                         CBNUtils.fireEvent(this, 'iron-error', {
                             error: this.xhr.response
                         });
-                        CBNUtils.displayMessage('Invalid request', 'error');
+                        CBNUtils.displayMessage(this.xhr.response.error, 'error');
                     }
                 }
             };

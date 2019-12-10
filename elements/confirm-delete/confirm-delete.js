@@ -53,10 +53,10 @@ class ConfirmDelete extends LitElement{
         return html`
             <iron-ajax .url="${this.url}" .body="${this.body}" @iron-response="${this._onIronResponse}"></iron-ajax>
             <paper-dialog class="dialog" .noActions="${true}"> 
-                <div slot="header" class="header">Confirm</div>                  
+                <div slot="header" class="header">Confirmare actiune</div>                  
                 <div slot="body">${this.message}</div>
-                <paper-button slot="button" icon="close" style="background: var(--grey-color)" @click="${this._closeDialog}">Cancel</paper-button>
-                <paper-button slot="button" icon="delete" style="background: var(--red-color)" @click="${this.confirmDelete}">Delete</paper-button>
+                <paper-button slot="button" icon="close" style="background: var(--grey-color)" @click="${this._closeDialog}">Anulare</paper-button>
+                <paper-button slot="button" icon="delete" style="background: var(--red-color)" @click="${this.confirmDelete}">Stergere</paper-button>
             </paper-dialog>
         `;
     }

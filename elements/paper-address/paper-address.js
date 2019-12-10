@@ -154,7 +154,7 @@ class PaperAddress extends PaperInputContainer {
 
     get inputElement(){
         return html`
-                <iron-ajax id="request" .url="${this.url}"></iron-ajax>
+                <iron-ajax id="request" .url="${this.url}" noAjaxHeader></iron-ajax>
                 <div class="select-container horizontal layout center flex">
                     <div class=" horizontal layout wrap center flex" style="overflow: hidden">
                     ${this._value.map((item, index) => {

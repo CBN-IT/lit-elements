@@ -47,11 +47,11 @@ class PaperToast extends LitElement {
                     position: fixed;
                     z-index:30;
                     bottom: -100px;
-                    left: 60px;
                     background-color: var(--paper-toast-background-color, #323232);
                     color: var(--paper-toast-color, #f1f1f1);
                     min-height: 48px;
                     min-width: 288px;
+                    left: calc(50% - 144px);
                     padding: 16px 24px;
                     box-sizing: border-box;
                     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);

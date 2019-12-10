@@ -14,6 +14,7 @@ import './../iron-icons/iron-icons.js';
 import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
+import logo from '/web/images/logo_square.svg';
 export class IronApp extends LitElement {
 
     static get properties() {
@@ -33,7 +34,8 @@ export class IronApp extends LitElement {
             isMobile: {type: Boolean},
             hideMenu: {type: Boolean},
             noHelp: {type: Boolean},
-            siteUrl: { type: String}
+            siteUrl: { type: String},
+            logoSrc: {type: String}
 
         };
     }
@@ -258,7 +260,7 @@ export class IronApp extends LitElement {
                     color: var(--group-section-color, white);
                     /*text-align: center;*/
                     font-weight: bold;
-                    background: rgba(255,255,255,0.2);
+                    background: var(--group-section-background-color, rgba(255,255,255,0.2)); 
                     border-top: 2px solid var(--menu-color, white);
                     padding: 5px 0 5px 15px;
                 }
@@ -291,7 +293,7 @@ export class IronApp extends LitElement {
         this.isMobile = this.constructor._isMobile();
         this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
         this.temporaryCollapsed = this.collapsed;
-
+        this.logoSrc = logo;
 
     }
 
@@ -321,7 +323,7 @@ export class IronApp extends LitElement {
                     <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
                     <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ?  'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
                         <div class="header logo">                                                        
-                            <img src="/web/images/logo_square.svg" class="small-logo" slot="small-logo" alt="logo" @click="${this._openSite}">                                            
+                            <img src="${this.logoSrc}" class="small-logo" slot="small-logo" alt="logo" @click="${this._openSite}">                                            
                         </div>
                         <div slot="company-dropdown" class="horizontal layout">
                             <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
@@ -359,7 +361,7 @@ export class IronApp extends LitElement {
     }
 
     async _selectPage(page) {
-    this.onPageSelection(page);
+        this.onPageSelection(page);
         this.page = page;
     }
 
