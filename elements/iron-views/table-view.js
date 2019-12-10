@@ -56,7 +56,7 @@ export class TableView extends LitElement {
                 border-radius: 5px;
                 margin: 10px;
             }
-            .bar{
+            .top-bar{
                 margin-bottom: 0px;
             }
         `
@@ -109,17 +109,21 @@ export class TableView extends LitElement {
                 <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>                  
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
             </paper-dialog>    
-            <div class="horizontal layout paper-material bar">
+            <div class="horizontal layout paper-material top-bar">
                 <paper-button icon="add" @click="${this._openDialog}" style="background: var(--green-color)">Adauga</paper-button>
                 ${this._displayReportsDropdown()}
-                <div class="flex">
-                    <slot name="bar"></slot>
+                <div class="flex horizontal layout center">
+                    ${this._getTopBarTemplate()}
                 </div>                
             </div>
             <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
             
             
         `;
+    }
+
+    _getTopBarTemplate(){
+        return '';
     }
 
     _displayReportsDropdown(){
