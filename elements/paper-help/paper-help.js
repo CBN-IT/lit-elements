@@ -24,7 +24,7 @@ class PaperHelp extends LitElement{
                 background: var(--blue-color);
                 z-index: 1;
                 right: 10px;
-                bottom: 70px;
+                top: 3px;
             }
             paper-dialog{
                 --min-dialog-width: 500px; 
