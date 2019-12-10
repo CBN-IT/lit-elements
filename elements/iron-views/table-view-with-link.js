@@ -98,10 +98,14 @@ export class TableViewWithLink extends LitElement {
         return html`           
             <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
-            <paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>
+            ${this._displayReportsDropdown()}         
             <paper-fab icon="add" @click="${this._addDocument}"></paper-fab>
             
         `;
+    }
+
+    _displayReportsDropdown(){
+        return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
     }
 
     async _importElements() {
