@@ -2,7 +2,7 @@
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import './../iron-selector/iron-selector.js';
-import './../paper-fab/paper-fab.js';
+import './../paper-button/paper-button.js';
 import './../iron-icon/iron-icon.js';
 import './../iron-overlay/iron-overlay.js';
 
@@ -79,7 +79,7 @@ export class PaperIconDropdown extends LitElement {
     render(){
         return html`
                 <div class="container vertical layout">
-                    <paper-fab icon="${this.icon}" style="background: var(--red-color)" @click="${this._openDropdown}"></paper-fab>
+                    <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
                     ${this.isNative ? html`
                         <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                             <option disabled selected></option>
