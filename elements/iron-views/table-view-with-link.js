@@ -95,7 +95,7 @@ export class TableViewWithLink extends LitElement {
         return html`           
             <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <div class="horizontal layout paper-material top-bar">
-                <paper-button icon="add" @click="${this._openDialog}" style="background: var(--green-color)">Adauga</paper-button>
+                <paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>
                 ${this._displayReportsDropdown()}
                 <div class="flex horizontal layout center">
                     ${this._getTopBarTemplate()}
