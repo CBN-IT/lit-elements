@@ -37,12 +37,6 @@ export class TableViewWithLink extends LitElement {
                 position: relative;
             }
 
-            paper-reports-dropdown {
-                position: absolute;
-                bottom: 10px;
-                right: 70px;
-            }
-
             paper-fab {
                 bottom: 10px;
                 right: 10px;
