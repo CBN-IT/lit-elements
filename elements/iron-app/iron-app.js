@@ -82,6 +82,9 @@ export class IronApp extends LitElement {
             .header.logo {
                 padding: 2px;
                 box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             .header.logo > div {
@@ -227,8 +230,7 @@ export class IronApp extends LitElement {
                 }
                
                 .big-logo{
-                    height: 43px;
-                    width: 196px;
+                    width: var(--logo-width, 160px);
                     user-select: none;
                 }
                 .small-logo{
@@ -263,6 +265,9 @@ export class IronApp extends LitElement {
                     background: var(--group-section-background-color, rgba(255,255,255,0.2)); 
                     border-top: 2px solid var(--menu-color, white);
                     padding: 5px 0 5px 15px;
+                }
+                .collapse-button{
+                    color: var(--menu-color);
                 }
         `;
     }
@@ -323,7 +328,7 @@ export class IronApp extends LitElement {
                     <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
                     <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ?  'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
                         <div class="header logo">                                                        
-                            <img src="${this.logoSrc}" class="small-logo" slot="small-logo" alt="logo" @click="${this._openSite}">                                            
+                            <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
                         </div>
                         <div slot="company-dropdown" class="horizontal layout">
                             <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
@@ -344,7 +349,7 @@ export class IronApp extends LitElement {
                                 </iron-selector>
                             </div>                                            
                             <div class="horizontal layout start-justified"> 
-                                <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'}" icon="file-upload" small no-margin no-background
+                                <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'} collapse-button" icon="file-upload" small no-margin no-background
                                 style="display:${this.isMobile ? 'none' : 'inline-block'}" @click="${this._toggle}"></paper-button>
                             </div>                       
                         </div>                                       
