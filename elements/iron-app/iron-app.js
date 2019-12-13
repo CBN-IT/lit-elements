@@ -59,7 +59,7 @@ export class IronApp extends LitElement {
                     --selected-menu-color: #1ac6b4;
                     --border-menu-color: #cecece;
                     --background-menu-color: #f0f0f0;
-                    
+                    --menu-color: white;
                     --highlight-color: #1ac6b4;
                     
                     --teal-color: #1ac6b4;
