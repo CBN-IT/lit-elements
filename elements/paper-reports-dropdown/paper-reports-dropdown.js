@@ -15,7 +15,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
 
     constructor(){
         super();
-        this.direction = 'top-left';
+        this.direction = 'bottom-right';
         this.itemLabelProperty = 'reportName';
         this.itemValueProperty = '_id';
         this.icon = 'chart';
