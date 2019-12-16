@@ -267,16 +267,43 @@ const template = {
     "annex": svg`
         <svg xmlns="http://www.w3.org/2000/svg" id="b1a2fe2e-434c-45b2-82c7-dab6167d1f74" data-name="Calque 1" viewBox="0 0 16 16">
           <g>
-            <rect x="7" y="6" width="8" height="9" rx="0.49" style="fill: #fff"/>
+            <rect x="7" y="6" width="8" height="9" rx="0.49"/>
             <path d="M14,7v7H8V7h6m.51-2h-7A1.49,1.49,0,0,0,6,6.49v8A1.49,1.49,0,0,0,7.49,16h7A1.49,1.49,0,0,0,16,14.51v-8A1.49,1.49,0,0,0,14.51,5Z"/>
           </g>
           <path d="M10,2.26A1.25,1.25,0,0,0,8.7,1H1.26A1.25,1.25,0,0,0,0,2.26v8.32A1.43,1.43,0,0,0,1.42,12h3.5s0-3.09,0-5.5A2.55,2.55,0,0,1,7.47,4H10Z"/>
-          <line x1="2" y1="2.5" x2="8" y2="2.5" style="fill: none;stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round;"/>
-          <line x1="9.5" y1="8.5" x2="12.5" y2="8.5" style="fill: none;stroke: var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round;"/>
-          <line x1="9.5" y1="10.5" x2="12.5" y2="10.5" style="fill: none;stroke: var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round;"/>
-          <line x1="9.5" y1="12.5" x2="12.5" y2="12.5" style="fill: none;stroke: var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round;"/>
-          <line x1="3" y1="1" x2="7" y2="1" style="fill: none;stroke: var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round;stroke-width: 2px;"/>
-          <line x1="4" y1="2" x2="6" y2="2" style="fill: none;stroke: white;stroke-linecap: round;stroke-linejoin: round;stroke-width: 2px"/>
+          <line x1="2" y1="2.5" x2="8" y2="2.5" style="stroke:white;stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="9.5" y1="8.5" x2="12.5" y2="8.5" style="stroke: white;stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="9.5" y1="10.5" x2="12.5" y2="10.5" style="stroke: white;stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="9.5" y1="12.5" x2="12.5" y2="12.5" style="stroke: white;stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="3" y1="1" x2="7" y2="1" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round;stroke-width: 2px"/>
+          <line x1="4" y1="2" x2="6" y2="2" style="stroke:white;stroke-linecap: round;stroke-linejoin: round;stroke-width: 2px"/>
+        </svg>
+    `,
+    "lease-report": svg`
+        <svg xmlns="http://www.w3.org/2000/svg" id="e237c3fb-d36d-490e-8a3b-a5181d8d3394" data-name="Calque 1" viewBox="0 0 32 32">
+          <line x1="11.92" y1="6" x2="20.27" y2="6" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="11.92" y1="9" x2="20.27" y2="9" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="11.92" y1="12" x2="20.27" y2="12" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round"/>
+          <g>
+            <path d="M29.48,12h-27A2.52,2.52,0,0,0,0,14.52v10A2.52,2.52,0,0,0,2.52,27H5.83V23H26.17v4h3.31A2.52,2.52,0,0,0,32,24.48v-10A2.52,2.52,0,0,0,29.48,12Z"/>
+            <rect x="7.83" y="25" width="16.35" height="6"/>
+          </g>
+          <circle cx="4.25" cy="20.25" r="1.25" style="fill: #fff"/>
+          <path d="M22.34,16H9.86a8.7,8.7,0,0,1-1.94,0V3.93A1.94,1.94,0,0,1,9.86,2H22.34a1.93,1.93,0,0,1,1.93,1.93V16Z" style="fill: #fff;stroke:var(--iron-icon-color, currentColor);stroke-miterlimit: 10;stroke-width: 2px;"/>
+          <line x1="11.92" y1="6" x2="20.27" y2="6" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="11.92" y1="9" x2="20.27" y2="9" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round"/>
+          <line x1="11.92" y1="12" x2="20.27" y2="12" style="stroke:var(--iron-icon-color, currentColor);stroke-linecap: round;stroke-linejoin: round"/>
+        </svg> 
+    `,
+    "individual": svg`
+        <svg xmlns="http://www.w3.org/2000/svg" id="f7586487-4053-40b0-92cb-c20ca813b3e2" data-name="Calque 1" viewBox="0 0 32 32">
+          <path d="M12.85,15.49h0l4.93,5.34a7.19,7.19,0,0,0,1.07-1.36,3.4,3.4,0,0,0,.49-1.74V15.19C17.59,17,15.24,17.83,12.85,15.49Z"/>
+          <path d="M19.8,6.2a7.22,7.22,0,0,0-2.74-.36h-.51A5.52,5.52,0,0,1,15,5.55l.37.16a5,5,0,0,1-2.1-1.81C12.14,4,9.9,7.4,10,10.17c0,0,0,0,0,0v.05a11.39,11.39,0,0,0,2.49,4.89V17.2a2.89,2.89,0,0,0,.36,1.46c1.05,1.92,2.88,4.16,4.93,2.17l-4.93-5.34h0c2.39,2.34,4.74,1.54,6.48-.3a11.33,11.33,0,0,0,2.45-4.27c0-.13,0-.23,0-.35C22.46,6.23,19.83,6.21,19.8,6.2Z"/>
+          <path d="M10,10.23v0s0,0,0,0C9.9,7.4,12.14,4,13.31,3.9a5,5,0,0,0,2.1,1.81,3.2,3.2,0,0,0,1.14.13h.51a7,7,0,0,1,2.74.36c.66.27,2.21,1.18,2,4.37,0,.12,0,.22,0,.35h0a10.25,10.25,0,0,0,.54-2.71A6.45,6.45,0,0,0,16,1c-1.42,0-1.39.42-2.06.69a2.74,2.74,0,0,1-.77,0C10.72,1.35,9.45,5,9.68,8.28A15,15,0,0,0,10,10.23Z"/>
+          <path d="M19.45,22.06l-.58-.45c-3.23,3.23-6.33-.61-7.58-3.56-2.21.55-7.41,1.38-8.06,4-.54,2.18,2.36,4.8,3.88,5.95a14.55,14.55,0,0,0,8.58,3,16.2,16.2,0,0,0,9.49-3.36c-.8-1.13-1.15-3.08-2.27-4.11s-2.74-.91-3.46-1.47Z"/>
+          <path d="M28.67,21.7c-1-2.12-5.46-3.07-7.59-3.65a11,11,0,0,1-2.21,3.56,28.45,28.45,0,0,1,6.31,6c1.35-1,4.42-3.88,3.49-5.94C28.29,20.86,28.73,21.84,28.67,21.7Z"/>
+          <path d="M11.29,18.05a31.68,31.68,0,0,0,4.8,12,18.81,18.81,0,0,0,5-12s-2,4.49-4.88,4.49S11.29,18.05,11.29,18.05Z"/>
+          <path d="M14.68,21l1.08,1.33a11.37,11.37,0,0,0-.64,3.76,11.45,11.45,0,0,0,1,3.95A12.85,12.85,0,0,0,17,26.17a12,12,0,0,0-.45-3.79l.93-1.28a4.13,4.13,0,0,1-1.39.26A3.7,3.7,0,0,1,14.68,21Z"/>
         </svg>
     `
 };
