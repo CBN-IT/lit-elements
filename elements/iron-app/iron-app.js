@@ -55,7 +55,7 @@ export class IronApp extends LitElement {
                     font-size: 16px;
                     --app-primary-color: #431a82;
                     --app-secondary-color: var(--teal-color);
-                    ----selected-menu-border-color: white;
+                    --selected-menu-border-color: white;
                     --selected-menu-color: #1ac6b4;
                     --border-menu-color: #cecece;
                     --background-menu-color: #f0f0f0;
@@ -246,7 +246,7 @@ export class IronApp extends LitElement {
                     --input-container-border: 0px;
                     --input-container-min-height: 30px;
                     --input-padding: 0 10px 5px 10px;
-                    color: white;
+                    color: var(--menu-color);
                     width: 300px;
                 }
                 .big{
