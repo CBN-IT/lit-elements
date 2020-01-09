@@ -22,5 +22,9 @@ class FormsView extends TableViewWithLink{
         ];
     }
 }
+try {
+    customElements.define('forms-view', FormsView);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('forms-view', FormsView);

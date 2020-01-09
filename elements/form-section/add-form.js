@@ -139,5 +139,9 @@ class AddForm extends AddWithLink{
     }
 
 }
+try {
+    customElements.define("add-form", AddForm);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("add-form", AddForm);

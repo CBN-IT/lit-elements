@@ -103,7 +103,11 @@ class GetReport extends LitElement {
     }
 
 }
+try {
+    customElements.define("get-report", GetReport);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("get-report", GetReport);
 
 

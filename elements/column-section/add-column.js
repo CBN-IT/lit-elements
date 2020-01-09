@@ -125,4 +125,10 @@ class AddColumn extends AddWithLink{
 
 }
 
-customElements.define("add-column", AddColumn);
+try {
+    customElements.define("add-column", AddColumn);
+} catch (e) {
+    console.error(e);
+}
+
+

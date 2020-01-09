@@ -69,7 +69,11 @@ class PaperTextarea extends PaperInputContainer {
     }
 
 }
+try {
+    customElements.define('paper-textarea', PaperTextarea);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-textarea', PaperTextarea);
 
 

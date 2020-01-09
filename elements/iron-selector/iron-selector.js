@@ -117,7 +117,11 @@ class IronSelector extends LitElement {
     }
 
 }
+try {
+    customElements.define("iron-selector", IronSelector);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("iron-selector", IronSelector);
 
 

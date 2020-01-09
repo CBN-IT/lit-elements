@@ -156,7 +156,11 @@ class IronAjax extends LitElement {
     }
 
 }
+try {
+    customElements.define("iron-ajax", IronAjax);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("iron-ajax", IronAjax);
 
 

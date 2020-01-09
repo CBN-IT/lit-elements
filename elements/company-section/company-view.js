@@ -34,5 +34,9 @@ export class CompanyView extends TableView {
         window.open(this.base ? `/${this.base}?_companyId=${event.detail._id}` : `?_companyId=${event.detail._id}`);
     }
 }
+try {
+    customElements.define("company-view", CompanyView);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("company-view", CompanyView);

@@ -37,7 +37,11 @@ class PaperReportsDropdown extends PaperIconDropdown {
   }
 
 }
+try {
+    customElements.define('paper-reports-dropdown', PaperReportsDropdown);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-reports-dropdown', PaperReportsDropdown);
 
 

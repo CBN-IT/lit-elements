@@ -174,6 +174,11 @@ class AceEditor extends LitElement {
 
 }
 
-customElements.define("ace-editor", AceEditor);
+try {
+    customElements.define("ace-editor", AceEditor);
+} catch (e) {
+    console.error(e);
+}
+
 
 

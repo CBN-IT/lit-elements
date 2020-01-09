@@ -78,8 +78,12 @@ class TableDemo extends LitElement {
             <confirm-delete></confirm-delete>
         `;
     }
-
 }
-customElements.define("table-demo", TableDemo);
+try {
+    customElements.define("table-demo", TableDemo);
+} catch (e) {
+    console.error(e);
+}
+
 
 

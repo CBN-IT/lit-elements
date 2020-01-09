@@ -130,6 +130,11 @@ class PaperDialog extends LitElement {
     }
 
 }
-customElements.define('paper-dialog', PaperDialog);
+try {
+    customElements.define('paper-dialog', PaperDialog);
+} catch (e) {
+    console.error(e);
+}
+
 
 

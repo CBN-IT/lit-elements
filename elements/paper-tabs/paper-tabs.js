@@ -77,7 +77,11 @@ class PaperTabs extends LitElement {
 
 
 }
+try {
+    customElements.define("paper-tabs", PaperTabs);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("paper-tabs", PaperTabs);
 
 

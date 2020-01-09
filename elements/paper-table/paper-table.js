@@ -732,7 +732,11 @@ class PaperTable extends LitElement {
     }
 
 }
+try {
+    customElements.define('paper-table', PaperTable);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-table', PaperTable);
 
 

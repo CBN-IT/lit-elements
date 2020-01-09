@@ -150,7 +150,8 @@ class IronOverlay extends LitElement {
 
 
 }
-
-customElements.define("iron-overlay", IronOverlay);
-
-
+try {
+    customElements.define("iron-overlay", IronOverlay);
+} catch (e) {
+    console.error(e);
+}

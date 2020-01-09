@@ -175,6 +175,12 @@ export class TableView extends LitElement {
     }
 
 }
-customElements.define("table-view", TableView);
+
+try {
+    customElements.define("table-view", TableView);
+} catch (e) {
+    console.error(e);
+}
+
 
 

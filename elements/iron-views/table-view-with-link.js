@@ -151,6 +151,10 @@ export class TableViewWithLink extends LitElement {
     }
 
 }
+try {
+    customElements.define("table-view-with-link", TableViewWithLink);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("table-view-with-link", TableViewWithLink);
 

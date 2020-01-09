@@ -3,6 +3,7 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import './../paper-dialog/paper-dialog.js';
 import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
+import {CompanyView} from "../company-section/company-view";
 
 class ConfirmDelete extends LitElement{
 
@@ -87,5 +88,9 @@ class ConfirmDelete extends LitElement{
     }
 
 }
+try {
+    customElements.define("confirm-delete", ConfirmDelete);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("confirm-delete", ConfirmDelete);

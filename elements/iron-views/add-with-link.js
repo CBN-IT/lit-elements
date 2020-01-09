@@ -139,7 +139,11 @@ export class AddWithLink extends LitElement {
     }
 
 }
+try {
+    customElements.define("add-with-link", AddWithLink);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("add-with-link", AddWithLink);
 
 

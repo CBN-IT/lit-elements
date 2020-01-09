@@ -75,7 +75,11 @@ class PaperLoading extends LitElement {
     }
 
 }
+try {
+    customElements.define('paper-loading', PaperLoading);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-loading', PaperLoading);
 
 

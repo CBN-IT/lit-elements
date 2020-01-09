@@ -127,6 +127,11 @@ class TableViewNoLink extends LitElement {
     }
 
 }
-customElements.define("table-view-no-link", TableViewNoLink);
+try {
+    customElements.define("table-view-no-link", TableViewNoLink);
+} catch (e) {
+    console.error(e);
+}
+
 
 

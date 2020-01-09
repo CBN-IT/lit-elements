@@ -171,6 +171,11 @@ class DemoApp extends LitElement {
     }
 
 }
-customElements.define("demo-app", DemoApp);
+try {
+    customElements.define("demo-app", DemoApp);
+} catch (e) {
+    console.error(e);
+}
+
 
 

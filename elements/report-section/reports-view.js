@@ -28,5 +28,9 @@ class ReportsView extends TableViewWithLink{
     }
 
 }
+try {
+    customElements.define('reports-view', ReportsView);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('reports-view', ReportsView);

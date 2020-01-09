@@ -59,7 +59,10 @@ class IronIcon extends LitElement {
     }
 
 }
-
-customElements.define("iron-icon", IronIcon);
+try {
+    customElements.define("iron-icon", IronIcon);
+} catch (e) {
+    console.error(e);
+}
 
 

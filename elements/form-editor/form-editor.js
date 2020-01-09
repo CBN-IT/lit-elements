@@ -1246,5 +1246,8 @@ class FormEditor extends LitElement {
         }
     }
 }
-
-customElements.define("form-editor", FormEditor);
+try {
+    customElements.define("form-editor", FormEditor);
+} catch (e) {
+    console.error(e);
+}

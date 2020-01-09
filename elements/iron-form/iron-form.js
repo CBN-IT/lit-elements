@@ -14,6 +14,7 @@ import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
 
 import {gridClasses} from "./../grid-layout/grid-classes.js";
+import {IronApp} from "../iron-app/iron-app";
 
 
 //https://github.com/Polymer/lit-html/issues/877
@@ -235,7 +236,11 @@ class IronForm extends LitElement {
     }
 
 }
+try {
+    customElements.define('iron-form', IronForm);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('iron-form', IronForm);
 
 

@@ -422,7 +422,11 @@ class PaperSelect extends PaperInputContainer {
     }
 
 }
+try {
+    customElements.define('paper-select', PaperSelect);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-select', PaperSelect);
 
 

@@ -123,7 +123,11 @@ class PaperCheckbox extends PaperInputContainer {
     }
 
 }
+try {
+    customElements.define('paper-checkbox', PaperCheckbox);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-checkbox', PaperCheckbox);
 
 

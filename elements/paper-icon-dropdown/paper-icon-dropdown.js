@@ -155,7 +155,11 @@ export class PaperIconDropdown extends LitElement {
     }
 
 }
+try {
+    customElements.define('paper-icon-dropdown', PaperIconDropdown);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define('paper-icon-dropdown', PaperIconDropdown);
 
 

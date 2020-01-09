@@ -452,7 +452,11 @@ export class IronApp extends LitElement {
     }
 
 }
+try {
+    customElements.define("iron-app", IronApp);
+} catch (e) {
+    console.error(e);
+}
 
-customElements.define("iron-app", IronApp);
 
 
