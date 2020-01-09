@@ -62,12 +62,11 @@ class PaperSelect extends PaperInputContainer {
         return css`
                 
                 :host([isDropdownMenu]) .select-container{
-                    border-bottom: 2px solid var(--paper-select-color, white);
+                    border-bottom: 2px solid currentColor;
                 }
                 .select-container{
                     padding: 5px 0;
                     width: 100%;
-                    color: var(--paper-select-color, white);
                 }
                
                 .selected-option{

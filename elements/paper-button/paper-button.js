@@ -24,6 +24,7 @@ class PaperButton extends LitElement {
                 display: inline-flex;
                 position: relative;
                 overflow: hidden;
+                height: 24px;
                 margin: 10px;
                 user-select: none;
                 font-family: inherit;

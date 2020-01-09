@@ -124,6 +124,8 @@ class PaperFile extends PaperInputContainer {
             this._value = value.map(item => {
                 return typeof item === 'string' ? JSON.parse(item) : item
             });
+        } else {
+            this._value = [value];
         }
     }
 

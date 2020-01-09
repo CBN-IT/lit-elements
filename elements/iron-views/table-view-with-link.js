@@ -37,12 +37,6 @@ export class TableViewWithLink extends LitElement {
                 position: relative;
             }
 
-            paper-reports-dropdown {
-                position: absolute;
-                bottom: 10px;
-                right: 70px;
-            }
-
             paper-fab {
                 bottom: 10px;
                 right: 10px;
@@ -54,6 +48,9 @@ export class TableViewWithLink extends LitElement {
                 background: white;
                 border-radius: 5px;
                 margin: 10px;
+            }
+            .top-bar{
+                margin-bottom: 0px;
             }
         `
     }
@@ -97,11 +94,21 @@ export class TableViewWithLink extends LitElement {
     render() {
         return html`           
             <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
+            <div class="horizontal layout paper-material top-bar">
+                <paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>
+                ${this._displayReportsDropdown()}
+                <div class="flex horizontal layout center">
+                    ${this._getTopBarTemplate()}
+                </div>                
+            </div>
             <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
-            ${this._displayReportsDropdown()}         
-            <paper-fab icon="add" @click="${this._addDocument}"></paper-fab>
+            
             
         `;
+    }
+
+    _getTopBarTemplate(){
+        return '';
     }
 
     _displayReportsDropdown(){

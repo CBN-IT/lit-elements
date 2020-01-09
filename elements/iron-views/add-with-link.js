@@ -68,7 +68,7 @@ export class AddWithLink extends LitElement {
 
     firstUpdated(_changedProperties) {
         this.request = this.shadowRoot.querySelector('.request');
-        if(this.currentPage.page === this.name){
+        if(this.currentPage && this.currentPage.page === this.name){
             CBNUtils.async(() => this.newOrEditDocument(this.currentPage));
         }
     }
