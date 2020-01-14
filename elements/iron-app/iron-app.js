@@ -15,6 +15,7 @@ import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
 import logo from '/web/images/logo_square.svg';
+
 export class IronApp extends LitElement {
 
     static get properties() {
@@ -34,45 +35,45 @@ export class IronApp extends LitElement {
             isMobile: {type: Boolean},
             hideMenu: {type: Boolean},
             noHelp: {type: Boolean},
-            siteUrl: { type: String},
+            siteUrl: {type: String},
             logoSrc: {type: String}
 
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [this.hostStyles, flexLayoutClasses, this.layoutStyles];
     }
 
-    static get hostStyles(){
+    static get hostStyles() {
         // language=CSS
         return css`
-            :host{
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    font-family: Roboto, sans-serif;
-                    font-size: 16px;
-                    --app-primary-color: #431a82;
-                    --app-secondary-color: var(--teal-color);
-                    --selected-menu-border-color: white;
-                    --selected-menu-color: #1ac6b4;
-                    --border-menu-color: #cecece;
-                    --background-menu-color: #f0f0f0;
-                    --menu-color: white;
-                    --highlight-color: #1ac6b4;
-                    
-                    --teal-color: #1ac6b4;
-                    --green-color: #0b8043;
-                    --red-color: #d32f2f;
-                    --blue-color: #1976d2;
-                    --yellow-color: #f57c00;
-                    --grey-color:#616161;
-                }
+            :host {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                font-family: Roboto, sans-serif;
+                font-size: 16px;
+                --app-primary-color: #431a82;
+                --app-secondary-color: var(--teal-color);
+                --selected-menu-border-color: white;
+                --selected-menu-color: #1ac6b4;
+                --border-menu-color: #cecece;
+                --background-menu-color: #f0f0f0;
+                --menu-color: white;
+                --highlight-color: #1ac6b4;
+
+                --teal-color: #1ac6b4;
+                --green-color: #0b8043;
+                --red-color: #d32f2f;
+                --blue-color: #1976d2;
+                --yellow-color: #f57c00;
+                --grey-color: #616161;
+            }
         `;
     }
 
-    static get layoutStyles(){
+    static get layoutStyles() {
         // language=CSS
         return css`
             .header {
@@ -232,6 +233,7 @@ export class IronApp extends LitElement {
                 .big-logo{
                     width: var(--logo-width, 160px);
                     user-select: none;
+                    max-height: 100%;
                 }
                 .small-logo{
                     height: 100%;
@@ -272,16 +274,16 @@ export class IronApp extends LitElement {
         `;
     }
 
-    static _isMobile(){
+    static _isMobile() {
         const ua = window.navigator.userAgent;
         return (/[mM]obi/i.test(ua) || /[tT]ablet/i.test(ua) || /[aA]ndroid/i.test(ua));
     }
 
-  get importDependencies(){
-    return {}
-  }
+    get importDependencies() {
+        return {}
+    }
 
-    get menuSections(){
+    get menuSections() {
         return [];
     }
 
@@ -322,11 +324,11 @@ export class IronApp extends LitElement {
                             </iron-selector>
                         </div>    
                         
-                        <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
+                        <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                             
                     </div>  
                     <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
-                    <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ?  'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
+                    <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ? 'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
                         <div class="header logo">                                                        
                             <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
                         </div>
@@ -357,11 +359,11 @@ export class IronApp extends LitElement {
                 </div>`;
     }
 
-    _onPopstate(event){
+    _onPopstate(event) {
         this._setPages(window.location.pathname);
     }
 
-    _showPage(event){
+    _showPage(event) {
         this._setPages((this.base ? "/" + this.base : "") + `/${event.detail.page}` + (event.detail._id ? `/${event.detail._id}` : ''));
     }
 
@@ -370,93 +372,94 @@ export class IronApp extends LitElement {
         this.page = page;
     }
 
-  async checkAndImportDependencies(page) {
-    let dependencies = this.importDependencies[page];
-    if(dependencies){
-      await dependencies();
+    async checkAndImportDependencies(page) {
+        let dependencies = this.importDependencies[page];
+        if (dependencies) {
+            await dependencies();
+        }
     }
-  }
 
-  static getWebComponentName(path){
-    let splits = path.split('.js')[0].split('/');
-    return splits[splits.length - 1];
-  }
+    static getWebComponentName(path) {
+        let splits = path.split('.js')[0].split('/');
+        return splits[splits.length - 1];
+    }
 
     _onPageSelect(event) {
-        if(this.page !== event.detail.selected){
+        if (this.page !== event.detail.selected) {
             this._setPages(this.base ? `/${this.base}/${event.detail.selected}` : `/${event.detail.selected}`);
             this._pushState(this.pathname);
         }
     }
 
-    _pushState(pathname){
-    window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
+    _pushState(pathname) {
+        window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
     }
 
-  async _setPages(pathname, model) {
-    pathname = this.base && pathname.replace('/', '') !== this.base || !this.base && pathname.replace('/', '').length > 0 ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
+    async _setPages(pathname, model) {
+        pathname = this.base && pathname.replace('/', '') !== this.base || !this.base && pathname.replace('/', '').length > 0 ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
 
-        if(this.pathname !== pathname){
+        if (this.pathname !== pathname) {
             this._pushState(pathname);
         }
         this.pathname = pathname;
-    let currentPage = this.getCurrentPageFromPath(pathname, model);
+        let currentPage = this.getCurrentPageFromPath(pathname, model);
 
-    this.checkAndImportDependencies(currentPage.page);
-    this.currentPage = currentPage;
-    this.page = this.currentPage.page;
-  }
-
-  getCurrentPageFromPath(path, model){
-    let splits = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
-    return {
-      page: splits[0],
-      _id: splits[1],
-      model: model
-    };
+        this.checkAndImportDependencies(currentPage.page);
+        this.currentPage = currentPage;
+        this.page = this.currentPage.page;
     }
 
-    _onCompanySelection(event){
-    window.open(this.base ? `/${this.base}?_companyId=${event.detail.value._id}` : `?_companyId=${event.detail.value._id}`);
-  } //layout functions
+    getCurrentPageFromPath(path, model) {
+        let splits = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
+        return {
+            page: splits[0],
+            _id: splits[1],
+            model: model
+        };
+    }
+
+    _onCompanySelection(event) {
+        window.open(this.base ? `/${this.base}?_companyId=${event.detail.value._id}` : `?_companyId=${event.detail.value._id}`);
+    } //layout functions
 
     //layout functions
-    _toggle(){
+    _toggle() {
         this.collapsed = !this.collapsed;
         window.localStorage.setItem('collapsed', this.collapsed);
     }
 
-    _onMouseEnterMenu(){
-        if(!this.isMobile && this.collapsed){
+    _onMouseEnterMenu() {
+        if (!this.isMobile && this.collapsed) {
             this.temporaryCollapsed = false;
         }
     }
 
-    _onMouseLeaveMenu(){
-        if(!this.isMobile && this.collapsed){
+    _onMouseLeaveMenu() {
+        if (!this.isMobile && this.collapsed) {
             this.temporaryCollapsed = true;
         }
     }
 
-    _onClick(event){
+    _onClick(event) {
         // event.preventDefault();
-        if(this.isMobile){
+        if (this.isMobile) {
             this.collapsed = true;
         }
     }
 
-    _showMenu(event){
+    _showMenu(event) {
         event.stopPropagation();
         this.collapsed = false;
     }
 
-    _openSite(){
-        if(this.siteUrl){
+    _openSite() {
+        if (this.siteUrl) {
             window.open(this.siteUrl);
         }
     }
 
 }
+
 try {
     customElements.define("iron-app", IronApp);
 } catch (e) {
