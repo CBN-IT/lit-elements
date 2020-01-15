@@ -37,6 +37,6 @@ export class CompanyView extends TableView {
 try {
     customElements.define("company-view", CompanyView);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 

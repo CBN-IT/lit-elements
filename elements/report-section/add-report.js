@@ -76,6 +76,6 @@ class AddReport extends AddWithLink{
 try {
     customElements.define("add-report", AddReport);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 

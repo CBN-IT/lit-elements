@@ -235,7 +235,7 @@ export class PaperDatePicker extends PaperInputContainer {
 try {
     customElements.define('paper-date-picker', PaperDatePicker);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

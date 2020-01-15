@@ -112,7 +112,7 @@ export class AddNoLink extends LitElement {
 try {
     customElements.define("add-no-link", AddNoLink);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

@@ -91,7 +91,7 @@ class PaperFab extends LitElement {
 try {
     customElements.define("paper-fab", PaperFab);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

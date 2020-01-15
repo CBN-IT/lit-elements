@@ -150,7 +150,7 @@ class PaperInput extends PaperInputContainer {
 try {
     customElements.define('paper-input', PaperInput);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

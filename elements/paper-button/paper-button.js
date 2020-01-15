@@ -122,7 +122,7 @@ class PaperButton extends LitElement {
 try {
     customElements.define("paper-button", PaperButton);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

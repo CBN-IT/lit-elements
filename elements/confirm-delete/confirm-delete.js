@@ -91,6 +91,6 @@ class ConfirmDelete extends LitElement{
 try {
     customElements.define("confirm-delete", ConfirmDelete);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 

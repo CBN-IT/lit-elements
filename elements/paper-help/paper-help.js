@@ -65,6 +65,6 @@ class PaperHelp extends LitElement{
 try {
     customElements.define("paper-help", PaperHelp);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 

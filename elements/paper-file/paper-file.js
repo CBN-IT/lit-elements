@@ -174,7 +174,7 @@ class PaperFile extends PaperInputContainer {
 try {
     customElements.define('paper-file', PaperFile);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

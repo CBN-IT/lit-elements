@@ -120,7 +120,7 @@ class IronSelector extends LitElement {
 try {
     customElements.define("iron-selector", IronSelector);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

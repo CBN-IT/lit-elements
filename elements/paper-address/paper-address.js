@@ -494,7 +494,7 @@ class PaperAddress extends PaperInputContainer {
 try {
     customElements.define('paper-address', PaperAddress);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

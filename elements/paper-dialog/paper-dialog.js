@@ -133,7 +133,7 @@ class PaperDialog extends LitElement {
 try {
     customElements.define('paper-dialog', PaperDialog);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

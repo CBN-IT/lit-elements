@@ -72,7 +72,7 @@ class PaperTextarea extends PaperInputContainer {
 try {
     customElements.define('paper-textarea', PaperTextarea);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

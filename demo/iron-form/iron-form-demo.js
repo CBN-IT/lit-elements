@@ -44,7 +44,7 @@ class IronFormDemo extends LitElement {
 try {
     customElements.define("iron-form-demo", IronFormDemo);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

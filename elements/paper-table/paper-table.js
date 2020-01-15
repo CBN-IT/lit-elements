@@ -735,7 +735,7 @@ class PaperTable extends LitElement {
 try {
     customElements.define('paper-table', PaperTable);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

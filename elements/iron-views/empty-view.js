@@ -52,7 +52,7 @@ export class EmptyView extends LitElement {
 try {
     customElements.define("empty-view", EmptyView);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

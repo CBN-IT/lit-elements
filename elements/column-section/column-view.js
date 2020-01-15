@@ -25,6 +25,6 @@ class ColumnView extends TableViewWithLink{
 try {
     customElements.define('column-view', ColumnView);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 

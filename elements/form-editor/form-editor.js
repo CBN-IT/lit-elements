@@ -1249,5 +1249,5 @@ class FormEditor extends LitElement {
 try {
     customElements.define("form-editor", FormEditor);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }

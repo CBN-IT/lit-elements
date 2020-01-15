@@ -80,7 +80,7 @@ class PaperTabs extends LitElement {
 try {
     customElements.define("paper-tabs", PaperTabs);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

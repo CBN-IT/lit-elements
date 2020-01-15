@@ -113,7 +113,7 @@ class PaperToast extends LitElement {
 try {
     customElements.define("paper-toast", PaperToast);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

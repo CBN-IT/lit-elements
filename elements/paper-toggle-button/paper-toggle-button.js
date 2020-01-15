@@ -122,7 +122,7 @@ class PaperToggleButton extends LitElement {
 try {
     customElements.define("paper-toggle-button", PaperToggleButton);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 

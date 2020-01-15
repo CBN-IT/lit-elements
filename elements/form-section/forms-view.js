@@ -25,6 +25,6 @@ class FormsView extends TableViewWithLink{
 try {
     customElements.define('forms-view', FormsView);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 

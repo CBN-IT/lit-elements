@@ -253,7 +253,7 @@ export class PaperInputContainer extends LitElement {
 try {
 // customElements.define('paper-input-container', PaperInputContainer);
 } catch (e) {
-    console.error(e);
+    console.log(e);
 }
 
 
