@@ -51,7 +51,7 @@ export class PaperDatePicker extends PaperInputContainer {
 
     get inputElement(){
         return html`
-            <input class="input" @change="${this._onChangeInput}"/>
+            <input class="input" @keyup="${this._onChangeInput}"/>
             <input type="date" .value="${this.value}" style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}"/>
         `;
         // return html`<date-picker class="input" .value="${this._value}" .autoConfirm="${true}" .required="${this.required}"></date-picker>`;
@@ -114,7 +114,8 @@ export class PaperDatePicker extends PaperInputContainer {
         return !CBNUtils.isNoE(this._value) ? moment(this._value).format("YYYY-MM-DD") : '';
     }
     _onChangeInput(event){
-        this.value = this._parseDate(event.currentTarget.value, this.format);
+        this._value = this._parseDate(event.currentTarget.value, "MM-DD-YYYY");
+        this.validate(this._value, true);
     }
     _onChange(event){
         this.value = this.nativeInput.value;
