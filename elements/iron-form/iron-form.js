@@ -9,12 +9,10 @@ import './../paper-checkbox/paper-checkbox.js';
 import './../paper-file/paper-file.js';
 import './../paper-date-picker/paper-date-picker.js';
 import "./../paper-button/paper-button.js";
-// import './paper-date-time-picker.js';
 import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
 
 import {gridClasses} from "./../grid-layout/grid-classes.js";
-import {IronApp} from "../iron-app/iron-app";
 
 
 //https://github.com/Polymer/lit-html/issues/877
