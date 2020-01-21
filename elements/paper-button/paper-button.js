@@ -100,6 +100,15 @@ class PaperButton extends LitElement {
             :host([border]) {
                 border: 1px solid currentColor;
             }
+            :host(.loading) iron-icon{
+                animation:spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
         `
     }
 
