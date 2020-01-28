@@ -5,6 +5,7 @@ import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import "./../iron-icon/iron-icon.js";
 import "./../iron-icons/iron-icons.js";
 import "./../paper-checkbox/paper-checkbox.js";
+
 window.html = html;
 
 class PaperTable extends LitElement {
@@ -55,16 +56,16 @@ class PaperTable extends LitElement {
                 width: 100%;
             }
 
-            .row-group{
+            .row-group {
                 display: table-row-group;
             }
 
-            .thead-group{
+            .thead-group {
                 display: table-row-group;
                 height: 63px
             }
 
-            .thead-row{
+            .thead-row {
                 display: table-row;
             }
 
@@ -127,8 +128,8 @@ class PaperTable extends LitElement {
                 display: table-row;
             }
 
-            .cell, 
-            .cell-nr-crt, 
+            .cell,
+            .cell-nr-crt,
             .thead-cell {
                 display: table-cell;
             }
@@ -150,7 +151,7 @@ class PaperTable extends LitElement {
                 display: block;
             }
 
-            .cell-nr-crt:hover > div, 
+            .cell-nr-crt:hover > div,
             .row.iron-selected > .cell-nr-crt > div {
                 display: none;
             }
@@ -159,7 +160,7 @@ class PaperTable extends LitElement {
                 display: none;
             }
 
-            .cell-nr-crt:hover > paper-checkbox, 
+            .cell-nr-crt:hover > paper-checkbox,
             .row.iron-selected > .cell-nr-crt > paper-checkbox {
                 display: inline-block;
             }
@@ -214,7 +215,7 @@ class PaperTable extends LitElement {
                             <div>${this._filteredItemsNumber}</div>
                         </div>
                         ${this._columns.map((column, index) =>
-                            html`
+            html`
                                 <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
                                     <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
                                         <div class="flex">${column.title}</div>
@@ -251,14 +252,19 @@ class PaperTable extends LitElement {
 
 
     set columns(config) {
-    if(config){
-        let columns = config.columns ? config.columns : config;
-      this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
-        this._columns = columns.map(column => {
-            return {...column, icon: 'unfold-more', sortType: 0}
-        });
+        if (config) {
+            let columns = config.columns ? config.columns : config;
+            this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
+            if (this._columns === columns) {
+                return;
+            }
+            columns.forEach(column => {
+                column.icon= 'unfold-more';
+                column.sortType= 0;
+            });
+            this._columns = columns;
+        }
     }
-  }
 
     get columns() {
         return this._columns;
@@ -269,7 +275,15 @@ class PaperTable extends LitElement {
             return {...item, initialIndex: index, isSelected: false}
         });
         this._filteredItems = [...this._items];
-        CBNUtils.async(this._firstRender.bind(this));
+        this.updateComplete.then(() => {
+            this._firstRender();
+            this._filter();
+            for (let i = 0; i < this._columns.length; i++) {
+                if (this._columns[i].sortType !== 0) {
+                    this._sort(this._columns[i].name, this._columns[i].sortType);
+                }
+            }
+        });
     }
 
     get selectedItems() {
@@ -329,12 +343,12 @@ class PaperTable extends LitElement {
         this._createRowCells(row, _endIndex);
     }
 
-    _getRowStyle(translateY, model){
+    _getRowStyle(translateY, model) {
         let rowStyle = `transform:translate3d(0px,${translateY}px,0px);height:${this.rowHeight}px;`;
-        if(this._rowStyle){
-            if(typeof this._rowStyle === 'string'){
+        if (this._rowStyle) {
+            if (typeof this._rowStyle === 'string') {
                 rowStyle += this._rowStyle;
-            } else if(typeof this._rowStyle === 'function'){
+            } else if (typeof this._rowStyle === 'function') {
                 rowStyle += this._rowStyle(model);
             }
         }
@@ -374,13 +388,13 @@ class PaperTable extends LitElement {
             cell.textContent = this._formatValue(column, model);
         }
         if (column["style"]) {
-            if(typeof column["style"] === 'string'){
+            if (typeof column["style"] === 'string') {
                 cell.style = column["style"];
-            } else if(typeof column["style"] === 'function'){
+            } else if (typeof column["style"] === 'function') {
                 cell.style = column["style"](model);
             }
         }
-        if(column['styleFunction']){
+        if (column['styleFunction']) {
             cell.style = column["style"](model);
         }
         // cell.appendChild(container);
@@ -393,14 +407,14 @@ class PaperTable extends LitElement {
 
         let rows = this.rowGroup.querySelectorAll(".row");
         rows = Array.prototype.slice.call(rows, 0);
-        if(rows.length === 0){
+        if (rows.length === 0) {
             return;
         }
-        let rowsParams = this._getRowsParams(rows,viewHeight,containerScrollTop);
+        let rowsParams = this._getRowsParams(rows, viewHeight, containerScrollTop);
 
         if (rowsParams.rowsTopNr === this._rowsNr || rowsParams.rowsBottomNr === this._rowsNr) {
             rows = this._repositionRows();
-            rowsParams = this._getRowsParams(rows,viewHeight,containerScrollTop);
+            rowsParams = this._getRowsParams(rows, viewHeight, containerScrollTop);
         }
         let rowsToTranslateNumber = rowsParams.rowsTopNr - rowsParams.rowsBottomNr;
         if (rowsToTranslateNumber > 0) {
@@ -420,7 +434,7 @@ class PaperTable extends LitElement {
             }
         } else {
             let rowIndex = rows.length - 1;
-            while(rowsToTranslateNumber < -1){
+            while (rowsToTranslateNumber < -1) {
                 if (this._endIndex < this._filteredItems.length - 1) {
                     rows[rowIndex].translateY = rowsParams.firstTranslateY - (this.rowHeight * (rows.length - rowIndex));
                     //rowsParams.firstRow.setAttribute("translateY", rowsParams.firstRow.translateY);
@@ -428,7 +442,7 @@ class PaperTable extends LitElement {
                     this._startIndex--;
                     this._endIndex--;
                     rowIndex--;
-                    rowsToTranslateNumber+=2;
+                    rowsToTranslateNumber += 2;
                 } else {
                     break;
                 }
@@ -457,7 +471,7 @@ class PaperTable extends LitElement {
         rows.sort(function (a, b) {
             return a["initialIndex"] > b["initialIndex"] ? 1 : -1;
         });
-        slidesNr = Math.min(slidesNr, Math.max(0, parseInt((this._filteredItems.length)/this._rowsNr) - 1));
+        slidesNr = Math.min(slidesNr, Math.max(0, parseInt((this._filteredItems.length) / this._rowsNr) - 1));
         this._startIndex = slidesNr * this._rowsNr;
         for (let i = 0; i < rows.length; i++) {
             if (slidesNr * this._rowsNr + i >= 0 && slidesNr * this._rowsNr + i < this._filteredItems.length) {
@@ -475,7 +489,7 @@ class PaperTable extends LitElement {
 
     }
 
-    _getRowsParams(rows,viewHeight, containerScrollTop) {
+    _getRowsParams(rows, viewHeight, containerScrollTop) {
         rows.sort(function (a, b) {
             return a["translateY"] > b["translateY"] ? 1 : -1;
         });
@@ -536,17 +550,10 @@ class PaperTable extends LitElement {
     }
 
     _setSort(event, column, columnIndex) {
-        this._columns = this._columns.map((column, index) => {
+        this._columns.forEach((column, index) => {
             let sortType = column.sortType === 0 ? 1 : column.sortType === 1 ? -1 : 0;
-            return index === columnIndex ? {
-                ...column,
-                sortType: sortType,
-                icon: this._getIcon(sortType)
-            } : {
-                ...column,
-                sortType: 0,
-                icon: this._getIcon(0)
-            }
+            column.sortType = index === columnIndex ? sortType : 0
+            column.icon = this._getIcon(column.sortType);
         });
         this.requestUpdate('_columns');
         this._sort(this._columns[columnIndex].name, this._columns[columnIndex].sortType);
@@ -732,6 +739,7 @@ class PaperTable extends LitElement {
     }
 
 }
+
 try {
     customElements.define('paper-table', PaperTable);
 } catch (e) {
