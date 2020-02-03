@@ -69,13 +69,16 @@ export class PaperDatePicker extends PaperInputContainer {
             dayOffset: 1,
             min:this.min,
             max:this.max,
-            hilightedDate: new Date(),
-            // format:(date) =>{
-            //     return moment(date).format(this.format);
-            // },
-            // parse:(str)=> {
-            //     return moment(str,this.format).toDate();
-            // },
+            format:(date) =>{
+                return moment(date).format(this.format);
+            },
+            parse:(str)=> {
+                let d = moment(str, this.format).toDate();
+                if (isNaN(d.getTime())) {
+                    d = new Date();
+                }
+                return d;
+            },
         }).on('select', (_, dp) => this._selectedDate(dp))
             .on('open', this._openedDatePicker.bind(this));
 
@@ -114,7 +117,7 @@ export class PaperDatePicker extends PaperInputContainer {
         return !CBNUtils.isNoE(this._value) ? moment(this._value).format("YYYY-MM-DD") : '';
     }
     _onChangeInput(event){
-        this._value = this._parseDate(event.currentTarget.value, "MM-DD-YYYY");
+        this._value = this._parseDate(event.currentTarget.value, this.format);
         this.validate(this._value, true);
     }
     _onChange(event){
