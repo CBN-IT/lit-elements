@@ -93,13 +93,13 @@ class PaperTable extends LitElement {
             }
 
             .row:hover .cell, .row:hover .cell-nr-crt {
-                background: #eeeeee;
-                color: black;
+                background-color: var(--paper-table-row-hover-bg, #eeeeee);
+                color: var(--paper-table-row-hover-color, black);
             }
 
             .row.iron-selected .cell, .row.iron-selected .cell-nr-crt {
-                background: #eeeeee;
-                color: black;
+                background-color: var(--paper-table-row-selected-bg, #eeeeee);
+                color: var(--paper-table-row-selected-color, black);
             }
 
             input {
