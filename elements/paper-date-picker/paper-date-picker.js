@@ -223,7 +223,9 @@ export class PaperDatePicker extends PaperInputContainer {
             date = null;
         return date;
     }
+    _onInput(){
 
+    }
     validate(value, fromUser){
         let isValid = !this.required || !CBNUtils.isNoE(value);
         this.isValid = isValid;
