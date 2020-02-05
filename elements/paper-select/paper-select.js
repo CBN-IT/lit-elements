@@ -259,7 +259,6 @@ class PaperSelect extends PaperInputContainer {
     }
 
     _onChange(event){
-
         if(this.multiple){
             this._value = [];
             let selectedOptions = Array.from(event.currentTarget.selectedOptions);
@@ -273,7 +272,7 @@ class PaperSelect extends PaperInputContainer {
                 return;
             }
             let index = event.currentTarget.selectedIndex - 1;
-            this._selectedOptionByValue(this._options[index]);
+            this._selectOption(event,this._options[index],index);
         }
     }
 
