@@ -93,7 +93,7 @@ class IronOverlay extends LitElement {
             let style = `${yDirection}: calc(${y}px);${xDirection}: calc(${x}px);`;
 
             if (this.fullWidth) {
-                style = `${style}width:${hostRect.width - (2 * this.padding)}px`
+                style = `${style}min-width:${hostRect.width - (2 * this.padding)}px`
             }
             this.container.style.cssText = style;
             let optionsContainerRect = this._getBoundingClientRect(this.container);
