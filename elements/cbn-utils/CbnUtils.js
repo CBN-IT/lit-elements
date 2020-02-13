@@ -93,7 +93,29 @@ window.CBNUtils = {
         let index = array.findIndex(item => item._id === itemToDelete._id);
         array.splice(index, 1);
         return [...array];
+    },
+    deepEqual(a, b) {
+        if ((typeof a == 'object' && a != null) &&
+            (typeof b == 'object' && b != null)) {
+            let keysA = Object.keys(a);
+            let keysB = Object.keys(b);
+            if (keysA.length !== keysB.length) {
+                return false;
+            }
+            for (let key of keysA) {
+                if (!(key in b) || !CBNUtils.deepEqual(a[key], b[key])) {
+                    return false;
+                }
+            }
+            for (let key of keysB) {
+                if (!(key in a) || !CBNUtils.deepEqual(b[key], a[key])) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return a === b;
+        }
     }
-
 
 };

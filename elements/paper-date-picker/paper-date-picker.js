@@ -117,6 +117,9 @@ export class PaperDatePicker extends PaperInputContainer {
         return !CBNUtils.isNoE(this._value) ? moment(this._value).format("YYYY-MM-DD") : '';
     }
     _onChangeInput(event){
+        if (this._parseDate(event.currentTarget.value, this.format) === this._value) {
+            return;
+        }
         this._value = this._parseDate(event.currentTarget.value, this.format);
         this.validate(this._value, true);
     }
