@@ -75,7 +75,9 @@ export class TableView extends LitElement {
         this._collection = value;
         this.config = window.data._configs[this._collection];
         this.columns = window.data._columns[this._collection];
-        this.reports = window.data._reports.filter(item => item.collection === this._collection);
+        this.reports = window.data._reports
+            .filter(item => item.collection === this._collection)
+            .sort((a, b) => a.reportName.localeCompare(b.reportName));
         window.addEventListener(`get-${this._collection}`, this._getItems.bind(this));
     }
 
