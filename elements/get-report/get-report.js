@@ -129,8 +129,7 @@ class GetReport extends LitElement {
                         }
                         .middle{
                             width:120px;
-                            margin:0 auto;
-                            margin-top: 10px;
+                            margin: 10px auto 0 auto;
                         }
                         @keyframes lds-dual-ring {
                           0% {
