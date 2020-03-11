@@ -1,6 +1,5 @@
 "use strict";
 import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
-import "./../paper-button/paper-button.js"
 
 class PaperLoading extends LitElement {
 
