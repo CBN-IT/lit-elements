@@ -149,8 +149,8 @@ class GetReport extends LitElement {
                         <input type='hidden' name='_companyId' value='${window.data._selectedCompany}'/>
                         <input type='hidden' name='hashReport' value='${hashReport}'/>
                         <input type='hidden' name='download' value='inline'/>
-                        ${keys.map(key => "<input type='hidden' name='keys' value='" + key + "'/>").join("")}
-                        ${Object.entries(params).map(([key, value]) =>  "<input type='hidden' name='" + "ADMA." + key + "' value='" + value + "'/>").join("")}
+                        ${keys.map(key => `<input type='hidden' name='keys' value='${key}'/>`).join("")}
+                        ${Object.entries(params).map(([key, value]) =>  `<input type='hidden' name='ADMA.${key}' value='${value}'/>`).join("")}
                     </form>
                 </body>
                 <script>document.getElementById("formRaport").submit();</script>
