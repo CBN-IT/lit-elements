@@ -11,7 +11,8 @@ class PaperTextarea extends PaperInputContainer {
             required: {type: Boolean},
             minLength: {type: Number},
             maxLength: {type: Number},
-            _value: {type: Object}
+            _value: {type: Object},
+            disabled: {type: Boolean}
         };
     }
 
@@ -20,7 +21,7 @@ class PaperTextarea extends PaperInputContainer {
     }
 
     get inputElement(){
-        return html`<textarea class="input" rows="1" .value="${this._value}"></textarea>`;
+        return html`<textarea class="input" rows="1" .value="${this._value}" ?disabled="${this.disabled}" ></textarea>`;
     }
 
     firstUpdated(changedProperties){

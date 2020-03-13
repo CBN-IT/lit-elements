@@ -21,7 +21,8 @@ class PaperInput extends PaperInputContainer {
             maxLength: {type: Number},
             isCNP: {type: Boolean},
             isCIF: {type: Boolean},
-            _value: {type: Object}
+            _value: {type: Object},
+            disabled:{type:Boolean}
         };
     }
 
@@ -30,7 +31,18 @@ class PaperInput extends PaperInputContainer {
     }
 
     get inputElement(){
-        return html`<input class="input" type="${this.type}" name="${this.name}" min="${this.min}" max="${this.max}" minlength="${this.minLength}" maxlength="${this.maxLength}" .value="${this._value}">`;
+        return html`
+            <input 
+                class="input" 
+                type="${this.type}" 
+                name="${this.name}" 
+                min="${this.min||""}" 
+                max="${this.max||""}" 
+                minlength="${this.minLength||""}" 
+                maxlength="${this.maxLength||""}" 
+                .value="${this._value}" 
+                ?disabled="${this.disabled}" 
+            />`;
     }
 
     set value(value) {

@@ -16,7 +16,8 @@ export class PaperDatePicker extends PaperInputContainer {
             max: {type: Number},
             _value: {type: Object},
             isNative: {type: Boolean},
-            format:{type:String}
+            format:{type:String},
+            disabled:{type:Boolean}
         };
     }
 
@@ -52,7 +53,7 @@ export class PaperDatePicker extends PaperInputContainer {
     get inputElement(){
         return html`
             <input class="input" @keyup="${this._onChangeInput}"/>
-            <input type="date" .value="${this.value}" style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}"/>
+            <input type="date" .value="${this.value}" style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}" ?disabled="${this.disabled}"/>
         `;
         // return html`<date-picker class="input" .value="${this._value}" .autoConfirm="${true}" .required="${this.required}"></date-picker>`;
     }

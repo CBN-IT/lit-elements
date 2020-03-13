@@ -31,7 +31,8 @@ class PaperSelect extends PaperInputContainer {
             preventSelection: {type: Boolean},
             _value: {type: Array},
             _filteredOptions: {type: Array},
-            _selectedOption: {type: Number}
+            _selectedOption: {type: Number},
+            disabled:{type:Boolean}
         };
     }
 
@@ -42,13 +43,6 @@ class PaperSelect extends PaperInputContainer {
         this._filteredOptions = [];
         this.isNative = this._isNative();
         this.addEventListener('click', this._onClick.bind(this));
-    }
-
-    _onClick(){
-        if(!this.isNative){
-            this.ironOverlay.openOverlay();
-            this.focused = true;
-        }
     }
 
     static get styles(){
@@ -160,7 +154,7 @@ class PaperSelect extends PaperInputContainer {
                    <iron-icon icon="arrow-drop-down"></iron-icon>
                     
                     ${this.isNative ? html`
-                        <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}">
+                        <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
                             <option selected></option>
                             ${this._options.map((item, index) => html`
                                 <option value="${index}" ?selected="${
@@ -171,7 +165,7 @@ class PaperSelect extends PaperInputContainer {
                     `:''}
                 </div>
                 
-                <iron-overlay .positioningElement="${this}" .openedOverlay="${forceWrite(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
+                <iron-overlay .positioningElement="${this}" .openedOverlay="${forceWrite(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
                     <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
                         ${this._filteredOptions.map((item,index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
                     </iron-selector>
@@ -220,7 +214,15 @@ class PaperSelect extends PaperInputContainer {
     get selectLabel(){
         return this.multiple ? this._value.map(item => item.__label) : (this._value.length > 0 ? this._value[0].__label : '');
     }
-
+    _onClick(){
+        if (this.disabled) {
+            return;
+        }
+        if(!this.isNative){
+            this.ironOverlay.openOverlay();
+            this.focused = true;
+        }
+    }
     _processValue(value){
         if(typeof value === 'string'){
             this._value = [{
@@ -259,6 +261,9 @@ class PaperSelect extends PaperInputContainer {
     }
 
     _onChange(event){
+        if (this.disabled) {
+            return;
+        }
         if(this.multiple){
             this._value = [];
             let selectedOptions = Array.from(event.currentTarget.selectedOptions);
@@ -286,16 +291,22 @@ class PaperSelect extends PaperInputContainer {
     }
 
     _deleteItem(event, item, index){
+        if (this.disabled) {
+            return;
+        }
         this._value.splice(index, 1);
         if(!this.allowDuplicates){
             this._filterOptions();
         }
         this.validate(this._value, true);
         this.requestUpdate();
-    CBNUtils.async(() => this.floated = true, 1);
+        CBNUtils.async(() => this.floated = true, 1);
     }
 
     _selectOption(event, item, index){
+        if (this.disabled) {
+            return;
+        }
         if(this.preventSelection){
             CBNUtils.fireEvent(this, 'selection-attempt', {
                 name: this.name,
@@ -308,10 +319,16 @@ class PaperSelect extends PaperInputContainer {
     }
 
     _selectOptionByIndex(index){
+        if (this.disabled) {
+            return;
+        }
         this._selectedOptionByValue(this._filteredOptions[index]);
     }
 
     _selectedOptionByValue(value){
+        if (this.disabled) {
+            return;
+        }
         if(this.multiple){
             if(this.allowDuplicates || this._value.findIndex((item) => {return item.__value === value.__value}) === -1){
                 this._value.push(value);
@@ -329,6 +346,9 @@ class PaperSelect extends PaperInputContainer {
     }
 
     _onIronSelect(event){
+        if (this.disabled) {
+            return;
+        }
         this._selectedOption = event.detail.selected;
     }
 
@@ -346,26 +366,31 @@ class PaperSelect extends PaperInputContainer {
     }
 
     onKeyDown(event){
-        let key = event.which || event.keyCode;
+        if (this.disabled) {
+            return;
+        }
+        let key = event.key;
         switch (key){
-            case 40 : {
-          this._selectedOption = this._selectedOption === undefined || this._selectedOption + 1 >= this._filteredOptions.length ? 0 : this._selectedOption + 1;
+            case "Down": // IE/Edge specific value
+            case "ArrowDown": {
+                this._selectedOption = this._selectedOption === undefined || this._selectedOption + 1 >= this._filteredOptions.length ? 0 : this._selectedOption + 1;
                 break;
             }
-            case 38 : {
-          this._selectedOption = this._selectedOption === undefined || this._selectedOption - 1 < 0 ? this._filteredOptions.length - 1 : this._selectedOption - 1;
+            case "Up": // IE/Edge specific value
+            case "ArrowUp": {
+                this._selectedOption = this._selectedOption === undefined || this._selectedOption - 1 < 0 ? this._filteredOptions.length - 1 : this._selectedOption - 1;
                 break;
             }
-            case 13 : {
-                if(this._filteredOptions.length > this._selectedOption){
+            case "Enter": {
+                if (this._filteredOptions.length > this._selectedOption) {
                     this._selectOptionByIndex(this._selectedOption);
                 } else {
                     this._selectFreeTextValue();
-                    }
+                }
                 break;
             }
-            case 8 : {
-                if(CBNUtils.isNoE(this.input.value)){
+            case "Backspace": {
+                if (CBNUtils.isNoE(this.input.value)) {
                     this._value.pop();
                     this.requestUpdate();
                 }
@@ -373,16 +398,19 @@ class PaperSelect extends PaperInputContainer {
         }
     }
 
-  _selectFreeTextValue(){
-    if (this.freeText && !CBNUtils.isNoE(this.input.value)) {
-      this._selectedOptionByValue({
-        __label: this.input.value,
-        __value: this.input.value
-      });
-    } else {
-      this.clearInput();
+    _selectFreeTextValue() {
+        if (this.disabled) {
+            return;
+        }
+        if (this.freeText && !CBNUtils.isNoE(this.input.value)) {
+            this._selectedOptionByValue({
+                __label: this.input.value,
+                __value: this.input.value
+            });
+        } else {
+            this.clearInput();
+        }
     }
-  }
 
     _filterOptions(value){
         let _filteredOptions = [];
@@ -405,6 +433,9 @@ class PaperSelect extends PaperInputContainer {
     }
 
     validate(value, fromUser){
+        if (this.disabled) {
+            return false;
+        }
         this.isValid= !this.required || (!CBNUtils.isNoE(value) && value.length > 0);
         // if(this.isValid){
             CBNUtils.fireEvent(this, 'value-changed', {

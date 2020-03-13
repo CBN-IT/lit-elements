@@ -38,7 +38,7 @@ class IronForm extends LitElement {
                 type: Object
             },
             config: {
-                type: String
+                type: Object
             },
             params: {
                 type: Object
