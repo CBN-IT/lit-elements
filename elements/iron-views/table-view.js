@@ -111,7 +111,7 @@ export class TableView extends LitElement {
                 <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>                  
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
             </paper-dialog>    
-            <div class="horizontal layout paper-material top-bar">
+            <div class="horizontal layout paper-material top-bar center">
                 <paper-button icon="add" @click="${this._openDialog}" style="background: var(--green-color)">Adauga</paper-button>
                 ${this._displayReportsDropdown()}
                 <div class="flex horizontal layout center">
