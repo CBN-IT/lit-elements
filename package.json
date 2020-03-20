@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "ace-builds": "1.4.8",
-    "lit-element": "2.2.1",
-    "lit-html": "1.1.2",
+    "lit-element": "2.3.1",
+    "lit-html": "1.2.1",
     "moment": "2.24.0",
     "tiny-date-picker": "3.2.8"
   }
