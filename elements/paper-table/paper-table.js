@@ -433,7 +433,6 @@ class PaperTable extends LitElement {
             }
         } else {
             let rowIndex = rows.length - 1;
-            console.log(this._endIndex,this._filteredItems.length - 1, rowIndex,rowsToTranslateNumber);
             while (rowsToTranslateNumber < -1) {
                 if (this._endIndex <= this._filteredItems.length - 1) {
                     rows[rowIndex].translateY = rowsParams.firstTranslateY - (this.rowHeight * (rows.length - rowIndex));
