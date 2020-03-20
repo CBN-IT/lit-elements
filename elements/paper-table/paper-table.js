@@ -215,7 +215,7 @@ class PaperTable extends LitElement {
                             <div>${this._filteredItemsNumber}</div>
                         </div>
                         ${this._columns.map((column, index) =>
-            html`
+                            html`
                                 <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
                                     <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
                                         <div class="flex">${column.title}</div>
