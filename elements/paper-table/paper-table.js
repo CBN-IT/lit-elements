@@ -62,7 +62,7 @@ class PaperTable extends LitElement {
 
             .thead-group {
                 display: table-row-group;
-                height: 63px
+                height: 62px
             }
 
             .thead-row {
@@ -192,7 +192,7 @@ class PaperTable extends LitElement {
     constructor() {
         super();
         this.rowHeight = 30;
-        this.headerHeight = 66;
+        this.headerHeight = 62;
         this.columns = [];
         this.items = [];
     }
@@ -417,13 +417,12 @@ class PaperTable extends LitElement {
             rowsParams = this._getRowsParams(rows, viewHeight, containerScrollTop);
         }
         let rowsToTranslateNumber = rowsParams.rowsTopNr - rowsParams.rowsBottomNr;
+
         if (rowsToTranslateNumber > 0) {
             let rowIndex = 0;
             while (rowsToTranslateNumber > 1) {
-                if (this._endIndex < this._filteredItems.length - 1) {
+                if (this._endIndex <= this._filteredItems.length - 1) {
                     rows[rowIndex].translateY = rowsParams.lastTranslateY + (this.rowHeight * (rowIndex + 1));
-                    //rowsParams.firstRow.setAttribute("translateY", rowsParams.firstRow.translateY);
-                    // rows[rowIndex].style.transform = "translate3d(0px," + (rowsParams.lastTranslateY + (this.rowHeight * (rowIndex + 1)) - rows[rowIndex].initial).toFixed(0) + "px,0px)";
                     this._startIndex++;
                     this._endIndex++;
                     rowIndex++;
@@ -434,11 +433,10 @@ class PaperTable extends LitElement {
             }
         } else {
             let rowIndex = rows.length - 1;
+            console.log(this._endIndex,this._filteredItems.length - 1, rowIndex,rowsToTranslateNumber);
             while (rowsToTranslateNumber < -1) {
-                if (this._endIndex < this._filteredItems.length - 1) {
+                if (this._endIndex <= this._filteredItems.length - 1) {
                     rows[rowIndex].translateY = rowsParams.firstTranslateY - (this.rowHeight * (rows.length - rowIndex));
-                    //rowsParams.firstRow.setAttribute("translateY", rowsParams.firstRow.translateY);
-                    // rows[rowIndex].style.transform = "translate3d(0px," + (rowsParams.firstTranslateY - (this.rowHeight * (rows.length - rowIndex)) - rows[rowIndex].initial).toFixed(0) + "px,0px)";
                     this._startIndex--;
                     this._endIndex--;
                     rowIndex--;
