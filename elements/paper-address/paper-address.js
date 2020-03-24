@@ -166,7 +166,7 @@ class PaperAddress extends PaperInputContainer {
                                 <span>${item.__label}</span>
                             `
                             })}
-                        <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" />
+                        <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" autocomplete="off"/>
                     </div>
                     
                     ${this.isDropdownMenu ? html`<iron-icon icon="arrow-drop-down"></iron-icon>` : ''}

@@ -43,21 +43,20 @@ class PaperInput extends PaperInputContainer {
                 maxlength="${this.maxLength||""}"
                 .value="${this._value}"
                 ?disabled="${this.disabled}"
+                autocomplete="off"
             />`;
     }
 
     set value(value) {
-        // if(value !== this.value){
-            if(!CBNUtils.isNoE(value)){
-                this._value = value;
-            } else if((value === null || value === undefined) && this.defaultValue){
-                this._value = this.defaultValue;
-            } else {
-                this._value = '';
-            }
-            this.blur();
-            this.validate(this.value);
-        // }
+        if(!CBNUtils.isNoE(value)){
+            this._value = value;
+        } else if((value === null || value === undefined) && this.defaultValue){
+            this._value = this.defaultValue;
+        } else {
+            this._value = '';
+        }
+        this.blur();
+        this.validate(this.value);
     }
 
     get value() {

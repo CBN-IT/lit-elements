@@ -131,44 +131,44 @@ class PaperSelect extends PaperInputContainer {
 
     get inputElement(){
         return html`
-                <div class="select-container horizontal layout center flex">
-                    <div class=" horizontal layout wrap center flex" style="overflow: hidden">
-                    ${this._value.map((item, index) => {
-                        return !this.isDropdownMenu ?
-                            html`
-                                <div class="selected-option">
-                                    <span>${item.__label}</span>
-                                    <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
-                                </div>
-                            ` : 
-                            html`
+            <div class="select-container horizontal layout center flex">
+                <div class=" horizontal layout wrap center flex" style="overflow: hidden">
+                ${this._value.map((item, index) => {
+                    return !this.isDropdownMenu ?
+                        html`
+                            <div class="selected-option">
                                 <span>${item.__label}</span>
-                            `
-                            })}
-                        <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" />
-                    </div>
-                    
-                   <iron-icon icon="arrow-drop-down"></iron-icon>
-                    
-                    ${this.isNative ? html`
-                        <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
-                            <option selected></option>
-                            ${this._options.map((item, index) => html`
-                                <option value="${index}" ?selected="${
-                                    this._value.findIndex((value) => { return value.__value === item.__value}) !== -1
-                                }">${item.__label}</option>
-                            `)}
-                        </select>   
-                    `:''}
+                                <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
+                            </div>
+                        ` : 
+                        html`
+                            <span>${item.__label}</span>
+                        `
+                        })}
+                    <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" autocomplete="off"/>
                 </div>
                 
-                <iron-overlay .positioningElement="${this}" .openedOverlay="${live(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
-                    <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
-                        ${this._filteredOptions.map((item,index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
-                    </iron-selector>
-                </iron-overlay>
+               <iron-icon icon="arrow-drop-down"></iron-icon>
+                
+                ${this.isNative ? html`
+                    <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
+                        <option selected></option>
+                        ${this._options.map((item, index) => html`
+                            <option value="${index}" ?selected="${
+                                this._value.findIndex((value) => { return value.__value === item.__value}) !== -1
+                            }">${item.__label}</option>
+                        `)}
+                    </select>   
+                `:''}
+            </div>
+            
+            <iron-overlay .positioningElement="${this}" .openedOverlay="${live(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
+                <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
+                    ${this._filteredOptions.map((item,index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
+                </iron-selector>
+            </iron-overlay>
               
-`;
+        `;
     }
 
     firstUpdated(changedProperties){

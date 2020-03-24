@@ -62,7 +62,6 @@ export class IronApp extends LitElement {
                 --background-menu-color: #f0f0f0;
                 --menu-color: white;
                 --highlight-color: #1ac6b4;
-
                 --teal-color: #1ac6b4;
                 --green-color: #0b8043;
                 --red-color: #d32f2f;
@@ -109,11 +108,6 @@ export class IronApp extends LitElement {
                 top: 0;
                 bottom: 0;
                 left: 0;
-                z-index: ${unsafeCSS(this._isMobile() ? 40 : 10)};
-            }
-
-            .left-side:hover {
-                /*overflow: visible;*/
             }
 
             .right-side {
@@ -172,105 +166,101 @@ export class IronApp extends LitElement {
                 bottom: 0;
                 left: 0;
                 right: 0;
-                z-index: ${unsafeCSS(this._isMobile() ? 40 : 10)};
                 background: rgba(0, 0, 0, .43);
             }
 
             paper-fab{
                 bottom: 10px;
                 left: 10px;
-                background: var(--app-primary-color);
+                background: var(--highlight-color);
                 z-index: 40;
             }
             
-                .menu-button:hover,.menu-button.iron-selected {
-                    color: var(--selected-menu-color, white);
-                    background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
-                    border-left: 3px solid var(--selected-menu-border-color, white);
-                    cursor: pointer; 
-                                       
-                }
-                .menu-button:hover{
-                    cursor: pointer;
-                }
-                
-                .menu-button {
-                    text-decoration: none;
-                    height: 32px;
-                    flex-shrink: 0;
-                    border-left: 3px solid var(--app-primary-color);
-                    padding: 0 8px;
-                    cursor: pointer;
-                    white-space: nowrap;
-                    background: var(--app-primary-color);                  
-                    border-top-right-radius: 25px;
-                    border-bottom-right-radius: 25px;
-                    box-sizing: border-box;
-                    color: var(--menu-color, white)!important;
-                }
-                
-                .menu-button>iron-icon{
-                    margin-right: 12px;
-                    color: var(--menu-color, white);
+            .menu-button:hover,.menu-button.iron-selected {
+                color: var(--selected-menu-color, white);
+                background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
+                border-left: 3px solid var(--selected-menu-border-color, white);
+                cursor: pointer; 
+                                   
+            }
+            .menu-button:hover{
+                cursor: pointer;
+            }
+            
+            .menu-button {
+                text-decoration: none;
+                height: 32px;
+                flex-shrink: 0;
+                border-left: 3px solid var(--app-primary-color);
+                padding: 0 8px;
+                cursor: pointer;
+                white-space: nowrap;
+                background: var(--app-primary-color);                  
+                border-top-right-radius: 25px;
+                border-bottom-right-radius: 25px;
+                box-sizing: border-box;
+                color: var(--menu-color, white)!important;
+            }
+            
+            .menu-button>iron-icon{
+                margin-right: 12px;
+                color: var(--menu-color, white);
 
-                }
-                
-             
-                
-                .small.menu-button>iron-icon{
-                    margin-right: 0;
-                }
-                
-                .menu-button:hover>iron-icon,.menu-button.iron-selected>iron-icon{
-                    color: var(--menu-color, white);
-                }
-                
-              
-                a, a:visited, a:hover, a:active { 
-                    color: white;
-                }
-               
-                .big-logo{
-                    width: var(--logo-width, 160px);
-                    user-select: none;
-                    max-height: 100%;
-                }
-                .small-logo{
-                    height: 100%;
-                    width: 100%;
-                    user-select: none;
-                }
-                .small-logo:hover{
-                    cursor: pointer;
-                }
-                .company-dropdown{
-                    --input-container-padding: 1px;               
-                    --input-container-border: 0px;
-                    --input-container-min-height: 30px;
-                    --input-padding: 0 10px 5px 10px;
-                    color: var(--menu-color);
-                    width: 300px;
-                }
-                .big{
-                    max-width:80%;
-                }
-                .small{
-                    max-width:20%;
-                }
-                .full-width{
-                    min-width:100%;
-                }
-                .group-section-title{
-                    color: var(--group-section-color, white);
-                    /*text-align: center;*/
-                    font-weight: bold;
-                    background: var(--group-section-background-color, rgba(255,255,255,0.2)); 
-                    border-top: 2px solid var(--menu-color, white);
-                    padding: 5px 0 5px 15px;
-                }
-                .collapse-button{
-                    color: var(--menu-color);
-                }
+            }
+            
+            .small.menu-button>iron-icon{
+                margin-right: 0;
+            }
+            
+            .menu-button:hover>iron-icon,.menu-button.iron-selected>iron-icon{
+                color: var(--menu-color, white);
+            }
+            
+          
+            a, a:visited, a:hover, a:active { 
+                color: white;
+            }
+           
+            .big-logo{
+                width: var(--logo-width, 160px);
+                user-select: none;
+                max-height: 100%;
+            }
+            .small-logo{
+                height: 100%;
+                width: 100%;
+                user-select: none;
+            }
+            .small-logo:hover{
+                cursor: pointer;
+            }
+            .company-dropdown{
+                --input-container-padding: 1px;               
+                --input-container-border: 0px;
+                --input-container-min-height: 30px;
+                --input-padding: 0 10px 5px 10px;
+                color: var(--menu-color);
+                width: 300px;
+            }
+            .big{
+                max-width:80%;
+            }
+            .small{
+                max-width:20%;
+            }
+            .full-width{
+                min-width:100%;
+            }
+            .group-section-title{
+                color: var(--group-section-color, white);
+                font-weight: bold;
+                background: var(--group-section-background-color, rgba(255,255,255,0.2)); 
+                border-top: 2px solid var(--menu-color, white);
+                padding: 5px 0 5px 15px;
+            }
+            .collapse-button{
+                color: var(--menu-color);
+            }
         `;
     }
 
@@ -286,7 +276,11 @@ export class IronApp extends LitElement {
     get menuSections() {
         return [];
     }
-
+    _updateSmallScreen(state){
+        this.isMobile = state || this.constructor._isMobile();
+        this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
+        this.temporaryCollapsed = this.collapsed;
+    }
     constructor() {
         super();
         this._setPages(window.location.pathname);
@@ -297,7 +291,20 @@ export class IronApp extends LitElement {
         window.addEventListener('show-page', this._showPage.bind(this)); //for layout
         window.addEventListener('click', this._onClick.bind(this));
 
-        this.isMobile = this.constructor._isMobile();
+        let sizeMedia = window.matchMedia('(max-width: 992px)');
+        try {
+
+            // Chrome & Firefox
+            sizeMedia.addEventListener('change', (e) => {this._updateSmallScreen(e.matches)});
+        } catch (e1) {
+            try {
+                // Safari
+                sizeMedia.addListener((e) => {this._updateSmallScreen(e.matches)});
+            } catch (e2) {
+                console.error(e2);
+            }
+        }
+        this._updateSmallScreen(sizeMedia.matches);
         this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
         this.temporaryCollapsed = this.collapsed;
         this.logoSrc = logo;
@@ -306,57 +313,64 @@ export class IronApp extends LitElement {
 
     render() {
         // language=HTML
-
         return html`
-                <confirm-delete></confirm-delete>
-                ${!this.noHelp ? html`<paper-help></paper-help>` : ''}
-                <paper-toast></paper-toast>
-                <get-report></get-report>
-                <paper-loading></paper-loading>
-                <div class="flex horizontal layout" style="position: relative">
-                    <div class="flex vertical layout right-side ${this.isMobile ? 'full-window' : this.collapsed ? 'big-window' : 'small-window'}">
-                        <div class="header toolbar horizontal layout center" style="display:none">
-                            <slot name="toolbar"></slot>
-                        </div>
-                        <div class="flex vertical layout right-side-bottom">
-                            <iron-selector class="flex vertical layout" attrForSelected="name" .selected="${this.page}" slot="pages" isPages>
-                                ${this.views}
-                            </iron-selector>
-                        </div>    
+            <style>
+                .left-side {
+                    z-index: ${this.isMobile ? 40 : 10};
+                }
+                .overlay {
+                    z-index: ${this.isMobile ? 40 : 10};
+                }
+            </style>
+            <confirm-delete></confirm-delete>
+            ${!this.noHelp ? html`<paper-help></paper-help>` : ''}
+            <paper-toast></paper-toast>
+            <get-report></get-report>
+            <paper-loading></paper-loading>
+            <div class="flex horizontal layout" style="position: relative">
+                <div class="flex vertical layout right-side ${this.isMobile ? 'full-window' : this.collapsed ? 'big-window' : 'small-window'}">
+                    <div class="header toolbar horizontal layout center" style="display:none">
+                        <slot name="toolbar"></slot>
+                    </div>
+                    <div class="flex vertical layout right-side-bottom">
+                        <iron-selector class="flex vertical layout" attrForSelected="name" .selected="${this.page}" slot="pages" isPages>
+                            ${this.views}
+                        </iron-selector>
+                    </div>    
+                    
+                    <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                         
-                        <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
-                            
-                    </div>  
-                    <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
-                    <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ? 'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
-                        <div class="header logo">                                                        
-                            <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
-                        </div>
-                        <div slot="company-dropdown" class="horizontal layout">
-                            <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
-                        </div>
-                       
-                        <div class="vertical layout flex left-menu" @mouseenter="${this._onMouseEnterMenu}" @mouseleave="${this._onMouseLeaveMenu}">      
-                            <div class="flex menu-buttons-container" >
-                                <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap" @iron-select="${this._onPageSelect.bind(this)}">
-                                    ${this.menuSections.map(groupSection => html`
-                                        <div class="group-section-title full-width">${groupSection.groupTitle}</div>
-                                        ${groupSection.sections.map(menuSection => html`
-                                        <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
-                                            <iron-icon icon="${menuSection.icon}"></iron-icon>
-                                            ${menuSection.label}
-                                        </a>
-                                        `)}                                        
-                                    `)}
-                                </iron-selector>
-                            </div>                                            
-                            <div class="horizontal layout start-justified"> 
-                                <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'} collapse-button" icon="file-upload" small no-margin no-background
-                                style="display:${this.isMobile ? 'none' : 'inline-block'}" @click="${this._toggle}"></paper-button>
-                            </div>                       
-                        </div>                                       
-                    </div>                                                        
-                </div>`;
+                </div>  
+                <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
+                <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ? 'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
+                    <div class="header logo">                                                        
+                        <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
+                    </div>
+                    <div slot="company-dropdown" class="horizontal layout">
+                        <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
+                    </div>
+                   
+                    <div class="vertical layout flex left-menu" @mouseenter="${this._onMouseEnterMenu}" @mouseleave="${this._onMouseLeaveMenu}">      
+                        <div class="flex menu-buttons-container" >
+                            <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap" @iron-select="${this._onPageSelect.bind(this)}">
+                                ${this.menuSections.map(groupSection => html`
+                                    <div class="group-section-title full-width">${groupSection.groupTitle}</div>
+                                    ${groupSection.sections.map(menuSection => html`
+                                    <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
+                                        <iron-icon icon="${menuSection.icon}"></iron-icon>
+                                        ${menuSection.label}
+                                    </a>
+                                    `)}                                        
+                                `)}
+                            </iron-selector>
+                        </div>                                            
+                        <div class="horizontal layout start-justified"> 
+                            <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'} collapse-button" icon="file-upload" small no-margin no-background
+                            style="display:${this.isMobile ? 'none' : 'inline-block'}" @click="${this._toggle}"></paper-button>
+                        </div>                       
+                    </div>                                       
+                </div>                                                        
+            </div>`;
     }
 
     _onPopstate(event) {

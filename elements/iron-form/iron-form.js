@@ -14,8 +14,6 @@ import './../paper-button/paper-button.js';
 
 import {gridClasses} from "./../grid-layout/grid-classes.js";
 
-
-
 class IronForm extends LitElement {
 
     static get properties() {
@@ -127,6 +125,7 @@ class IronForm extends LitElement {
                 return html`
                     <paper-date-picker 
                         class="form-element ${elementConfig.class}" 
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -140,6 +139,7 @@ class IronForm extends LitElement {
                 return html`
                     <paper-date-time-picker 
                         class="form-element ${elementConfig.class}" 
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -152,6 +152,7 @@ class IronForm extends LitElement {
                 return html`
                     <paper-file 
                         class="form-element ${elementConfig.class}" 
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -164,6 +165,7 @@ class IronForm extends LitElement {
                 return html`
                     <paper-checkbox 
                         class="form-element ${elementConfig.class}" 
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -176,6 +178,7 @@ class IronForm extends LitElement {
                 return html`
                     <paper-select 
                         class="form-element ${elementConfig.class}" 
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -194,6 +197,7 @@ class IronForm extends LitElement {
                 return html`
                     <paper-address 
                         class="form-element ${elementConfig.class}" 
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -211,7 +215,8 @@ class IronForm extends LitElement {
             case 'textarea': {
                 return html`
                     <paper-textarea 
-                        class="form-element ${elementConfig.class}" 
+                        class="form-element ${elementConfig.class}"
+                        style="${elementConfig.style}"  
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -225,12 +230,14 @@ class IronForm extends LitElement {
             case 'paragraph': {
                 return html`
                     <p 
+                        style="${elementConfig.style}" 
                         class="${elementConfig.class}">${elementConfig.text}</p>`
             }
             default: {
                 return html`
                     <paper-input 
-                        class="form-element ${elementConfig.class}" 
+                        class="form-element ${elementConfig.class}"
+                        style="${elementConfig.style}" 
                         @value-changed="${this._onValueChanged}" 
                         .type="${elementConfig.type}" 
                         .name="${elementConfig.name}" 
