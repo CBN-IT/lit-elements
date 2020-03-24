@@ -1,15 +1,12 @@
 "use strict";
 import {html, css} from '/node_modules/lit-element/lit-element.js';
-import {directive} from '/node_modules/lit-html/lit-html.js';
+import {live} from '/node_modules/lit-html/directives/live.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from './../paper-input/paper-input-container.js';
 import './../iron-selector/iron-selector.js';
 import './../iron-icon/iron-icon.js';
 import './../iron-overlay/iron-overlay.js';
 
-const forceWrite = directive((value) => (part) => {
-    part.setValue(value);
-});
 
 class PaperSelect extends PaperInputContainer {
 
@@ -165,7 +162,7 @@ class PaperSelect extends PaperInputContainer {
                     `:''}
                 </div>
                 
-                <iron-overlay .positioningElement="${this}" .openedOverlay="${forceWrite(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
+                <iron-overlay .positioningElement="${this}" .openedOverlay="${live(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
                     <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
                         ${this._filteredOptions.map((item,index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
                     </iron-selector>
