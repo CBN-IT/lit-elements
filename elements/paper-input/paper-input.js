@@ -33,15 +33,16 @@ class PaperInput extends PaperInputContainer {
     get inputElement(){
         return html`
             <input 
-                class="input" 
-                type="${this.type}" 
-                name="${this.name}" 
-                min="${this.min||""}" 
-                max="${this.max||""}" 
-                minlength="${this.minLength||""}" 
-                maxlength="${this.maxLength||""}" 
-                .value="${this._value}" 
-                ?disabled="${this.disabled}" 
+                class="input"
+                type="${this.type}"
+                name="${this.name}"
+                min="${this.min||""}"
+                max="${this.max||""}"
+                step="${this.step || ""}"
+                minlength="${this.minLength||""}"
+                maxlength="${this.maxLength||""}"
+                .value="${this._value}"
+                ?disabled="${this.disabled}"
             />`;
     }
 
