@@ -23,8 +23,10 @@ class PaperHelp extends LitElement{
             paper-fab{
                 background: var(--blue-color);
                 z-index: 1;
-                right: 10px;
-                top: 3px;
+                top: var(--paper-help-top, 3px);
+                right: var(--paper-help-right, 10px);
+                bottom: var(--paper-help-bottom, auto);
+                left: var(--paper-help-left, auto);
             }
             paper-dialog{
                 --min-dialog-width: 500px; 
