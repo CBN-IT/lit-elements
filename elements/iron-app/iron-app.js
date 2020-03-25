@@ -14,7 +14,7 @@ import './../iron-icons/iron-icons.js';
 import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
-import logo from '/web/images/logo_square.svg';
+import logo from '/web/images/logo.svg';
 
 export class IronApp extends LitElement {
 
@@ -54,20 +54,28 @@ export class IronApp extends LitElement {
                 display: flex;
                 font-family: Roboto, sans-serif;
                 font-size: 16px;
-                --app-primary-color: #431a82;
-                --app-secondary-color: var(--teal-color);
-                --selected-menu-border-color: white;
-                --selected-menu-color: #1ac6b4;
+                --app-primary-color: white;
+                --menu-color: black;
+                --group-section-color: white;
+                --group-section-background-color: var(--blue-color);
+                --selected-menu-background-color: #D1D1D1;
+                --selected-menu-border-color: black;
+                --selected-menu-color: var(--blue-color);
                 --border-menu-color: #cecece;
                 --background-menu-color: #f0f0f0;
-                --menu-color: white;
-                --highlight-color: #1ac6b4;
-                --teal-color: #1ac6b4;
+                --teal-color: #00bfa5;
                 --green-color: #0b8043;
-                --red-color: #d32f2f;
-                --blue-color: #1976d2;
-                --yellow-color: #f57c00;
+                --red-color: #c53929;
+                --blue-color: #1a3d6b;
+                --yellow-color: #f09300;
                 --grey-color: #616161;
+                --logo-width: 150px;
+                --app-secondary-color: #5aa056;
+                --highlight-color: var(--blue-color);
+                --paper-table-row-hover-bg: rgba(128, 128, 128, 0.5);
+                --paper-table-row-hover-color: black;
+                --paper-table-row-selected-bg: rgba(128, 128, 128, 0.5);
+                --paper-table-row-selected-color: black;
             }
         `;
     }
@@ -86,13 +94,9 @@ export class IronApp extends LitElement {
                 flex-direction: column;
                 align-items: center;
             }
-
-            .header.logo > div {
-                height: 100%;
-            }
-
-            .header.toolbar {
-            }
+            .collapsed .header.logo{
+                align-items: flex-start;
+            } 
 
             .header.toolbar {
                 background: var(--app-primary-color);
@@ -100,7 +104,6 @@ export class IronApp extends LitElement {
 
             .left-side {
                 background: var(--app-primary-color);
-                /*border-right: 1px solid var(--border-menu-color);*/
                 box-sizing: border-box;
                 overflow: hidden;
                 transition: width 0.3s;
@@ -170,8 +173,8 @@ export class IronApp extends LitElement {
             }
 
             paper-fab{
-                bottom: 10px;
-                left: 10px;
+                bottom: 0;
+                left: 0;
                 background: var(--highlight-color);
                 z-index: 40;
             }
@@ -225,14 +228,6 @@ export class IronApp extends LitElement {
                 width: var(--logo-width, 160px);
                 user-select: none;
                 max-height: 100%;
-            }
-            .small-logo{
-                height: 100%;
-                width: 100%;
-                user-select: none;
-            }
-            .small-logo:hover{
-                cursor: pointer;
             }
             .company-dropdown{
                 --input-container-padding: 1px;               
@@ -305,10 +300,7 @@ export class IronApp extends LitElement {
             }
         }
         this._updateSmallScreen(sizeMedia.matches);
-        this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
-        this.temporaryCollapsed = this.collapsed;
         this.logoSrc = logo;
-
     }
 
     render() {
@@ -410,7 +402,7 @@ export class IronApp extends LitElement {
     }
 
     async _setPages(pathname, model) {
-        pathname = this.base && pathname.replace('/', '') !== this.base || !this.base && pathname.replace('/', '').length > 0 ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
+        pathname = (this.base && pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
 
         if (this.pathname !== pathname) {
             this._pushState(pathname);
