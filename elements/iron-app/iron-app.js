@@ -69,7 +69,7 @@ export class IronApp extends LitElement {
                 --blue-color: #1a3d6b;
                 --yellow-color: #f09300;
                 --grey-color: #616161;
-                --logo-width: 150px;
+                --logo-width: 140px;
                 --app-secondary-color: #5aa056;
                 --highlight-color: var(--blue-color);
                 --paper-table-row-hover-bg: rgba(128, 128, 128, 0.5);
@@ -84,7 +84,7 @@ export class IronApp extends LitElement {
         // language=CSS
         return css`
             .header {
-                    height: 47px;
+                height: 47px;
             }
 
             .header.logo {
@@ -93,6 +93,7 @@ export class IronApp extends LitElement {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                justify-content: center;
             }
             .collapsed .header.logo{
                 align-items: flex-start;
