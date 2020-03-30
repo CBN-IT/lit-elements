@@ -558,26 +558,26 @@ class PaperTable extends LitElement {
 
     _sort(property, sortType) {
         this._filteredItems.sort(function (a, b) {
-            let prop1, prop2;
-            prop1 = (a[property] === undefined || a[property] === null) ? "" : a[property];
-            prop2 = (b[property] === undefined || b[property] === null) ? "" : b[property];
-            prop1 = a[property] instanceof Array ? a[property].length + "" : prop1;
-            prop2 = b[property] instanceof Array ? b[property].length + "" : prop2;
-            if (!isNaN(parseFloat(prop1))) {
-                prop1 = parseFloat(prop1);
+            let prop1Str, prop2Str, prop1Nr=null, prop2Nr=null;
+            prop1Str = (a[property] === undefined || a[property] === null) ? "" : a[property];
+            prop2Str = (b[property] === undefined || b[property] === null) ? "" : b[property];
+            prop1Str = a[property] instanceof Array ? a[property].join(",") : prop1Str;
+            prop2Str = b[property] instanceof Array ? b[property].join(",") : prop2Str;
+            if (!isNaN(parseFloat(prop1Str)) || typeof prop1Str ==="number") {
+                prop1Nr = parseFloat(prop1Str);
             }
-            if (!isNaN(parseFloat(prop2))) {
-                prop2 = parseFloat(prop2);
+            if (!isNaN(parseFloat(prop2Str))|| typeof prop2Str ==="number") {
+                prop2Nr = parseFloat(prop2Str);
             }
             //first empty strings then strings then numbers
-            if (typeof prop1 === "number" && typeof prop2 !== "number") {
+            if (typeof prop1Nr === "number" && typeof prop2Nr !== "number") {
                 return -sortType;
-            } else if (typeof prop1 !== "number" && typeof prop2 === "number") {
+            } else if (typeof prop1Nr !== "number" && typeof prop2Nr === "number") {
                 return sortType;
-            } else if (typeof prop1 === "number" && typeof prop2 === "number") {
-                return (prop1 - prop2) * sortType;
+            } else if (typeof prop1Nr === "number" && typeof prop2Nr === "number" && prop1Nr !== prop2Nr) {
+                return (prop1Str - prop2Str) * sortType;
             } else {
-                return (prop1 + "").localeCompare(prop2) * sortType;
+                return (prop1Str + "").localeCompare(prop2Str+"") * sortType;
             }
         });
         this._updateFilteredItems();
