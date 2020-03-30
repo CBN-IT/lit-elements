@@ -191,7 +191,7 @@ class PaperTable extends LitElement {
 
     constructor() {
         super();
-        this.rowHeight = 30;
+        this.rowHeight = 32;
         this.headerHeight = 62;
         this.columns = [];
         this.items = [];
