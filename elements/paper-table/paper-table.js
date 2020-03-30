@@ -191,7 +191,7 @@ class PaperTable extends LitElement {
 
     constructor() {
         super();
-        this.rowHeight = 32;
+        this.rowHeight = this._realRowHeight = 30;
         this.headerHeight = 62;
         this.columns = [];
         this.items = [];
@@ -214,22 +214,21 @@ class PaperTable extends LitElement {
                             </div>
                             <div>${this._filteredItemsNumber}</div>
                         </div>
-                        ${this._columns.map((column, index) =>
-            html`
-                                <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
-                                    <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
-                                        <div class="flex">${column.title}</div>
-                                        ${column.sortable ? html`
-                                          <div>
-                                            <iron-icon icon="${column.icon}"></iron-icon>
-                                           </div>
-                                        ` : ''}
-                                    </div>
-                                    <div class="head-input">
-                                        ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : html``}                                       
-                                    </div>
-                              </div>
-                            `)}
+                        ${this._columns.map((column, index) => html`
+                            <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
+                                <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
+                                    <div class="flex">${column.title}</div>
+                                    ${column.sortable ? html`
+                                      <div>
+                                        <iron-icon icon="${column.icon}"></iron-icon>
+                                       </div>
+                                    ` : ''}
+                                </div>
+                                <div class="head-input">
+                                    ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : html``}                                       
+                                </div>
+                          </div>
+                        `)}
                     </div>
                 </div>  
             </div>   
@@ -293,13 +292,15 @@ class PaperTable extends LitElement {
     _firstRender() {
         this._clean();
         this.viewHieght = screen.height * 2;
-        this.table.style.height = (this.rowHeight * this._filteredItems.length + this.headerHeight) + "px";
-        this.theadGroup.style.transform = "translate3D(0, -" + (this.rowHeight * this._filteredItems.length) + "px, 0)";
+
         let currentHeight = this.headerHeight;
         let _endIndex = 0;
-        while (_endIndex < this._filteredItems.length && currentHeight < this.viewHieght + this.rowHeight * 3) {
-            this._createRow(currentHeight, _endIndex);
-            currentHeight += this.rowHeight;
+        while (_endIndex < this._filteredItems.length && currentHeight < this.viewHieght) {
+            let row = this._createRow(currentHeight, _endIndex);
+            if(_endIndex===0){
+                this._realRowHeight = parseFloat(window.getComputedStyle(row).height);
+            }
+            currentHeight += this._realRowHeight;
             _endIndex++;
         }
         this._filteredItemsNumber = this._filteredItems.length;
@@ -307,6 +308,8 @@ class PaperTable extends LitElement {
         this._endIndex = _endIndex - 1;
         this._rowsNr = _endIndex;
         this._scrollToTop();
+        this.table.style.height = (this._realRowHeight * this._filteredItems.length + this.headerHeight) + "px";
+        this.theadGroup.style.transform = "translate3D(0, -" + (this._realRowHeight * this._filteredItems.length) + "px, 0)";
     }
 
     _clean() {
@@ -336,11 +339,9 @@ class PaperTable extends LitElement {
         row.translateY = currentHeight;
         //row.setAttribute("initial", currentHeight);
         row.lastIndex = _endIndex;
-        let rowStyle = `transform:translate3d(0px,${this.headerHeight}px,0px);height:${this.rowHeight}px;`;
-        // row.style.transform = "translate3d(0px," + this.headerHeight + "px,0px)";
-        // row.style.height = this.rowHeight + "px";
         row.style = this._getRowStyle(this.headerHeight, this._filteredItems[_endIndex]);
         this._createRowCells(row, _endIndex);
+        return row;
     }
 
     _getRowStyle(translateY, model) {
@@ -418,11 +419,12 @@ class PaperTable extends LitElement {
         }
         let rowsToTranslateNumber = rowsParams.rowsTopNr - rowsParams.rowsBottomNr;
 
+
         if (rowsToTranslateNumber > 0) {
             let rowIndex = 0;
             while (rowsToTranslateNumber > 1) {
                 if (this._endIndex <= this._filteredItems.length - 1) {
-                    rows[rowIndex].translateY = rowsParams.lastTranslateY + (this.rowHeight * (rowIndex + 1));
+                    rows[rowIndex].translateY = rowsParams.lastTranslateY + (this._realRowHeight * (rowIndex + 1));
                     this._startIndex++;
                     this._endIndex++;
                     rowIndex++;
@@ -434,8 +436,8 @@ class PaperTable extends LitElement {
         } else {
             let rowIndex = rows.length - 1;
             while (rowsToTranslateNumber < -1) {
-                if (this._endIndex <= this._filteredItems.length - 1) {
-                    rows[rowIndex].translateY = rowsParams.firstTranslateY - (this.rowHeight * (rows.length - rowIndex));
+                if (this._endIndex <= this._filteredItems.length) {
+                    rows[rowIndex].translateY = rowsParams.firstTranslateY - (this._realRowHeight * (rows.length - rowIndex));
                     this._startIndex--;
                     this._endIndex--;
                     rowIndex--;
@@ -457,11 +459,11 @@ class PaperTable extends LitElement {
                 rows[i]["lastIndex"] = this._startIndex + i;
             }
         }
-        this.theadGroup.style.transform = "translate3D(0, -" + (this.rowHeight * this._filteredItems.length - containerScrollTop) + "px, 0)";
+        this.theadGroup.style.transform = "translate3D(0, -" + (this._realRowHeight * this._filteredItems.length - containerScrollTop) + "px, 0)";
     }
 
     _repositionRows() {
-        let rowHeight = this.rowHeight;
+        let rowHeight = this._realRowHeight;
         let slidesNr = Math.max(0, parseInt((this.container.scrollTop - this.headerHeight) / (this._rowsNr * rowHeight)));
         let rows = this.rowGroup.querySelectorAll(".row");
         rows = Array.prototype.slice.call(rows, 0);
@@ -635,8 +637,8 @@ class PaperTable extends LitElement {
         rows.forEach((row, index) => {
             row.style.display = index < this._filteredItems.length ? "table-row" : "none";
         });
-        this.table.style.height = (this.rowHeight * this._filteredItems.length + this.headerHeight) + "px";
-        this.theadGroup.style.transform = "translate3D(0, -" + (this.rowHeight * this._filteredItems.length) + "px, 0)";
+        this.table.style.height = (this._realRowHeight * this._filteredItems.length + this.headerHeight) + "px";
+        this.theadGroup.style.transform = "translate3D(0, -" + (this._realRowHeight * this._filteredItems.length) + "px, 0)";
         if (this.container.scrollTop !== 0) {
             this.container.scrollTop = 0;
         } else {
