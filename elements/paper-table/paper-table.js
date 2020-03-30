@@ -215,7 +215,7 @@ class PaperTable extends LitElement {
                             <div>${this._filteredItemsNumber}</div>
                         </div>
                         ${this._columns.map((column, index) =>
-                            html`
+            html`
                                 <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
                                     <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
                                         <div class="flex">${column.title}</div>
@@ -259,8 +259,8 @@ class PaperTable extends LitElement {
                 return;
             }
             columns.forEach(column => {
-                column.icon= 'unfold-more';
-                column.sortType= 0;
+                column.icon = 'unfold-more';
+                column.sortType = 0;
             });
             this._columns = columns;
         }
@@ -558,17 +558,27 @@ class PaperTable extends LitElement {
 
     _sort(property, sortType) {
         this._filteredItems.sort(function (a, b) {
-            let prop1, prop2, toReturn;
+            let prop1, prop2;
             prop1 = (a[property] === undefined || a[property] === null) ? "" : a[property];
             prop2 = (b[property] === undefined || b[property] === null) ? "" : b[property];
             prop1 = a[property] instanceof Array ? a[property].length + "" : prop1;
             prop2 = b[property] instanceof Array ? b[property].length + "" : prop2;
-            if (typeof prop1 === "number" && typeof prop1 === "number") {
-                toReturn = ((prop1 >= prop2) ? (prop1 > prop2 ? 1 : 0) : -1) * sortType;
-            } else {
-                toReturn = (prop1 + "").localeCompare(prop2) * sortType;
+            if (!isNaN(parseFloat(prop1))) {
+                prop1 = parseFloat(prop1);
             }
-            return toReturn;
+            if (!isNaN(parseFloat(prop2))) {
+                prop2 = parseFloat(prop2);
+            }
+            //first empty strings then strings then numbers
+            if (typeof prop1 === "number" && typeof prop2 !== "number") {
+                return -sortType;
+            } else if (typeof prop1 !== "number" && typeof prop2 === "number") {
+                return sortType;
+            } else if (typeof prop1 === "number" && typeof prop2 === "number") {
+                return (prop1 - prop2) * sortType;
+            } else {
+                return (prop1 + "").localeCompare(prop2) * sortType;
+            }
         });
         this._updateFilteredItems();
     }
