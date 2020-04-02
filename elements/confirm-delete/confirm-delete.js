@@ -79,7 +79,6 @@ class ConfirmDelete extends LitElement{
         this.shadowRoot.querySelector('paper-dialog').close();
     }
     confirmDelete(){
-        CBNUtils.startLoading();
         this.shadowRoot.querySelector('iron-ajax').generateRequest();
     }
     _onIronResponse(event){

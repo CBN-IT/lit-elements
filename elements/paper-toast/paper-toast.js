@@ -35,17 +35,13 @@ class PaperToast extends LitElement {
         window.addEventListener('display-message', this._onMessage.bind(this))
     }
 
-    updated(changedProperties){
-
-    }
-
     render() {
         return html`
             <style>
                 :host{                  
                     display: block;
                     position: fixed;
-                    z-index:30;
+                    z-index: 90;
                     bottom: -100px;
                     background-color: var(--paper-toast-background-color, #323232);
                     color: var(--paper-toast-color, #f1f1f1);

@@ -120,10 +120,8 @@ class TableViewNoLink extends LitElement {
 
     async _getItems() {
         if (this.request) {
-            CBNUtils.startLoading();
             this.items = await this.request.generateRequest();
         }
-        CBNUtils.stopLoading();
     }
 
 }

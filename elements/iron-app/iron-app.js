@@ -15,6 +15,7 @@ import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
 import logo from '/web/images/logo.svg';
+import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 
 export class IronApp extends LitElement {
 
@@ -31,7 +32,6 @@ export class IronApp extends LitElement {
             _selectedCompany: {type: String},
 
             collapsed: {type: Boolean},
-            temporaryCollapsed: {type: Boolean},
             isMobile: {type: Boolean},
             hideMenu: {type: Boolean},
             noHelp: {type: Boolean},
@@ -59,7 +59,7 @@ export class IronApp extends LitElement {
                 --group-section-color: white;
                 --group-section-background-color: var(--blue-color);
                 --selected-menu-background-color: #D1D1D1;
-                --selected-menu-border-color: black;
+                --selected-menu-border-color: #1a3d6b;
                 --selected-menu-color: var(--blue-color);
                 --border-menu-color: #cecece;
                 --background-menu-color: #f0f0f0;
@@ -97,7 +97,7 @@ export class IronApp extends LitElement {
             }
             .collapsed .header.logo{
                 align-items: flex-start;
-            } 
+            }
 
             .header.toolbar {
                 background: var(--app-primary-color);
@@ -112,6 +112,7 @@ export class IronApp extends LitElement {
                 top: 0;
                 bottom: 0;
                 left: 0;
+                z-index:40;
             }
 
             .right-side {
@@ -142,7 +143,7 @@ export class IronApp extends LitElement {
                 width: 0;
             }
 
-            .extended {
+            .collapsed:hover, .extended {
                 width: 200px;
             }
 
@@ -171,6 +172,7 @@ export class IronApp extends LitElement {
                 left: 0;
                 right: 0;
                 background: rgba(0, 0, 0, .43);
+                z-index: 40;
             }
 
             paper-fab{
@@ -185,7 +187,6 @@ export class IronApp extends LitElement {
                 background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
                 border-left: 3px solid var(--selected-menu-border-color, white);
                 cursor: pointer; 
-                                   
             }
             .menu-button:hover{
                 cursor: pointer;
@@ -203,7 +204,7 @@ export class IronApp extends LitElement {
                 border-top-right-radius: 25px;
                 border-bottom-right-radius: 25px;
                 box-sizing: border-box;
-                color: var(--menu-color, white)!important;
+                color: var(--menu-color, white);
             }
             
             .menu-button>iron-icon{
@@ -217,7 +218,7 @@ export class IronApp extends LitElement {
             }
             
             .menu-button:hover>iron-icon,.menu-button.iron-selected>iron-icon{
-                color: var(--menu-color, white);
+                color: var(--selected-menu-border-color, white);
             }
             
           
@@ -272,49 +273,28 @@ export class IronApp extends LitElement {
     get menuSections() {
         return [];
     }
-    _updateSmallScreen(state){
-        this.isMobile = state || this.constructor._isMobile();
-        this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
-        this.temporaryCollapsed = this.collapsed;
-    }
+
     constructor() {
         super();
         this._setPages(window.location.pathname);
         this._companies = window.data._companies;
         this._selectedCompany = window.data._selectedCompany;
 
+
         window.addEventListener('popstate', this._onPopstate.bind(this));
         window.addEventListener('show-page', this._showPage.bind(this)); //for layout
         window.addEventListener('click', this._onClick.bind(this));
 
-        let sizeMedia = window.matchMedia('(max-width: 992px)');
-        try {
-
-            // Chrome & Firefox
-            sizeMedia.addEventListener('change', (e) => {this._updateSmallScreen(e.matches)});
-        } catch (e1) {
-            try {
-                // Safari
-                sizeMedia.addListener((e) => {this._updateSmallScreen(e.matches)});
-            } catch (e2) {
-                console.error(e2);
-            }
-        }
-        this._updateSmallScreen(sizeMedia.matches);
+        installMediaQueryWatcher('(max-width: 992px)', (matches) => {
+            this.isMobile = matches || this.constructor._isMobile();
+            this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
+        });
         this.logoSrc = logo;
     }
 
     render() {
         // language=HTML
         return html`
-            <style>
-                .left-side {
-                    z-index: ${this.isMobile ? 40 : 10};
-                }
-                .overlay {
-                    z-index: ${this.isMobile ? 40 : 10};
-                }
-            </style>
             <confirm-delete></confirm-delete>
             ${!this.noHelp ? html`<paper-help></paper-help>` : ''}
             <paper-toast></paper-toast>
@@ -330,20 +310,17 @@ export class IronApp extends LitElement {
                             ${this.views}
                         </iron-selector>
                     </div>    
-                    
                     <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
-                        
                 </div>  
                 <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
-                <div class="${(!this.collapsed || (!this.temporaryCollapsed && this.collapsed)) ? 'extended' : (this.isMobile ? 'full-collapsed' : 'collapsed')} vertical layout left-side">
+                <div class="${ this.collapsed ? this.isMobile ? 'full-collapsed' :'collapsed':'extended' } vertical layout left-side">
                     <div class="header logo">                                                        
                         <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
                     </div>
                     <div slot="company-dropdown" class="horizontal layout">
                         <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
                     </div>
-                   
-                    <div class="vertical layout flex left-menu" @mouseenter="${this._onMouseEnterMenu}" @mouseleave="${this._onMouseLeaveMenu}">      
+                    <div class="vertical layout flex left-menu">      
                         <div class="flex menu-buttons-container" >
                             <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap" @iron-select="${this._onPageSelect.bind(this)}">
                                 ${this.menuSections.map(groupSection => html`
@@ -433,18 +410,6 @@ export class IronApp extends LitElement {
     _toggle() {
         this.collapsed = !this.collapsed;
         window.localStorage.setItem('collapsed', this.collapsed);
-    }
-
-    _onMouseEnterMenu() {
-        if (!this.isMobile && this.collapsed) {
-            this.temporaryCollapsed = false;
-        }
-    }
-
-    _onMouseLeaveMenu() {
-        if (!this.isMobile && this.collapsed) {
-            this.temporaryCollapsed = true;
-        }
     }
 
     _onClick(event) {

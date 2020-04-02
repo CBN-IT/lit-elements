@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 
 class PaperLoading extends LitElement {
 
@@ -9,70 +9,91 @@ class PaperLoading extends LitElement {
         };
     }
 
-    constructor() {
+    constructor(){
         super();
-        window.addEventListener('start-loading', this.open.bind(this));
-        window.addEventListener('stop-loading', this.close.bind(this));
+        this._nrLoadings=0;
+        this._bindedOpen = this.open.bind(this);
+        this._bindedClose = this.close.bind(this);
+    }
+
+    static get styles(){
+        // language=CSS
+        return [css`
+            :host {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            :host([opened]) {
+                display: flex;
+            }
+
+            .lds-dual-ring {
+                display: inline-block;
+                width: 120px;
+                height: 120px;
+            }
+
+            .lds-dual-ring:after {
+                content: " ";
+                display: block;
+                width: 120px;
+                height: 120px;
+                margin: 1px;
+                border-radius: 50%;
+                border: 10px solid var(--selected-menu-color, #1ac6b4);
+                border-color: var(--selected-menu-color, #1ac6b4) transparent var(--selected-menu-color, #1ac6b4) transparent;
+                animation: lds-dual-ring 1.2s linear infinite;
+            }
+
+            @keyframes lds-dual-ring {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        `]
     }
 
     render() {
-        return html`
-            <style>              
-                :host{
-                    position: fixed;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    /*background: white;*/
-                    z-index: 30;
-                    display: none; 
-                    align-items: center;
-                    justify-content: center;   
-                    flex-direction: column;  
-                }     
-                :host([opened]){
-                    display: flex;
-                }   
-                .lds-dual-ring {
-                    display: inline-block;
-                    width: 120px;
-                    height: 120px;
-                }
-                .lds-dual-ring:after {
-                    content: " ";
-                    display: block;
-                    width: 120px;
-                    height: 120px;
-                    margin: 1px;
-                    border-radius: 50%;
-                    border: 10px solid var(--selected-menu-color, #1ac6b4);
-                    border-color: var(--selected-menu-color, #1ac6b4) transparent var(--selected-menu-color, #1ac6b4) transparent;
-                    animation: lds-dual-ring 1.2s linear infinite;
-                }
-                @keyframes lds-dual-ring {
-                  0% {
-                    transform: rotate(0deg);
-                  }
-                  100% {
-                    transform: rotate(360deg);
-                  }
-                }          
-            </style>     
-            <div class="lds-dual-ring"></div>
-                                 
-        `;
+        return html`<div class="lds-dual-ring"></div>`;
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        window.addEventListener("start-loading", this._bindedOpen);
+        window.addEventListener("stop-loading", this._bindedClose);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener("start-loading", this._bindedOpen);
+        window.removeEventListener("stop-loading", this._bindedClose);
     }
 
     open() {
+        this._nrLoadings++;
         this.opened = true;
-        // CBNUtils.async(() => {this.style.opacity = 0.63;})
     }
 
     close() {
-        this.opened = false;
+        if (this._nrLoadings > 0) {
+            this._nrLoadings--;
+            if (this._nrLoadings === 0) {
+                this.opened = false;
+            }
+        }
     }
-
 }
 try {
     customElements.define('paper-loading', PaperLoading);

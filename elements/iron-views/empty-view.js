@@ -45,7 +45,6 @@ export class EmptyView extends LitElement {
     }
 
     refreshPage(){
-        CBNUtils.stopLoading();
     }
 
 }

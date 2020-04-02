@@ -22,7 +22,7 @@ class PaperHelp extends LitElement{
         return css`
             paper-fab{
                 background: var(--blue-color);
-                z-index: 11;
+                z-index: var(--paper-help-z-index, 11);
                 top: var(--paper-help-top, 3px);
                 right: var(--paper-help-right, 10px);
                 bottom: var(--paper-help-bottom, auto);
@@ -59,7 +59,6 @@ class PaperHelp extends LitElement{
     }
 
     _onSavedForm(){
-        CBNUtils.stopLoading();
         this.shadowRoot.querySelector('paper-dialog').close();
     }
 

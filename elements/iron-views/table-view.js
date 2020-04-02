@@ -153,12 +153,10 @@ export class TableView extends LitElement {
     }
 
     async _getItems() {
-    if (this.request && !this.disabledRequest) {
-      CBNUtils.startLoading();
-            await this.request.generateRequest();
-    }
-            CBNUtils.stopLoading();
+        if (this.request && !this.disabledRequest) {
+                await this.request.generateRequest();
         }
+    }
 
   onValueChanged() {}
 

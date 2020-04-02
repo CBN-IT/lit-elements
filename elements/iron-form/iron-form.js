@@ -1,6 +1,8 @@
 "use strict";
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {live} from '/node_modules/lit-html/directives/live.js';
+import {directive} from '/node_modules/lit-html/lit-html.js';
+
 import './../paper-input/paper-input.js';
 import './../paper-input/paper-textarea.js';
 import './../paper-select/paper-select.js';
@@ -13,7 +15,11 @@ import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
 
 import {gridClasses} from "./../grid-layout/grid-classes.js";
-
+//https://github.com/Polymer/lit-html/issues/877
+//https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
+const forceWrite = directive((value) => (part) => {
+    part.setValue(value);
+});
 class IronForm extends LitElement {
 
     static get properties() {
@@ -133,7 +139,7 @@ class IronForm extends LitElement {
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}"
                         .format="${elementConfig.format}"
-                        .value="${live(this._model[elementConfig.name])}"></paper-date-picker>`;
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-date-picker>`;
             }
             case 'time': {
                 return html`
@@ -146,7 +152,7 @@ class IronForm extends LitElement {
                         .required="${elementConfig.required}" 
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-date-time-picker>`;
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-date-time-picker>`;
             }
             case 'file': {
                 return html`
@@ -159,7 +165,7 @@ class IronForm extends LitElement {
                         .required="${elementConfig.required}" 
                         .disabled="${elementConfig.disabled}" 
                         .multiple="${elementConfig.multiple}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-file>`
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-file>`
             }
             case 'checkbox': {
                 return html`
@@ -172,7 +178,7 @@ class IronForm extends LitElement {
                         .required="${elementConfig.required}" 
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-checkbox>`
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-checkbox>`
             }
             case 'select': {
                 return html`
@@ -191,7 +197,7 @@ class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}" 
                         .itemLabelProperty="${elementConfig.itemLabelProperty}" 
                         .options="${elementConfig.options}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-select>`
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-select>`
             }
             case 'address': {
                 return html`
@@ -210,7 +216,7 @@ class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}" 
                         .itemLabelProperty="${elementConfig.itemLabelProperty}" 
                         .options="${elementConfig.options}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-address>`
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-address>`
             }
             case 'textarea': {
                 return html`
@@ -225,7 +231,7 @@ class IronForm extends LitElement {
                         .minLength="${elementConfig.minLength}" 
                         .maxLength="${elementConfig.maxLength}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-textarea>`;
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-textarea>`;
             }
             case 'paragraph': {
                 return html`
@@ -252,7 +258,7 @@ class IronForm extends LitElement {
                         .isCNP="${elementConfig.isCNP}" 
                         .isCIF="${elementConfig.isCIF}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${live(this._model[elementConfig.name])}"></paper-input>`
+                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-input>`
             }
         }
     }
@@ -315,7 +321,6 @@ class IronForm extends LitElement {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});
                 return;
             }
-            CBNUtils.startLoading();
             this.request.body = {collection: this.collection, ...this._model, ...this.params};
             let response = await this.request.generateRequest();
             CBNUtils.fireEvent(this, 'saved-form', {response});

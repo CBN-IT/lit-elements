@@ -137,10 +137,8 @@ export class TableViewWithLink extends LitElement {
 
     async _getItems() {
         if (this.request && !this.disabledRequest) {
-            CBNUtils.startLoading();
             this.items = await this.request.generateRequest();
         }
-        CBNUtils.stopLoading();
     }
 
     async _deleteItem(event) {

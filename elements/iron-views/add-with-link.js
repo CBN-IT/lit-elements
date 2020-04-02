@@ -103,8 +103,6 @@ export class AddWithLink extends LitElement {
 
     _onSavedForm(event) {
         this.model._id = event.detail.response._id;
-        CBNUtils.stopLoading();
-        // CBNUtils.fireEvent(this, 'show-page', {name: this.listView});
     }
 
   refreshPage(newPage, oldPage) {
@@ -123,7 +121,6 @@ export class AddWithLink extends LitElement {
 
     _onNewDocument() {
         this.model = this.defaultModel;
-        CBNUtils.stopLoading();
     }
 
     _getDocument(_id) {
@@ -135,7 +132,6 @@ export class AddWithLink extends LitElement {
 
     _onIronResponse(event) {
         this.model = event.detail.response;
-        CBNUtils.stopLoading();
     }
 
 }

@@ -30,7 +30,7 @@ class PaperDialog extends LitElement {
                     bottom: 0;
                     left: 0;
                     right: 0;
-                    z-index: 20;
+                    z-index: 50;
                     display: none;
                     align-items: center;
                     justify-content: center;   

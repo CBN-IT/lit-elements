@@ -135,7 +135,6 @@ class AddForm extends AddWithLink{
 
     _onIronResponse(event) {
         this.model = {...event.detail.response, code: JSON.stringify(JSON.parse(event.detail.response.code), null,  "\t")};
-        CBNUtils.stopLoading();
     }
 
 }
