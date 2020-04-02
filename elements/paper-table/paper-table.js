@@ -258,8 +258,8 @@ class PaperTable extends LitElement {
                 return;
             }
             columns.forEach(column => {
-                column.icon = 'unfold-more';
-                column.sortType = 0;
+                column.sortType = column.sortType || 0;
+                column.icon = this._getIcon(column.sortType);
             });
             this._columns = columns;
         }
@@ -271,7 +271,11 @@ class PaperTable extends LitElement {
 
     set items(items) {
         this._items = items.map((item, index) => {
-            return {...item, initialIndex: index, isSelected: false}
+            return {
+                ...item,
+                initialIndex: index,
+                isSelected: false
+            }
         });
         this._filteredItems = [...this._items];
         this.updateComplete.then(() => {
@@ -285,8 +289,16 @@ class PaperTable extends LitElement {
         });
     }
 
+    get items(){
+        return this._items;
+    }
+
     get selectedItems() {
         return this._filteredItems.filter(item => item.isSelected);
+    }
+
+    get filteredItems(){
+        return this._filteredItems;
     }
 
     _firstRender() {
@@ -577,7 +589,7 @@ class PaperTable extends LitElement {
             } else if (typeof prop1Nr !== "number" && typeof prop2Nr === "number") {
                 return sortType;
             } else if (typeof prop1Nr === "number" && typeof prop2Nr === "number" && prop1Nr !== prop2Nr) {
-                return (prop1Str - prop2Str) * sortType;
+                return (prop1Nr - prop2Nr) * sortType;
             } else {
                 return (prop1Str + "").localeCompare(prop2Str+"") * sortType;
             }
