@@ -1,13 +1,13 @@
 "use strict";
 import {TableViewWithLink} from './../iron-views/table-view-with-link.js'
 
-class ReportsView extends TableViewWithLink{
+class ReportsView extends TableViewWithLink {
 
-    static get styles(){
+    static get styles() {
         return super.styles;
     }
 
-    constructor(){
+    constructor() {
         super();
         this.collection = 'report';
         this.addView = 'add-report';
@@ -28,9 +28,6 @@ class ReportsView extends TableViewWithLink{
     }
 
 }
-try {
-    customElements.define('reports-view', ReportsView);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('reports-view', ReportsView);
 

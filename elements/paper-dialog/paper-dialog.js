@@ -2,74 +2,96 @@
 import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from './../flex-layout/flex-layout-classes.js';
 import './../paper-button/paper-button.js'
+import {css} from "lit-element";
 
 class PaperDialog extends LitElement {
 
     static get properties() {
         return {
-            opened: {type: Boolean},
+            opened: {
+                type: Boolean,
+                reflect: true
+            },
             noActions: {type: Boolean},
-            preventClosing: {type:Boolean}
+            preventClosing: {type: Boolean}
         };
     }
 
-    static get styles(){
-        return [flexLayoutClasses]
+    static get styles() {
+        return [flexLayoutClasses, this.styleElement]
     }
 
-    constructor() {
-        super();
+    static get styleElement() {
+        // language=CSS
+        return css`
+            :host {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                opacity: 0;
+                transition: transform 0.3s, opacity 0.3s ease-in-out, visibility 0.3s;
+                visibility: hidden;
+                transform: translate(0px, 100px);
+            }
+
+            :host([opened]) {
+                opacity: 1;
+                pointer-events: all;
+                visibility: visible;
+                transform: translate(0px, 0px);
+            }
+
+            .container {
+                background: white;
+                max-width: var(--max-dialog-width);
+                min-width: var(--min-dialog-width);
+                min-height: 0;
+                border-radius: 5px;
+                z-index: 1;
+            }
+
+            .header, .body {
+                padding: 10px 10px;
+            }
+
+            .body {
+                overflow: auto;
+                display: flex;
+            }
+
+            .buttons {
+                padding: 10px 0;
+            }
+
+            .close-button {
+                background: var(--red-color);
+                margin: 0 0 0 10px;
+            }
+
+            h3 {
+                margin: 0;
+            }
+
+            #overlay {
+                position: absolute;
+                top: -100px;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: rgba(0, 0, 0, .43);
+            }
+        `
     }
 
     render() {
         return html`
-            <style>              
-                :host{
-                    position: fixed;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    z-index: 50;
-                    display: none;
-                    align-items: center;
-                    justify-content: center;   
-                    flex-direction: column;                           
-                }   
-                .container{                   
-                    background: white;
-                    max-width: var(--max-dialog-width);
-                    min-width: var(--min-dialog-width);
-                    min-height: 0;
-                    border-radius: 5px;
-                    z-index: 1;
-                }     
-                .header,.body{
-                    padding: 10px 10px;
-                }  
-                .body{
-                    overflow: auto;
-                    display: flex;
-                }
-                .buttons{
-                    padding: 10px 0;
-                }                   
-                .close-button{
-                    background: var(--red-color);
-                    margin: 0 0 0 10px;
-                }
-                h3{
-                    margin: 0;
-                }
-                #overlay{
-                    position: absolute;
-                    top:0;
-                    left:0;
-                    bottom:0;
-                    right:0;
-                    background: rgba(0,0,0,.43);
-                }
-            </style>
             <div id="overlay" @click=${this._onCancelClick}></div>
             <div class="container vertical layout">
                 <div class="header horizontal layout center">
@@ -92,49 +114,36 @@ class PaperDialog extends LitElement {
                         <slot name="button"></slot>
                     </div>
                 `}
-                
             </div>      
-                                 
         `;
     }
-    updated(changedProperties){
-        if(!CBNUtils.isNoE(this.opened)){
-            this._updateStyle();
-        }
-    }
 
-    _onCancelClick(){
+
+    _onCancelClick() {
         let e = CBNUtils.fireEvent(this, 'cancel-click');
-        if(!e.defaultPrevented){
+        if (!e.defaultPrevented) {
             this.opened = false;
         }
     }
 
-    _onSaveClick(){
+    _onSaveClick() {
         let e = CBNUtils.fireEvent(this, 'save-click');
-        if(!e.defaultPrevented && !this.preventClosing){
+        if (!e.defaultPrevented && !this.preventClosing) {
             this.opened = false;
         }
     }
 
-    _updateStyle(){
-        this.style.display = this.opened ? 'flex' : 'none';
-    }
-
-    open(){
+    open() {
         this.opened = true;
     }
 
-    close(){
+    close() {
         this.opened = false;
     }
 
 }
-try {
-    customElements.define('paper-dialog', PaperDialog);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('paper-dialog', PaperDialog);
 
 
 

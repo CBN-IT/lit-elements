@@ -79,11 +79,7 @@ class TableDemo extends LitElement {
         `;
     }
 }
-try {
-    customElements.define("table-demo", TableDemo);
-} catch (e) {
-    console.log(e);
-}
+customElements.define("table-demo", TableDemo);
 
 
 

@@ -11,29 +11,29 @@ export class EmptyView extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses, this.styleElement]
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-            :host{
+            :host {
                 display: flex;
             }
         `
     }
 
-    set currentPage(page){
+    set currentPage(page) {
         this._currentPage = page;
         this.refreshPage();
     }
 
-    get currentPage(){
+    get currentPage() {
         return this._currentPage;
     }
 
-    firstUpdated(){
+    firstUpdated() {
         this.request = this.shadowRoot.querySelector('.request');
         this.refreshPage();
     }
@@ -44,15 +44,12 @@ export class EmptyView extends LitElement {
         `;
     }
 
-    refreshPage(){
+    refreshPage() {
     }
 
 }
-try {
-    customElements.define("empty-view", EmptyView);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("empty-view", EmptyView);
 
 
 

@@ -3,17 +3,17 @@ import {PaperIconDropdown} from './../paper-icon-dropdown/paper-icon-dropdown.js
 
 class PaperReportsDropdown extends PaperIconDropdown {
 
-    static get properties(){
+    static get properties() {
         return {
             table: {type: Object}
         }
     }
 
-    static get styles(){
+    static get styles() {
         return super.styles;
     }
 
-    constructor(){
+    constructor() {
         super();
         this.direction = 'bottom-right';
         this.itemLabelProperty = 'reportName';
@@ -21,27 +21,24 @@ class PaperReportsDropdown extends PaperIconDropdown {
         this.icon = 'chart';
     }
 
-    _selectedOptionByValue(value){
+    _selectedOptionByValue(value) {
         CBNUtils.fireEvent(this, 'get-report', {
             keys: this.table.selectedItems,
             report: value
         });
     }
 
-  _openDropdown() {
-    if(!this.options || this.options.length === 0){
-      CBNUtils.displayMessage('Nu exista rapoarte pentru aceasta sectiune', 'warning');
-      return;
+    _openDropdown() {
+        if (!this.options || this.options.length === 0) {
+            CBNUtils.displayMessage('Nu exista rapoarte pentru aceasta sectiune', 'warning');
+            return;
+        }
+        this.ironOverlay.openOverlay();
     }
-    this.ironOverlay.openOverlay();
-  }
 
 }
-try {
-    customElements.define('paper-reports-dropdown', PaperReportsDropdown);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('paper-reports-dropdown', PaperReportsDropdown);
 
 
 

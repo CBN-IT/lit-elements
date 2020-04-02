@@ -27,40 +27,36 @@ class IronSelector extends LitElement {
         this._skip = true;
     }
 
-    updated(changedProperties){
-        // this._select(this.selected);
-    }
-
     render() {
         return html`
             <slot @slotchange="${this.changedItems}"></slot> 
         `;
     }
 
-    set selected(value){
+    set selected(value) {
         this._selected = value;
-    if(value === undefined || value === ''){
-      this.deselect();
-    } else {
-        this._select(value);
+        if (value === undefined || value === '') {
+            this.deselect();
+        } else {
+            this._select(value);
+        }
     }
-  }
 
-    get selected(){
+    get selected() {
         return this._selected;
     }
 
     changedItems() {
-        if(this._skip){
+        if (this._skip) {
             this._skip = false;
             return;
         }
         let items = this._getItems(this.shadowRoot.querySelector("slot"));
-        if(!this.isPages){
-            items.forEach((item,index) => {
-        if (!this.attrForSelected ||  item.hasAttribute(this.attrForSelected)) {
-                item.addEventListener("click", this._onClick.bind(this, index));
-        }
+        if (!this.isPages) {
+            items.forEach((item, index) => {
+                if (!this.attrForSelected || item.hasAttribute(this.attrForSelected)) {
+                    item.addEventListener("click", this._onClick.bind(this, index));
+                }
             });
         }
         this.items = items;
@@ -68,60 +64,57 @@ class IronSelector extends LitElement {
 
     }
 
-    _getItems(slot){
+    _getItems(slot) {
         return Array.from(slot.assignedNodes()).filter(element => element instanceof Element).reduce((currentValue, item) => {
             item instanceof HTMLSlotElement ? currentValue.push(...this._getItems(item)) : currentValue.push(item);
             return currentValue;
         }, []);
     }
 
-    _onClick(index, event){
-        let selected = this.attrForSelected ? event.currentTarget.getAttribute(this.attrForSelected): index;
+    _onClick(index, event) {
+        let selected = this.attrForSelected ? event.currentTarget.getAttribute(this.attrForSelected) : index;
         this.select(selected);
     }
 
-    select(selected){
+    select(selected) {
         this.selected = selected;
     }
 
-    deselect(){
-    if(this.items){
-        this.items.forEach((item, index) => {
-            item.classList.remove('iron-selected');
-        });
+    deselect() {
+        if (this.items) {
+            this.items.forEach((item, index) => {
+                item.classList.remove('iron-selected');
+            });
+        }
     }
-  }
 
-    _select(selected, preventEvent){
-        if(selected === undefined || !this.items || this.items.length === 0){
+    _select(selected, preventEvent) {
+        if (selected === undefined || !this.items || this.items.length === 0) {
             return;
         }
         this.items.forEach((item, index) => {
-            if(this.attrForSelected ? item.getAttribute('name') === selected : index === selected){
-                if(this.isPages){
+            if (this.attrForSelected ? item.getAttribute('name') === selected : index === selected) {
+                if (this.isPages) {
                     item.style.display = 'flex';
                 } else {
                     item.classList.add('iron-selected');
                 }
             } else {
-                if(this.isPages){
+                if (this.isPages) {
                     item.style.display = 'none';
                 } else {
                     item.classList.remove('iron-selected');
                 }
             }
         });
-        if(!preventEvent){
+        if (!preventEvent) {
             CBNUtils.fireEvent(this, 'iron-select', {selected: this.selected});
         }
     }
 
 }
-try {
-    customElements.define("iron-selector", IronSelector);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("iron-selector", IronSelector);
 
 
 

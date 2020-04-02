@@ -26,33 +26,37 @@ export class PaperInputContainer extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         // language=CSS
-        return [css`                
-            :host{           
+        return [css`
+            :host {
                 display: flex;
                 width: 100%;
                 outline: 0;
                 position: relative;
-            }                  
-            :host([disabled]){
+            }
+
+            :host([disabled]) {
                 pointer-events: none;
             }
-            .overlay{
+
+            .overlay {
                 position: absolute;
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
             }
-            .form-field{
+
+            .form-field {
                 width: 100%;
                 padding: var(--input-padding, 10px);
                 outline: 0;
                 position: relative;
                 box-sizing: border-box;
             }
-            .input-container{                 
+
+            .input-container {
                 border: var(--input-container-border, 1px solid #b8b8b8);
                 border-radius: 4px;
                 box-sizing: border-box;
@@ -61,39 +65,47 @@ export class PaperInputContainer extends LitElement {
                 display: flex;
                 padding: var(--input-container-padding, 1px 1px 1px 16px);
                 align-items: center;
-             } 
-            .input-container:hover{
+            }
+
+            .input-container:hover {
                 border: var(--input-container-border, 1px solid black);
-            } 
-            .focused .input-container{
+            }
+
+            .focused .input-container {
                 border: var(--input-container-border, 2px solid var(--highlight-color, #6200ee));
                 padding: var(--input-container-padding, 0 0 0 15px);
             }
-            .disabled .input-container > *{
+
+            .disabled .input-container > * {
                 opacity: 0.33;
             }
-            .disabled .input-container{
+
+            .disabled .input-container {
                 border-style: dashed;
             }
-            .invalid .input-container{
+
+            .invalid .input-container {
                 border: var(--input-container-border, 2px solid #dd2c00);
-                padding: var(--input-container-padding, 0 0 0 15px); 
+                padding: var(--input-container-padding, 0 0 0 15px);
             }
-            .input, input{
+
+            .input, input {
                 font-family: inherit;
                 font-size: inherit;
                 border: 0;
                 outline: none;
-                margin:0;
+                margin: 0;
                 width: 100%;
                 box-sizing: border-box;
                 color: rgba(0, 0, 0, 0.87);
                 resize: none;
             }
-            textarea{
-               margin: 10px 0!important;
-            }          
-            .label{
+
+            textarea {
+                margin: 10px 0 !important;
+            }
+
+            .label {
                 position: absolute;
                 overflow: hidden;
                 white-space: nowrap;
@@ -101,27 +113,27 @@ export class PaperInputContainer extends LitElement {
                 padding: 0 4px;
                 color: #8a8a8a;
                 top: calc(50% - 9px);
-                left:24px;
+                left: 24px;
                 cursor: text;
-                background: white;  
-                transition: top 0.1s;  
-                max-width: calc(100% - 50px);  
-                box-sizing: border-box;   
-                user-select: none;          
-            }                               
-            
-            .floated{
+                background: white;
+                transition: top 0.1s;
+                max-width: calc(100% - 50px);
+                box-sizing: border-box;
+                user-select: none;
+            }
+
+            .floated {
                 /*z-index: 1;*/
                 top: 4px;
                 font-size: 12px;
-                color: #8a8a8a;                   
-            }                  
-            
-            .focused .label{
+                color: #8a8a8a;
+            }
+
+            .focused .label {
                 color: var(--highlight-color, #6200ee)
             }
-                                                                                       
-            .invalid .label{                   
+
+            .invalid .label {
                 color: #dd2c00;
             }
         `];
@@ -130,22 +142,22 @@ export class PaperInputContainer extends LitElement {
     constructor() {
         super();
         this.tabindex = "1";
-        this.value=this.defaultValue;
+        this.value = this.defaultValue;
     }
 
     render() {
         return html`
-            <div class="form-field ${this.focused ? 'focused': ''} ${this.isValid ? 'valid': 'invalid'} ${this.disabled ? 'disabled' : ''}">
+            <div class="form-field ${this.focused ? 'focused' : ''} ${this.isValid ? 'valid' : 'invalid'} ${this.disabled ? 'disabled' : ''}">
                 <div class="input-container">   
                     ${this.inputElement}                                                                             
                 </div>
             </div>
-            <label class="label ${this.floated ? 'floated': ''}">${this.label}</label>
+            <label class="label ${this.floated ? 'floated' : ''}">${this.label}</label>
             <div class="${this.disabled ? 'overlay' : ''}"></div>
         `;
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         this.input = this.shadowRoot.querySelector(".input");
         this.input.addEventListener('focus', this._onInputFocus.bind(this));
         this.input.addEventListener('blur', this._onInputBlur.bind(this));
@@ -157,99 +169,68 @@ export class PaperInputContainer extends LitElement {
         this.input.addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
-    updated(changedProperties){
-        /*if(changedProperties.has('required')){
-            this.validate(this._value);
-        }
-        if(changedProperties.has('defaultValue') && (this.isValid !== true || changedProperties.get('defaultValue') === this.value)){
-            this.value = this.defaultValue;
-        }*/
-    }
 
-    _onInputFocus(){
-
-        // this.focused = true;
-        // this.floated = true;
-    }
-
-    _onFocus(event){
-        // console.log("focus general " + event);
+    _onFocus(event) {
         this.focus();
         this._focusInput();
     }
 
-    _onBlur(event){
-        // console.log("blur general " + event);
-        if(event && event.relatedTarget !== this){
+    _onBlur(event) {
+        if (event && event.relatedTarget !== this) {
             this.blur();
         }
     }
 
-    _onInputBlur(event){
-        // console.log("blur input " + event);
-        if(event && event.relatedTarget === this){
+    _onInputBlur(event) {
+        if (event && event.relatedTarget === this) {
             this._focusInput();
         }
 
     }
 
-    _isFloated(){
+    _isFloated() {
         return !CBNUtils.isNoE(this.value);
     }
 
-    _onInput(){
+    _onInput() {
         this.validate(this.input.value, true);
     }
 
-    _focusInput(){
-        if(this.input){
+    _focusInput() {
+        if (this.input) {
             this.input.focus();
         }
         this.scrollIntoViewIfNeeded();
     }
 
-    clearInput(){
-        if(this.input){
+    clearInput() {
+        if (this.input) {
             this.input.value = "";
         }
     }
 
-    blur(preventFocusChange){
-        // console.log(document.activeElement);
-        /*if(!preventFocusChange){
-            this.focused = false;
-        }
-        if(this.focused){
-            this._focusInput();
-        }
-        this.floated = this.focused || this._isFloated();*/
-
+    blur(preventFocusChange) {
         this.focused = false;
         this.floated = this._isFloated();
     }
 
-    focus(){
+    focus() {
         this.focused = true;
         this.floated = true;
-        // this.floated = true;
     }
 
-    validate(){}
+    validate() {
+    }
 
-    onKeyDown(){}
+    onKeyDown() {
+    }
 
-    get inputElement(){}
+    get inputElement() {
+    }
 
-    get styleElement(){
+    get styleElement() {
         return html``;
     }
 
 }
-try {
-// customElements.define('paper-input-container', PaperInputContainer);
-} catch (e) {
-    console.log(e);
-}
-
-
 

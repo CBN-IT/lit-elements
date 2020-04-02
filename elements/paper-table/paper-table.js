@@ -289,7 +289,7 @@ class PaperTable extends LitElement {
         });
     }
 
-    get items(){
+    get items() {
         return this._items;
     }
 
@@ -297,7 +297,7 @@ class PaperTable extends LitElement {
         return this._filteredItems.filter(item => item.isSelected);
     }
 
-    get filteredItems(){
+    get filteredItems() {
         return this._filteredItems;
     }
 
@@ -309,7 +309,7 @@ class PaperTable extends LitElement {
         let _endIndex = 0;
         while (_endIndex < this._filteredItems.length && currentHeight < this.viewHieght) {
             let row = this._createRow(currentHeight, _endIndex);
-            if(_endIndex===0){
+            if (_endIndex === 0) {
                 this._realRowHeight = parseFloat(window.getComputedStyle(row).height);
             }
             currentHeight += this._realRowHeight;
@@ -572,15 +572,15 @@ class PaperTable extends LitElement {
 
     _sort(property, sortType) {
         this._filteredItems.sort(function (a, b) {
-            let prop1Str, prop2Str, prop1Nr=null, prop2Nr=null;
+            let prop1Str, prop2Str, prop1Nr = null, prop2Nr = null;
             prop1Str = (a[property] === undefined || a[property] === null) ? "" : a[property];
             prop2Str = (b[property] === undefined || b[property] === null) ? "" : b[property];
             prop1Str = a[property] instanceof Array ? a[property].join(",") : prop1Str;
             prop2Str = b[property] instanceof Array ? b[property].join(",") : prop2Str;
-            if (!isNaN(parseFloat(prop1Str)) || typeof prop1Str ==="number") {
+            if (!isNaN(parseFloat(prop1Str)) || typeof prop1Str === "number") {
                 prop1Nr = parseFloat(prop1Str);
             }
-            if (!isNaN(parseFloat(prop2Str))|| typeof prop2Str ==="number") {
+            if (!isNaN(parseFloat(prop2Str)) || typeof prop2Str === "number") {
                 prop2Nr = parseFloat(prop2Str);
             }
             //first empty strings then strings then numbers
@@ -591,7 +591,7 @@ class PaperTable extends LitElement {
             } else if (typeof prop1Nr === "number" && typeof prop2Nr === "number" && prop1Nr !== prop2Nr) {
                 return (prop1Nr - prop2Nr) * sortType;
             } else {
-                return (prop1Str + "").localeCompare(prop2Str+"") * sortType;
+                return (prop1Str + "").localeCompare(prop2Str + "") * sortType;
             }
         });
         this._updateFilteredItems();
@@ -761,11 +761,7 @@ class PaperTable extends LitElement {
 
 }
 
-try {
-    customElements.define('paper-table', PaperTable);
-} catch (e) {
-    console.log(e);
-}
+customElements.define('paper-table', PaperTable);
 
 
 

@@ -4,11 +4,11 @@ export class CompanyView extends TableView {
 
     get properties() {
         return {
-          base: String
+            base: String
         }
     }
 
-    set collection(value){
+    set collection(value) {
         super.collection = value;
         this.config = {
             elements: [...window.data._configs[this._collection].elements,
@@ -24,19 +24,16 @@ export class CompanyView extends TableView {
         };
     }
 
-    constructor(){
+    constructor() {
         super();
         this.addEventListener('open-company-view', this._openCompanyView);
     }
 
-    _openCompanyView(event){
+    _openCompanyView(event) {
         event.stopPropagation();
         window.open(this.base ? `/${this.base}?_companyId=${event.detail._id}` : `?_companyId=${event.detail._id}`);
     }
 }
-try {
-    customElements.define("company-view", CompanyView);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("company-view", CompanyView);
 

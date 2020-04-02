@@ -1,16 +1,16 @@
 "use strict";
 import {TableViewWithLink} from './../iron-views/table-view-with-link.js'
 
-class ColumnView extends TableViewWithLink{
+class ColumnView extends TableViewWithLink {
 
-    static get styles(){
+    static get styles() {
         return super.styles;
     }
 
-    constructor(){
+    constructor() {
         super();
         this.collection = 'column';
-    this.addView = 'add-column';
+        this.addView = 'add-column';
         this.getUrl = '/GetColumns';
         this.columns = [
             {
@@ -22,9 +22,6 @@ class ColumnView extends TableViewWithLink{
         ];
     }
 }
-try {
-    customElements.define('column-view', ColumnView);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('column-view', ColumnView);
 

@@ -25,14 +25,14 @@ class PaperTextarea extends PaperInputContainer {
         return html`<textarea class="input" rows="${this.rows || 1}" .value="${this._value}" ?disabled="${this.disabled}" ></textarea>`;
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
     }
 
     set value(value) {
-        if(!CBNUtils.isNoE(value)){
+        if (!CBNUtils.isNoE(value)) {
             this._value = value;
-        } else if((value === null || value === undefined) && this.defaultValue){
+        } else if ((value === null || value === undefined) && this.defaultValue) {
             this._value = this.defaultValue;
         } else {
             this._value = '';
@@ -45,18 +45,18 @@ class PaperTextarea extends PaperInputContainer {
         return this._value;
     }
 
-    validate(value){
+    validate(value) {
         this._validate(value);
         this._resizeTextArea();
     }
 
-    _resizeTextArea(){
-        if (this.input && this.input.clientHeight < this.input.scrollHeight){
+    _resizeTextArea() {
+        if (this.input && this.input.clientHeight < this.input.scrollHeight) {
             this.input.style.height = this.input.scrollHeight + 'px';
         }
     }
 
-    _validate(value){
+    _validate(value) {
         this.isValid = (!this.required || !CBNUtils.isNoE(value)) && this._validateText(value);
         this._value = value;
         CBNUtils.fireEvent(this, 'value-changed', {
@@ -66,16 +66,13 @@ class PaperTextarea extends PaperInputContainer {
         return this.isValid;
     }
 
-    _validateText(value){
+    _validateText(value) {
         return !isNaN(this.minLength) && !isNaN(this.maxLength) && !CBNUtils.isNoE(value) ? value.length >= this.minLength && value.length <= this.maxLength : true;
     }
 
 }
-try {
-    customElements.define('paper-textarea', PaperTextarea);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('paper-textarea', PaperTextarea);
 
 
 

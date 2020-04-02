@@ -7,7 +7,7 @@ import './../ace-editor/ace-editor.js';
 import './../form-editor/form-editor.js';
 import {css} from "/node_modules/lit-element/lit-element.js";
 
-class AddForm extends AddWithLink{
+class AddForm extends AddWithLink {
 
     static get properties() {
         return {
@@ -18,47 +18,50 @@ class AddForm extends AddWithLink{
             }
         }
     }
-    static get styleElement(){
+
+    static get styleElement() {
         // language=CSS
         return css`
             form-editor {
                 flex-direction: column;
             }
-            :host{
+
+            :host {
                 display: flex;
             }
         `
     }
 
-    static get styles(){
-        return [super.styles,this.styleElement];
+    static get styles() {
+        return [super.styles, this.styleElement];
     }
 
-    get defaultModel(){
+    get defaultModel() {
         return {
-            code:'{"elements": []}',
-            collection:""
+            code: '{"elements": []}',
+            collection: ""
         };
     }
 
-    get listView(){
+    get listView() {
         return 'forms-view';
     }
+
     constructor() {
         super();
-        this.pages = ["Form","Form-Editor",'Demo', 'Code'];
+        this.pages = ["Form", "Form-Editor", 'Demo', 'Code'];
         this.collection = 'form';
-        this.tabindex="1";
+        this.tabindex = "1";
         this._bindedSaveFormFromKeyDown = this._saveFormFromKeyDown.bind(this);
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.tabs = this.shadowRoot.querySelector('paper-tabs');
         this.form = this.shadowRoot.querySelector('iron-form');
     }
 
-    render(){
+    render() {
         return html`
             <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <paper-tabs .pages="${this.pages}" class="flex" @tab-select="${this._changedTab}">
@@ -69,18 +72,20 @@ class AddForm extends AddWithLink{
             </paper-tabs>
         `;
     }
-    _safeParseJson(val){
-        if(typeof val!=="string"){
+
+    _safeParseJson(val) {
+        if (typeof val !== "string") {
             return val;
         }
-        try{
+        try {
             return JSON.parse(val)
-        }catch (e) {
+        } catch (e) {
             return JSON.parse(this.defaultModel["code"]);
         }
     }
-    _changedTab(e){
-        if(e.detail.oldTab===3){
+
+    _changedTab(e) {
+        if (e.detail.oldTab === 3) {
             try {
                 JSON.parse(this.shadowRoot.querySelector("ace-editor").value);
                 this.model.code = this.shadowRoot.querySelector("ace-editor").value;
@@ -88,16 +93,17 @@ class AddForm extends AddWithLink{
             } catch (ignored) {
             }
         }
-        if(e.detail.oldTab===1){
+        if (e.detail.oldTab === 1) {
             try {
                 let val = this.shadowRoot.querySelector("form-editor").value;
-                this.model.code = JSON.stringify(val,null,4);
+                this.model.code = JSON.stringify(val, null, 4);
                 this.requestUpdate();
             } catch (ignored) {
             }
         }
     }
-    _saveForm(event){
+
+    _saveForm(event) {
         if (this.tabs.selectedTab === 3) {
             try {
                 let val = JSON.parse(this.shadowRoot.querySelector("ace-editor").value);
@@ -114,33 +120,34 @@ class AddForm extends AddWithLink{
 
         this.form._submitForm();
     }
-    _saveFormFromKeyDown(){
+
+    _saveFormFromKeyDown() {
         if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && event.key === "s") {
             event.preventDefault();
             this._saveForm();
         }
     }
 
-    refreshPage(oldValue, newValue){
+    refreshPage(oldValue, newValue) {
         super.refreshPage(oldValue, newValue);
-        if(newValue && newValue.page === this.name){
-            window.addEventListener("keydown",this._bindedSaveFormFromKeyDown);
-            if(this.tabs){
+        if (newValue && newValue.page === this.name) {
+            window.addEventListener("keydown", this._bindedSaveFormFromKeyDown);
+            if (this.tabs) {
                 this.tabs.refresh();
             }
-        }else{
-            window.removeEventListener("keydown",this._bindedSaveFormFromKeyDown);
+        } else {
+            window.removeEventListener("keydown", this._bindedSaveFormFromKeyDown);
         }
     }
 
     _onIronResponse(event) {
-        this.model = {...event.detail.response, code: JSON.stringify(JSON.parse(event.detail.response.code), null,  "\t")};
+        this.model = {
+            ...event.detail.response,
+            code: JSON.stringify(JSON.parse(event.detail.response.code), null, "\t")
+        };
     }
 
 }
-try {
-    customElements.define("add-form", AddForm);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("add-form", AddForm);
 

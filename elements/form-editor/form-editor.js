@@ -2,7 +2,7 @@
 import {LitElement} from '/node_modules/lit-element/lit-element.js';
 import {repeat} from '/node_modules/lit-html/directives/repeat.js';
 import {gridClasses} from "./../grid-layout/grid-classes.js";
-import {html,css} from "/node_modules/lit-element/lit-element.js";
+import {html, css} from "/node_modules/lit-element/lit-element.js";
 import "./../paper-dialog/paper-dialog.js";
 import "./../iron-form/iron-form.js";
 import './../iron-icons/iron-icons.js';
@@ -12,18 +12,19 @@ class FormEditor extends LitElement {
 
     static get properties() {
         return {
-            value:{
-                type:Object
+            value: {
+                type: Object
             },
-            _json:{
-                type:Object
+            _json: {
+                type: Object
             },
-            configs:{
-                type:Object
+            configs: {
+                type: Object
             }
         };
     }
-    constructor(){
+
+    constructor() {
         super();
         this.configs = {
             "date": {
@@ -103,7 +104,6 @@ class FormEditor extends LitElement {
                         "required": false,
                         "minLength": 0,
                         "maxLength": 100,
-
 
 
                     }
@@ -186,7 +186,6 @@ class FormEditor extends LitElement {
                         "required": false,
                         "minLength": 0,
                         "maxLength": 100,
-
 
 
                     }
@@ -861,31 +860,31 @@ class FormEditor extends LitElement {
             },
         };
     }
-    static get styles(){
+
+    static get styles() {
         return [gridClasses, this.styleElement]
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
 
             .hidden {
-                display: none;
+                display: none !important;
             }
 
-            .container.pointerNone .box{
+            .container.pointerNone .box {
                 pointer-events: none;
             }
 
             .container {
-                /*background-color: #eeeeee;*/
                 display: flex;
                 flex-wrap: wrap;
                 width: 100%;
                 position: relative;
             }
 
-            #newItemsContainer{
+            #newItemsContainer {
                 background-color: #818181;
             }
 
@@ -938,10 +937,10 @@ class FormEditor extends LitElement {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
             }
 
-            .box:hover{
+            .box:hover {
                 background: #cef0ff;
             }
-            
+
             .required {
                 color: red;
                 font-weight: bold;
@@ -991,7 +990,7 @@ class FormEditor extends LitElement {
                 background-color: white;
                 font-weight: bold;
                 cursor: grab;
-                
+
                 min-width: 100px;
                 text-align: center;
                 /*background-color: #d7cbff;*/
@@ -1001,9 +1000,10 @@ class FormEditor extends LitElement {
                 box-sizing: border-box;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
             }
-            .deleteBtn{
-                color:red;
-                float:right;
+
+            .deleteBtn {
+                color: red;
+                float: right;
             }
         `
     }
@@ -1022,6 +1022,7 @@ class FormEditor extends LitElement {
         val.elements.forEach((model) => this._cleanModel(model));
         this._json = val;
     }
+
     render() {
         return html`
             <paper-dialog @save-click="${this._updateElem}" @cancel-click="${this._cancelElem}">
@@ -1040,26 +1041,26 @@ class FormEditor extends LitElement {
                 <paper-button icon="check-circle" style="background: var(--app-secondary-color, green);" @click="${this._submit}">Submit</paper-button>
             </div>
             <div id="existingItemsContainer" class="container">
-                ${repeat(this._json.elements,(el)=>el.name,(el)=>html`
+                ${repeat(this._json.elements, (el) => el.name, (el) => html`
                     <div class="elemBox ${el.class}">
                         <div class="elem ">
                             <div class="holder left" @dragover="${this._dragover}" @dragenter="${this._dragenter}" @dragleave="${this._dragleave}" @drop="${this._drop}"></div>
                             <div class="holder right" @dragover="${this._dragover}" @dragenter="${this._dragenter}" @dragleave="${this._dragleave}" @drop="${this._drop}"></div>
                             <div  class="box" draggable="true" @click="${this._editEvent}" @dragstart="${this._dragstart}" @dragend="${this._dragend}">
                                 <div class="topBar">
-                                    <sup class="required">${el.required===true?"*":html`&nbsp;`}</sup><span class="label">${el.label}</span>
+                                    <sup class="required">${el.required === true ? "*" : html`&nbsp;`}</sup><span class="label">${el.label}</span>
                                     <iron-icon size="24" icon="delete" class="deleteBtn" @click="${this._delete}"></iron-icon>
                                 </div>
                                 <div class="bottomBar">
                                     <span class="tag type">${el.type}</span>
                                     <span class="tag name">${el.name}</span>
-                                    <span class="tag class"><iron-icon size="18" icon="phone"></iron-icon>${this._getCol("xs",el.class)}</span>
-                                    <span class="tag class"><iron-icon size="18" icon="tablet"></iron-icon>${this._getCol("sm",el.class)}</span>
-                                    <span class="tag class"><iron-icon size="18" icon="laptop"></iron-icon>${this._getCol("lg",el.class)}</span>
+                                    <span class="tag class"><iron-icon size="18" icon="phone"></iron-icon>${this._getCol("xs", el.class)}</span>
+                                    <span class="tag class"><iron-icon size="18" icon="tablet"></iron-icon>${this._getCol("sm", el.class)}</span>
+                                    <span class="tag class"><iron-icon size="18" icon="laptop"></iron-icon>${this._getCol("lg", el.class)}</span>
                                     ${this._simplifyClass(el.class).map(value => html`<span class="tag class">${value}</span>`)}
-                                    ${el.multiple?html`<iron-icon size="24" icon="folders"></iron-icon>`:""}
-                                    ${el.freeText?html`<iron-icon size="24" icon="create"></iron-icon>`:""}
-                                    ${el.allowDuplicates?html`<iron-icon size="24" icon="content-copy"></iron-icon>`:""}
+                                    ${el.multiple ? html`<iron-icon size="24" icon="folders"></iron-icon>` : ""}
+                                    ${el.freeText ? html`<iron-icon size="24" icon="create"></iron-icon>` : ""}
+                                    ${el.allowDuplicates ? html`<iron-icon size="24" icon="content-copy"></iron-icon>` : ""}
                                 </div>
                                 
                             </div>
@@ -1069,9 +1070,11 @@ class FormEditor extends LitElement {
             </div>
         `;
     }
-    _submit(){
-        CBNUtils.fireEvent(this,"submit");
+
+    _submit() {
+        CBNUtils.fireEvent(this, "submit");
     }
+
     _edit(idx) {
         this._idx = idx;
         this.shadowRoot.querySelector("paper-dialog").opened = true;
@@ -1086,16 +1089,19 @@ class FormEditor extends LitElement {
         this.shadowRoot.querySelector("iron-form").model = model;
         this.shadowRoot.querySelector("#modelName").innerText = model.label;
     }
+
     _editEvent(e) {
         this._edit(this._getIdx(e));
     }
-    _delete(e){
+
+    _delete(e) {
         e.stopPropagation();
-        if(confirm(`Are you sure you want to delete ${this._json.elements[this._getIdx(e)].label} ?`)){
+        if (confirm(`Are you sure you want to delete ${this._json.elements[this._getIdx(e)].label} ?`)) {
             this._json.elements.splice(this._getIdx(e), 1);
             this.requestUpdate();
         }
     }
+
     _updateElem(e) {
         let form = this.shadowRoot.querySelector("iron-form");
         if (!form.validate()) {
@@ -1246,8 +1252,5 @@ class FormEditor extends LitElement {
         }
     }
 }
-try {
-    customElements.define("form-editor", FormEditor);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("form-editor", FormEditor);

@@ -21,12 +21,12 @@ class IronOverlay extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         // language=CSS
         return [
             css`
-                .container{
-                    position:fixed;
+                .container {
+                    position: fixed;
                     overflow: auto;
                     display: none;
                     z-index: 2;
@@ -36,14 +36,15 @@ class IronOverlay extends LitElement {
                     height: 0;
                     transition: height 0.1s;
                 }
-                .container.opened-overlay{
+
+                .container.opened-overlay {
                     display: block;
                 }
-                `
+            `
         ]
     }
 
-    constructor(){
+    constructor() {
         super();
         this.tabindex = '-1';
         this.from = 'bottom-left';
@@ -55,20 +56,20 @@ class IronOverlay extends LitElement {
 
     render() {
         return html`                     
-            <div class="container ${this._openedOverlay ? 'opened-overlay': ''}">
+            <div class="container ${this._openedOverlay ? 'opened-overlay' : ''}">
                 <slot></slot>
             </div>
         `;
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         this.container = this.shadowRoot.querySelector('.container');
         this.addEventListener('blur', this._onBlur.bind(this));
         this.addEventListener('click', this._onClick.bind(this));
     }
 
-    set openedOverlay(value){
-        if(value){
+    set openedOverlay(value) {
+        if (value) {
             this._onOpeningOverlay();
         } else {
             this._onClosingOverlay();
@@ -76,11 +77,11 @@ class IronOverlay extends LitElement {
         this._openedOverlay = value;
     }
 
-    get openedOverlay(){
+    get openedOverlay() {
         return this._openedOverlay;
     }
 
-    _resizeContainer(){
+    _resizeContainer() {
         if (this.container) {
             let hostRect = this._getBoundingClientRect(this.positioningElement);
 
@@ -108,35 +109,35 @@ class IronOverlay extends LitElement {
         }
     }
 
-    _onClick(event){
+    _onClick(event) {
         event.stopPropagation();
         this._onBlur();
     }
 
-    _onBlur(){
-        if(!this.preventClosing){
+    _onBlur() {
+        if (!this.preventClosing) {
             this.openedOverlay = false;
         }
     }
 
-    openOverlay(){
+    openOverlay() {
         this.openedOverlay = true;
     }
 
-    _onOpeningOverlay(){
-        if(!this.preventFocus){
+    _onOpeningOverlay() {
+        if (!this.preventFocus) {
             this.focus();
         }
         CBNUtils.async(this._resizeContainer.bind(this));
     }
 
-    _onClosingOverlay(){
-        if(this.container){
+    _onClosingOverlay() {
+        if (this.container) {
             this.container.style.height = "0px";
         }
     }
 
-    _getBoundingClientRect(element){
+    _getBoundingClientRect(element) {
         let clientRect = element.getBoundingClientRect();
         return {
             height: clientRect.height,
@@ -147,11 +148,6 @@ class IronOverlay extends LitElement {
             bottom: window.innerHeight - clientRect.bottom
         }
     }
-
-
 }
-try {
-    customElements.define("iron-overlay", IronOverlay);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("iron-overlay", IronOverlay);

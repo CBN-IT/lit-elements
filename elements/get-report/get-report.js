@@ -62,8 +62,8 @@ class GetReport extends LitElement {
     }
 
     _getReport(event) {
-    this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => report._path === event.detail.report);
-    this.keys = event.detail.keys.map(item => typeof item === 'object' ? item._path : item);
+        this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => report._path === event.detail.report);
+        this.keys = event.detail.keys.map(item => typeof item === 'object' ? item._path : item);
 
         if (this.report.params) {
             this.config = JSON.parse(this.report.params);
@@ -94,63 +94,14 @@ class GetReport extends LitElement {
             <!DOCTYPE html>
             <html>
                 <head>
-                    <title></title>
-                    <style>              
-                        :host{
-                            position: fixed;
-                            top: 0;
-                            bottom: 0;
-                            left: 0;
-                            right: 0;
-                            z-index: 30;
-                            display: none; 
-                            align-items: center;
-                            justify-content: center;   
-                            flex-direction: column;  
-                        }     
-                        :host([opened]){
-                            display: flex;
-                        }   
-                        .lds-dual-ring {
-                            display: inline-block;
-                            width: 120px;
-                            height: 120px;
-                        }
-                        .lds-dual-ring:after {
-                            content: " ";
-                            display: block;
-                            width: 120px;
-                            height: 120px;
-                            margin: 1px;
-                            border-radius: 50%;
-                            border: 10px solid var(--selected-menu-color, #1ac6b4);
-                            border-color: var(--selected-menu-color, #1ac6b4) transparent var(--selected-menu-color, #1ac6b4) transparent;
-                            animation: lds-dual-ring 1.2s linear infinite;
-                        }
-                        .middle{
-                            width:120px;
-                            margin: 10px auto 0 auto;
-                        }
-                        @keyframes lds-dual-ring {
-                          0% {
-                            transform: rotate(0deg);
-                          }
-                          100% {
-                            transform: rotate(360deg);
-                          }
-                        }          
-                    </style>     
                 </head>
                 <body>
-                    <div id="middle">
-                        <div class="lds-dual-ring"></div>
-                    </div>
                     <form id='formRaport' action='${url}' target="_blank" method='POST'>
                         <input type='hidden' name='_companyId' value='${window.data._selectedCompany}'/>
                         <input type='hidden' name='hashReport' value='${hashReport}'/>
                         <input type='hidden' name='download' value='inline'/>
                         ${keys.map(key => `<input type='hidden' name='keys' value='${key}'/>`).join("")}
-                        ${Object.entries(params).map(([key, value]) =>  `<input type='hidden' name='ADMA.${key}' value='${value}'/>`).join("")}
+                        ${Object.entries(params).map(([key, value]) => `<input type='hidden' name='ADMA.${key}' value='${value}'/>`).join("")}
                     </form>
                 </body>
                 <script>document.getElementById("formRaport").submit();</script>
@@ -160,11 +111,8 @@ class GetReport extends LitElement {
     }
 
 }
-try {
-    customElements.define("get-report", GetReport);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("get-report", GetReport);
 
 
 

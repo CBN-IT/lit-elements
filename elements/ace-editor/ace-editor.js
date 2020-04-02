@@ -1,11 +1,11 @@
 "use strict";
-import {LitElement, html,css} from '/node_modules/lit-element/lit-element.js';
-import '/node_modules/ace-builds/src-min-noconflict/ace.js';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
+import ace from '/node_modules/ace-builds/src-min-noconflict/ace.js';
 
 
 class AceEditor extends LitElement {
 
-    static get stringProps(){
+    static get stringProps() {
         return [
             "selectionStyle",
             "cursorStyle",
@@ -15,7 +15,8 @@ class AceEditor extends LitElement {
             "mode"
         ];
     }
-    static get booleanProps(){
+
+    static get booleanProps() {
         return [
             "highlightActiveLine",
             "highlightSelectedWord",
@@ -41,7 +42,8 @@ class AceEditor extends LitElement {
             "fixedWidthGutter"
         ];
     }
-    static get numberProps(){
+
+    static get numberProps() {
         return [
             "printMarginColumn",
             "printMargin",
@@ -51,39 +53,41 @@ class AceEditor extends LitElement {
             "scrollPastEnd"
         ];
     }
+
     static get properties() {
         let typeString = {type: String};
         let typeNumber = {type: Number};
         let typeBoolean = {type: Boolean};
         let props = {
-            editor:{type:Object},
-            name:{type:String},
-            value:{type:String},
-            basePath:{type:String}
+            editor: {type: Object},
+            name: {type: String},
+            value: {type: String},
+            basePath: {type: String}
         };
-        for(let i=0;i<AceEditor.stringProps.length;i++){
+        for (let i = 0; i < AceEditor.stringProps.length; i++) {
             props[AceEditor.stringProps[i]] = typeString;
         }
-        for(let i=0;i<AceEditor.numberProps.length;i++){
+        for (let i = 0; i < AceEditor.numberProps.length; i++) {
             props[AceEditor.numberProps[i]] = typeNumber;
         }
-        for(let i=0;i<AceEditor.booleanProps.length;i++){
+        for (let i = 0; i < AceEditor.booleanProps.length; i++) {
             props[AceEditor.booleanProps[i]] = typeBoolean;
         }
         return props;
     }
 
-    static get styles(){
+    static get styles() {
         // language=CSS
         return [
             css`
                 :host {
                     display: inline-block;
-                    width:100%;
-                    height:100%;
+                    width: 100%;
+                    height: 100%;
                     box-sizing: border-box;
-                    position:relative;
+                    position: relative;
                 }
+
                 #editor {
                     position: absolute;
                     top: 0;
@@ -93,9 +97,6 @@ class AceEditor extends LitElement {
                 }
             `
         ];
-    }
-    constructor() {
-        super();
     }
 
     render() {
@@ -153,8 +154,8 @@ class AceEditor extends LitElement {
     }
 
     set value(val) {
-        if(typeof val!=="string"){
-            val = JSON.stringify(val," ",4);
+        if (typeof val !== "string") {
+            val = JSON.stringify(val, null, 4);
         }
         this._value = val;
         if (this.editor) {
@@ -174,11 +175,7 @@ class AceEditor extends LitElement {
 
 }
 
-try {
-    customElements.define("ace-editor", AceEditor);
-} catch (e) {
-    console.log(e);
-}
+customElements.define("ace-editor", AceEditor);
 
 
 

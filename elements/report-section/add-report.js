@@ -6,7 +6,7 @@ import './../paper-tabs/paper-tabs.js';
 import './../iron-form/iron-form.js';
 import './../ace-editor/ace-editor.js';
 
-class AddReport extends AddWithLink{
+class AddReport extends AddWithLink {
 
     static get properties() {
         return {
@@ -14,15 +14,15 @@ class AddReport extends AddWithLink{
         }
     }
 
-    static get styles(){
+    static get styles() {
         return super.styles;
     }
 
-    get defaultModel(){
+    get defaultModel() {
         return {code: '', params: ''};
     }
 
-    get listView(){
+    get listView() {
         return 'reports-view';
     }
 
@@ -32,7 +32,7 @@ class AddReport extends AddWithLink{
         this.collection = 'report';
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.tabs = this.shadowRoot.querySelector('paper-tabs');
         this.form = this.shadowRoot.querySelector('iron-form');
@@ -41,7 +41,7 @@ class AddReport extends AddWithLink{
 
     }
 
-    render(){
+    render() {
         return html`
             <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>              
             <paper-tabs .pages="${this.pages}" class="flex">
@@ -52,30 +52,27 @@ class AddReport extends AddWithLink{
         `;
     }
 
-    _onValueChanged(event){
+    _onValueChanged(event) {
         this.model[event.detail.name] = event.detail.value;
     }
 
-    _saveReport(event){
-        if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)  && event.keyCode === 83) {
+    _saveReport(event) {
+        if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && event.keyCode === 83) {
             this.form._submitForm();
             event.preventDefault();
         }
     }
 
-    refreshPage(oldValue, newValue){
+    refreshPage(oldValue, newValue) {
         super.refreshPage(oldValue, newValue);
-        if(newValue && newValue.page === this.name){
-            if(this.tabs){
+        if (newValue && newValue.page === this.name) {
+            if (this.tabs) {
                 this.tabs.refresh();
             }
         }
     }
 
 }
-try {
-    customElements.define("add-report", AddReport);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("add-report", AddReport);
 

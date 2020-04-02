@@ -22,25 +22,25 @@ class PaperInput extends PaperInputContainer {
             isCNP: {type: Boolean},
             isCIF: {type: Boolean},
             _value: {type: Object},
-            disabled:{type:Boolean}
+            disabled: {type: Boolean}
         };
     }
 
-    static get styles(){
+    static get styles() {
         return super.styles;
     }
 
-    get inputElement(){
+    get inputElement() {
         return html`
             <input 
                 class="input"
                 type="${this.type}"
                 name="${this.name}"
-                min="${this.min||""}"
-                max="${this.max||""}"
+                min="${this.min || ""}"
+                max="${this.max || ""}"
                 step="${this.step || ""}"
-                minlength="${this.minLength||""}"
-                maxlength="${this.maxLength||""}"
+                minlength="${this.minLength || ""}"
+                maxlength="${this.maxLength || ""}"
                 .value="${this._value}"
                 ?disabled="${this.disabled}"
                 autocomplete="off"
@@ -48,9 +48,9 @@ class PaperInput extends PaperInputContainer {
     }
 
     set value(value) {
-        if(!CBNUtils.isNoE(value)){
+        if (!CBNUtils.isNoE(value)) {
             this._value = value;
-        } else if((value === null || value === undefined) && this.defaultValue){
+        } else if ((value === null || value === undefined) && this.defaultValue) {
             this._value = this.defaultValue;
         } else {
             this._value = '';
@@ -63,7 +63,7 @@ class PaperInput extends PaperInputContainer {
         return this._value;
     }
 
-    validate(value, fromUser){
+    validate(value, fromUser) {
         let isValid = !this.required || !CBNUtils.isNoE(value);
         switch (this.type) {
             case 'number': {
@@ -74,10 +74,10 @@ class PaperInput extends PaperInputContainer {
                 isValid = isValid && this._validateText(value);
             }
         }
-        if(this.isCNP===true){
+        if (this.isCNP === true) {
             isValid = isValid && PaperInput._validateCNP(value);
         }
-        if(this.isCIF===true){
+        if (this.isCIF === true) {
             isValid = isValid && PaperInput._validateCIF(value);
         }
         this.isValid = isValid;
@@ -90,7 +90,8 @@ class PaperInput extends PaperInputContainer {
         });
         return this.isValid;
     }
-    static _validateCIF (cif) {
+
+    static _validateCIF(cif) {
         if (!cif) return false;
 
         cif = (cif + '').trim().toLowerCase();
@@ -112,9 +113,9 @@ class PaperInput extends PaperInputContainer {
             }
             sum *= 10;
 
-            return (sum % 11 % 10 === cif[cif.length - 1]*1);
+            return (sum % 11 % 10 === cif[cif.length - 1] * 1);
         }
-        if(cif.length===13){
+        if (cif.length === 13) {
             return PaperInput._validateCNP(cif);
         }
         return false;
@@ -124,7 +125,7 @@ class PaperInput extends PaperInputContainer {
         if (!cnp) return false;
 
         // normalize the code
-        cnp = (cnp+'').trim().toLowerCase();
+        cnp = (cnp + '').trim().toLowerCase();
         if (cnp.indexOf('ro') === 0) {
             cnp = cnp.substring(2).trim();
         }
@@ -142,7 +143,8 @@ class PaperInput extends PaperInputContainer {
         }
         return false;
     }
-    _validateNumber(value){
+
+    _validateNumber(value) {
         return CBNUtils.isNoE(value) ||
             (
                 (isNaN(this.min) || parseFloat(value) >= this.min) &&
@@ -150,7 +152,7 @@ class PaperInput extends PaperInputContainer {
             )
     }
 
-    _validateText(value){
+    _validateText(value) {
         return CBNUtils.isNoE(value) ||
             (
                 (isNaN(this.minLength) || value.length >= this.minLength) &&
@@ -159,11 +161,8 @@ class PaperInput extends PaperInputContainer {
     }
 
 }
-try {
-    customElements.define('paper-input', PaperInput);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('paper-input', PaperInput);
 
 
 

@@ -15,7 +15,7 @@ import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
 import logo from '/web/images/logo.svg';
-import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
+import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 
 export class IronApp extends LitElement {
 
@@ -95,7 +95,8 @@ export class IronApp extends LitElement {
                 align-items: center;
                 justify-content: center;
             }
-            .collapsed .header.logo{
+
+            .collapsed .header.logo {
                 align-items: flex-start;
             }
 
@@ -112,7 +113,7 @@ export class IronApp extends LitElement {
                 top: 0;
                 bottom: 0;
                 left: 0;
-                z-index:40;
+                z-index: 40;
             }
 
             .right-side {
@@ -122,8 +123,8 @@ export class IronApp extends LitElement {
                 right: 0;
                 background: rgb(216, 216, 216);
             }
-            
-            .right-side-bottom{
+
+            .right-side-bottom {
                 overflow: auto;
             }
 
@@ -175,23 +176,24 @@ export class IronApp extends LitElement {
                 z-index: 40;
             }
 
-            paper-fab{
+            paper-fab {
                 bottom: 0;
                 left: 0;
                 background: var(--highlight-color);
                 z-index: 40;
             }
-            
-            .menu-button:hover,.menu-button.iron-selected {
+
+            .menu-button:hover, .menu-button.iron-selected {
                 color: var(--selected-menu-color, white);
-                background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
+                background-color: var(--selected-menu-background-color, rgba(255, 255, 255, 0.30));
                 border-left: 3px solid var(--selected-menu-border-color, white);
-                cursor: pointer; 
-            }
-            .menu-button:hover{
                 cursor: pointer;
             }
-            
+
+            .menu-button:hover {
+                cursor: pointer;
+            }
+
             .menu-button {
                 text-decoration: none;
                 height: 32px;
@@ -200,62 +202,68 @@ export class IronApp extends LitElement {
                 padding: 0 8px;
                 cursor: pointer;
                 white-space: nowrap;
-                background: var(--app-primary-color);                  
+                background: var(--app-primary-color);
                 border-top-right-radius: 25px;
                 border-bottom-right-radius: 25px;
                 box-sizing: border-box;
                 color: var(--menu-color, white);
             }
-            
-            .menu-button>iron-icon{
+
+            .menu-button > iron-icon {
                 margin-right: 12px;
                 color: var(--menu-color, white);
 
             }
-            
-            .small.menu-button>iron-icon{
+
+            .small.menu-button > iron-icon {
                 margin-right: 0;
             }
-            
-            .menu-button:hover>iron-icon,.menu-button.iron-selected>iron-icon{
+
+            .menu-button:hover > iron-icon, .menu-button.iron-selected > iron-icon {
                 color: var(--selected-menu-border-color, white);
             }
-            
-          
-            a, a:visited, a:hover, a:active { 
+
+
+            a, a:visited, a:hover, a:active {
                 color: white;
             }
-           
-            .big-logo{
+
+            .big-logo {
                 width: var(--logo-width, 160px);
                 user-select: none;
                 max-height: 100%;
             }
-            .company-dropdown{
-                --input-container-padding: 1px;               
+
+            .company-dropdown {
+                --input-container-padding: 1px;
                 --input-container-border: 0px;
                 --input-container-min-height: 30px;
                 --input-padding: 0 10px 5px 10px;
                 color: var(--menu-color);
                 width: 300px;
             }
-            .big{
-                max-width:80%;
+
+            .big {
+                max-width: 80%;
             }
-            .small{
-                max-width:20%;
+
+            .small {
+                max-width: 20%;
             }
-            .full-width{
-                min-width:100%;
+
+            .full-width {
+                min-width: 100%;
             }
-            .group-section-title{
+
+            .group-section-title {
                 color: var(--group-section-color, white);
                 font-weight: bold;
-                background: var(--group-section-background-color, rgba(255,255,255,0.2)); 
+                background: var(--group-section-background-color, rgba(255, 255, 255, 0.2));
                 border-top: 2px solid var(--menu-color, white);
                 padding: 5px 0 5px 15px;
             }
-            .collapse-button{
+
+            .collapse-button {
                 color: var(--menu-color);
             }
         `;
@@ -313,7 +321,7 @@ export class IronApp extends LitElement {
                     <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                 </div>  
                 <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
-                <div class="${ this.collapsed ? this.isMobile ? 'full-collapsed' :'collapsed':'extended' } vertical layout left-side">
+                <div class="${this.collapsed ? this.isMobile ? 'full-collapsed' : 'collapsed' : 'extended'} vertical layout left-side">
                     <div class="header logo">                                                        
                         <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
                     </div>
@@ -432,11 +440,7 @@ export class IronApp extends LitElement {
 
 }
 
-try {
-    customElements.define("iron-app", IronApp);
-} catch (e) {
-    console.log(e);
-}
+customElements.define("iron-app", IronApp);
 
 
 

@@ -3,6 +3,7 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import './../iron-selector/iron-selector.js'
 import './../cbn-utils/CbnUtils.js'
+
 //
 class PaperTabs extends LitElement {
 
@@ -13,25 +14,28 @@ class PaperTabs extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses, this.styleElement]
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-            :host{
+            :host {
                 display: flex;
                 flex-direction: column;
                 user-select: none;
             }
-            .paper-tab{
+
+            .paper-tab {
                 font-weight: bold;
                 height: 40px;
             }
-            .paper-tab:hover{
+
+            .paper-tab:hover {
                 cursor: pointer;
             }
+
             .paper-tab.iron-selected {
                 color: white;
                 background-color: var(--selected-menu-color, #1ac6b4);
@@ -40,12 +44,11 @@ class PaperTabs extends LitElement {
         `
     }
 
-    constructor(){
+    constructor() {
         super();
         this.pages = [];
         this.selectedTab = 0;
     }
-
 
 
     render() {
@@ -61,27 +64,23 @@ class PaperTabs extends LitElement {
         `;
     }
 
-    _onPageSelect(event){
-        if(this.selectedTab !== event.detail.selected){
+    _onPageSelect(event) {
+        if (this.selectedTab !== event.detail.selected) {
             let old = this.selectedTab;
             this.selectedTab = event.detail.selected;
-            CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab, oldTab:old});
+            CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab, oldTab: old});
         }
     }
 
-    refresh(){
+    refresh() {
         this.selectedTab = 0;
         CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab});
     }
 
 
+}
 
-}
-try {
-    customElements.define("paper-tabs", PaperTabs);
-} catch (e) {
-    console.log(e);
-}
+customElements.define("paper-tabs", PaperTabs);
 
 
 

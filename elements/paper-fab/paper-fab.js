@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html,css} from '/node_modules/lit-element/lit-element.js';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 import "./../iron-icon/iron-icon.js";
 
@@ -13,14 +13,14 @@ class PaperFab extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses, this.styleElement];
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
-        return css`            
-            :host{
+        return css`
+            :host {
                 display: inline-block;
                 position: absolute;
                 overflow: hidden;
@@ -35,6 +35,7 @@ class PaperFab extends LitElement {
                 border-radius: 50%;
                 cursor: pointer;
             }
+
             :host:after {
                 content: "";
                 display: block;
@@ -47,36 +48,38 @@ class PaperFab extends LitElement {
                 background-image: radial-gradient(circle, white 10%, transparent 10.01%);
                 background-repeat: no-repeat;
                 background-position: 50%;
-                transform: scale(10,10);
+                transform: scale(10, 10);
                 opacity: 0;
                 transition: transform .1s, opacity 1s;
-              }            
+            }
+
             :host(:active):after {
-                transform: scale(0,0);
+                transform: scale(0, 0);
                 opacity: .5;
                 transition: 0s;
             }
+
             :host(:hover) {
                 box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
                 cursor: pointer;
             }
-            .text{
+
+            .text {
                 padding: 0 5px 0 10px;
             }
-            :host([small]) .text{
+
+            :host([small]) .text {
                 padding: 0;
             }
-            :host([small]){
+
+            :host([small]) {
                 padding: 2px;
             }
-            :host([no-margin]){
+
+            :host([no-margin]) {
                 margin: 0px;
             }
         `
-    }
-
-    constructor(){
-        super();
     }
 
     render() {
@@ -88,11 +91,8 @@ class PaperFab extends LitElement {
     }
 
 }
-try {
-    customElements.define("paper-fab", PaperFab);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("paper-fab", PaperFab);
 
 
 

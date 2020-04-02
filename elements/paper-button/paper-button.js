@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html,css} from '/node_modules/lit-element/lit-element.js';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from './../flex-layout/flex-layout-classes.js';
 import "./../iron-icon/iron-icon.js";
 
@@ -13,11 +13,11 @@ class PaperButton extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses, this.styleElement];
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
             :host {
@@ -85,10 +85,10 @@ class PaperButton extends LitElement {
                 margin: 0;
             }
 
-            :host([margin-left-right]){
+            :host([margin-left-right]) {
                 margin: auto 10px;
             }
-            
+
             :host([smallest][margin-left-right]) {
                 margin: auto 5px;
             }
@@ -100,8 +100,9 @@ class PaperButton extends LitElement {
             :host([border]) {
                 border: 1px solid currentColor;
             }
-            :host(.loading) iron-icon{
-                animation:spin 1s linear infinite;
+
+            :host(.loading) iron-icon {
+                animation: spin 1s linear infinite;
             }
 
             @keyframes spin {
@@ -110,10 +111,6 @@ class PaperButton extends LitElement {
                 }
             }
         `
-    }
-
-    constructor(){
-        super();
     }
 
     render() {
@@ -128,11 +125,8 @@ class PaperButton extends LitElement {
     }
 
 }
-try {
-    customElements.define("paper-button", PaperButton);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("paper-button", PaperButton);
 
 
 

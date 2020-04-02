@@ -20,6 +20,7 @@ import {gridClasses} from "./../grid-layout/grid-classes.js";
 const forceWrite = directive((value) => (part) => {
     part.setValue(value);
 });
+
 class IronForm extends LitElement {
 
     static get properties() {
@@ -287,7 +288,7 @@ class IronForm extends LitElement {
 
     changeOptions(name, items) {
         this.config.elements.forEach(item => {
-            if(item.name === name){
+            if (item.name === name) {
                 item.options = items;
             }
         });
@@ -301,22 +302,22 @@ class IronForm extends LitElement {
         }
     }
 
-    hideInput(name){
+    hideInput(name) {
         let input = this.shadowRoot.querySelector('[name="' + name + '"]');
-        if(input){
+        if (input) {
             input.style.display = 'none';
         }
     }
 
-    showInput(name){
+    showInput(name) {
         let input = this.shadowRoot.querySelector('[name="' + name + '"]');
-        if(input){
+        if (input) {
             input.style.display = 'flex';
         }
     }
 
     async _submitForm() {
-    if (this.request && this.validate()) {
+        if (this.request && this.validate()) {
             if (this.preventSubmit) {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});
                 return;
@@ -324,7 +325,7 @@ class IronForm extends LitElement {
             this.request.body = {collection: this.collection, ...this._model, ...this.params};
             let response = await this.request.generateRequest();
             CBNUtils.fireEvent(this, 'saved-form', {response});
-            if(!this.preventMessageOnSucces){
+            if (!this.preventMessageOnSucces) {
                 CBNUtils.displayMessage('Saved form');
             }
         } else {
@@ -338,11 +339,8 @@ class IronForm extends LitElement {
     }
 
 }
-try {
-    customElements.define('iron-form', IronForm);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('iron-form', IronForm);
 
 
 

@@ -134,12 +134,14 @@ class PaperSelect extends PaperInputContainer {
                 border: none;
                 font-size: 16px;
             }
+
             [hidden] {
                 display: none !important;
             }
         `
     }
-    _getNativeSelect(){
+
+    _getNativeSelect() {
         if (this.isNative) {
             return html`
                 <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
@@ -153,7 +155,8 @@ class PaperSelect extends PaperInputContainer {
             return '';
         }
     }
-    _getOptionTemplate(item, index){
+
+    _getOptionTemplate(item, index) {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
@@ -166,6 +169,7 @@ class PaperSelect extends PaperInputContainer {
         }
 
     }
+
     get inputElement() {
         return html`
             <div class="select-container horizontal layout center flex">
@@ -470,11 +474,7 @@ class PaperSelect extends PaperInputContainer {
 
 }
 
-try {
-    customElements.define('paper-select', PaperSelect);
-} catch (e) {
-    console.log(e);
-}
+customElements.define('paper-select', PaperSelect);
 
 
 

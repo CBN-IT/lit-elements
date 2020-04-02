@@ -20,9 +20,30 @@ export class AddNoLink extends LitElement {
     }
 
     static get styles() {
-        return [flexLayoutClasses]
+        return [flexLayoutClasses, this.styleElement]
     }
-
+    static get styleElement() {
+        // language=CSS
+        return css`
+            :host{
+                display: flex;
+                min-height: 0;
+                flex-direction: column;
+            }
+            h3{
+                padding: 10px 10px;
+                margin: 0;
+            }
+            .paper-material{
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                background: white;
+                border-radius: 5px;
+                margin: 10px;
+                min-height: 0;
+                max-width: calc(100% - 20px);
+            }
+        `
+    }
     set collection(value) {
         this._collection = value;
         this.config = window.data._configs[this._collection];
@@ -67,25 +88,6 @@ export class AddNoLink extends LitElement {
 
     render() {
         return html`
-            <style>              
-                :host{
-                    display: flex;
-                    min-height: 0;  
-                    flex-direction: column;             
-                }
-                h3{
-                    padding: 10px 10px;
-                    margin: 0;
-                } 
-                .paper-material{
-                    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-                    background: white;
-                    border-radius: 5px;
-                    margin: 10px;
-                    min-height: 0;
-                    max-width: calc(100% - 20px);
-                }                            
-            </style>  
             <div class="paper-material vertical layout">
                 <h3>${this.formTitle ? this.formTitle : this.collection}</h3>                 
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.url}" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
@@ -109,11 +111,8 @@ export class AddNoLink extends LitElement {
     }
 
 }
-try {
-    customElements.define("add-no-link", AddNoLink);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("add-no-link", AddNoLink);
 
 
 

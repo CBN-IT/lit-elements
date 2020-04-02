@@ -16,64 +16,63 @@ export class PaperDatePicker extends PaperInputContainer {
             max: {type: Number},
             _value: {type: Object},
             isNative: {type: Boolean},
-            format:{type:String},
-            disabled:{type:Boolean}
+            format: {type: String},
+            disabled: {type: Boolean}
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [...super.styles, this.styleElement];
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-                .native-input{
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    width: 100%;
-                    opacity: 0.000001;
-                    outline:none;
-                    border:none;
-                }
+            .native-input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                opacity: 0.000001;
+                outline: none;
+                border: none;
+            }
         `
     }
 
-    constructor(){
+    constructor() {
         super();
         this.floated = this._isFloated();
         this.isNative = this._isNative();
-        this.format="YYYY-MM-DD";
+        this.format = "YYYY-MM-DD";
         // this.isNative = true;
     }
 
-    get inputElement(){
+    get inputElement() {
         return html`
             <input class="input" @keyup="${this._onChangeInput}"/>
             <input type="date" .value="${this.value}" style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}" ?disabled="${this.disabled}"/>
         `;
-        // return html`<date-picker class="input" .value="${this._value}" .autoConfirm="${true}" .required="${this.required}"></date-picker>`;
     }
 
-    _isNative(){
+    _isNative() {
         const ua = window.navigator.userAgent;
         return (/[mM]obi/i.test(ua) || /[tT]ablet/i.test(ua) || /[aA]ndroid/i.test(ua));
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.tinyDatePicker = TinyDatePicker(this.shadowRoot.querySelector('.input'), {
             mode: 'dp-below',
             dayOffset: 1,
-            min:this.min,
-            max:this.max,
-            format:(date) =>{
+            min: this.min,
+            max: this.max,
+            format: (date) => {
                 return moment(date).format(this.format);
             },
-            parse:(str)=> {
+            parse: (str) => {
                 let d = moment(str, this.format).toDate();
                 if (isNaN(d.getTime())) {
                     d = new Date();
@@ -83,30 +82,23 @@ export class PaperDatePicker extends PaperInputContainer {
         }).on('select', (_, dp) => this._selectedDate(dp))
             .on('open', this._openedDatePicker.bind(this));
 
-        if(changedProperties.has('_value')){
+        if (changedProperties.has('_value')) {
             this.tinyDatePicker.setState({selectedDate: this._value});
-        } else if(changedProperties.has('defaultValue') && CBNUtils.isNoE(this.value)){
+        } else if (changedProperties.has('defaultValue') && CBNUtils.isNoE(this.value)) {
             this.value = this.defaultValue;
         }
         this.nativeInput = this.shadowRoot.querySelector('.native-input')
-        /*if(changedProperties.has('defaultValue') && CBNUtils.isNoE(this.value)){
-            this.value = this.defaultValue;
-        }
-        this.addEventListener('click', this._onClick.bind(this));
-        this.input.shadowRoot.querySelector('.icon.reset').addEventListener('click', this._onReset.bind(this));
-        this.input.addEventListener('input-picker-closed', this._pickerClosed.bind(this));
-        this.input.addEventListener('input-picker-opened', this._pickerOpened.bind(this));*/
     }
 
     set value(value) {
-        if(value){
+        if (value) {
             this._value = value ? new Date(this._parseDate(value).unix() * 1000) : "";
-        } else if((value === null || value === undefined) && this.defaultValue){
+        } else if ((value === null || value === undefined) && this.defaultValue) {
             this._value = new Date(this._parseDate(this.defaultValue).unix() * 1000);
         } else {
             this._value = '';
         }
-        if(this.tinyDatePicker){
+        if (this.tinyDatePicker) {
             this.tinyDatePicker.setState({selectedDate: this._value});
         }
 
@@ -117,60 +109,43 @@ export class PaperDatePicker extends PaperInputContainer {
     get value() {
         return !CBNUtils.isNoE(this._value) ? moment(this._value).format("YYYY-MM-DD") : '';
     }
-    _onChangeInput(event){
+
+    _onChangeInput(event) {
         if (this._parseDate(event.currentTarget.value, this.format) === this._value) {
             return;
         }
         this._value = this._parseDate(event.currentTarget.value, this.format);
         this.validate(this._value, true);
     }
-    _onChange(event){
+
+    _onChange(event) {
         this.value = this.nativeInput.value;
     }
 
-    _openedDatePicker(){
-        // CBNUtils.async(this._focusInput.bind(this), 5000);
-    }
-
-    /*_onClick(event){
-        if(event.detail !== 2){
-            this.input.open();
-        }
-    }*/
-
-    _selectedDate(dp){
-        if(CBNUtils.isNoE(dp.state.selectedDate) && !CBNUtils.isNoE(this._value)){
+    _selectedDate(dp) {
+        if (CBNUtils.isNoE(dp.state.selectedDate) && !CBNUtils.isNoE(this._value)) {
             this._value = '';
             this.validate(this._value, true);
-        } else if(!CBNUtils.isNoE(dp.state.selectedDate) && CBNUtils.isNoE(this._value)){
+        } else if (!CBNUtils.isNoE(dp.state.selectedDate) && CBNUtils.isNoE(this._value)) {
             this._value = dp.state.selectedDate;
             this.validate(this._value, true);
-        } else if(!CBNUtils.isNoE(this._value) && !CBNUtils.isNoE(dp.state.selectedDate) && this._value.getTime() !== dp.state.selectedDate.getTime()){
+        } else if (!CBNUtils.isNoE(this._value) && !CBNUtils.isNoE(dp.state.selectedDate) && this._value.getTime() !== dp.state.selectedDate.getTime()) {
             this._value = dp.state.selectedDate;
             this.validate(this._value, true);
         }
 
-
         this.blur();
-
-
-
-        /*if((CBNUtils.isNoE(dp.state.selectedDate) && this._value !== dp.state.selectedDate) ||
-            (!CBNUtils.isNoE(dp.state.selectedDate) && this._value.getTime() !== dp.state.selectedDate.getTime())){
-            this._value = dp.state.selectedDate;
-            this.validate(this._value, true);
-        }*/
     }
 
-    _focusInput(){
-        if(this.input){
-            if(!this.isNative){
+    _focusInput() {
+        if (this.input) {
+            if (!this.isNative) {
                 this.input.focus();
             }
         }
     }
 
-    _isFloated(){
+    _isFloated() {
         return !CBNUtils.isNoE(this._value);
     }
 
@@ -211,7 +186,6 @@ export class PaperDatePicker extends PaperInputContainer {
                         }
                         matches = pattern.exec(dateStr);
                     }
-
                 } else {
                     if (format === 'moment') {
                         // invalid value, should have been a Moment object
@@ -227,13 +201,15 @@ export class PaperDatePicker extends PaperInputContainer {
             date = null;
         return date;
     }
-    _onInput(){
+
+    _onInput() {
 
     }
-    validate(value, fromUser){
+
+    validate(value, fromUser) {
         let isValid = !this.required || !CBNUtils.isNoE(value);
         this.isValid = isValid;
-        if(isValid){
+        if (isValid) {
             CBNUtils.fireEvent(this, 'value-changed', {
                 name: this.name,
                 value: this.value,
@@ -242,13 +218,9 @@ export class PaperDatePicker extends PaperInputContainer {
         }
         return this.isValid;
     }
+}
 
-}
-try {
-    customElements.define('paper-date-picker', PaperDatePicker);
-} catch (e) {
-    console.log(e);
-}
+customElements.define('paper-date-picker', PaperDatePicker);
 
 
 

@@ -9,14 +9,14 @@ class PaperLoading extends LitElement {
         };
     }
 
-    constructor(){
+    constructor() {
         super();
-        this._nrLoadings=0;
+        this._nrLoadings = 0;
         this._bindedOpen = this.open.bind(this);
         this._bindedClose = this.close.bind(this);
     }
 
-    static get styles(){
+    static get styles() {
         // language=CSS
         return [css`
             :host {
@@ -95,11 +95,8 @@ class PaperLoading extends LitElement {
         }
     }
 }
-try {
-    customElements.define('paper-loading', PaperLoading);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('paper-loading', PaperLoading);
 
 
 

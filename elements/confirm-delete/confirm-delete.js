@@ -3,11 +3,10 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import './../paper-dialog/paper-dialog.js';
 import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
-import {CompanyView} from "../company-section/company-view";
 
-class ConfirmDelete extends LitElement{
+class ConfirmDelete extends LitElement {
 
-    static get properties(){
+    static get properties() {
         return {
             message: {
                 type: String
@@ -25,32 +24,35 @@ class ConfirmDelete extends LitElement{
         }
     }
 
-    static get styles(){
+    static get styles() {
         return this.styleElement;
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-            paper-dialog{
-                --min-dialog-width: 500px; 
+            paper-dialog {
+                --min-dialog-width: 500px;
             }
         `;
     }
-    connectedCallback(){
+
+    connectedCallback() {
         super.connectedCallback();
         document.addEventListener("confirm-delete", this._bindedConfirmDelete);
     }
-    disconnectedCallback(){
+
+    disconnectedCallback() {
         super.disconnectedCallback();
         document.removeEventListener("confirm-delete", this._bindedConfirmDelete);
     }
-    constructor(){
+
+    constructor() {
         super();
         this._bindedConfirmDelete = this._listenForConfirmDelete.bind(this);
     }
 
-    render(){
+    render() {
         return html`
             <iron-ajax .url="${this.url}" .body="${this.body}" @iron-response="${this._onIronResponse}"></iron-ajax>
             <paper-dialog class="dialog" .noActions="${true}"> 
@@ -61,35 +63,39 @@ class ConfirmDelete extends LitElement{
             </paper-dialog>
         `;
     }
-    _listenForConfirmDelete(event){
+
+    _listenForConfirmDelete(event) {
         console.log(event.detail);
         this.delete(event.detail.body, event.detail.message, event.detail.callback, event.detail.url);
     }
+
     delete(body, message, callback, url) {
         this.body = body;
         this.message = message;
-        this.callback = callback || function(){};
+        this.callback = callback || function () {
+        };
         this.url = url || "/delete/DeleteEntity";
         this._openDialog();
     }
-    _openDialog(){
+
+    _openDialog() {
         this.shadowRoot.querySelector('paper-dialog').open();
     }
-    _closeDialog () {
+
+    _closeDialog() {
         this.shadowRoot.querySelector('paper-dialog').close();
     }
-    confirmDelete(){
+
+    confirmDelete() {
         this.shadowRoot.querySelector('iron-ajax').generateRequest();
     }
-    _onIronResponse(event){
+
+    _onIronResponse(event) {
         this._closeDialog();
         this.callback(event);
     }
 
 }
-try {
-    customElements.define("confirm-delete", ConfirmDelete);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("confirm-delete", ConfirmDelete);
 

@@ -7,7 +7,8 @@ import './../iron-form/iron-form.js';
 import './../ace-editor/ace-editor.js';
 import './../form-editor/form-editor.js';
 import {css} from "/node_modules/lit-element/lit-element.js";
-class AddColumn extends AddWithLink{
+
+class AddColumn extends AddWithLink {
 
     static get properties() {
         return {
@@ -18,47 +19,50 @@ class AddColumn extends AddWithLink{
             }
         }
     }
-    static get styleElement(){
+
+    static get styleElement() {
         // language=CSS
         return css`
             form-editor {
                 flex-direction: column;
             }
-            :host{
+
+            :host {
                 display: flex;
             }
         `
     }
 
-    static get styles(){
-        return [super.styles,this.styleElement];
+    static get styles() {
+        return [super.styles, this.styleElement];
     }
 
-    get defaultModel(){
+    get defaultModel() {
         return {
-            code:'[]',
-            collection:""
+            code: '[]',
+            collection: ""
         };
     }
 
-    get listView(){
+    get listView() {
         return 'column-view';
     }
+
     constructor() {
         super();
-        this.pages = ["Form",' Demo', 'Code'];
+        this.pages = ["Form", ' Demo', 'Code'];
         this.collection = 'column';
-        this.tabindex="1";
+        this.tabindex = "1";
         this._bindedSaveFormFromKeyDown = this._saveFormFromKeyDown.bind(this);
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.tabs = this.shadowRoot.querySelector('paper-tabs');
         this.form = this.shadowRoot.querySelector('iron-form');
     }
 
-    render(){
+    render() {
         return html`
             <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <paper-tabs .pages="${this.pages}" class="flex" @tab-select="${this._changedTab}">
@@ -68,18 +72,20 @@ class AddColumn extends AddWithLink{
             </paper-tabs>
         `;
     }
-    _safeParseJson(val){
-        if(typeof val!=="string"){
+
+    _safeParseJson(val) {
+        if (typeof val !== "string") {
             return val;
         }
-        try{
+        try {
             return JSON.parse(val)
-        }catch (e) {
+        } catch (e) {
             return JSON.parse(this.defaultModel["code"]);
         }
     }
-    _changedTab(e){
-        if(e.detail.oldTab===2){
+
+    _changedTab(e) {
+        if (e.detail.oldTab === 2) {
             try {
                 JSON.parse(this.shadowRoot.querySelector("ace-editor").value);
                 this.model.code = this.shadowRoot.querySelector("ace-editor").value;
@@ -88,7 +94,8 @@ class AddColumn extends AddWithLink{
             }
         }
     }
-    _saveForm(event){
+
+    _saveForm(event) {
         if (this.tabs.selectedTab === 2) {
             try {
                 let val = JSON.parse(this.shadowRoot.querySelector("ace-editor").value);
@@ -99,35 +106,35 @@ class AddColumn extends AddWithLink{
 
         this.form._submitForm();
     }
-    _saveFormFromKeyDown(){
+
+    _saveFormFromKeyDown() {
         if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && event.key === "s") {
             event.preventDefault();
             this._saveForm();
         }
     }
 
-    refreshPage(oldValue, newValue){
+    refreshPage(oldValue, newValue) {
         super.refreshPage(oldValue, newValue);
-        if(newValue[0] === this.name){
-            window.addEventListener("keydown",this._bindedSaveFormFromKeyDown);
-            if(this.tabs){
+        if (newValue[0] === this.name) {
+            window.addEventListener("keydown", this._bindedSaveFormFromKeyDown);
+            if (this.tabs) {
                 this.tabs.refresh();
             }
-        }else{
-            window.removeEventListener("keydown",this._bindedSaveFormFromKeyDown);
+        } else {
+            window.removeEventListener("keydown", this._bindedSaveFormFromKeyDown);
         }
     }
 
     _onIronResponse(event) {
-        this.model = {...event.detail.response, code: JSON.stringify(JSON.parse(event.detail.response.code), null,  "\t")};
+        this.model = {
+            ...event.detail.response,
+            code: JSON.stringify(JSON.parse(event.detail.response.code), null, "\t")
+        };
     }
 
 }
 
-try {
-    customElements.define("add-column", AddColumn);
-} catch (e) {
-    console.log(e);
-}
+customElements.define("add-column", AddColumn);
 
 

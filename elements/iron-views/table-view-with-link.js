@@ -104,8 +104,6 @@ export class TableViewWithLink extends LitElement {
                 </div>                
             </div>
             <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
-            
-            
         `;
     }
 
@@ -115,10 +113,6 @@ export class TableViewWithLink extends LitElement {
 
     _displayReportsDropdown(){
         return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
-    }
-
-    async _importElements() {
-
     }
 
     async _addDocument() {
@@ -158,10 +152,6 @@ export class TableViewWithLink extends LitElement {
     }
 
 }
-try {
-    customElements.define("table-view-with-link", TableViewWithLink);
-} catch (e) {
-    console.log(e);
-}
+customElements.define("table-view-with-link", TableViewWithLink);
 
 

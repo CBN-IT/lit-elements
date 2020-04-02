@@ -4,23 +4,23 @@ import './../paper-fab/paper-fab.js';
 import './../paper-dialog/paper-dialog.js';
 import './../cbn-utils/CbnUtils.js';
 
-class PaperHelp extends LitElement{
+class PaperHelp extends LitElement {
 
-    static get properties(){
+    static get properties() {
         return {
             config: {type: Object},
             model: {type: Object}
         }
     }
 
-    static get styles(){
+    static get styles() {
         return this.styleElement;
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-            paper-fab{
+            paper-fab {
                 background: var(--blue-color);
                 z-index: var(--paper-help-z-index, 11);
                 top: var(--paper-help-top, 3px);
@@ -28,22 +28,24 @@ class PaperHelp extends LitElement{
                 bottom: var(--paper-help-bottom, auto);
                 left: var(--paper-help-left, auto);
             }
-            paper-dialog{
-                --min-dialog-width: 500px; 
+
+            paper-dialog {
+                --min-dialog-width: 500px;
             }
-            iron-form{
+
+            iron-form {
                 width: 100%;
             }
         `;
     }
 
-    constructor(){
+    constructor() {
         super();
         this.config = window.data._configs['help'];
         this.model = {};
     }
 
-    render(){
+    render() {
         return html`
             <paper-fab icon="help" @click="${this._openDialog}"></paper-fab>
             <paper-dialog class="dialog" .noActions="${true}"> 
@@ -53,19 +55,16 @@ class PaperHelp extends LitElement{
         `;
     }
 
-    _openDialog(){
+    _openDialog() {
         this.model = {};
         this.shadowRoot.querySelector('paper-dialog').open();
     }
 
-    _onSavedForm(){
+    _onSavedForm() {
         this.shadowRoot.querySelector('paper-dialog').close();
     }
 
 }
-try {
-    customElements.define("paper-help", PaperHelp);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("paper-help", PaperHelp);
 

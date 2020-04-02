@@ -15,7 +15,7 @@ import './../get-report/get-report.js';
 import './../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
 import logo from '/web/images/logo.svg';
-import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
+import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 
 export class IronAppRouter extends LitElement {
 
@@ -30,11 +30,11 @@ export class IronAppRouter extends LitElement {
             _selectedCompany: {type: String},
             collapsed: {
                 type: Boolean,
-                reflect:true
+                reflect: true
             },
             isMobile: {
                 type: Boolean,
-                reflect:true
+                reflect: true
             },
             hideMenu: {type: Boolean},
             noHelp: {type: Boolean},
@@ -112,7 +112,7 @@ export class IronAppRouter extends LitElement {
                 top: 0;
                 bottom: 0;
                 left: 0;
-                z-index:40;
+                z-index: 40;
             }
 
             .right-side {
@@ -122,8 +122,8 @@ export class IronAppRouter extends LitElement {
                 right: 0;
                 background: rgb(216, 216, 216);
             }
-            
-            .right-side-bottom{
+
+            .right-side-bottom {
                 overflow: auto;
             }
 
@@ -141,26 +141,27 @@ export class IronAppRouter extends LitElement {
                 right: 0;
                 background: rgba(0, 0, 0, .43);
                 z-index: 40;
-                display:none;
+                display: none;
             }
 
-            paper-fab{
+            paper-fab {
                 bottom: 0;
                 left: 0;
                 background: var(--highlight-color);
                 z-index: 40;
             }
-            
-            .menu-button:hover,.menu-button.iron-selected {
+
+            .menu-button:hover, .menu-button.iron-selected {
                 color: var(--selected-menu-color, white);
-                background-color: var(--selected-menu-background-color, rgba(255,255,255,0.30));
+                background-color: var(--selected-menu-background-color, rgba(255, 255, 255, 0.30));
                 border-left: 3px solid var(--selected-menu-border-color, white);
-                cursor: pointer; 
-            }
-            .menu-button:hover{
                 cursor: pointer;
             }
-            
+
+            .menu-button:hover {
+                cursor: pointer;
+            }
+
             .menu-button {
                 text-decoration: none;
                 height: 32px;
@@ -169,99 +170,113 @@ export class IronAppRouter extends LitElement {
                 padding: 0 8px;
                 cursor: pointer;
                 white-space: nowrap;
-                background: var(--app-primary-color);                  
+                background: var(--app-primary-color);
                 border-top-right-radius: 25px;
                 border-bottom-right-radius: 25px;
                 box-sizing: border-box;
                 color: var(--menu-color, white);
             }
-            
-            .menu-button>iron-icon{
+
+            .menu-button > iron-icon {
                 margin-right: 12px;
                 color: var(--menu-color, white);
 
             }
-            
-            .small.menu-button>iron-icon{
+
+            .small.menu-button > iron-icon {
                 margin-right: 0;
             }
-            
-            .menu-button:hover>iron-icon,.menu-button.iron-selected>iron-icon{
+
+            .menu-button:hover > iron-icon, .menu-button.iron-selected > iron-icon {
                 color: var(--selected-menu-border-color, white);
             }
-            
-          
+
+
             a, a:visited, a:hover, a:active {
                 color: var(--menu-color, white);
             }
-           
-            .big-logo{
+
+            .big-logo {
                 width: var(--logo-width, 160px);
                 user-select: none;
                 max-height: 100%;
             }
-            .company-dropdown{
-                --input-container-padding: 1px;               
+
+            .company-dropdown {
+                --input-container-padding: 1px;
                 --input-container-border: 0px;
                 --input-container-min-height: 30px;
                 --input-padding: 0 10px 5px 10px;
                 color: var(--menu-color);
                 width: 300px;
             }
-            .big{
-                max-width:80%;
+
+            .big {
+                max-width: 80%;
             }
-            .small{
-                max-width:20%;
+
+            .small {
+                max-width: 20%;
             }
-            .full-width{
-                min-width:100%;
+
+            .full-width {
+                min-width: 100%;
             }
-            .group-section-title{
+
+            .group-section-title {
                 color: var(--group-section-color, white);
                 font-weight: bold;
-                background: var(--group-section-background-color, rgba(255,255,255,0.2)); 
+                background: var(--group-section-background-color, rgba(255, 255, 255, 0.2));
                 border-top: 2px solid var(--menu-color, white);
                 padding: 5px 0 5px 15px;
             }
-            .collapse-button{
+
+            .collapse-button {
                 color: var(--menu-color);
                 transform: rotateZ(-90deg);
             }
-            :host .right-side{
+
+            :host .right-side {
                 left: 200px;
             }
-            :host([collapsed]) .right-side{
+
+            :host([collapsed]) .right-side {
                 left: 46px;
             }
-            :host([ismobile]) .right-side{
+
+            :host([ismobile]) .right-side {
                 left: 0;
             }
-            
-            :host([collapsed]) .left-side{
+
+            :host([collapsed]) .left-side {
                 width: 46px;
             }
-            :host([ismobile]) .left-side{
+
+            :host([ismobile]) .left-side {
                 width: 0;
             }
-            :host .left-side,:host .left-side:hover{
+
+            :host .left-side, :host .left-side:hover {
                 width: 200px;
             }
-            :host(:not([ismobile])) [icon="menu"]{
-                display:none;
-            }
-            :host([ismobile]:not([collapsed])) .overlay{
-                display:block;
+
+            :host(:not([ismobile])) [icon="menu"] {
+                display: none;
             }
 
-            :host([collapsed]) .collapse-button{
+            :host([ismobile]:not([collapsed])) .overlay {
+                display: block;
+            }
+
+            :host([collapsed]) .collapse-button {
                 transform: rotateZ(+90deg);
             }
-            :host([ismobile]) .collapse-button{
-                display:none;
+
+            :host([ismobile]) .collapse-button {
+                display: none;
             }
 
-            :host([collapsed]) .header.logo{
+            :host([collapsed]) .header.logo {
                 align-items: flex-start;
             }
         `;
@@ -303,7 +318,7 @@ export class IronAppRouter extends LitElement {
                     </div>
                     <div class="flex vertical layout right-side-bottom">
                     </div>    
-                    ${!this.hideMenu? html`<paper-fab icon="menu" @click="${this._showMenu}"></paper-fab>`:""}
+                    ${!this.hideMenu ? html`<paper-fab icon="menu" @click="${this._showMenu}"></paper-fab>` : ""}
                 </div>  
                 <div class="overlay"></div>                    
                 <div class="vertical layout left-side">
@@ -335,8 +350,6 @@ export class IronAppRouter extends LitElement {
             </div>
         `;
     }
-
-
 
 
     _onCompanySelection(event) {

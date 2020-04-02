@@ -32,11 +32,11 @@ class IronAjax extends LitElement {
         this.xhr.responseType = "json";
     }
 
-    shouldUpdate(_changedProperties){
+    shouldUpdate(_changedProperties) {
         return false;
     }
 
-    async generateRequest(){
+    async generateRequest() {
         return new Promise((resolve, reject) => {
             CBNUtils.startLoading();
             let params = this._getParams(this.params);
@@ -85,16 +85,16 @@ class IronAjax extends LitElement {
         });
     }
 
-    _getBody(body){
-        if(this._haveFile(body)){
+    _getBody(body) {
+        if (this._haveFile(body)) {
             return this._getFormData(body);
-        } else{
+        } else {
             return this._getEncodedObject(body);
         }
     }
 
-    _getParams(params){
-        let encodedCompanyId = window.data !== undefined &&  window.data._selectedCompany !== undefined ? `${encodeURIComponent('_companyId')}=${encodeURIComponent(window.data._selectedCompany)}` : '';
+    _getParams(params) {
+        let encodedCompanyId = window.data !== undefined && window.data._selectedCompany !== undefined ? `${encodeURIComponent('_companyId')}=${encodeURIComponent(window.data._selectedCompany)}` : '';
         return (params !== undefined ? '?' + this._getEncodedObject(params) + '&' + encodedCompanyId : '?' + encodedCompanyId);
     }
 
@@ -119,7 +119,7 @@ class IronAjax extends LitElement {
         }).join('&') : '';
     }
 
-    _getFormData(body){
+    _getFormData(body) {
         let formData = new FormData();
         this._apendToFormData(body, '', formData);
         return formData;
@@ -154,11 +154,11 @@ class IronAjax extends LitElement {
         });
     }
 
-    _haveFile(body){
+    _haveFile(body) {
         return body === undefined ? false : Object.values(body).reduce((currentValue, item) => {
-            if(item instanceof File){
+            if (item instanceof File) {
                 return true;
-            } else if(item instanceof Object){
+            } else if (item instanceof Object) {
                 return currentValue || this._haveFile(item);
             } else {
                 return currentValue;
@@ -167,11 +167,8 @@ class IronAjax extends LitElement {
     }
 
 }
-try {
-    customElements.define("iron-ajax", IronAjax);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define("iron-ajax", IronAjax);
 
 
 

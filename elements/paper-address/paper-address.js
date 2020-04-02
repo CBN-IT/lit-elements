@@ -35,7 +35,7 @@ class PaperAddress extends PaperInputContainer {
         };
     }
 
-    get url(){
+    get url() {
         return 'https://siruta-v2-dot-cbn-adresa.appspot.com/searchAddress';
     }
 
@@ -48,11 +48,11 @@ class PaperAddress extends PaperInputContainer {
         this.addEventListener('click', this._onClick.bind(this));
     }
 
-    static get styles(){
+    static get styles() {
         return [...super.styles, this.styleElement, flexLayoutClasses];
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
 
@@ -147,23 +147,20 @@ class PaperAddress extends PaperInputContainer {
         `
     }
 
-    get inputElement(){
+    get inputElement() {
         return html`
             <iron-ajax id="request" .url="${this.url}" noAjaxHeader></iron-ajax>
             <div class="select-container horizontal layout center flex">
                 <div class=" horizontal layout wrap center flex" style="overflow: hidden">
-                ${this._value.map((item, index) => {
-                    return !this.isDropdownMenu ?
-                        html`
-                            <div class="selected-option">
-                                <span>${item.__label}</span>
-                                <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
-                            </div>
-                        ` : 
-                        html`
-                            <span>${item.__label}</span>
-                        `
-                        })}
+                    ${this._value.map((item, index) => {
+            return !this.isDropdownMenu ?
+                html`
+                                <div class="selected-option">
+                                    <span>${item.__label}</span>
+                                    <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
+                                </div>` :
+                html`=<span>${item.__label}</span>`
+        })}
                     <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" autocomplete="off"/>
                 </div>
                 
@@ -174,40 +171,40 @@ class PaperAddress extends PaperInputContainer {
                         <option selected></option>
                         ${this._options.map((item, index) => html`
                             <option value="${index}" ?selected="${
-                                this._value.findIndex((value) => { return value.__value === item.__value}) !== -1
-                            }">${item.__label}</option>
+            this._value.findIndex((value) => {
+                return value.__value === item.__value
+            }) !== -1
+        }">${item.__label}</option>
                         `)}
                     </select>   
-                `:''}
+                ` : ''}
             </div>
             
             <iron-overlay .positioningElement="${this}" .openedOverlay="${live(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
                 <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
-                    ${this._filteredOptions.map((item,index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
+                    ${this._filteredOptions.map((item, index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
                 </iron-selector>
             </iron-overlay>
-              
         `;
     }
 
-    firstUpdated(changedProperties){
+    firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.ironOverlay = this.shadowRoot.querySelector('iron-overlay');
         this.ironAjax = this.shadowRoot.querySelector('iron-ajax');
     }
 
-    updated(changedProperties){
+    updated(changedProperties) {
         super.updated(changedProperties);
-        if(changedProperties.has('freeText') && this.freeText){
+        if (changedProperties.has('freeText') && this.freeText) {
             this.isNative = false;
         }
-
     }
 
     set value(value) {
         if (!CBNUtils.isNoE(value) && !CBNUtils.isNoE(value.id)) {
             this._processValue(value);
-        } else if(this.defaultValue){
+        } else if (this.defaultValue) {
             this._processValue(this.defaultValue);
         } else {
             this._value = [];
@@ -220,26 +217,26 @@ class PaperAddress extends PaperInputContainer {
         return this.multiple ? this._value.map(item => item.__value) : (this._value.length > 0 ? this._value[0].__value : '');
     }
 
-    get selectLabel(){
+    get selectLabel() {
         return this.multiple ? this._value.map(item => item.__label) : (this._value.length > 0 ? this._value[0].__label : '');
     }
 
-    _onClick(){
-        if(!this.isNative){
+    _onClick() {
+        if (!this.isNative) {
             this._filterOptions();
             this.ironOverlay.openOverlay();
             this.focused = true;
         }
     }
 
-    _processValue(value){
+    _processValue(value) {
         this._value = [{
             __label: value.label,
             __value: value
         }];
     }
 
-    set options(options){
+    set options(options) {
         this._options = options ? options.map((item) => {
             return typeof item === 'object' ?
                 Object.assign(item, {
@@ -253,7 +250,7 @@ class PaperAddress extends PaperInputContainer {
         this._filteredOptions = this._options;
     }
 
-    get options(){
+    get options() {
         return this._options;
     }
 
@@ -261,18 +258,18 @@ class PaperAddress extends PaperInputContainer {
         return false;
     }
 
-    _onChange(event){
+    _onChange(event) {
         if (this.disabled) {
             return;
         }
-        if(this.multiple){
+        if (this.multiple) {
             this._value = [];
             let selectedOptions = Array.from(event.currentTarget.selectedOptions);
             selectedOptions.forEach(selectedOption => {
                 this._selectOptionByIndex(parseInt(selectedOption.value));
             });
         } else {
-            if(event.currentTarget.selectedIndex === 0){
+            if (event.currentTarget.selectedIndex === 0) {
                 this._value = [];
                 this.validate(this._value, true);
                 return;
@@ -282,8 +279,8 @@ class PaperAddress extends PaperInputContainer {
         }
     }
 
-    _putLabels(){
-        if(this._options && this._value){
+    _putLabels() {
+        if (this._options && this._value) {
             this._value = this._value.map(item => {
                 let optionFound = this._options.find(option => item.__value === option.__value);
                 return optionFound ? optionFound : item;
@@ -291,7 +288,7 @@ class PaperAddress extends PaperInputContainer {
         }
     }
 
-    _deleteItem(event, item, index){
+    _deleteItem(event, item, index) {
         if (this.disabled) {
             return;
         }
@@ -300,11 +297,11 @@ class PaperAddress extends PaperInputContainer {
         this.requestUpdate();
     }
 
-    _selectOption(event, item, index){
+    _selectOption(event, item, index) {
         if (this.disabled) {
             return;
         }
-        if(this.preventSelection){
+        if (this.preventSelection) {
             CBNUtils.fireEvent(this, 'selection-attempt', {
                 name: this.name,
                 value: this._filteredOptions[index]
@@ -315,19 +312,21 @@ class PaperAddress extends PaperInputContainer {
 
     }
 
-    _selectOptionByIndex(index){
+    _selectOptionByIndex(index) {
         if (this.disabled) {
             return;
         }
         this._selectedOptionByValue(this._filteredOptions[index]);
     }
 
-    _selectedOptionByValue(value){
+    _selectedOptionByValue(value) {
         if (this.disabled) {
             return;
         }
-        if(this.multiple){
-            if(this.allowDuplicates || this._value.findIndex((item) => {return item.__value === value.__value}) === -1){
+        if (this.multiple) {
+            if (this.allowDuplicates || this._value.findIndex((item) => {
+                return item.__value === value.__value
+            }) === -1) {
                 this._value.push(value);
             }
         } else {
@@ -337,32 +336,32 @@ class PaperAddress extends PaperInputContainer {
         this.clearInput();
     }
 
-    _onIronSelect(event){
+    _onIronSelect(event) {
         if (this.disabled) {
             return;
         }
         this._selectedOption = event.detail.selected;
     }
 
-    _isFloated(){
+    _isFloated() {
         return !CBNUtils.isNoE(this._value) && this._value.length > 0;
     }
 
-    _onBlur(event){
+    _onBlur(event) {
         super._onBlur(event);
         this.clearInput();
     }
 
-    async _onInput(event){
+    async _onInput(event) {
         await this._filterOptions(this.input.value);
     }
 
-    onKeyDown(event){
+    onKeyDown(event) {
         if (this.disabled) {
             return;
         }
         let key = event.key;
-        switch (key){
+        switch (key) {
             case "Down": // IE/Edge specific value
             case "ArrowDown": {
                 this._selectedOption = this._selectedOption === undefined || this._selectedOption + 1 >= this._filteredOptions.length ? 0 : this._selectedOption + 1;
@@ -374,7 +373,7 @@ class PaperAddress extends PaperInputContainer {
                 break;
             }
             case "Enter": {
-                if(this._filteredOptions.length > this._selectedOption){
+                if (this._filteredOptions.length > this._selectedOption) {
                     this._selectOptionByIndex(this._selectedOption);
                 } else {
                     this._selectFreeTextValue();
@@ -382,13 +381,14 @@ class PaperAddress extends PaperInputContainer {
                 break;
             }
             case "Backspace": {
-                if(CBNUtils.isNoE(this.input.value)){
+                if (CBNUtils.isNoE(this.input.value)) {
                     this._value.pop();
                     this.requestUpdate();
                 }
             }
         }
     }
+
     _selectFreeTextValue() {
         if (this.disabled) {
             return;
@@ -402,7 +402,8 @@ class PaperAddress extends PaperInputContainer {
             this.clearInput();
         }
     }
-    async _filterOptions(value){
+
+    async _filterOptions(value) {
         if (this.ironAjax) {
             if (!CBNUtils.isNoE(this.value)) {
                 if (this.value.ancestor) {
@@ -435,9 +436,9 @@ class PaperAddress extends PaperInputContainer {
         }
     }
 
-    _processAdresses(addresses){
+    _processAdresses(addresses) {
         addresses.forEach(address => {
-            switch (address.rank){
+            switch (address.rank) {
                 case 0:
                     address.label = address.name;
                     address.value = {
@@ -469,30 +470,27 @@ class PaperAddress extends PaperInputContainer {
         });
     }
 
-    validate(value, fromUser){
+    validate(value, fromUser) {
         if (this.disabled) {
             return false;
         }
-        this.isValid= !this.required || (!CBNUtils.isNoE(value) && value.length > 0);
+        this.isValid = !this.required || (!CBNUtils.isNoE(value) && value.length > 0);
         // if(this.isValid){
-            CBNUtils.fireEvent(this, 'value-changed', {
-                name: this.name,
-                value: this.value,
-                label: this.selectLabel,
-                _value: this._value,
-                isValid: this.isValid,
-                fromUser: fromUser
-            });
+        CBNUtils.fireEvent(this, 'value-changed', {
+            name: this.name,
+            value: this.value,
+            label: this.selectLabel,
+            _value: this._value,
+            isValid: this.isValid,
+            fromUser: fromUser
+        });
         // }
         return this.isValid;
     }
 
 }
-try {
-    customElements.define('paper-address', PaperAddress);
-} catch (e) {
-    console.log(e);
-}
+
+customElements.define('paper-address', PaperAddress);
 
 
 
