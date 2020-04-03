@@ -159,7 +159,6 @@ export class PaperInputContainer extends LitElement {
 
     firstUpdated(changedProperties) {
         this.input = this.shadowRoot.querySelector(".input");
-        this.input.addEventListener('focus', this._onInputFocus.bind(this));
         this.input.addEventListener('blur', this._onInputBlur.bind(this));
 
         this.addEventListener('blur', this._onBlur.bind(this));
@@ -168,7 +167,6 @@ export class PaperInputContainer extends LitElement {
         this.input.addEventListener('input', this._onInput.bind(this));
         this.input.addEventListener('keydown', this.onKeyDown.bind(this));
     }
-
 
     _onFocus(event) {
         this.focus();
@@ -233,4 +231,6 @@ export class PaperInputContainer extends LitElement {
     }
 
 }
+
+
 

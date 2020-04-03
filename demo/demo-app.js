@@ -146,7 +146,7 @@ class DemoApp extends LitElement {
        
         <div class="container">
             <div class="title">paper-loading</div>
-            <paper-button icon="assignment" style="background: var(--green-color)" @click="${() => CBNUtils.fireEvent(this, 'start-loading')}">Start loading</paper-button>
+            <paper-button icon="assignment" style="background: var(--green-color)" @click="${() => {CBNUtils.fireEvent(this, 'start-loading');setTimeout(()=>CBNUtils.fireEvent(this, 'stop-loading'),2000)}}">Start loading</paper-button>
             <paper-button icon="assignment" style="background: var(--red-color)" @click="${() => CBNUtils.fireEvent(this, 'stop-loading')}">Stop loading</paper-button>
             <paper-loading></paper-loading>
         </div>

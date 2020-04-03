@@ -60,27 +60,31 @@ class IronForm extends LitElement {
     }
 
     static get styleElement() {
+        // language=CSS
         return css`
-            :host{
+            :host {
                 display: flex;
                 flex-direction: column;
                 background: white;
                 border-radius: inherit;
                 min-height: 0;
             }
-            p{
+
+            p {
                 margin: 0;
-                padding: 10px 20px;                   
+                padding: 10px 20px;
             }
-            .form{
-                
+
+            .form {
+
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
                 overflow-y: auto;
                 align-items: flex-start;
             }
-            .actions{
+
+            .actions {
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-end;

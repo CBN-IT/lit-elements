@@ -43,7 +43,6 @@ class PaperDialog extends LitElement {
 
             :host([opened]) {
                 opacity: 1;
-                pointer-events: all;
                 visibility: visible;
                 transform: translate(0px, 0px);
             }
