@@ -197,7 +197,6 @@ class PaperTable extends LitElement {
         this.items = [];
     }
 
-
     render() {
         return html`
         <div class="container">
@@ -246,11 +245,16 @@ class PaperTable extends LitElement {
     }
 
     shouldUpdate(changedProperties) {
+        if(changedProperties.has('columns')){
+            this.setColumns(this.columns);
+        }
+        if(changedProperties.has('items')){
+            this.setItems(this.items);
+        }
         return changedProperties.has('_columns') || changedProperties.has('_selectedItemsNumber') || changedProperties.has('_filteredItemsNumber');
     }
 
-
-    set columns(config) {
+    setColumns(config) {
         if (config) {
             let columns = config.columns ? config.columns : config;
             this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
@@ -265,11 +269,7 @@ class PaperTable extends LitElement {
         }
     }
 
-    get columns() {
-        return this._columns;
-    }
-
-    set items(items) {
+    setItems(items) {
         this._items = items.map((item, index) => {
             return {
                 ...item,
@@ -279,18 +279,14 @@ class PaperTable extends LitElement {
         });
         this._filteredItems = [...this._items];
         this.updateComplete.then(() => {
-            this._firstRender();
-            this._filter();
-            for (let i = 0; i < this._columns.length; i++) {
-                if (this._columns[i].sortType !== 0) {
-                    this._sort(this._columns[i].name, this._columns[i].sortType);
+                this._firstRender();
+                this._filter();
+                for (let i = 0; i < this._columns.length; i++) {
+                    if (this._columns[i].sortType !== 0) {
+                        this._sort(this._columns[i].name, this._columns[i].sortType);
+                    }
                 }
-            }
-        });
-    }
-
-    get items() {
-        return this._items;
+            });
     }
 
     get selectedItems() {
@@ -542,7 +538,7 @@ class PaperTable extends LitElement {
         this._updateIndexCell(row, index);
         let cells = row.querySelectorAll(".cell");
         for (let j = 0; j < cells.length; j++) {
-            this._updateCell(cells[j], this.columns[j], model);
+            this._updateCell(cells[j], this._columns[j], model);
         }
     }
 
