@@ -17,7 +17,8 @@ export class AddWithLink extends LitElement {
             defaultModel: {type: Object},
             collection: {type: String},
             listView: {type: String},
-            saveUrl: {type: String}
+            saveUrl: {type: String},
+            getUrl: {type: String}
         };
     }
 
@@ -83,6 +84,7 @@ export class AddWithLink extends LitElement {
         super();
         this.config = {elements: []};
         this.model = this.defaultModel;
+        this.getUrl = "/GetDocument";
     }
 
     requestUpdate() {
@@ -98,7 +100,7 @@ export class AddWithLink extends LitElement {
 
     render() {
         return html`
-            <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>          
+            <iron-ajax class="request" url="${this.getUrl}" @iron-response="${this._onIronResponse}"></iron-ajax>          
             <div class="paper-material vertical layout">
                 <h3>Detalii ${this._collection}</h3>                 
                 <iron-form class="flex" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this._collection}" @saved-form="${this._onSavedForm}"></iron-form>

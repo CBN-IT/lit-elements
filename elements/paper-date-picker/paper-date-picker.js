@@ -79,8 +79,7 @@ export class PaperDatePicker extends PaperInputContainer {
                 }
                 return d;
             },
-        }).on('select', (_, dp) => this._selectedDate(dp))
-            .on('open', this._openedDatePicker.bind(this));
+        }).on('select', (_, dp) => this._selectedDate(dp));
 
         if (changedProperties.has('_value')) {
             this.tinyDatePicker.setState({selectedDate: this._value});

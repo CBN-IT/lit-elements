@@ -923,8 +923,9 @@ class FormEditor extends LitElement {
             }
 
             .box {
+                --box-bg-color:white;
                 border-radius: 10px;
-                background-color: white;
+                background-color: var(--box-bg-color);
                 height: 100%;
                 cursor: pointer;
                 position: absolute;
@@ -938,7 +939,7 @@ class FormEditor extends LitElement {
             }
 
             .box:hover {
-                background: #cef0ff;
+                --box-bg-color:#cef0ff;
             }
 
             .required {
@@ -949,8 +950,27 @@ class FormEditor extends LitElement {
             }
 
             .topBar {
+                display: flex;
+                white-space: nowrap;
+                overflow: hidden;
                 margin-bottom: 3px;
                 font-weight: bold;
+            }
+            .label{
+                flex:1;
+                flex-basis: 0.1px;
+                position: relative;
+                overflow: hidden;
+                text-overflow: clip;
+            }
+            .label:after {
+                content:'';
+                width:18px;
+                position:absolute;
+                right:0;
+                top:0;
+                bottom:0;
+                background:linear-gradient(to right, transparent, var(--box-bg-color));
             }
 
             .bottomBar {
@@ -1048,12 +1068,13 @@ class FormEditor extends LitElement {
                             <div class="holder right" @dragover="${this._dragover}" @dragenter="${this._dragenter}" @dragleave="${this._dragleave}" @drop="${this._drop}"></div>
                             <div  class="box" draggable="true" @click="${this._editEvent}" @dragstart="${this._dragstart}" @dragend="${this._dragend}">
                                 <div class="topBar">
-                                    <sup class="required">${el.required === true ? "*" : html`&nbsp;`}</sup><span class="label">${el.label}</span>
+                                    <span class="label"><sup class="required">${el.required === true ? "*" : html`&nbsp;`}</sup>${el.label}</span>
+                                    <span class="tag type">${el.type}</span>
                                     <iron-icon size="24" icon="delete" class="deleteBtn" @click="${this._delete}"></iron-icon>
                                 </div>
                                 <div class="bottomBar">
-                                    <span class="tag type">${el.type}</span>
                                     <span class="tag name">${el.name}</span>
+                                    <span style="flex:1;"></span>
                                     <span class="tag class"><iron-icon size="18" icon="phone"></iron-icon>${this._getCol("xs", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="tablet"></iron-icon>${this._getCol("sm", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="laptop"></iron-icon>${this._getCol("lg", el.class)}</span>
@@ -1062,7 +1083,6 @@ class FormEditor extends LitElement {
                                     ${el.freeText ? html`<iron-icon size="24" icon="create"></iron-icon>` : ""}
                                     ${el.allowDuplicates ? html`<iron-icon size="24" icon="content-copy"></iron-icon>` : ""}
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

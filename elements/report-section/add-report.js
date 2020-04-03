@@ -30,20 +30,18 @@ class AddReport extends AddWithLink {
         super();
         this.pages = ['Config', 'Code', 'Params'];
         this.collection = 'report';
+        this._bindedSaveFormFromKeyDown = this._saveFormFromKeyDown.bind(this);
     }
 
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.tabs = this.shadowRoot.querySelector('paper-tabs');
         this.form = this.shadowRoot.querySelector('iron-form');
-        this.shadowRoot.querySelector('[name="code"]').addEventListener("keydown", this._saveReport.bind(this));
-        this.shadowRoot.querySelector('[name="params"]').addEventListener("keydown", this._saveReport.bind(this));
-
     }
 
     render() {
         return html`
-            <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>              
+            <iron-ajax class="request" url="${this.getUrl}" @iron-response="${this._onIronResponse}"></iron-ajax>              
             <paper-tabs .pages="${this.pages}" class="flex">
                 <iron-form class="flex" .config="${this.config}" .model="${this.model}" url="/SaveReport" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
                 <ace-editor class="flex" name="code" .value="${this.model.code}" mode="ace/mode/typescript" theme="ace/theme/dracula" fontSize="14" @value-changed="${this._onValueChanged}"></ace-editor>
@@ -56,19 +54,22 @@ class AddReport extends AddWithLink {
         this.model[event.detail.name] = event.detail.value;
     }
 
-    _saveReport(event) {
-        if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && event.keyCode === 83) {
+    _saveFormFromKeyDown(event) {
+        if ((event.metaKey || event.ctrlKey) && event.key === "s") {
             this.form._submitForm();
             event.preventDefault();
         }
     }
 
-    refreshPage(oldValue, newValue) {
-        super.refreshPage(oldValue, newValue);
-        if (newValue && newValue.page === this.name) {
+    refreshPage(newPage, oldPage) {
+        super.refreshPage(newPage, oldPage);
+        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)){
+            window.addEventListener("keydown", this._bindedSaveFormFromKeyDown);
             if (this.tabs) {
                 this.tabs.refresh();
             }
+        }else{
+            window.removeEventListener("keydown", this._bindedSaveFormFromKeyDown);
         }
     }
 

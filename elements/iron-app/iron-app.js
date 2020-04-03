@@ -356,7 +356,8 @@ export class IronApp extends LitElement {
     }
 
     _showPage(event) {
-        this._setPages((this.base ? "/" + this.base : "") + `/${event.detail.page}` + (event.detail._id ? `/${event.detail._id}` : ''));
+        let {page,_id, ...model} = event.detail;
+        this._setPages((this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : ''), model);
     }
 
     async _selectPage(page) {
@@ -396,7 +397,7 @@ export class IronApp extends LitElement {
         this.pathname = pathname;
         let currentPage = this.getCurrentPageFromPath(pathname, model);
 
-        this.checkAndImportDependencies(currentPage.page);
+        await this.checkAndImportDependencies(currentPage.page);
         this.currentPage = currentPage;
         this.page = this.currentPage.page;
     }

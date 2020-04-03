@@ -22,6 +22,9 @@ class IronAjax extends LitElement {
             },
             noAjaxHeader: {
                 type: Boolean
+            },
+            noLoading: {
+                type: Boolean
             }
         };
     }
@@ -30,6 +33,8 @@ class IronAjax extends LitElement {
         super();
         this.xhr = new XMLHttpRequest();
         this.xhr.responseType = "json";
+        this.noAjaxHeader = false;
+        this.noLoading = false;
     }
 
     shouldUpdate(_changedProperties) {
@@ -38,7 +43,11 @@ class IronAjax extends LitElement {
 
     async generateRequest() {
         return new Promise((resolve, reject) => {
-            CBNUtils.startLoading();
+            if (this.xhr.readyState === 0 || this.xhr.readyState === 4) {
+                if (!this.noLoading) {
+                    CBNUtils.startLoading();
+                }
+            }
             let params = this._getParams(this.params);
             let body = this._getBody(this.body);
             this.xhr.open(this.method || this.body ? 'POST' : 'GET', this.url + params, true);
@@ -50,7 +59,9 @@ class IronAjax extends LitElement {
             }
             this.xhr.onreadystatechange = () => {
                 if (this.xhr.readyState === XMLHttpRequest.DONE) {
-                    CBNUtils.stopLoading();
+                    if (!this.noLoading) {
+                        CBNUtils.stopLoading();
+                    }
                     if (this.xhr.status === 200) {
                         resolve(this.xhr.response);
                         CBNUtils.fireEvent(this, 'iron-response', {

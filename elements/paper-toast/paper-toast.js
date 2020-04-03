@@ -96,10 +96,10 @@ class PaperToast extends LitElement {
         return this.type === 'error' ? 'error' : this.type === 'warning' ? 'warning' : 'check-circle'
     }
 
-    _onMessage(event){
+    _onMessage(event) {
         this.message = event.detail.message;
         this.type = event.detail.type || 'success';
-        this.timeout = event.detail.timeout || 5;
+        this.timeout = event.detail.timeout || (this.type === "error") ? 10 : 7;
         this._open();
     }
 

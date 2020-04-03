@@ -52,6 +52,7 @@ class AddColumn extends AddWithLink {
         super();
         this.pages = ["Form", ' Demo', 'Code'];
         this.collection = 'column';
+        this.getUrl = '/GetColumns';
         this.tabindex = "1";
         this._bindedSaveFormFromKeyDown = this._saveFormFromKeyDown.bind(this);
     }
@@ -64,7 +65,7 @@ class AddColumn extends AddWithLink {
 
     render() {
         return html`
-            <iron-ajax class="request" url="/GetDocument" @iron-response="${this._onIronResponse}"></iron-ajax>  
+            <iron-ajax class="request" url="${this.getUrl}" @iron-response="${this._onIronResponse}"></iron-ajax>  
             <paper-tabs .pages="${this.pages}" class="flex" @tab-select="${this._changedTab}">
                 <iron-form class="flex" name="form" .config="${this.config}" .model="${this.model}" url="/SaveColumn" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
                 <paper-table class="flex paper-material" name="demo" .columns="${this._safeParseJson(this.model.code)}" .items="${[]}"></paper-table>              
@@ -107,16 +108,16 @@ class AddColumn extends AddWithLink {
         this.form._submitForm();
     }
 
-    _saveFormFromKeyDown() {
-        if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && event.key === "s") {
+    _saveFormFromKeyDown(event) {
+        if ((event.metaKey || event.ctrlKey) && event.key === "s") {
             event.preventDefault();
             this._saveForm();
         }
     }
 
-    refreshPage(oldValue, newValue) {
-        super.refreshPage(oldValue, newValue);
-        if (newValue[0] === this.name) {
+    refreshPage(newPage, oldPage) {
+        super.refreshPage(newPage, oldPage);
+        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)){
             window.addEventListener("keydown", this._bindedSaveFormFromKeyDown);
             if (this.tabs) {
                 this.tabs.refresh();
@@ -127,9 +128,14 @@ class AddColumn extends AddWithLink {
     }
 
     _onIronResponse(event) {
+        let code = event.detail.response.code;
+        if (typeof code === "string") {
+            code = JSON.parse(event.detail.response.code);
+        }
+        code = JSON.stringify(code, null, "\t")
         this.model = {
             ...event.detail.response,
-            code: JSON.stringify(JSON.parse(event.detail.response.code), null, "\t")
+            code
         };
     }
 

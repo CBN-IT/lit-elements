@@ -17,7 +17,8 @@ class ColumnView extends TableViewWithLink {
                 "name": "collection",
                 "title": "Collection",
                 "filterable": true,
-                "sortable": true
+                "sortable": true,
+                "sortType": 1
             }
         ];
     }

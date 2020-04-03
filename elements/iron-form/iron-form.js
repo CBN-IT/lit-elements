@@ -34,9 +34,6 @@ class IronForm extends LitElement {
             model: {
                 type: Object
             },
-            _model: {
-                type: Object
-            },
             config: {
                 type: Object
             },
@@ -100,17 +97,6 @@ class IronForm extends LitElement {
         this.params = {};
     }
 
-    set model(value) {
-        if (this._model === value) {
-            return;
-        }
-        this._model = value;
-    }
-
-    get model() {
-        return this._model;
-    }
-
     render() {
         return html`
             <iron-ajax id="request" .url="${this.url}" method="POST"></iron-ajax>
@@ -144,7 +130,7 @@ class IronForm extends LitElement {
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}"
                         .format="${elementConfig.format}"
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-date-picker>`;
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-date-picker>`;
             }
             case 'time': {
                 return html`
@@ -157,7 +143,7 @@ class IronForm extends LitElement {
                         .required="${elementConfig.required}" 
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-date-time-picker>`;
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-date-time-picker>`;
             }
             case 'file': {
                 return html`
@@ -170,7 +156,7 @@ class IronForm extends LitElement {
                         .required="${elementConfig.required}" 
                         .disabled="${elementConfig.disabled}" 
                         .multiple="${elementConfig.multiple}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-file>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-file>`
             }
             case 'checkbox': {
                 return html`
@@ -183,7 +169,7 @@ class IronForm extends LitElement {
                         .required="${elementConfig.required}" 
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-checkbox>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-checkbox>`
             }
             case 'select': {
                 return html`
@@ -202,7 +188,7 @@ class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}" 
                         .itemLabelProperty="${elementConfig.itemLabelProperty}" 
                         .options="${elementConfig.options}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-select>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-select>`
             }
             case 'address': {
                 return html`
@@ -221,7 +207,7 @@ class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}" 
                         .itemLabelProperty="${elementConfig.itemLabelProperty}" 
                         .options="${elementConfig.options}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-address>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-address>`
             }
             case 'textarea': {
                 return html`
@@ -236,7 +222,7 @@ class IronForm extends LitElement {
                         .minLength="${elementConfig.minLength}" 
                         .maxLength="${elementConfig.maxLength}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-textarea>`;
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-textarea>`;
             }
             case 'paragraph': {
                 return html`
@@ -263,16 +249,16 @@ class IronForm extends LitElement {
                         .isCNP="${elementConfig.isCNP}" 
                         .isCIF="${elementConfig.isCIF}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${forceWrite(this._model[elementConfig.name])}"></paper-input>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-input>`
             }
         }
     }
 
 
     _onValueChanged(event) {
-        this._model[event.detail.name] = event.detail.value;
+        this.model[event.detail.name] = event.detail.value;
         if (event.detail.label !== undefined) {
-            this._model[`${event.detail.name}_label`] = event.detail.label;
+            this.model[`${event.detail.name}_label`] = event.detail.label;
         }
     }
 
@@ -326,7 +312,7 @@ class IronForm extends LitElement {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});
                 return;
             }
-            this.request.body = {collection: this.collection, ...this._model, ...this.params};
+            this.request.body = {collection: this.collection, ...this.model, ...this.params};
             let response = await this.request.generateRequest();
             CBNUtils.fireEvent(this, 'saved-form', {response});
             if (!this.preventMessageOnSucces) {

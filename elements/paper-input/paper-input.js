@@ -64,21 +64,26 @@ class PaperInput extends PaperInputContainer {
     }
 
     validate(value, fromUser) {
-        let isValid = !this.required || !CBNUtils.isNoE(value);
-        switch (this.type) {
-            case 'number': {
-                isValid = isValid && this._validateNumber(value);
-                break;
+        let isValid;
+        if (!this.required && CBNUtils.isNoE(value)) {
+            isValid = true;
+        } else {
+            isValid = !this.required || !CBNUtils.isNoE(value);
+            switch (this.type) {
+                case 'number': {
+                    isValid = isValid && this._validateNumber(value);
+                    break;
+                }
+                case 'text': {
+                    isValid = isValid && this._validateText(value);
+                }
             }
-            case 'text': {
-                isValid = isValid && this._validateText(value);
+            if (this.isCNP === true) {
+                isValid = isValid && PaperInput._validateCNP(value);
             }
-        }
-        if (this.isCNP === true) {
-            isValid = isValid && PaperInput._validateCNP(value);
-        }
-        if (this.isCIF === true) {
-            isValid = isValid && PaperInput._validateCIF(value);
+            if (this.isCIF === true) {
+                isValid = isValid && PaperInput._validateCIF(value);
+            }
         }
         this.isValid = isValid;
         this._value = value;

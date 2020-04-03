@@ -21,7 +21,7 @@ export class CompanyView extends TableView {
                     "required": false
                 }
             ]
-        };
+        }
     }
 
     constructor() {

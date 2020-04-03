@@ -16,7 +16,8 @@ class ReportsView extends TableViewWithLink {
                 "name": "reportName",
                 "title": "Name",
                 "filterable": true,
-                "sortable": true
+                "sortable": true,
+                "sortType": 1
             },
             {
                 "name": "type",
