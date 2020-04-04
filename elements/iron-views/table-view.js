@@ -27,37 +27,42 @@ export class TableView extends LitElement {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses, this.styleElement]
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-            :host{
+            :host {
                 display: flex;
                 position: relative;
                 flex-direction: column;
             }
-            paper-fab{
+
+            paper-fab {
                 bottom: 10px;
                 right: 10px;
                 background: var(--app-secondary-color);
             }
-            paper-dialog{
+
+            paper-dialog {
                 --max-dialog-width: 1000px;
             }
-            .header{
+
+            .header {
                 padding: 0 10px;
             }
-            .paper-material{
+
+            .paper-material {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
                 background: white;
                 border-radius: 5px;
                 margin: 10px;
             }
-            .top-bar{
-                margin-bottom: 0px;
+
+            .top-bar {
+                margin-bottom: 0;
             }
         `
     }
@@ -71,7 +76,7 @@ export class TableView extends LitElement {
         this.deleteUrl = "/DeleteItem";
     }
 
-    set collection(value){
+    set collection(value) {
         this._collection = value;
         this.config = window.data._configs[this._collection];
         this.columns = window.data._columns[this._collection];
@@ -81,20 +86,20 @@ export class TableView extends LitElement {
         window.addEventListener(`get-${this._collection}`, this._getItems.bind(this));
     }
 
-    get collection(){
+    get collection() {
         return this._collection;
     }
 
-    set currentPage(page){
+    set currentPage(page) {
         this.refreshPage(page, this._currentPage);
         this._currentPage = page;
     }
 
-    get currentPage(){
+    get currentPage() {
         return this._currentPage;
     }
 
-    firstUpdated(){
+    firstUpdated() {
         this.table = this.shadowRoot.querySelector('paper-table');
         this.dialog = this.shadowRoot.querySelector('.dialog');
         this.form = this.shadowRoot.querySelector('iron-form');
@@ -124,62 +129,63 @@ export class TableView extends LitElement {
         `;
     }
 
-    _getTopBarTemplate(){
+    _getTopBarTemplate() {
         return '';
     }
 
-    _displayReportsDropdown(){
+    _displayReportsDropdown() {
         return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
     }
 
-    _openDialog(){
+    _openDialog() {
         this.model = {};
         this.dialog.open();
     }
 
-    _onDblClick(event){
+    _onDblClick(event) {
         this.model = event.detail.item;
         this.dialog.open();
     }
 
-    async _onSavedForm(){
+    async _onSavedForm() {
         this.dialog.close();
         this._getItems();
     }
 
-    _onIronResponse(event){
+    _onIronResponse(event) {
         this.items = event.detail.response;
         CBNUtils.fireEvent(this, `update-${this.collection}`, {items: this.items});
     }
 
     async _getItems() {
         if (this.request && !this.disabledRequest) {
-                await this.request.generateRequest();
+            await this.request.generateRequest();
         }
     }
 
-  onValueChanged() {}
+    onValueChanged() {
+    }
 
-  refreshPage(newPage, oldPage) {
-    if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
+    refreshPage(newPage, oldPage) {
+        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
             this._getItems();
         }
     }
 
     async _deleteItem(event) {
-    CBNUtils.fireEvent(this, 'confirm-delete', {
-      message: 'Esti sigur ca doresti sa stergi aceasta inregistrare?',
-      url: this.deleteUrl,
-      body: {
-        _id: event.detail._id,
-        collection: this.collection
-      },
-      callback: this._deletedItem.bind(this)
-    });
-  }
+        CBNUtils.fireEvent(this, 'confirm-delete', {
+            message: 'Esti sigur ca doresti sa stergi aceasta inregistrare?',
+            url: this.deleteUrl,
+            body: {
+                _id: event.detail._id,
+                collection: this.collection
+            },
+            callback: this._deletedItem.bind(this)
+        });
+    }
 
-  _deletedItem(){
-    this._getItems();
+    _deletedItem() {
+        this._getItems();
     }
 
 }

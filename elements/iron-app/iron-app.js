@@ -81,7 +81,7 @@ export class IronApp extends LitElement {
     }
 
     static get layoutStyles() {
-        // language=CSS
+        // language= CSS
         return css`
             .header {
                 height: 47px;
@@ -388,7 +388,7 @@ export class IronApp extends LitElement {
         window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
     }
 
-    async _setPages(pathname, model) {
+    _setPages(pathname, model) {
         pathname = (this.base && pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
 
         if (this.pathname !== pathname) {
@@ -397,7 +397,9 @@ export class IronApp extends LitElement {
         this.pathname = pathname;
         let currentPage = this.getCurrentPageFromPath(pathname, model);
 
-        await this.checkAndImportDependencies(currentPage.page);
+        CBNUtils.startLoading();
+        this.checkAndImportDependencies(currentPage.page).then(CBNUtils.stopLoading);
+
         this.currentPage = currentPage;
         this.page = this.currentPage.page;
     }

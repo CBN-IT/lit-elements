@@ -113,7 +113,7 @@ class IronAjax extends LitElement {
         return object !== undefined ? Object.entries(object).map(([key, value]) => {
             if (value instanceof Array) {
                 if (value.length === 0) {
-                    return `${encodeURIComponent(key)}=${encodeURIComponent([])}`;
+                    return `${encodeURIComponent(key)}=${encodeURIComponent("")}`;
                 }
                 return value.map((subValue, index) => {
                     if (subValue instanceof Object) {
@@ -126,6 +126,8 @@ class IronAjax extends LitElement {
                 return this._getEncodedObject(value, prefix ? `${prefix}.${key}` : key);
             } else if (value !== undefined) {
                 return `${encodeURIComponent(prefix ? `${prefix}.${key}` : key)}=${encodeURIComponent(value)}`;
+            }else{
+                return "";
             }
         }).join('&') : '';
     }
@@ -142,7 +144,7 @@ class IronAjax extends LitElement {
                 if (value.length === 0) {
                     formData.append(prefix ? `${prefix}.${key}` : key, []);
                 }
-                return value.map((subValue, index) => {
+                value.map((subValue, index) => {
                     if (subValue instanceof Object) {
                         if (subValue['file']) {
                             formData.append(prefix ? `${prefix}.${key}` : key, subValue['file']);
