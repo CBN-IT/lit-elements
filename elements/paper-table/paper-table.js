@@ -661,13 +661,13 @@ class PaperTable extends LitElement {
 
     _onMouseDown(event) {
         if (event.shiftKey) {
-            document.getSelection().removeAllRanges();
+            event.preventDefault();
         }
     }
 
     _onClick(event) {
         if (event.shiftKey) {
-            document.getSelection().removeAllRanges();
+            event.preventDefault();
         }
         let row = event.currentTarget;
         this._updateSelected(row, event.shiftKey, event.ctrlKey);
@@ -721,7 +721,7 @@ class PaperTable extends LitElement {
     }
 
     _onDblClick(event) {
-        document.getSelection().removeAllRanges();
+        event.preventDefault();
         let row = event.currentTarget;
         this.dispatchEvent(new CustomEvent('dbl-click', {
             bubbles: true,
