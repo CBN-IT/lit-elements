@@ -1,6 +1,5 @@
 "use strict";
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
 
 export class EmptyView extends LitElement {
 
@@ -12,7 +11,7 @@ export class EmptyView extends LitElement {
     }
 
     static get styles() {
-        return [flexLayoutClasses, this.styleElement]
+        return [this.styleElement]
     }
 
     static get styleElement() {
@@ -34,7 +33,6 @@ export class EmptyView extends LitElement {
     }
 
     firstUpdated() {
-        this.request = this.shadowRoot.querySelector('.request');
         this.refreshPage();
     }
 

@@ -58,8 +58,8 @@ class ConfirmDelete extends LitElement {
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">Confirmare actiune</div>                  
                 <div slot="body">${this.message}</div>
-                <paper-button slot="button" icon="close" style="background: var(--grey-color)" @click="${this._closeDialog}">Anulare</paper-button>
-                <paper-button slot="button" icon="delete" style="background: var(--red-color)" @click="${this.confirmDelete}">Stergere</paper-button>
+                <paper-button slot="button" icon="close" class="bgGrey" @click="${this._closeDialog}">Anulare</paper-button>
+                <paper-button slot="button" icon="delete" class="bgRed" @click="${this.confirmDelete}">Stergere</paper-button>
             </paper-dialog>
         `;
     }

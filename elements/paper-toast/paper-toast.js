@@ -25,6 +25,9 @@ class PaperToast extends LitElement {
             }
         };
     }
+    static get styles(){
+        return [this.styleElement]
+    }
     static get styleElement() {
         // language=CSS
         return css`
@@ -37,14 +40,17 @@ class PaperToast extends LitElement {
                 color: var(--paper-toast-color, #f1f1f1);
                 min-height: 48px;
                 min-width: 288px;
-                left: calc(50% - 144px);
+                left:0;
+                right:0;
+                width:fit-content;
+                max-width: 80%;
                 padding: 16px 24px;
                 box-sizing: border-box;
                 box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
                 border-radius: 2px;
-                margin: 12px;
+                margin: 12px auto;
                 font-size: 14px;
-                cursor: default;
+                cursor: pointer;
                 opacity: 0;
                 transition: transform 0.25s, opacity 0.25s ease-in-out;
                 user-select: none;
@@ -74,9 +80,7 @@ class PaperToast extends LitElement {
             }
         `;
     }
-    static get styles(){
-        return [this.styleElement]
-    }
+
 
     constructor(){
         super();
@@ -99,7 +103,7 @@ class PaperToast extends LitElement {
     _onMessage(event) {
         this.message = event.detail.message;
         this.type = event.detail.type || 'success';
-        this.timeout = event.detail.timeout || (this.type === "error") ? 10 : 7;
+        this.timeout = event.detail.timeout || (this.type === "error") ? 10 : 70;
         this._open();
     }
 

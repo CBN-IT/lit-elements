@@ -1,6 +1,5 @@
 "use strict";
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import {live} from '/node_modules/lit-html/directives/live.js';
 import {directive} from '/node_modules/lit-html/lit-html.js';
 
 import './../paper-input/paper-input.js';
@@ -21,7 +20,7 @@ const forceWrite = directive((value) => (part) => {
     part.setValue(value);
 });
 
-class IronForm extends LitElement {
+export class IronForm extends LitElement {
 
     static get properties() {
         return {
@@ -103,12 +102,12 @@ class IronForm extends LitElement {
             <div class="form" id="form">
                 ${this.config ? this.config.elements.map(item => this.getElement(item)) : ''}
             </div>    
-            ${!this.noSubmitButton ? html`
-                <div class="actions">
-                    <paper-button icon="check-circle" @click="${this._submitForm}" style="background: var(--app-secondary-color, green)">Salveaza</paper-button>               
-                </div>
-            ` : ''}
-                                                       
+            <div class="actions">
+                ${!this.noSubmitButton ? html`
+                    <paper-button icon="check-circle" @click="${this._submitForm}" style="background: var(--app-secondary-color, green)">Salveaza</paper-button>     
+                ` : ''} 
+                <slot name="button"></slot>         
+            </div>
         `;
     }
 
@@ -262,6 +261,11 @@ class IronForm extends LitElement {
         }
     }
 
+    /**
+     * @public
+     * @param name
+     * @param value
+     */
     changeInputValue(name, value) {
         let input = this.shadowRoot.querySelector('[name="' + name + '"]');
         if (input) {
@@ -307,6 +311,10 @@ class IronForm extends LitElement {
     }
 
     async _submitForm() {
+        console.warn("@Deprecated API iron-form._submitForm Please use submit() instead");
+        return this.submit();
+    }
+    async submit() {
         if (this.request && this.validate()) {
             if (this.preventSubmit) {
                 CBNUtils.fireEvent(this, 'pre-submit', {model: this.model});

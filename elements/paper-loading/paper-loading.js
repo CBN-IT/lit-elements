@@ -30,6 +30,7 @@ class PaperLoading extends LitElement {
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
+                cursor:wait;
             }
 
             :host([opened]) {

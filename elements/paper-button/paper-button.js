@@ -1,7 +1,9 @@
 "use strict";
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {flexLayoutClasses} from './../flex-layout/flex-layout-classes.js';
+import {hostColors} from '../cbn-utils/hostColors.js';
 import "./../iron-icon/iron-icon.js";
+
 
 class PaperButton extends LitElement {
 
@@ -14,7 +16,7 @@ class PaperButton extends LitElement {
     }
 
     static get styles() {
-        return [flexLayoutClasses, this.styleElement];
+        return [flexLayoutClasses, this.styleElement, hostColors];
     }
 
     static get styleElement() {

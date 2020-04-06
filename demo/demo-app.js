@@ -69,17 +69,17 @@ class DemoApp extends LitElement {
             </style>
         <div class="container">
             <div class="title">paper-table</div>
-                <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => window.open('/demo/paper-table/index.html')}">Demo paper-table</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('/demo/paper-table/index.html')}">Demo paper-table</paper-button>
             </div>
         </div>
         <div class="container">
             <div class="title">form-editor</div>
-                <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => window.open('/demo/form-editor/index.html')}">Demo form-editor</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('/demo/form-editor/index.html')}">Demo form-editor</paper-button>
             </div>
         </div>
         <div class="container">
             <div class="title">iron-form</div>
-                <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => window.open('/demo/iron-form/index.html')}">Demo iron-form</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('/demo/iron-form/index.html')}">Demo iron-form</paper-button>
             </div>
         </div>
        
@@ -89,7 +89,7 @@ class DemoApp extends LitElement {
         </div>
         <div class="container">
             <div class="title">iron-overlay</div>
-            <paper-button icon="assignment" style="background: var(--green-color)" @click="${() => this.shadowRoot.querySelectorAll('iron-overlay')[0].openOverlay()}">Open overlay</paper-button>
+            <paper-button icon="assignment" class="bgGreen" @click="${() => this.shadowRoot.querySelectorAll('iron-overlay')[0].openOverlay()}">Open overlay</paper-button>
             <iron-overlay padding="0">
                 <div>
                     <div>Overlay content</div>
@@ -100,7 +100,7 @@ class DemoApp extends LitElement {
                     <div>Overlay content</div>
                 </div>
             </iron-overlay>
-            <paper-button icon="assignment" style="background: var(--blue-color)" @click="${() => this.shadowRoot.querySelectorAll('iron-overlay')[1].openOverlay()}">Open overlay</paper-button>
+            <paper-button icon="assignment" class="bgBlue" @click="${() => this.shadowRoot.querySelectorAll('iron-overlay')[1].openOverlay()}">Open overlay</paper-button>
             <iron-overlay padding="0" from="top-left" direction="top-right">
                 <div>
                     <div>Overlay content</div>
@@ -123,31 +123,32 @@ class DemoApp extends LitElement {
         </div>
         <div class="container">
             <div class="title">paper-button</div>
-            <paper-button icon="file-upload" style="background: var(--blue-color)">Upload file</paper-button>
-            <paper-button icon="add" style="background: var(--red-color)">Adauga</paper-button>
-            <paper-button icon="assignment" style="background: var(--teal-color)">Asigneaza</paper-button>
-            <paper-button icon="settings" style="background: var(--green-color)">Setari</paper-button>
-            <paper-button icon="layers" style="background: var(--yellow-color)">Sectiuni</paper-button>
-            <paper-button icon="dns" small style="background: var(--grey-color)"></paper-button>
+            <paper-button icon="file-upload" class="bgBlue">Upload file</paper-button>
+            <paper-button icon="add" class="bgRed">Adauga</paper-button>
+            <paper-button icon="assignment" class="bgTeal">Asigneaza</paper-button>
+            <paper-button icon="settings" class="bgGreen">Setari</paper-button>
+            <paper-button icon="layers" class="bgYellow">Sectiuni</paper-button>
+            <paper-button icon="dns" small class="bgGrey"></paper-button>
         </div>
         <div class="container">
             <div class="title">paper-fab</div>
             <div style="position:relative;height:64px;width:64px;">
-                <paper-fab icon="file-upload" style="background: var(--blue-color);top:0;"></paper-fab>
+                <paper-fab icon="file-upload" class="bgBlue" style="top:0;"></paper-fab>
             </div>
         </div>
         <div class="container">
             <div class="title">paper-toast</div>
-            <paper-button icon="assignment" style="background: var(--green-color)" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - success'})}">Open toast - success</paper-button>
-            <paper-button icon="assignment" style="background: var(--yellow-color)" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - warning', type: 'warning'})}">Open toast - warning</paper-button>
-            <paper-button icon="assignment" style="background: var(--red-color)" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - error', type: 'error'})}">Open toast - error</paper-button>
+            <paper-button icon="assignment" class="bgGreen" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - success'})}">Open toast - success</paper-button>
+            <paper-button icon="assignment" class="bgYellow" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - warning', type: 'warning'})}">Open toast - warning</paper-button>
+            <paper-button icon="assignment" class="bgRed" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - error', type: 'error'})}">Open toast - error</paper-button>
+            <paper-button icon="assignment" class="bgRed" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error'})}">Big message</paper-button>
             <paper-toast></paper-toast>
         </div>
        
         <div class="container">
             <div class="title">paper-loading</div>
-            <paper-button icon="assignment" style="background: var(--green-color)" @click="${() => {CBNUtils.fireEvent(this, 'start-loading');setTimeout(()=>CBNUtils.fireEvent(this, 'stop-loading'),2000)}}">Start loading</paper-button>
-            <paper-button icon="assignment" style="background: var(--red-color)" @click="${() => CBNUtils.fireEvent(this, 'stop-loading')}">Stop loading</paper-button>
+            <paper-button icon="assignment" class="bgGreen" @click="${() => {CBNUtils.fireEvent(this, 'start-loading');setTimeout(()=>CBNUtils.fireEvent(this, 'stop-loading'),2000)}}">Start loading</paper-button>
+            <paper-button icon="assignment" class="bgRed" @click="${() => CBNUtils.fireEvent(this, 'stop-loading')}">Stop loading</paper-button>
             <paper-loading></paper-loading>
         </div>
         <div class="container">
@@ -161,7 +162,7 @@ class DemoApp extends LitElement {
         </div>     
         <div class="container">
             <div class="title">paper-dialog</div>
-            <paper-button icon="add" style="background: var(--blue-color)" @click="${() => this.shadowRoot.querySelector('paper-dialog').open()}">Open dialog</paper-button>
+            <paper-button icon="add" class="bgBlue" @click="${() => this.shadowRoot.querySelector('paper-dialog').open()}">Open dialog</paper-button>
             <paper-dialog>
                 <div slot="header">Dialog title</div>
                 <div slot="body">Dialog body</div>
