@@ -56,7 +56,7 @@ class AddReport extends AddWithLink {
 
     _saveFormFromKeyDown(event) {
         if ((event.metaKey || event.ctrlKey) && event.key === "s") {
-            this.form._submitForm();
+            this.form.submit();
             event.preventDefault();
         }
     }

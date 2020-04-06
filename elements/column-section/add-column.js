@@ -105,7 +105,7 @@ class AddColumn extends AddWithLink {
             }
         }
 
-        this.form._submitForm();
+        this.form.submit();
     }
 
     _saveFormFromKeyDown(event) {

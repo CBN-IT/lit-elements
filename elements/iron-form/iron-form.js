@@ -104,7 +104,7 @@ export class IronForm extends LitElement {
             </div>    
             <div class="actions">
                 ${!this.noSubmitButton ? html`
-                    <paper-button icon="check-circle" @click="${this._submitForm}" style="background: var(--app-secondary-color, green)">Salveaza</paper-button>     
+                    <paper-button icon="check-circle" @click="${this.submit}" style="background: var(--app-secondary-color, green)">Salveaza</paper-button>     
                 ` : ''} 
                 <slot name="button"></slot>         
             </div>

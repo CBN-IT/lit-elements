@@ -6,6 +6,7 @@ import "./../paper-table/paper-table.js";
 import "./../paper-fab/paper-fab.js";
 import "./../iron-ajax/iron-ajax.js";
 
+
 export class AddWithLink extends LitElement {
 
     static get properties() {
@@ -18,10 +19,9 @@ export class AddWithLink extends LitElement {
             collection: {type: String},
             listView: {type: String},
             saveUrl: {type: String},
-            getUrl: {type: String}
+            getUrl: {type: String},
         };
     }
-
     static get styles() {
         return [flexLayoutClasses, this.styleElement]
     }
@@ -50,16 +50,8 @@ export class AddWithLink extends LitElement {
         `
     }
 
-    set collection(value) {
-        this._collection = value;
-        this.config = window.data._configs[this._collection];
-    }
-
-    get collection() {
-        return this._collection;
-    }
-
     get defaultModel() {
+        //calls should return a different object each time
         return {};
     }
 
@@ -70,18 +62,19 @@ export class AddWithLink extends LitElement {
     get saveUrl() {
         return '/SaveDocument';
     }
-
-
-
     constructor() {
         super();
         this.config = {elements: []};
         this.model = this.defaultModel;
         this.getUrl = "/GetDocument";
     }
+
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        if (changedProperties.has('collection')) {
+            this.config = window.data._configs[this._collection];
         }
         return true;
     }
@@ -123,10 +116,8 @@ export class AddWithLink extends LitElement {
     }
 
     _getDocument(_id) {
-        if (this.request !== undefined) {
-            this.request.params = {_id, collection: this.collection};
-            this.request.generateRequest();
-        }
+        this.request.params = {_id, collection: this.collection};
+        this.request.generateRequest();
     }
 
     _onIronResponse(event) {
