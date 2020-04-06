@@ -74,20 +74,15 @@ class TableViewNoLink extends LitElement {
         this.items = [];
     }
 
-    set currentPage(page){
-        this.refreshPage(page, this.currentPage);
-        this._currentPage = page;
-    }
-
-    get currentPage(){
-        return this._currentPage;
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('currentPage')) {
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        return true;
     }
 
     firstUpdated(){
         this.request = this.shadowRoot.querySelector('.request');
-        if (this._currentPage.page === this.name) {
-            this._getItems();
-        }
     }
 
     render() {

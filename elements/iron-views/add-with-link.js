@@ -71,14 +71,7 @@ export class AddWithLink extends LitElement {
         return '/SaveDocument';
     }
 
-    set currentPage(page) {
-        this.refreshPage(page, this._currentPage);
-        this._currentPage = page;
-    }
 
-    get currentPage() {
-        return this._currentPage;
-    }
 
     constructor() {
         super();
@@ -86,16 +79,15 @@ export class AddWithLink extends LitElement {
         this.model = this.defaultModel;
         this.getUrl = "/GetDocument";
     }
-
-    requestUpdate() {
-        super.requestUpdate();
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('currentPage')) {
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        return true;
     }
 
     firstUpdated(_changedProperties) {
         this.request = this.shadowRoot.querySelector('.request');
-        if (this.currentPage && this.currentPage.page === this.name) {
-            CBNUtils.async(() => this.newOrEditDocument(this.currentPage));
-        }
     }
 
     render() {

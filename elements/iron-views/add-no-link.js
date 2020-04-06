@@ -22,19 +22,22 @@ export class AddNoLink extends LitElement {
     static get styles() {
         return [flexLayoutClasses, this.styleElement]
     }
+
     static get styleElement() {
         // language=CSS
         return css`
-            :host{
+            :host {
                 display: flex;
                 min-height: 0;
                 flex-direction: column;
             }
-            h3{
+
+            h3 {
                 padding: 10px 10px;
                 margin: 0;
             }
-            .paper-material{
+
+            .paper-material {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
                 background: white;
                 border-radius: 5px;
@@ -44,6 +47,7 @@ export class AddNoLink extends LitElement {
             }
         `
     }
+
     set collection(value) {
         this._collection = value;
         this.config = window.data._configs[this._collection];
@@ -72,18 +76,13 @@ export class AddNoLink extends LitElement {
 
     firstUpdated(_changedProperties) {
         this.form = this.shadowRoot.querySelector('iron-form');
-        if (this.currentPage.page === this.name) {
-            CBNUtils.async(() => this.newOrEditDocument(this.currentPage));
+    }
+
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('currentPage')) {
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
-    }
-
-    set currentPage(page) {
-        this.refreshPage(page, this._currentPage);
-        this._currentPage = page;
-    }
-
-    get currentPage() {
-        return this._currentPage;
+        return true;
     }
 
     render() {

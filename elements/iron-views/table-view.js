@@ -89,14 +89,11 @@ export class TableView extends LitElement {
     get collection() {
         return this._collection;
     }
-
-    set currentPage(page) {
-        this.refreshPage(page, this._currentPage);
-        this._currentPage = page;
-    }
-
-    get currentPage() {
-        return this._currentPage;
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('currentPage')) {
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        return true;
     }
 
     firstUpdated() {
@@ -104,9 +101,6 @@ export class TableView extends LitElement {
         this.dialog = this.shadowRoot.querySelector('.dialog');
         this.form = this.shadowRoot.querySelector('iron-form');
         this.request = this.shadowRoot.querySelector('.request');
-        if (this.getItemsOnFirstRender || this._currentPage.page === this.name) {
-            this._getItems();
-        }
     }
 
     render() {

@@ -23,13 +23,11 @@ export class EmptyView extends LitElement {
         `
     }
 
-    set currentPage(page) {
-        this._currentPage = page;
-        this.refreshPage();
-    }
-
-    get currentPage() {
-        return this._currentPage;
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('currentPage')) {
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        return true;
     }
 
     firstUpdated() {

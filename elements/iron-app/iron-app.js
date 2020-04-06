@@ -351,18 +351,13 @@ export class IronApp extends LitElement {
             </div>`;
     }
 
-    _onPopstate(event) {
-        this._setPages(window.location.pathname);
+    async _onPopstate(event) {
+        await this._setPages(window.location.pathname);
     }
 
-    _showPage(event) {
+    async _showPage(event) {
         let {page,_id, ...model} = event.detail;
-        this._setPages((this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : ''), model);
-    }
-
-    async _selectPage(page) {
-        this.onPageSelection(page);
-        this.page = page;
+        await this._setPages((this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : ''), model);
     }
 
     async checkAndImportDependencies(page) {
@@ -377,9 +372,9 @@ export class IronApp extends LitElement {
         return splits[splits.length - 1];
     }
 
-    _onPageSelect(event) {
+    async _onPageSelect(event) {
         if (this.page !== event.detail.selected) {
-            this._setPages(this.base ? `/${this.base}/${event.detail.selected}` : `/${event.detail.selected}`);
+            await this._setPages(this.base ? `/${this.base}/${event.detail.selected}` : `/${event.detail.selected}`);
             this._pushState(this.pathname);
         }
     }
@@ -388,7 +383,7 @@ export class IronApp extends LitElement {
         window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
     }
 
-    _setPages(pathname, model) {
+    async _setPages(pathname, model) {
         pathname = (this.base && pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
 
         if (this.pathname !== pathname) {
@@ -398,10 +393,11 @@ export class IronApp extends LitElement {
         let currentPage = this.getCurrentPageFromPath(pathname, model);
 
         CBNUtils.startLoading();
-        this.checkAndImportDependencies(currentPage.page).then(CBNUtils.stopLoading);
-
+        await this.checkAndImportDependencies(currentPage.page);
+        CBNUtils.stopLoading();
         this.currentPage = currentPage;
         this.page = this.currentPage.page;
+
     }
 
     getCurrentPageFromPath(path, model) {

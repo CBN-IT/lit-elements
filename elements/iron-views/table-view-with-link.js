@@ -49,7 +49,8 @@ export class TableViewWithLink extends LitElement {
                 border-radius: 5px;
                 margin: 10px;
             }
-            .top-bar{
+
+            .top-bar {
                 margin-bottom: 0px;
             }
         `
@@ -76,21 +77,16 @@ export class TableViewWithLink extends LitElement {
         return this._collection;
     }
 
-    set currentPage(page) {
-        this.refreshPage(page, this.currentPage);
-        this._currentPage = page;
-    }
-
-    get currentPage() {
-        return this._currentPage;
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('currentPage')) {
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        return true;
     }
 
     firstUpdated() {
         this.table = this.shadowRoot.querySelector('paper-table');
         this.request = this.shadowRoot.querySelector('.request');
-        if (this._currentPage.page === this.name) {
-            CBNUtils.async(this._getItems.bind(this), 1);
-        }
     }
 
     render() {
@@ -107,11 +103,11 @@ export class TableViewWithLink extends LitElement {
         `;
     }
 
-    _getTopBarTemplate(){
+    _getTopBarTemplate() {
         return '';
     }
 
-    _displayReportsDropdown(){
+    _displayReportsDropdown() {
         return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
     }
 
@@ -152,6 +148,7 @@ export class TableViewWithLink extends LitElement {
     }
 
 }
+
 customElements.define("table-view-with-link", TableViewWithLink);
 
 
