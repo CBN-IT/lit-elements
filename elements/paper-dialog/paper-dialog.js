@@ -35,13 +35,13 @@ class PaperDialog extends LitElement {
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
-                opacity: 0;
-                transition: opacity 0.3s ease-in-out, visibility 0.3s;
+                /*opacity: 0;*/
+                /*transition: opacity 0.3s ease-in-out, visibility 0.3s;*/
                 visibility: hidden;
             }
 
             :host([opened]) {
-                opacity: 1;
+                /*opacity: 1;*/
                 visibility: visible;
             }
 
