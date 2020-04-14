@@ -74,7 +74,7 @@ export class AddWithLink extends LitElement {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         if (changedProperties.has('collection')) {
-            this.config = window.data._configs[this._collection];
+            this.config = window.data._configs[this.collection];
         }
         return true;
     }
@@ -87,8 +87,8 @@ export class AddWithLink extends LitElement {
         return html`
             <iron-ajax class="request" url="${this.getUrl}" @iron-response="${this._onIronResponse}"></iron-ajax>          
             <div class="paper-material vertical layout">
-                <h3>Detalii ${this._collection}</h3>                 
-                <iron-form class="flex" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this._collection}" @saved-form="${this._onSavedForm}"></iron-form>
+                <h3>Detalii ${this.collection}</h3>                 
+                <iron-form class="flex" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
             </div>    
         `;
     }

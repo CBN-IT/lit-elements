@@ -86,6 +86,10 @@ export class IronForm extends LitElement {
                 justify-content: flex-end;
                 flex-shrink: 0;
             }
+
+            .hidden {
+                display: none !important;
+            }
         `;
     }
 
@@ -120,8 +124,8 @@ export class IronForm extends LitElement {
             case 'date': {
                 return html`
                     <paper-date-picker 
-                        class="form-element ${elementConfig.class}" 
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}" 
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -134,8 +138,8 @@ export class IronForm extends LitElement {
             case 'time': {
                 return html`
                     <paper-date-time-picker 
-                        class="form-element ${elementConfig.class}" 
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}" 
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -147,8 +151,8 @@ export class IronForm extends LitElement {
             case 'file': {
                 return html`
                     <paper-file 
-                        class="form-element ${elementConfig.class}" 
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}" 
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -160,8 +164,8 @@ export class IronForm extends LitElement {
             case 'checkbox': {
                 return html`
                     <paper-checkbox 
-                        class="form-element ${elementConfig.class}" 
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}" 
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -173,8 +177,8 @@ export class IronForm extends LitElement {
             case 'select': {
                 return html`
                     <paper-select 
-                        class="form-element ${elementConfig.class}" 
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}" 
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -192,8 +196,8 @@ export class IronForm extends LitElement {
             case 'address': {
                 return html`
                     <paper-address 
-                        class="form-element ${elementConfig.class}" 
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}" 
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -211,8 +215,8 @@ export class IronForm extends LitElement {
             case 'textarea': {
                 return html`
                     <paper-textarea 
-                        class="form-element ${elementConfig.class}"
-                        style="${elementConfig.style}"  
+                        class="form-element ${elementConfig.class || ""}"
+                        style="${elementConfig.style || ""}"  
                         @value-changed="${this._onValueChanged}" 
                         .name="${elementConfig.name}" 
                         .label="${elementConfig.label}" 
@@ -226,14 +230,14 @@ export class IronForm extends LitElement {
             case 'paragraph': {
                 return html`
                     <p 
-                        style="${elementConfig.style}" 
-                        class="${elementConfig.class}">${elementConfig.text}</p>`
+                        style="${elementConfig.style || ""}" 
+                        class="${elementConfig.class || ""}">${elementConfig.text || ""}</p>`
             }
             default: {
                 return html`
                     <paper-input 
-                        class="form-element ${elementConfig.class}"
-                        style="${elementConfig.style}" 
+                        class="form-element ${elementConfig.class || ""}"
+                        style="${elementConfig.style || ""}" 
                         @value-changed="${this._onValueChanged}" 
                         .type="${elementConfig.type}" 
                         .name="${elementConfig.name}" 
@@ -299,14 +303,20 @@ export class IronForm extends LitElement {
     hideInput(name) {
         let input = this.shadowRoot.querySelector('[name="' + name + '"]');
         if (input) {
-            input.style.display = 'none';
+            input.classList.add("hidden");
         }
     }
 
     showInput(name) {
         let input = this.shadowRoot.querySelector('[name="' + name + '"]');
         if (input) {
-            input.style.display = 'flex';
+            input.classList.remove("hidden");
+        }
+    }
+    changeLabel(name,newLabel){
+        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        if (input) {
+            input.label=newLabel;
         }
     }
 
