@@ -14,8 +14,12 @@ import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
 
 import {gridClasses} from "./../grid-layout/grid-classes.js";
-//https://github.com/Polymer/lit-html/issues/877
-//https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
+/*
+https://github.com/Polymer/lit-html/issues/877
+https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
+Does not work with live, cause when we change the model,
+the select doesn't throw a changed event and we dont populate the model with _label
+*/
 const forceWrite = directive((value) => (part) => {
     part.setValue(value);
 });
@@ -324,6 +328,7 @@ export class IronForm extends LitElement {
         console.warn("@Deprecated API iron-form._submitForm Please use submit() instead");
         return this.submit();
     }
+
     async submit() {
         if (this.request && this.validate()) {
             if (this.preventSubmit) {
@@ -343,7 +348,7 @@ export class IronForm extends LitElement {
 
     validate() {
         let formElements = this.shadowRoot.querySelectorAll('.form-element');
-        return !Array.from(formElements).some(formElement => !formElement['isValid']);
+        return !Array.from(formElements).some(formElement => !formElement.classList.contains("hidden") && !formElement['isValid']);
     }
 
 }

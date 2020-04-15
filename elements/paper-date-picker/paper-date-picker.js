@@ -67,8 +67,8 @@ export class PaperDatePicker extends PaperInputContainer {
         this.tinyDatePicker = TinyDatePicker(this.shadowRoot.querySelector('.input'), {
             mode: 'dp-below',
             dayOffset: 1,
-            min: this.min,
-            max: this.max,
+            min: this._parseDate(this.min),
+            max: this._parseDate(this.max),
             format: (date) => {
                 return moment(date).format(this.format);
             },
