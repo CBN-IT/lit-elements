@@ -1,8 +1,8 @@
 "use strict";
-import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import './../paper-fab/paper-fab.js';
-import './../paper-dialog/paper-dialog.js';
-import './../cbn-utils/CbnUtils.js';
+import {LitElement, html, css} from 'lit-element';
+import '../paper-fab/paper-fab.js';
+import '../paper-dialog/paper-dialog.js';
+import '../cbn-utils/CbnUtils.js';
 
 class PaperHelp extends LitElement {
 

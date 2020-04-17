@@ -2,6 +2,8 @@
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {directive} from '/node_modules/lit-html/lit-html.js';
 
+import {gridClasses} from "../grid-layout/grid-classes.js";
+
 import './../paper-input/paper-input.js';
 import './../paper-input/paper-textarea.js';
 import './../paper-select/paper-select.js';
@@ -12,8 +14,6 @@ import './../paper-date-picker/paper-date-picker.js';
 import "./../paper-button/paper-button.js";
 import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
-
-import {gridClasses} from "./../grid-layout/grid-classes.js";
 /*
 https://github.com/Polymer/lit-html/issues/877
 https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152

@@ -1,8 +1,8 @@
 "use strict";
-import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import './../paper-dialog/paper-dialog.js';
-import './../iron-ajax/iron-ajax.js';
-import './../paper-button/paper-button.js';
+import {LitElement, html, css} from 'lit-element';
+import '../paper-dialog/paper-dialog.js';
+import '../iron-ajax/iron-ajax.js';
+import '../paper-button/paper-button.js';
 
 class ConfirmDelete extends LitElement {
 

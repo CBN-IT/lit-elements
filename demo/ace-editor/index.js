@@ -1,9 +1,8 @@
 "use strict";
 import {LitElement, html, css} from 'lit-element';
-import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
-import "/elements/form-section/add-form.js";
+import "/elements/ace-editor/ace-editor.js";
 
-class FormEditorDemo extends LitElement {
+class AceEditorDemo extends LitElement {
 
     static get properties() {
         return {
@@ -13,7 +12,7 @@ class FormEditorDemo extends LitElement {
     }
 
     static get styles(){
-        return [flexLayoutClasses]
+        return []
     }
 
 
@@ -33,12 +32,12 @@ class FormEditorDemo extends LitElement {
                     display: flex;                    
                 }
             </style>
-            <add-form class="flex" .model="${this.json}" ></add-form>
+            <ace-editor class="flex" .value="${this.json}" mode="ace/mode/json" theme="ace/theme/dracula" fontSize="14"></ace-editor>
             
         `;
     }
 
 }
-customElements.define("form-editor-demo", FormEditorDemo);
+customElements.define("ace-editor-demo", AceEditorDemo);
 
 

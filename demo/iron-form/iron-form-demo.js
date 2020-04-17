@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
+import {LitElement, html} from 'lit-element';
 import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
 import "/elements/iron-icons/iron-icons.js";
 import "/elements/iron-form/iron-form.js";

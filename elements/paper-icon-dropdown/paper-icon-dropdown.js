@@ -1,10 +1,10 @@
 "use strict";
-import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
-import './../iron-selector/iron-selector.js';
-import './../paper-button/paper-button.js';
-import './../iron-icon/iron-icon.js';
-import './../iron-overlay/iron-overlay.js';
+import {LitElement, html, css} from 'lit-element';
+import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
+import '../iron-selector/iron-selector.js';
+import '../paper-button/paper-button.js';
+import '../iron-icon/iron-icon.js';
+import '../iron-overlay/iron-overlay.js';
 
 export class PaperIconDropdown extends LitElement {
 

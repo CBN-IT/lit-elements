@@ -1,11 +1,11 @@
 "use strict";
-import {html, css} from '/node_modules/lit-element/lit-element.js';
-import {live} from '/node_modules/lit-html/directives/live.js';
-import {flexLayoutClasses} from "./../flex-layout/flex-layout-classes.js";
-import {PaperInputContainer} from './../paper-input/paper-input-container.js';
-import './../iron-selector/iron-selector.js';
-import './../iron-icon/iron-icon.js';
-import './../iron-overlay/iron-overlay.js';
+import {html, css} from 'lit-element';
+import {live} from 'lit-html/directives/live';
+import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
+import {PaperInputContainer} from '../paper-input/paper-input-container.js';
+import '../iron-selector/iron-selector.js';
+import '../iron-icon/iron-icon.js';
+import '../iron-overlay/iron-overlay.js';
 
 
 class PaperSelect extends PaperInputContainer {

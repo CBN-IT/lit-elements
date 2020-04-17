@@ -1,11 +1,10 @@
 "use strict";
-import {AddWithLink} from "./../iron-views/add-with-link.js";
-import {html} from '/node_modules/lit-element/lit-element.js';
-import './../paper-tabs/paper-tabs.js';
-import './../iron-form/iron-form.js';
-import './../ace-editor/ace-editor.js';
-import './../form-editor/form-editor.js';
-import {css} from "/node_modules/lit-element/lit-element.js";
+import {AddWithLink} from "../iron-views/add-with-link.js";
+import {html, css} from 'lit-element';
+import '../paper-tabs/paper-tabs.js';
+import '../iron-form/iron-form.js';
+import '../ace-editor/ace-editor.js';
+import '../form-editor/form-editor.js';
 
 class AddForm extends AddWithLink {
 
@@ -80,7 +79,7 @@ class AddForm extends AddWithLink {
         }
         try {
             return JSON.parse(val)
-        } catch (e) {
+        } catch (ignored) {
             return JSON.parse(this.defaultModel["code"]);
         }
     }
@@ -92,6 +91,7 @@ class AddForm extends AddWithLink {
                 this.model.code = this.shadowRoot.querySelector("ace-editor").value;
                 this.requestUpdate();
             } catch (ignored) {
+                //do nothing
             }
         }
         if (e.detail.oldTab === 1) {
@@ -100,6 +100,7 @@ class AddForm extends AddWithLink {
                 this.model.code = JSON.stringify(val, null, 4);
                 this.requestUpdate();
             } catch (ignored) {
+                //do nothing
             }
         }
     }
@@ -110,12 +111,14 @@ class AddForm extends AddWithLink {
                 let val = JSON.parse(this.shadowRoot.querySelector("ace-editor").value);
                 this.model.code = JSON.stringify(val);
             } catch (ignored) {
+                //do nothing
             }
         } else {
             try {
                 let val = this.shadowRoot.querySelector("form-editor").value;
                 this.model.code = JSON.stringify(val);
             } catch (ignored) {
+                //do nothing
             }
         }
 

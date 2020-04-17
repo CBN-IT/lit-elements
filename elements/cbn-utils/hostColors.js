@@ -1,5 +1,5 @@
 "use strict";
-import {css} from '/node_modules/lit-element/lit-element.js';
+import {css} from 'lit-element';
 
 // language=CSS
 export const hostColors = css`

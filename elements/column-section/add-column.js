@@ -1,12 +1,11 @@
 "use strict";
-import {AddWithLink} from "./../iron-views/add-with-link.js";
-import {html} from '/node_modules/lit-element/lit-element.js';
-import './../paper-tabs/paper-tabs.js';
-import './../paper-table/paper-table.js';
-import './../iron-form/iron-form.js';
-import './../ace-editor/ace-editor.js';
-import './../form-editor/form-editor.js';
-import {css} from "/node_modules/lit-element/lit-element.js";
+import {html, css} from 'lit-element';
+import {AddWithLink} from "../iron-views/add-with-link.js";
+import '../paper-tabs/paper-tabs.js';
+import '../paper-table/paper-table.js';
+import '../iron-form/iron-form.js';
+import '../ace-editor/ace-editor.js';
+import '../form-editor/form-editor.js';
 
 class AddColumn extends AddWithLink {
 

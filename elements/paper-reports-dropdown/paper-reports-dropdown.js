@@ -1,5 +1,5 @@
 "use strict";
-import {PaperIconDropdown} from './../paper-icon-dropdown/paper-icon-dropdown.js';
+import {PaperIconDropdown} from '../paper-icon-dropdown/paper-icon-dropdown.js';
 
 class PaperReportsDropdown extends PaperIconDropdown {
 

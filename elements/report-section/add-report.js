@@ -1,10 +1,10 @@
 "use strict";
 
-import {AddWithLink} from "./../iron-views/add-with-link.js";
-import {html} from '/node_modules/lit-element/lit-element.js';
-import './../paper-tabs/paper-tabs.js';
-import './../iron-form/iron-form.js';
-import './../ace-editor/ace-editor.js';
+import {AddWithLink} from "../iron-views/add-with-link.js";
+import {html} from 'lit-element';
+import '../paper-tabs/paper-tabs.js';
+import '../iron-form/iron-form.js';
+import '../ace-editor/ace-editor.js';
 
 class AddReport extends AddWithLink {
 

@@ -1,6 +1,10 @@
 "use strict";
-import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import ace from '/node_modules/ace-builds/src-min-noconflict/ace.js';
+import {LitElement, html, css} from 'lit-element';
+import {CBNUtils} from "../cbn-utils/CbnUtils";
+
+//This makes ace a global variable
+// noinspection ES6UnusedImports
+import * as acem from 'ace-builds/src-noconflict/ace';
 
 
 class AceEditor extends LitElement {

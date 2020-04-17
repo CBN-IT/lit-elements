@@ -1,4 +1,4 @@
-import {TableView} from "./../iron-views/table-view.js";
+import {TableView} from "../iron-views/table-view.js";
 
 export class CompanyView extends TableView {
 

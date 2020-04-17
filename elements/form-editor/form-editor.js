@@ -1,11 +1,10 @@
 "use strict";
-import {LitElement} from '/node_modules/lit-element/lit-element.js';
-import {repeat} from '/node_modules/lit-html/directives/repeat.js';
-import {gridClasses} from "./../grid-layout/grid-classes.js";
-import {html, css} from "/node_modules/lit-element/lit-element.js";
-import "./../paper-dialog/paper-dialog.js";
-import "./../iron-form/iron-form.js";
-import './../iron-icons/iron-icons.js';
+import {repeat} from 'lit-html/directives/repeat';
+import {gridClasses} from "../grid-layout/grid-classes.js";
+import {html, css, LitElement} from "lit-element";
+import "../paper-dialog/paper-dialog.js";
+import "../iron-form/iron-form.js";
+import '../iron-icons/iron-icons.js';
 
 
 class FormEditor extends LitElement {

@@ -1,6 +1,6 @@
 "use strict";
-import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
-import './../iron-icon/iron-icon.js';
+import {LitElement, html} from 'lit-element';
+import '../iron-icon/iron-icon.js';
 import {css} from "lit-element";
 
 class PaperToast extends LitElement {

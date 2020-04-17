@@ -1,8 +1,8 @@
 "use strict";
-import {html, css} from '/node_modules/lit-element/lit-element.js';
-import {PaperInputContainer} from './../paper-input/paper-input-container.js';
-import TinyDatePicker from '/node_modules/tiny-date-picker/src/index.js';
-import moment from '/node_modules/moment/src/moment.js';
+import {html, css} from 'lit-element';
+import {PaperInputContainer} from '../paper-input/paper-input-container.js';
+import TinyDatePicker from 'tiny-date-picker';
+import dayjs from 'dayjs';
 
 export class PaperDatePicker extends PaperInputContainer {
 
@@ -70,10 +70,10 @@ export class PaperDatePicker extends PaperInputContainer {
             min: this._parseDate(this.min),
             max: this._parseDate(this.max),
             format: (date) => {
-                return moment(date).format(this.format);
+                return dayjs(date).format(this.format);
             },
             parse: (str) => {
-                let d = moment(str, this.format).toDate();
+                let d = dayjs(str, this.format).toDate();
                 if (isNaN(d.getTime())) {
                     d = new Date();
                 }
@@ -106,7 +106,7 @@ export class PaperDatePicker extends PaperInputContainer {
     }
 
     get value() {
-        return !CBNUtils.isNoE(this._value) ? moment(this._value).format("YYYY-MM-DD") : '';
+        return !CBNUtils.isNoE(this._value) ? dayjs(this._value).format("YYYY-MM-DD") : '';
     }
 
     _onChangeInput(event) {
@@ -160,8 +160,8 @@ export class PaperDatePicker extends PaperInputContainer {
                 let pattern = /([+=-])([+-]?[0-9]+)\s*([a-z]+)/ig;
                 let matches = pattern.exec(dateStr);
                 if (matches) { // it's a relative date
-                    if (!referenceDate) referenceDate = moment();
-                    date = moment(referenceDate).startOf("day");
+                    if (!referenceDate) referenceDate = dayjs();
+                    date = dayjs(referenceDate).startOf("day");
                     while (matches) {
                         let op = matches[1];
                         let value = parseInt(matches[2], 10);
@@ -186,14 +186,10 @@ export class PaperDatePicker extends PaperInputContainer {
                         matches = pattern.exec(dateStr);
                     }
                 } else {
-                    if (format === 'moment') {
-                        // invalid value, should have been a Moment object
-                        return null;
-                    }
-                    date = moment(dateStr, format);
+                    date = dayjs(dateStr, format);
                 }
             } else {
-                date = moment(dateStr);
+                date = dayjs(dateStr);
             }
         }
         if (date && !date.isValid())

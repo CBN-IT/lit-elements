@@ -1,7 +1,7 @@
 "use strict";
-import {LitElement, html} from '/node_modules/lit-element/lit-element.js';
-import {flexLayoutClasses} from './../flex-layout/flex-layout-classes.js';
-import './../paper-button/paper-button.js'
+import {LitElement, html} from 'lit-element';
+import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
+import '../paper-button/paper-button.js'
 import {css} from "lit-element";
 
 class PaperDialog extends LitElement {

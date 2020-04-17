@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css,svg} from '/node_modules/lit-element/lit-element.js';
+import {LitElement, html, css,svg} from 'lit-element';
 
 class DemoSvg extends LitElement {
 

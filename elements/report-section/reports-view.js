@@ -1,5 +1,5 @@
 "use strict";
-import {TableViewWithLink} from './../iron-views/table-view-with-link.js'
+import {TableViewWithLink} from '../iron-views/table-view-with-link.js'
 
 class ReportsView extends TableViewWithLink {
 
