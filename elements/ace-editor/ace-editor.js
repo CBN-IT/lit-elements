@@ -4,7 +4,7 @@ import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 //This makes ace a global variable
 // noinspection ES6UnusedImports
-import * as acem from 'ace-builds/src-noconflict/ace';
+import * as acem from 'ace-builds/src-min-noconflict/ace';
 
 
 class AceEditor extends LitElement {
