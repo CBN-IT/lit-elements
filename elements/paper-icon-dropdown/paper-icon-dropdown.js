@@ -96,15 +96,16 @@ export class PaperIconDropdown extends LitElement {
                 </div>           
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <iron-selector @iron-select="${this._onIronSelect}">
-                        ${this._options.map((item, index) =>
-            item.type ?
-                html`<div class="option horizontal layout center">
-                                    <iron-icon icon="${item.type}"></iron-icon>
-                                    ${item.label}
-                                </div>` :
-                html`<div class="option">                                
+                        ${this._options.map((item, index) => item.type ? html`
+                            <div class="option horizontal layout center">
+                                <iron-icon icon="${item.type}"></iron-icon>
                                 ${item.label}
-                            </div>`
+                            </div>
+                        ` : html`
+                            <div class="option">                                
+                                ${item.label}
+                            </div>
+                        `
         )}
                     </iron-selector>
                 </iron-overlay>

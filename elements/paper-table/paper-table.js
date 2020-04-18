@@ -3,8 +3,12 @@ import {LitElement, html, css} from 'lit-element';
 import {render} from 'lit-html';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-icon/iron-icon.js";
-import "../iron-icons/iron-icons.js";
 import "../paper-checkbox/paper-checkbox.js";
+
+import "expand-more|../iron-icons/icons.svgicon";
+import "expand-less|../iron-icons/icons.svgicon";
+import "unfold-more|../iron-icons/icons.svgicon";
+
 
 window.html = html;
 

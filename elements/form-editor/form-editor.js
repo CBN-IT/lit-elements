@@ -4,7 +4,19 @@ import {gridClasses} from "../grid-layout/grid-classes.js";
 import {html, css, LitElement} from "lit-element";
 import "../paper-dialog/paper-dialog.js";
 import "../iron-form/iron-form.js";
-import '../iron-icons/iron-icons.js';
+
+import "folders|../iron-icons/cbn.svgicon"
+
+import "phone|../iron-icons/harware.svgicon"
+import "tablet|../iron-icons/harware.svgicon"
+import "laptop|../iron-icons/harware.svgicon"
+
+import "check-circle|../iron-icons/icons.svgicon"
+import "delete|../iron-icons/icons.svgicon"
+import "create|../iron-icons/icons.svgicon"
+import "content-copy|../iron-icons/icons.svgicon"
+
+
 
 
 class FormEditor extends LitElement {

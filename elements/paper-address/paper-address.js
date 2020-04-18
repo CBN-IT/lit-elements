@@ -8,6 +8,7 @@ import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import '../iron-ajax/iron-ajax.js';
 
+import "arrow-drop-down|../iron-icons/icons.svgicon";
 
 class PaperAddress extends PaperInputContainer {
 

@@ -5,6 +5,8 @@ import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 
+import "file-upload|../iron-icons/icons.svgicon";
+
 class PaperFile extends PaperInputContainer {
 
     static get properties() {

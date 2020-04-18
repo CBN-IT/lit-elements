@@ -3,6 +3,11 @@ import {LitElement, html} from 'lit-element';
 import '../iron-icon/iron-icon.js';
 import {css} from "lit-element";
 
+import "error|../iron-icons/icons.svgicon";
+import "warning|../iron-icons/icons.svgicon";
+import "check-circle|../iron-icons/icons.svgicon";
+
+
 class PaperToast extends LitElement {
 
     static get properties() {

@@ -6,6 +6,9 @@ import "../paper-table/paper-table.js";
 import "./../paper-fab/paper-fab.js";
 import "./../paper-dialog/paper-dialog.js";
 
+import "add|../iron-icons/icons.svgicon";
+
+
 class TableViewNoLink extends LitElement {
 
     static get properties() {

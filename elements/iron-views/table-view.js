@@ -5,6 +5,7 @@ import "../paper-table/paper-table.js";
 import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
+import "add|../iron-icons/icons.svgicon";
 
 export class TableView extends LitElement {
 

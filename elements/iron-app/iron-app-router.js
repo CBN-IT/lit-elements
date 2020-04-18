@@ -10,7 +10,6 @@ import '../paper-select/paper-select.js';
 import '../paper-loading/paper-loading.js';
 import '../paper-fab/paper-fab.js';
 import '../paper-button/paper-button.js';
-import '../iron-icons/iron-icons.js';
 import '../get-report/get-report.js';
 import '../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";

@@ -4,6 +4,9 @@ import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import '../paper-button/paper-button.js'
 import {css} from "lit-element";
 
+import "close|../iron-icons/icons.svgicon";
+import "check|../iron-icons/icons.svgicon";
+
 class PaperDialog extends LitElement {
 
     static get properties() {

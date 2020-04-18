@@ -14,6 +14,7 @@ import './../paper-date-picker/paper-date-picker.js';
 import "./../paper-button/paper-button.js";
 import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
+import "check-circle|../iron-icons/icons.svgicon";
 /*
 https://github.com/Polymer/lit-html/issues/877
 https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152

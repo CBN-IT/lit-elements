@@ -7,6 +7,8 @@ import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 
+import "add|../iron-icons/icons.svgicon";
+
 export class TableViewWithLink extends LitElement {
 
     static get properties() {

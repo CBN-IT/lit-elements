@@ -42,7 +42,7 @@ class IronIcon extends LitElement {
     }
 
     get svgIcon() {
-        return window.icons[this.icon] || "";
+        return (window.icons && window.icons[this.icon]) || "";
     }
 
     render() {

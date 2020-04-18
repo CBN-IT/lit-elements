@@ -4,6 +4,8 @@ import '../paper-fab/paper-fab.js';
 import '../paper-dialog/paper-dialog.js';
 import '../cbn-utils/CbnUtils.js';
 
+import "help|../iron-icons/icons.svgicon";
+
 class PaperHelp extends LitElement {
 
     static get properties() {

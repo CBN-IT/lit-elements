@@ -7,6 +7,7 @@ import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 
+import "arrow-drop-down|../iron-icons/icons.svgicon";
 
 class PaperSelect extends PaperInputContainer {
 
