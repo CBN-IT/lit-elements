@@ -34,7 +34,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
                 --iron-icon-color: #207245;
             }
             [icon="pdf"] {
-                fill:#D50000
+                --iron-icon-color: #D50000
             }
         `
     }
