@@ -6,10 +6,10 @@ import "document|../iron-icons/cbn.svgicon";
 import "excel|../iron-icons/cbn.svgicon";
 import "html|../iron-icons/cbn.svgicon";
 import "pdf|../iron-icons/cbn.svgicon";
-import "powerpoint|../iron-icons/cbn.svgicon";
 import "generic|../iron-icons/cbn.svgicon";
 import "word|../iron-icons/cbn.svgicon";
 import "xml|../iron-icons/cbn.svgicon";
+import {css} from "lit-element";
 
 
 class PaperReportsDropdown extends PaperIconDropdown {
@@ -21,9 +21,23 @@ class PaperReportsDropdown extends PaperIconDropdown {
     }
 
     static get styles() {
-        return super.styles;
+        return [...super.styles,this.reportDocStyles];
     }
+    static get reportDocStyles() {
+        // language=CSS
+        return css`
+            [icon="word"] {
+                --iron-icon-color: #2a5699;
+            }
 
+            [icon="excel"] {
+                --iron-icon-color: #207245;
+            }
+            [icon="pdf"] {
+                fill:#D50000
+            }
+        `
+    }
     constructor() {
         super();
         this.direction = 'bottom-right';
