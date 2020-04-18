@@ -1,6 +1,17 @@
 "use strict";
 import {PaperIconDropdown} from '../paper-icon-dropdown/paper-icon-dropdown.js';
 
+import "chart|../iron-icons/cbn.svgicon";
+import "document|../iron-icons/cbn.svgicon";
+import "excel|../iron-icons/cbn.svgicon";
+import "html|../iron-icons/cbn.svgicon";
+import "pdf|../iron-icons/cbn.svgicon";
+import "powerpoint|../iron-icons/cbn.svgicon";
+import "generic|../iron-icons/cbn.svgicon";
+import "word|../iron-icons/cbn.svgicon";
+import "xml|../iron-icons/cbn.svgicon";
+
+
 class PaperReportsDropdown extends PaperIconDropdown {
 
     static get properties() {
