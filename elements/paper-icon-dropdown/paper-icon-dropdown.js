@@ -44,7 +44,7 @@ export class PaperIconDropdown extends LitElement {
             }
 
             .option {
-                padding: 10px 10px 10px 10px;
+                padding: 10px;
                 background-color: white;
                 color: black;
             }
@@ -97,8 +97,8 @@ export class PaperIconDropdown extends LitElement {
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <iron-selector @iron-select="${this._onIronSelect}">
                         ${this._options.map((item, index) => item.type ? html`
-                            <div class="option horizontal layout center">
-                                <iron-icon icon="${item.type}"></iron-icon>
+                            <div class="option horizontal layout center" style="padding:5px">
+                                <iron-icon icon="${item.type}" size="34"></iron-icon>
                                 ${item.label}
                             </div>
                         ` : html`

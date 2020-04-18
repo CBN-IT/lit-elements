@@ -36,6 +36,12 @@ class PaperReportsDropdown extends PaperIconDropdown {
             [icon="pdf"] {
                 --iron-icon-color: #D50000
             }
+            [icon="html"] {
+                --iron-icon-color: #e44d26;
+            }
+            [icon="xml"] {
+                --iron-icon-color: #727d0f;
+            }
         `
     }
     constructor() {
