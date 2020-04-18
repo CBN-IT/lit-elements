@@ -7,7 +7,7 @@ import "../iron-form/iron-form.js";
 
 import "folders|../iron-icons/cbn.svgicon"
 
-import "phone|../iron-icons/hardware.svgicon"
+import "phone-android|../iron-icons/hardware.svgicon"
 import "tablet|../iron-icons/hardware.svgicon"
 import "laptop|../iron-icons/hardware.svgicon"
 
@@ -1086,7 +1086,7 @@ class FormEditor extends LitElement {
                                 <div class="bottomBar">
                                     <span class="tag name">${el.name}</span>
                                     <span style="flex:1;"></span>
-                                    <span class="tag class"><iron-icon size="18" icon="phone"></iron-icon>${this._getCol("xs", el.class)}</span>
+                                    <span class="tag class"><iron-icon size="18" icon="phone-android"></iron-icon>${this._getCol("xs", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="tablet"></iron-icon>${this._getCol("sm", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="laptop"></iron-icon>${this._getCol("lg", el.class)}</span>
                                     ${this._simplifyClass(el.class).map(value => html`<span class="tag class">${value}</span>`)}
