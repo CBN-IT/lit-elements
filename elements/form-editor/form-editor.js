@@ -7,9 +7,9 @@ import "../iron-form/iron-form.js";
 
 import "folders|../iron-icons/cbn.svgicon"
 
-import "phone|../iron-icons/harware.svgicon"
-import "tablet|../iron-icons/harware.svgicon"
-import "laptop|../iron-icons/harware.svgicon"
+import "phone|../iron-icons/hardware.svgicon"
+import "tablet|../iron-icons/hardware.svgicon"
+import "laptop|../iron-icons/hardware.svgicon"
 
 import "check-circle|../iron-icons/icons.svgicon"
 import "delete|../iron-icons/icons.svgicon"
