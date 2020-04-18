@@ -42,7 +42,14 @@ class IronIcon extends LitElement {
     }
 
     get svgIcon() {
-        return (window.icons && window.icons[this.icon]) || "";
+        if (this.icon === "" || this.icon == null) {
+            return ""
+        }
+        if (!window.icons || !window.icons[this.icon]) {
+            console.warn("iron-icon", `The icon ${this.icon} was not found`);
+            return "";
+        }
+        return window.icons[this.icon];
     }
 
     render() {
