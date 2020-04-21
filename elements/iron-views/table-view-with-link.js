@@ -101,10 +101,18 @@ export class TableViewWithLink extends LitElement {
                     ${this._getTopBarTemplate()}
                 </div>                
             </div>
-            <paper-table class="flex paper-material" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}" @delete-item="${this._deleteItem}"></paper-table>
+            <paper-table 
+                class="flex paper-material" 
+                .columns="${this.columns}" 
+                .items="${this.items}" 
+                @dbl-click="${this._onDblClick}" 
+                @delete-item="${this._deleteItem}"
+                @cbn-table-select="${this._onTableSelect}"
+            ></paper-table>
         `;
     }
-
+    _onTableSelect(event){
+    }
     _getTopBarTemplate() {
         return '';
     }

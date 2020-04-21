@@ -42,38 +42,7 @@ class TableViewNoLink extends LitElement {
     constructor() {
         super();
         this.collection = 'document';
-        this.columns = [
-            {
-                "name": "date",
-                "title": "Date",
-                "filterable": true,
-                "sortable": true
-            },
-            {
-                "name": "numar",
-                "title": "Number",
-                "filterable": true,
-                "sortable": true
-            },
-            {
-                "name": "prenume",
-                "title": "Prenume",
-                "filterable": true,
-                "sortable": true
-            },
-            {
-                "name": "textarea",
-                "title": "Textarea",
-                "filterable": true,
-                "sortable": true
-            },
-            {
-                "name": "select",
-                "title": "Select",
-                "filterable": true,
-                "sortable": true
-            }
-        ];
+        this.columns = [];
         this.items = [];
     }
 
@@ -92,12 +61,21 @@ class TableViewNoLink extends LitElement {
         return html`               
             <iron-ajax class="request" url="/GetDocuments" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
             
-            <paper-table class="flex" .columns="${this.columns}" .items="${this.items}" @dbl-click="${this._onDblClick}"></paper-table>
+            <paper-table 
+                class="flex paper-material" 
+                .columns="${this.columns}" 
+                .items="${this.items}" 
+                @dbl-click="${this._onDblClick}" 
+                @delete-item="${this._deleteItem}"
+                @cbn-table-select="${this._onTableSelect}"
+            ></paper-table>
             <paper-fab icon="add" @click="${this._addDocument}"></paper-fab>
             
         `;
     }
+    _onTableSelect(event){
 
+    }
     _addDocument(){
         CBNUtils.fireEvent(this, 'show-page', {page: 'add-no-link'});
     }
