@@ -284,14 +284,17 @@ class PaperTable extends LitElement {
         });
         this._filteredItems = [...this._items];
         this.updateComplete.then(() => {
-                this._firstRender();
-                this._filter();
-                for (let i = 0; i < this._columns.length; i++) {
-                    if (this._columns[i].sortType !== 0) {
-                        this._sort(this._columns[i].name, this._columns[i].sortType);
-                    }
+            this._firstRender();
+            this._filter();
+            for (let i = 0; i < this._columns.length; i++) {
+                if (this._columns[i].sortType !== 0) {
+                    this._sort(this._columns[i].name, this._columns[i].sortType);
                 }
+            }
+            CBNUtils.fireEvent(this, "cbn-table-select", {
+                selectedItems: this.selectedItems
             });
+        });
     }
 
     get selectedItems() {
@@ -662,6 +665,9 @@ class PaperTable extends LitElement {
 
     _onAllSelected(event) {
         this._updateRangeSelection([0, this._filteredItems.length - 1], event.detail.value);
+        CBNUtils.fireEvent(this, "cbn-table-select", {
+            selectedItems: this.selectedItems
+        });
     }
 
     _onMouseDown(event) {
