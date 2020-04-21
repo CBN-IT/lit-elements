@@ -8,6 +8,7 @@ import "../paper-checkbox/paper-checkbox.js";
 import "expand-more|../iron-icons/icons.svgicon";
 import "expand-less|../iron-icons/icons.svgicon";
 import "unfold-more|../iron-icons/icons.svgicon";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 
 window.html = html;
@@ -690,6 +691,9 @@ class PaperTable extends LitElement {
             this._updateRowSelection(row, true);
         }
         this._lastSelectedIndex = rowIndex;
+        CBNUtils.fireEvent(this, "cbn-table-select", {
+            selectedItems: this.selectedItems
+        });
     }
 
     _updateRangeSelection(selectedRange, selected) {
@@ -727,13 +731,7 @@ class PaperTable extends LitElement {
     _onDblClick(event) {
         event.preventDefault();
         let row = event.currentTarget;
-        this.dispatchEvent(new CustomEvent('dbl-click', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                "item": this._filteredItems[row.lastIndex]
-            }
-        }));
+        CBNUtils.fireEvent(this, 'dbl-click', {"item": this._filteredItems[row.lastIndex]});
     }
 
     _getIcon(sortType) {
