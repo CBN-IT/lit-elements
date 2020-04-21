@@ -200,6 +200,13 @@ class PaperTable extends LitElement {
         this.headerHeight = 62;
         this.columns = [];
         this.items = [];
+
+        this.__onClick = this._onClick.bind(this);
+        this.__onCheckboxClick = this._onCheckboxClick.bind(this);
+        this.__onMouseDown = this._onMouseDown.bind(this);
+        this.__onDblClick = this._onDblClick.bind(this);
+        this.__onScroll = this._onScroll.bind(this);
+
     }
 
     render() {
@@ -229,7 +236,7 @@ class PaperTable extends LitElement {
                                     ` : ''}
                                 </div>
                                 <div class="head-input">
-                                    ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : html``}                                       
+                                    ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : ""}                                       
                                 </div>
                           </div>
                         `)}
@@ -244,16 +251,16 @@ class PaperTable extends LitElement {
         this.container = this.shadowRoot.querySelector('.container');
         this.theadGroup = this.shadowRoot.querySelector('.thead-group');
         this.table = this.shadowRoot.querySelector('.table');
-        this.container.addEventListener("scroll", this._onScroll.bind(this));
+        this.container.addEventListener("scroll", this.__onScroll);
         this.bottom = this.shadowRoot.querySelector('.bottom');
         this.rowGroup = this.shadowRoot.querySelector('.row-group');
     }
 
     shouldUpdate(changedProperties) {
-        if(changedProperties.has('columns')){
+        if (changedProperties.has('columns')) {
             this.setColumns(this.columns);
         }
-        if(changedProperties.has('items')){
+        if (changedProperties.has('items')) {
             this.setItems(this.items);
         }
         return changedProperties.has('_columns') || changedProperties.has('_selectedItemsNumber') || changedProperties.has('_filteredItemsNumber');
@@ -343,17 +350,15 @@ class PaperTable extends LitElement {
 
     _createRow(currentHeight, _endIndex) {
         let row = document.createElement("div");
-        row.addEventListener("click", this._onClick.bind(this));
-        row.addEventListener("mousedown", this._onMouseDown.bind(this));
-        row.addEventListener("dblclick", this._onDblClick.bind(this));
+        row.addEventListener("click", this.__onClick);
+        row.addEventListener("mousedown", this.__onMouseDown);
+        row.addEventListener("dblclick", this.__onDblClick);
         this.rowGroup.insertBefore(row, this.bottom);
         row.classList.add("row");
-        //row.setAttribute("translateY", currentHeight);
         row.setAttribute("initialIndex", _endIndex);
         row.initialIndex = _endIndex;
         row.initial = currentHeight - this.headerHeight;
         row.translateY = currentHeight;
-        //row.setAttribute("initial", currentHeight);
         row.lastIndex = _endIndex;
         row.style = this._getRowStyle(this.headerHeight, this._filteredItems[_endIndex]);
         this._createRowCells(row, _endIndex);
@@ -390,6 +395,7 @@ class PaperTable extends LitElement {
         row.checkbox = checkbox;
         cell.appendChild(nrCrt);
         cell.appendChild(checkbox);
+        cell.addEventListener("click", this.__onCheckboxClick);
         row.appendChild(cell);
     }
 
@@ -397,7 +403,6 @@ class PaperTable extends LitElement {
         let cell = document.createElement("div");
         cell.classList.add("cell");
         cell.style.height = this.rowHeight + "px";
-        // let container = document.createElement("div");
         if (column.template) {
             let renderFunction = (item) => eval(column.template);
             render(renderFunction(model), cell);
@@ -414,7 +419,6 @@ class PaperTable extends LitElement {
         if (column['styleFunction']) {
             cell.style = column["style"](model);
         }
-        // cell.appendChild(container);
         row.appendChild(cell);
     }
 
@@ -682,7 +686,15 @@ class PaperTable extends LitElement {
         }
         let row = event.currentTarget;
         this._updateSelected(row, event.shiftKey, event.ctrlKey);
+    }
 
+    _onCheckboxClick(event) {
+        event.stopPropagation();
+        if (event.shiftKey) {
+            event.preventDefault();
+        }
+        let row = event.currentTarget.parentElement;
+        this._updateSelected(row, event.shiftKey, true);
     }
 
     _updateSelected(row, shiftKey, ctrlKey) {
