@@ -3,6 +3,8 @@ import {html, css} from 'lit-element';
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import TinyDatePicker from 'tiny-date-picker';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs.extend(customParseFormat);
 
 export class PaperDatePicker extends PaperInputContainer {
 
@@ -91,14 +93,18 @@ export class PaperDatePicker extends PaperInputContainer {
 
     set value(value) {
         if (value) {
-            this._value = value ? new Date(this._parseDate(value).unix() * 1000) : "";
+            this._value = value ? this._parseDate(value) : "";
         } else if ((value === null || value === undefined) && this.defaultValue) {
-            this._value = new Date(this._parseDate(this.defaultValue).unix() * 1000);
+            this._value = this._parseDate(this.defaultValue);
         } else {
             this._value = '';
         }
         if (this.tinyDatePicker) {
             this.tinyDatePicker.setState({selectedDate: this._value});
+        } else {
+            this.updateComplete.then(() => {
+                this.tinyDatePicker.setState({selectedDate: this._value});
+            });
         }
 
         this.blur();
@@ -192,9 +198,10 @@ export class PaperDatePicker extends PaperInputContainer {
                 date = dayjs(dateStr);
             }
         }
-        if (date && !date.isValid())
-            date = null;
-        return date;
+        if (!date || !date.isValid()) {
+            return null;
+        }
+        return date.toDate();
     }
 
     _onInput() {
