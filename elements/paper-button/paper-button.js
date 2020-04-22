@@ -11,6 +11,9 @@ class PaperButton extends LitElement {
         return {
             icon: {
                 type: String
+            },
+            iconSize:{
+                type:Number
             }
         };
     }
@@ -118,7 +121,7 @@ class PaperButton extends LitElement {
     render() {
         return html`           
             <div class="container horizontal layout center">
-                <iron-icon icon="${this.icon}"></iron-icon>             
+                <iron-icon icon="${this.icon}" .size="${this.iconSize}"></iron-icon>             
                 <div class="text">
                     <slot></slot>
                 </div>              

@@ -63,8 +63,8 @@ class IronIcon extends LitElement {
     }
 
     _updateSize() {
-        this.style.width = this.size + "px";
-        this.style.height = this.size + "px";
+        this.style.width = (this.size || 24) + "px";
+        this.style.height = (this.size || 24) + "px";
     }
 
 }
