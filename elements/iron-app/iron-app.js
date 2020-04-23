@@ -79,8 +79,6 @@ export class IronApp extends LitElement {
                 --paper-table-row-hover-color: black;
                 --paper-table-row-selected-bg: rgba(128, 128, 128, 0.5);
                 --paper-table-row-selected-color: black;
-                --paper-help-right: 0;
-                --paper-help-top: 2px;
             }
         `;
     }

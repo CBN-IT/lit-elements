@@ -25,8 +25,8 @@ class PaperHelp extends LitElement {
             paper-fab {
                 background: var(--blue-color);
                 z-index: var(--paper-help-z-index, 11);
-                top: var(--paper-help-top, 3px);
-                right: var(--paper-help-right, 10px);
+                top: var(--paper-help-top, 2px);
+                right: var(--paper-help-right, 0px);
                 bottom: var(--paper-help-bottom, auto);
                 left: var(--paper-help-left, auto);
             }
