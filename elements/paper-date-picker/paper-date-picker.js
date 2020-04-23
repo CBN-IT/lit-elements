@@ -154,20 +154,19 @@ export class PaperDatePicker extends PaperInputContainer {
         return !CBNUtils.isNoE(this._value);
     }
 
-    _parseDate(dateStr, format, referenceDate) {
+    _parseDate(dateStr, format) {
         let date = null;
         if (dateStr !== null && dateStr !== undefined && dateStr !== "") {
             if (typeof dateStr === "string") {
                 let shortands = {
                     'm': 'months',
-                    'd': 'days',
+                    'd': 'date',
                     'y': 'years'
                 };
                 let pattern = /([+=-])([+-]?[0-9]+)\s*([a-z]+)/ig;
                 let matches = pattern.exec(dateStr);
                 if (matches) { // it's a relative date
-                    if (!referenceDate) referenceDate = dayjs();
-                    date = dayjs(referenceDate).startOf("day");
+                    date = dayjs().startOf("day");
                     while (matches) {
                         let op = matches[1];
                         let value = parseInt(matches[2], 10);
@@ -177,16 +176,17 @@ export class PaperDatePicker extends PaperInputContainer {
                         }
                         switch (op) {
                             case '+':
-                                date.add(value, name);
+                                date = date.add(value, name);
                                 break;
                             case '-':
-                                date.subtract(value, name);
+                                date = date.subtract(value, name);
                                 break;
                             case '=':
                                 if (name === 'days') {
+                                    //days is day of the week; date is day of month
                                     name = 'date';
                                 }
-                                date.set(name, value);
+                                date = date.set(name, value);
                                 break;
                         }
                         matches = pattern.exec(dateStr);
