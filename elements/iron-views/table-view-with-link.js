@@ -8,6 +8,7 @@ import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 
 import "add|../iron-icons/icons.svgicon";
+import "excel|../iron-icons/cbn.svgicon";
 
 export class TableViewWithLink extends LitElement {
 
@@ -55,6 +56,9 @@ export class TableViewWithLink extends LitElement {
             .top-bar {
                 margin-bottom: 0;
             }
+            [icon="excel"] {
+                --iron-icon-color: #207245;
+            }
         `
     }
 
@@ -99,7 +103,9 @@ export class TableViewWithLink extends LitElement {
                 ${this._displayReportsDropdown()}
                 <div class="flex horizontal layout center">
                     ${this._getTopBarTemplate()}
-                </div>                
+                </div>
+                <paper-button title="Salveaza ca Excel" icon="excel" small @click="${this.saveAsExcel}"></paper-button>
+                <div style="width:40px;"></div>
             </div>
             <paper-table 
                 class="flex paper-material" 
@@ -116,7 +122,11 @@ export class TableViewWithLink extends LitElement {
     _getTopBarTemplate() {
         return '';
     }
-
+    async saveAsExcel(){
+        CBNUtils.startLoading();
+        await this.table.saveXls();
+        CBNUtils.stopLoading();
+    }
     _displayReportsDropdown() {
         return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
     }

@@ -9,9 +9,11 @@ import "expand-more|../iron-icons/icons.svgicon";
 import "expand-less|../iron-icons/icons.svgicon";
 import "unfold-more|../iron-icons/icons.svgicon";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 
+dayjs.extend(customParseFormat);
 
-window.html = html;
 
 class PaperTable extends LitElement {
     static get properties() {
@@ -196,7 +198,8 @@ class PaperTable extends LitElement {
 
     constructor() {
         super();
-        this.rowHeight = this._realRowHeight = 30;
+        this._realRowHeight = 30
+        this.rowHeight = this._realRowHeight;
         this.headerHeight = 62;
         this.columns = [];
         this.items = [];
@@ -276,6 +279,18 @@ class PaperTable extends LitElement {
             columns.forEach(column => {
                 column.sortType = column.sortType || 0;
                 column.icon = this._getIcon(column.sortType);
+                if (column.template) {
+                    column._templateFunction = new Function(
+                        "column", "dayjs", "html",
+                        "item", "return " + column.template).bind(this, column, dayjs, html);
+                }
+                if (column.value) {
+                    column._valueFunction = new Function(
+                        "column", "dayjs", "html",
+                        "item", "return " + column.value).bind(this, column, dayjs, html);
+                } else {
+                    column._valueFunction = this._formatValue.bind(this, column);
+                }
             });
             this._columns = columns;
         }
@@ -295,7 +310,7 @@ class PaperTable extends LitElement {
             this._filter();
             for (let i = 0; i < this._columns.length; i++) {
                 if (this._columns[i].sortType !== 0) {
-                    this._sort(this._columns[i].name, this._columns[i].sortType);
+                    this._sort(this._columns[i]);
                 }
             }
             CBNUtils.fireEvent(this, "cbn-table-select", {
@@ -404,10 +419,9 @@ class PaperTable extends LitElement {
         cell.classList.add("cell");
         cell.style.height = this.rowHeight + "px";
         if (column.template) {
-            let renderFunction = (item) => eval(column.template);
-            render(renderFunction(model), cell);
+            render(column._templateFunction(model), cell);
         } else {
-            cell.textContent = this._formatValue(column, model);
+            cell.textContent = column._valueFunction(model);
         }
         if (column["style"]) {
             if (typeof column["style"] === 'string') {
@@ -561,10 +575,9 @@ class PaperTable extends LitElement {
 
     _updateCell(cell, column, model) {
         if (column.template) {
-            let renderFunction = (item) => eval(column.template);
-            render(renderFunction(model), cell);
+            render(column._templateFunction(model), cell);
         } else {
-            cell.textContent = this._formatValue(column, model);
+            cell.textContent = column._valueFunction(model);
         }
     }
 
@@ -575,22 +588,15 @@ class PaperTable extends LitElement {
             column.icon = this._getIcon(column.sortType);
         });
         this.requestUpdate('_columns');
-        this._sort(this._columns[columnIndex].name, this._columns[columnIndex].sortType);
+        this._sort(this._columns[columnIndex]);
     }
 
-    _sort(property, sortType) {
-        this._filteredItems.sort(function (a, b) {
-            let prop1Str, prop2Str, prop1Nr = null, prop2Nr = null;
-            prop1Str = (a[property] === undefined || a[property] === null) ? "" : a[property];
-            prop2Str = (b[property] === undefined || b[property] === null) ? "" : b[property];
-            prop1Str = a[property] instanceof Array ? a[property].join(",") : prop1Str;
-            prop2Str = b[property] instanceof Array ? b[property].join(",") : prop2Str;
-            if (!isNaN(parseFloat(prop1Str)) || typeof prop1Str === "number") {
-                prop1Nr = parseFloat(prop1Str);
-            }
-            if (!isNaN(parseFloat(prop2Str)) || typeof prop2Str === "number") {
-                prop2Nr = parseFloat(prop2Str);
-            }
+    _sort(column) {
+        let sortType = column.sortType;
+        this._filteredItems.sort((a, b) => {
+            let [prop1Str, prop1Nr] = this._getStrNumberVal(column._valueFunction(a));
+            let [prop2Str, prop2Nr] = this._getStrNumberVal(column._valueFunction(b));
+
             //first empty strings then strings then numbers
             if (typeof prop1Nr === "number" && typeof prop2Nr !== "number") {
                 return -sortType;
@@ -603,6 +609,22 @@ class PaperTable extends LitElement {
             }
         });
         this._updateFilteredItems();
+    }
+
+    _getStrNumberVal(prop) {
+        if (prop instanceof Date) {
+            return [dayjs(prop).format("YYYY-MM-DD")]
+        }
+        if (prop instanceof Array) {
+            return [prop.join(", ")]
+        }
+        if (typeof prop === "number") {
+            return [prop + "", prop];
+        }
+        if (!isNaN(parseFloat(prop))) {
+            return [prop, parseFloat(prop)];
+        }
+        return [prop + ""];
     }
 
     _setFilter(event, column, index) {
@@ -618,33 +640,40 @@ class PaperTable extends LitElement {
     }
 
     _testItem(column, item) {
-        if (!CBNUtils.isNoE(column["filterValue"])) {
-            let value = this._formatValue(column, item);
-            if (column["filterValue"] === "-") {
-                if (!CBNUtils.isNoE(value)) {
-                    return false;
-                }
-            } else if (CBNUtils.isNoE(value)) {
+        if (CBNUtils.isNoE(column.filterValue)) {
+            return true;
+        }
+        let filter = column.filterValue.toLowerCase();
+        let value = column._valueFunction(item);
+        if (column.filterValue === "-") {
+            if (!CBNUtils.isNoE(value)) {
                 return false;
-            } else {
-                if (typeof value === "string") {
-                    if (value.toLowerCase().indexOf(column["filterValue"].toLowerCase()) === -1) {
-                        return false;
-                    }
-                } else if (value instanceof Array) {
-                    for (let k = 0; k < value.length; k++) {
-                        if (value[k].toLowerCase().indexOf(column["filterValue"].toLowerCase()) > -1) {
-                            return true;
-                        }
-                    }
-                    return false;
-                } else if (typeof value === "boolean" || typeof value === "number") {
-                    if (value.toString().toLowerCase().indexOf(column["filterValue"].toLowerCase()) === -1) {
-                        return false
-                    }
+            }
+        } else if (CBNUtils.isNoE(value)) {
+            return false;
+        } else if (typeof value === "string") {
+            return value.toLowerCase().includes(filter)
+        } else if (value instanceof Array) {
+            for (let k = 0; k < value.length; k++) {
+                if (value[k].toLowerCase().includes(filter)) {
+                    return true;
                 }
             }
+            return false;
         }
+        if (value instanceof Date) {
+            if (column.template) {
+                let template = column._templateFunction(item);
+                if (typeof template === "string") {
+                    return template.includes(filter);
+                }
+            }
+            dayjs(value).format("YYYY-MM-DD").includes(filter)
+
+        } else if (typeof value === "boolean" || typeof value === "number") {
+            return value.toString().toLowerCase().includes(filter)
+        }
+
         return true;
     }
 
@@ -773,6 +802,15 @@ class PaperTable extends LitElement {
             toReturn = toReturn[splits[i]] !== undefined ? toReturn[splits[i]] : "";
         }
         return toReturn;
+    }
+
+    async saveXls() {
+        let data = [
+            this._columns.map((col) => col.title),
+            ...this.filteredItems.map(row => this._columns.map((col) => col._valueFunction(row)))
+        ];
+
+        await CBNUtils.saveAsXls(data);
     }
 
 }

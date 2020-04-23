@@ -31,10 +31,17 @@ class TableViewNoLink extends LitElement {
             :host{
                 display: flex;
             }
-            paper-fab{
+            paper-fab[icon="add"]{
                 bottom: 10px;
                 right: 10px;
                 background: var(--app-secondary-color)
+            }
+            paper-fab[icon="excel"]{
+                bottom: 10px;
+                right: 50px;
+            }
+            [icon="excel"] {
+                --iron-icon-color: #207245;
             }
         `
     }
@@ -60,8 +67,7 @@ class TableViewNoLink extends LitElement {
     render() {
         return html`               
             <iron-ajax class="request" url="/GetDocuments" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
-            
-            <paper-table 
+            <paper-table
                 class="flex paper-material" 
                 .columns="${this.columns}" 
                 .items="${this.items}" 
@@ -70,11 +76,16 @@ class TableViewNoLink extends LitElement {
                 @cbn-table-select="${this._onTableSelect}"
             ></paper-table>
             <paper-fab icon="add" @click="${this._addDocument}"></paper-fab>
-            
+            <paper-fab icon="excel" @click="${this._addDocument}"></paper-fab>
         `;
     }
     _onTableSelect(event){
 
+    }
+    async saveAsExcel(){
+        CBNUtils.startLoading();
+        await this.table.saveXls();
+        CBNUtils.stopLoading();
     }
     _addDocument(){
         CBNUtils.fireEvent(this, 'show-page', {page: 'add-no-link'});
