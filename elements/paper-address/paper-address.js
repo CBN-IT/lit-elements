@@ -445,7 +445,8 @@ class PaperAddress extends PaperInputContainer {
                     address.value = {
                         nume_judet: address.name,
                         id: address.id,
-                        ancestor: address.id
+                        ancestor: address.id,
+                        prescurtare_judet:address.metaData.shortCountyName
                     };
                     break;
                 case 1:
@@ -454,7 +455,8 @@ class PaperAddress extends PaperInputContainer {
                         nume_judet: address.ancestors[0].name,
                         nume_superior: address.name,
                         id: address.id,
-                        ancestor: address.ancestors[0].id
+                        ancestor: address.ancestors[0].id,
+                        prescurtare_judet:address.ancestors[0].metaData.shortCountyName
                     };
                     break;
                 case 2:
@@ -464,7 +466,8 @@ class PaperAddress extends PaperInputContainer {
                         nume_superior: address.ancestors[0].name,
                         nume_localitate: address.name,
                         id: address.id,
-                        ancestor: address.ancestors[0].id
+                        ancestor: address.ancestors[0].id,
+                        prescurtare_judet:address.ancestors[1].metaData.shortCountyName
                     };
                     break;
             }
