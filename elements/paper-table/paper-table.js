@@ -593,7 +593,7 @@ class PaperTable extends LitElement {
 
     _sort(column) {
         let sortType = column.sortType;
-        this._filteredItems.sort((a, b) => {
+        this._items.sort((a, b) => {
             let [prop1Str, prop1Nr] = this._getStrNumberVal(column._valueFunction(a));
             let [prop2Str, prop2Nr] = this._getStrNumberVal(column._valueFunction(b));
 
@@ -608,7 +608,7 @@ class PaperTable extends LitElement {
                 return (prop1Str + "").localeCompare(prop2Str + "") * sortType;
             }
         });
-        this._updateFilteredItems();
+        this._filter();
     }
 
     _getStrNumberVal(prop) {
