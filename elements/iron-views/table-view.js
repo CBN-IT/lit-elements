@@ -121,7 +121,7 @@ export class TableView extends LitElement {
                     ${this._getTopBarTemplate()}
                 </div>
                 <paper-button title="Salveaza ca Excel" icon="excel" small @click="${this.saveAsExcel}"></paper-button>
-                <div style="width:40px;"></div>
+                <div style="width:44px;"></div>
             </div>
             <paper-table 
                 class="flex paper-material" 
