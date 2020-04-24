@@ -116,6 +116,9 @@ export class PaperDatePicker extends PaperInputContainer {
     }
 
     _onChangeInput(event) {
+        if(this.disabled){
+            return;
+        }
         if (this._parseDate(event.currentTarget.value, this.format) === this._value) {
             return;
         }
@@ -124,10 +127,16 @@ export class PaperDatePicker extends PaperInputContainer {
     }
 
     _onChange(event) {
+        if(this.disabled){
+            return;
+        }
         this.value = this.nativeInput.value;
     }
 
     _selectedDate(dp) {
+        if(this.disabled){
+            return;
+        }
         if (CBNUtils.isNoE(dp.state.selectedDate) && !CBNUtils.isNoE(this._value)) {
             this._value = '';
             this.validate(this._value, true);
