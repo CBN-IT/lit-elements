@@ -8,22 +8,6 @@ export class CompanyView extends TableView {
         }
     }
 
-    set collection(value) {
-        super.collection = value;
-        this.config = {
-            elements: [...window.data._configs[this._collection].elements,
-                {
-                    "label": "Blocare access",
-                    "type": "checkbox",
-                    "name": "blockedAccessCompany",
-                    "dbType": "boolean",
-                    "class": "col-xs-12 col-sm-4 col-lg-4",
-                    "required": false
-                }
-            ]
-        }
-    }
-
     constructor() {
         super();
         this.addEventListener('open-company-view', this._openCompanyView);
