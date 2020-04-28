@@ -228,7 +228,7 @@ export class IronApp extends LitElement {
 
 
             a, a:visited, a:hover, a:active {
-                color: white;
+                color: var(--menu-color, white);
             }
 
             .big-logo {
