@@ -807,7 +807,13 @@ class PaperTable extends LitElement {
     async saveXls() {
         let data = [
             this._columns.map((col) => col.title),
-            ...this.filteredItems.map(row => this._columns.map((col) => col._valueFunction(row)))
+            ...this.filteredItems.map(row => this._columns.map((col) => {
+                let val = col._valueFunction(row);
+                if (val instanceof Array) {
+                    return val.join(", ");
+                }
+                return val
+            }))
         ];
 
         await CBNUtils.saveAsXls(data);
