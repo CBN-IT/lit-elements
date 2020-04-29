@@ -183,7 +183,7 @@ export const CBNUtils = {
         }
 
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XLSX.writeFile(wb, 'out.xlsx');
+        XLSX.writeFile(wb, window.data._office2003 ? "out.xls" : 'out.xlsx');
     },
     _datenum: (v, date1904) => {
         if (date1904) {
