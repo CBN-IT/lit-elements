@@ -260,8 +260,8 @@ class PaperSelect extends PaperInputContainer {
         this._options = options ? JSON.parse(JSON.stringify(options)).map((item) => {
             return typeof item === 'object' ?
                 Object.assign(item, {
-                    '__label': this.itemLabelProperty ? item[this.itemLabelProperty] : item.label,
-                    '__value': this.itemValueProperty ? item[this.itemValueProperty] : item.value
+                    '__label': this.itemLabelProperty ? item[this.itemLabelProperty] || "" : item.label,
+                    '__value': this.itemValueProperty ? item[this.itemValueProperty] || "" : item.value
                 })
                 : {
                     '__label': item,
