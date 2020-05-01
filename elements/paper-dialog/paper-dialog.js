@@ -52,7 +52,8 @@ class PaperDialog extends LitElement {
                 background: white;
                 max-width: var(--max-dialog-width);
                 min-width: var(--min-dialog-width);
-                min-height: 0;
+                max-height: var(--max-dialog-height);
+                min-height: var(--min-dialog-height,0);
                 border-radius: 5px;
                 z-index: 1;
             }
