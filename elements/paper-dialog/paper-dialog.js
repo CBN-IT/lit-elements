@@ -38,36 +38,33 @@ class PaperDialog extends LitElement {
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
-                /*opacity: 0;*/
-                /*transition: opacity 0.3s ease-in-out, visibility 0.3s;*/
                 visibility: hidden;
             }
 
             :host([opened]) {
-                /*opacity: 1;*/
                 visibility: visible;
             }
 
-            .container {
+            #container {
                 background: white;
                 max-width: var(--max-dialog-width);
                 min-width: var(--min-dialog-width);
                 max-height: var(--max-dialog-height);
-                min-height: var(--min-dialog-height,0);
+                min-height: var(--min-dialog-height, 0);
                 border-radius: 5px;
                 z-index: 1;
             }
 
-            .header, .body {
+            #header, #body {
                 padding: 10px 10px;
             }
 
-            .body {
+            #body {
                 overflow: auto;
                 display: flex;
             }
 
-            .buttons {
+            #buttons {
                 padding: 10px 0;
             }
 
@@ -94,27 +91,23 @@ class PaperDialog extends LitElement {
     render() {
         return html`
             <div id="overlay" @click=${this._onCancelClick}></div>
-            <div class="container vertical layout">
-                <div class="header horizontal layout center">
+            <div id="container" class="vertical layout">
+                <div id="header" class="horizontal layout center">
                     <h3 class="flex">
                         <slot name="header"></slot>
                     </h3>
                     <paper-button small class="close-button" small icon="close" @click="${this._onCancelClick}"></paper-button>
                 </div>
-                    <div class="body">
-                        <slot name="body"></slot>
-                    </div>
-               
-                ${!this.noActions ? html`
-                    <div class="buttons horizontal layout justified">
+                <div id="body">
+                    <slot name="body"></slot>
+                </div>
+               <div id="buttons" class="horizontal layout justified">
+                    ${!this.noActions ? html`
                         <paper-button icon="close" style="background: var(--grey-color)" @click="${this._onCancelClick}">Cancel</paper-button>
                         <paper-button icon="check" style="background: var(--green-color)" @click="${this._onSaveClick}">Save</paper-button>
-                    </div>
-                ` : html`
-                    <div class="buttons horizontal layout justified">
-                        <slot name="button"></slot>
-                    </div>
-                `}
+                    ` : ""}
+                    <slot name="button"></slot>
+                </div>
             </div>      
         `;
     }
