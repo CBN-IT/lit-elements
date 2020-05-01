@@ -47,9 +47,9 @@ class PaperDialog extends LitElement {
 
             #container {
                 background: white;
-                max-width: var(--max-dialog-width);
+                max-width: var(--max-dialog-width, 95%);
                 min-width: var(--min-dialog-width);
-                max-height: var(--max-dialog-height);
+                max-height: var(--max-dialog-height, 95%);
                 min-height: var(--min-dialog-height, 0);
                 border-radius: 5px;
                 z-index: 1;
@@ -102,11 +102,11 @@ class PaperDialog extends LitElement {
                     <slot name="body"></slot>
                 </div>
                <div id="buttons" class="horizontal layout justified">
+                    <slot name="button"></slot>
                     ${!this.noActions ? html`
                         <paper-button icon="close" style="background: var(--grey-color)" @click="${this._onCancelClick}">Cancel</paper-button>
                         <paper-button icon="check" style="background: var(--green-color)" @click="${this._onSaveClick}">Save</paper-button>
                     ` : ""}
-                    <slot name="button"></slot>
                 </div>
             </div>      
         `;
