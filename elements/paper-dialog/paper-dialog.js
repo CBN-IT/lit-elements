@@ -98,7 +98,7 @@ class PaperDialog extends LitElement {
                     </h3>
                     <paper-button small class="close-button" small icon="close" @click="${this._onCancelClick}"></paper-button>
                 </div>
-                <div id="body" class="flex">
+                <div id="body">
                     <slot name="body"></slot>
                 </div>
                <div id="buttons" class="horizontal layout justified">
