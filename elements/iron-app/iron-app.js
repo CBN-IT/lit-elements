@@ -383,7 +383,7 @@ export class IronApp extends LitElement {
     }
 
     _pushState(pathname) {
-        window.history.pushState({}, '', `${pathname}?_companyId=${window.data._selectedCompany}`);
+        window.history.pushState({}, '', `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}`);
     }
 
     async _setPages(pathname, model) {
