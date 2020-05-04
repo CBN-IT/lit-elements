@@ -413,7 +413,7 @@ export class IronApp extends LitElement {
     }
 
     _onCompanySelection(event) {
-        window.open(`/${this.base || ""}?_companyId=${event.detail.value._id}`);
+        window.open(`/${this.base || ""}?_companyId=${encodeURIComponent(event.detail.value._id)}`);
     } //layout functions
 
     //layout functions
