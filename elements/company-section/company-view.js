@@ -15,7 +15,7 @@ export class CompanyView extends TableView {
 
     _openCompanyView(event) {
         event.stopPropagation();
-        window.open(this.base ? `/${this.base}?_companyId=${event.detail._id}` : `?_companyId=${event.detail._id}`);
+        window.open(`/${this.base || ""}?_companyId=${encodeURIComponent(event.detail._id)}`);
     }
 }
 
