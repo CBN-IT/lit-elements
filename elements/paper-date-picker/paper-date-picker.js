@@ -168,9 +168,9 @@ export class PaperDatePicker extends PaperInputContainer {
         if (dateStr !== null && dateStr !== undefined && dateStr !== "") {
             if (typeof dateStr === "string") {
                 let shortands = {
-                    'm': 'months',
+                    'm': 'month',
                     'd': 'date',
-                    'y': 'years'
+                    'y': 'year'
                 };
                 let pattern = /([+=-])([+-]?[0-9]+)\s*([a-z]+)/ig;
                 let matches = pattern.exec(dateStr);
@@ -191,11 +191,12 @@ export class PaperDatePicker extends PaperInputContainer {
                                 date = date.subtract(value, name);
                                 break;
                             case '=':
-                                if (name === 'days') {
+                                if (name === 'day' || name==="days") {
                                     //days is day of the week; date is day of month
                                     name = 'date';
                                 }
-                                date = date.set(name, value);
+                                //month is 0 based index
+                                date = date.set(name, value - (name === "month") ? 1 : 0);
                                 break;
                         }
                         matches = pattern.exec(dateStr);
