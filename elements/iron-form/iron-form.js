@@ -230,7 +230,8 @@ export class IronForm extends LitElement {
                         .minLength="${elementConfig.minLength}" 
                         .maxLength="${elementConfig.maxLength}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-textarea>`;
+                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .rows="${elementConfig.rows}"></paper-textarea>`;
             }
             case 'paragraph': {
                 return html`
