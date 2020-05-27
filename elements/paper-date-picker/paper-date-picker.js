@@ -4,6 +4,7 @@ import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import TinyDatePicker from 'tiny-date-picker';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+
 dayjs.extend(customParseFormat);
 
 export class PaperDatePicker extends PaperInputContainer {
@@ -116,7 +117,7 @@ export class PaperDatePicker extends PaperInputContainer {
     }
 
     _onChangeInput(event) {
-        if(this.disabled){
+        if (this.disabled) {
             return;
         }
         if (this._parseDate(event.currentTarget.value, this.format) === this._value) {
@@ -127,14 +128,14 @@ export class PaperDatePicker extends PaperInputContainer {
     }
 
     _onChange(event) {
-        if(this.disabled){
+        if (this.disabled) {
             return;
         }
         this.value = this.nativeInput.value;
     }
 
     _selectedDate(dp) {
-        if(this.disabled){
+        if (this.disabled) {
             return;
         }
         if (CBNUtils.isNoE(dp.state.selectedDate) && !CBNUtils.isNoE(this._value)) {
@@ -185,13 +186,13 @@ export class PaperDatePicker extends PaperInputContainer {
                         }
                         switch (op) {
                             case '+':
-                                date = date.add(value, name);
+                                date = date.add(name, value);
                                 break;
                             case '-':
-                                date = date.subtract(value, name);
+                                date = date.subtract(name, value);
                                 break;
                             case '=':
-                                if (name === 'day' || name==="days") {
+                                if (name === 'day' || name === "days") {
                                     //days is day of the week; date is day of month
                                     name = 'date';
                                 }
