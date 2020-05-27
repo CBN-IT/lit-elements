@@ -170,7 +170,7 @@ export class PaperDatePicker extends PaperInputContainer {
             if (typeof dateStr === "string") {
                 let shortands = {
                     'm': 'month',
-                    'd': 'date',
+                    'd': 'day',
                     'y': 'year'
                 };
                 let pattern = /([+=-])([+-]?[0-9]+)\s*([a-z]+)/ig;
@@ -186,10 +186,10 @@ export class PaperDatePicker extends PaperInputContainer {
                         }
                         switch (op) {
                             case '+':
-                                date = date.add(name, value);
+                                date = date.add(value, name);
                                 break;
                             case '-':
-                                date = date.subtract(name, value);
+                                date = date.subtract(value, name);
                                 break;
                             case '=':
                                 if (name === 'day' || name === "days") {
