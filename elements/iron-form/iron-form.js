@@ -138,6 +138,8 @@ export class IronForm extends LitElement {
                         .disabled="${elementConfig.disabled}" 
                         .defaultValue="${elementConfig.defaultValue}"
                         .format="${elementConfig.format}"
+                        .min="${elementConfig.min}"
+                        .max="${elementConfig.max}"
                         .value="${forceWrite(this.model[elementConfig.name])}"></paper-date-picker>`;
             }
             case 'time': {
