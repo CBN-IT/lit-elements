@@ -115,6 +115,7 @@ class PaperTable extends LitElement {
                 width: 100%;
                 min-width: 60px;
                 font-size: 16px;
+                box-sizing: border-box;
             }
 
             .head-title {
