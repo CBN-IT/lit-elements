@@ -9,7 +9,21 @@ import '../iron-overlay/iron-overlay.js';
 import '../iron-ajax/iron-ajax.js';
 
 import "arrow-drop-down|../iron-icons/icons.svgicon";
-
+function selectText(node) {
+    if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(node);
+        range.select();
+    } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        console.warn("Could not select text in node: Unsupported browser.");
+    }
+}
 class PaperAddress extends PaperInputContainer {
 
     static get properties() {
@@ -153,32 +167,12 @@ class PaperAddress extends PaperInputContainer {
             <iron-ajax id="request" .url="${this.url}" noAjaxHeader noLoading></iron-ajax>
             <div class="select-container horizontal layout center flex">
                 <div class=" horizontal layout wrap center flex" style="overflow: hidden">
-                    ${this._value.map((item, index) => {
-            return !this.isDropdownMenu ?
-                html`
-                                <div class="selected-option">
-                                    <span>${item.__label}</span>
-                                    <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
-                                </div>` :
-                html`=<span>${item.__label}</span>`
-        })}
+                    ${this._value.map(this._getOptionTemplate,this)}
                     <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" autocomplete="off"/>
                 </div>
                 
                 ${this.isDropdownMenu ? html`<iron-icon icon="arrow-drop-down"></iron-icon>` : ''}
-                
-                ${this.isNative ? html`
-                    <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}">
-                        <option selected></option>
-                        ${this._options.map((item, index) => html`
-                            <option value="${index}" ?selected="${
-            this._value.findIndex((value) => {
-                return value.__value === item.__value
-            }) !== -1
-        }">${item.__label}</option>
-                        `)}
-                    </select>   
-                ` : ''}
+                ${this._getNativeSelect()}
             </div>
             
             <iron-overlay .positioningElement="${this}" .openedOverlay="${live(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
@@ -188,7 +182,36 @@ class PaperAddress extends PaperInputContainer {
             </iron-overlay>
         `;
     }
+    _getNativeSelect() {
+        if (this.isNative) {
+            return html`
+                <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
+                    <option selected></option>
+                    ${this._options.map((item, index) => html`
+                        <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
+                    `)}
+                </select>   
+            `
+        } else {
+            return '';
+        }
+    }
+    _getOptionTemplate(item, index) {
+        if (!this.isDropdownMenu) {
+            return html`
+                <div class="selected-option">
+                    <span @click="${this._allowSelection}">${item.__label}</span>
+                    <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
+                </div>
+            `;
+        } else {
+            return html`<span>${item.__label}</span>`
+        }
 
+    }
+    _allowSelection(event){
+        selectText(event.currentTarget);
+    }
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.ironOverlay = this.shadowRoot.querySelector('iron-overlay');
