@@ -7,12 +7,12 @@
     "url": "https://voloaca_octavian@bitbucket.org/cbn-it/lit-elements.git"
   },
   "dependencies": {
-    "ace-builds": "1.4.11",
-    "dayjs": "1.8.24",
+    "ace-builds": "1.4.12",
+    "dayjs": "1.8.29",
     "lit-element": "2.3.1",
     "lit-html": "1.2.1",
     "pwa-helpers": "0.9.1",
     "tiny-date-picker": "3.2.8",
-    "xlsx": "0.15.6"
+    "xlsx": "0.16.3"
   }
 }
