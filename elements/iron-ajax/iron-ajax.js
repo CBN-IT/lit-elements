@@ -71,6 +71,8 @@ class IronAjax extends LitElement {
                         //no internet connection
                         CBNUtils.displayMessage("Aplicatia are nevoie de o conexiune de internet stabila.", 'error');
                     } else if (this.xhr.status === 401) {
+                        window.location = "/login";
+                    } else if (this.xhr.status === 403) {
                         window.location = "/logout/unauthorized";
                     } else {
                         //handle 400, 422 and 500
