@@ -194,6 +194,9 @@ class PaperTable extends LitElement {
                 --input-padding: 0;
                 width: 18px;
             }
+            [hidden]{
+                display: none!important;
+            }
         `;
     }
 
@@ -376,13 +379,14 @@ class PaperTable extends LitElement {
         row.initial = currentHeight - this.headerHeight;
         row.translateY = currentHeight;
         row.lastIndex = _endIndex;
-        row.style = this._getRowStyle(this.headerHeight, this._filteredItems[_endIndex]);
+        row.style = this._getRowStyle(this.headerHeight, this._filteredItems[_endIndex], _endIndex);
         this._createRowCells(row, _endIndex);
         return row;
     }
 
-    _getRowStyle(translateY, model) {
-        let rowStyle = `transform:translate3d(0px,${translateY}px,0px);height:${this.rowHeight}px;`;
+    _getRowStyle(translateY, model, index) {
+        let rowStyle;
+        rowStyle = `height:${this.rowHeight}px;transform:translate3d(0px,${translateY}px,0px);`;
         if (this._rowStyle) {
             if (typeof this._rowStyle === 'string') {
                 rowStyle += this._rowStyle;
@@ -441,7 +445,7 @@ class PaperTable extends LitElement {
         let viewHeight = this.getBoundingClientRect()["height"];
         let containerScrollTop = this.container.scrollTop;
 
-        let rows = this.rowGroup.querySelectorAll(".row");
+        let rows = this.rowGroup.querySelectorAll(".row:not([hidden])");
         rows = Array.prototype.slice.call(rows, 0);
         if (rows.length === 0) {
             return;
@@ -485,13 +489,12 @@ class PaperTable extends LitElement {
         rows.sort(function (a, b) {
             return a["translateY"] - b["translateY"];
         });
-
         for (let i = 0; i < rows.length; i++) {
-            let lastIndex = rows[i]["lastIndex"];
+            let lastIndex = rows[i].lastIndex;
             if (lastIndex !== this._startIndex + i && this._startIndex + i >= 0 && this._startIndex + i < this._filteredItems.length) {
                 let model = this._filteredItems[this._startIndex + i];
                 this._updateRow(rows[i], model, i);
-                rows[i]["lastIndex"] = this._startIndex + i;
+                rows[i].lastIndex = this._startIndex + i;
             }
         }
         this.theadGroup.style.transform = "translate3D(0, -" + (this._realRowHeight * this._filteredItems.length - containerScrollTop) + "px, 0)";
@@ -500,7 +503,7 @@ class PaperTable extends LitElement {
     _repositionRows() {
         let rowHeight = this._realRowHeight;
         let slidesNr = Math.max(0, parseInt((this.container.scrollTop - this.headerHeight) / (this._rowsNr * rowHeight)));
-        let rows = this.rowGroup.querySelectorAll(".row");
+        let rows = this.rowGroup.querySelectorAll(".row:not([hidden])");
         rows = Array.prototype.slice.call(rows, 0);
         rows.sort(function (a, b) {
             return a["initialIndex"] > b["initialIndex"] ? 1 : -1;
@@ -510,7 +513,6 @@ class PaperTable extends LitElement {
         for (let i = 0; i < rows.length; i++) {
             if (slidesNr * this._rowsNr + i >= 0 && slidesNr * this._rowsNr + i < this._filteredItems.length) {
                 rows[i].translateY = (slidesNr) * (this._rowsNr * rowHeight) + rows[i]["initial"] + this.headerHeight;
-                //rows[i].setAttribute("translateY", rows[i].translateY);
                 rows[i].lastIndex = slidesNr * this._rowsNr + i;
                 rows[i].style.transform = "translate3d(0px," + ((slidesNr) * (this._rowsNr * rowHeight) + this.headerHeight) + "px,0px)";
                 let model = this._filteredItems[slidesNr * this._rowsNr + i];
@@ -551,10 +553,7 @@ class PaperTable extends LitElement {
     }
 
     _updateRow(row, model, index) {
-        /*if(this.rowStyle !== undefined){
-            this.rowStyle(model, row);
-        }*/
-        row.style = this._getRowStyle(row.translateY - row.initial, model);
+        row.style = this._getRowStyle(row.translateY - row.initial, model, index);
         if (model["isSelected"]) {
             row.classList.add("iron-selected");
             row.checkbox.value = true;
@@ -685,7 +684,10 @@ class PaperTable extends LitElement {
             return a["initialIndex"] > b["initialIndex"] ? 1 : -1;
         });
         rows.forEach((row, index) => {
-            row.style.display = index < this._filteredItems.length ? "table-row" : "none";
+            //row.style.display = index < this._filteredItems.length ? "" : "none";
+            if(index >= this._filteredItems.length){
+                row.setAttribute("hidden","true");
+            }
         });
         this.table.style.height = (this._realRowHeight * this._filteredItems.length + this.headerHeight) + "px";
         this.theadGroup.style.transform = "translate3D(0, -" + (this._realRowHeight * this._filteredItems.length) + "px, 0)";
@@ -745,7 +747,7 @@ class PaperTable extends LitElement {
     }
 
     _updateRangeSelection(selectedRange, selected) {
-        let rows = this.rowGroup.querySelectorAll(".row");
+        let rows = this.rowGroup.querySelectorAll(".row:not([hidden])");
         rows.forEach(row => {
             if (row.lastIndex >= selectedRange[0] && row.lastIndex <= selectedRange[1] && this._filteredItems[row.lastIndex].isSelected !== selected) {
                 this._updateRowSelection(row, selected);
