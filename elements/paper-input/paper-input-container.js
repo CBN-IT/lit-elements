@@ -102,7 +102,10 @@ export class PaperInputContainer extends LitElement {
             }
 
             textarea {
+                /*
+                not sure why its here, but it affects its height
                 margin: 10px 0 !important;
+                */
             }
 
             .label {
