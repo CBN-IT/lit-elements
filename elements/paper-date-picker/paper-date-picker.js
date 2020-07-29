@@ -197,7 +197,7 @@ export class PaperDatePicker extends PaperInputContainer {
                                     name = 'date';
                                 }
                                 //month is 0 based index
-                                date = date.set(name, value - (name === "month") ? 1 : 0);
+                                date = date.set(name, value - ((name === "month") ? 1 : 0));
                                 break;
                         }
                         matches = pattern.exec(dateStr);
