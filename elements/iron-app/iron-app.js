@@ -407,7 +407,7 @@ export class IronApp extends LitElement {
         let splits = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
         return {
             page: decodeURIComponent(splits[0]),
-            _id: decodeURIComponent(splits[1]),
+            _id: splits[1] === undefined ? undefined : decodeURIComponent(splits[1]),
             model: model
         };
     }
