@@ -4,6 +4,13 @@ import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-dialog/paper-dialog.js";
 
+function escapeStr(val){
+    if(val===undefined || val===null){
+        return "";
+    }
+return val.replace(/"/g, '\\"');
+}
+
 class GetReport extends LitElement {
 
     static get properties() {
@@ -97,11 +104,11 @@ class GetReport extends LitElement {
                 </head>
                 <body>
                     <form id="formRaport" action="${url}" target="_blank" method="POST">
-                        <input type="hidden" name="_companyId" value="${JSON.stringify(window.data._selectedCompany)}"/>
-                        <input type="hidden" name="hashReport" value="${JSON.stringify(hashReport)}"/>
+                        <input type="hidden" name="_companyId" value="${escapeStr(window.data._selectedCompany)}"/>
+                        <input type="hidden" name="hashReport" value="${escapeStr(hashReport)}"/>
                         <input type="hidden" name="download" value="inline"/>
-                        ${keys.map(key => `<input type="hidden" name="keys" value="${JSON.stringify(key)}"/>`).join("")}
-                        ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="ADMA.${key}" value="${JSON.stringify(value)}"/>`).join("")}
+                        ${keys.map(key => `<input type="hidden" name="keys" value="${escapeStr(key)}"/>`).join("")}
+                        ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="ADMA.${key}" value="${escapeStr(value)}"/>`).join("")}
                     </form>
                 </body>
                 <script>document.getElementById("formRaport").submit();</script>
