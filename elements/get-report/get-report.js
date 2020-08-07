@@ -97,11 +97,11 @@ class GetReport extends LitElement {
                 </head>
                 <body>
                     <form id='formRaport' action='${url}' target="_blank" method='POST'>
-                        <input type='hidden' name='_companyId' value='${window.data._selectedCompany}'/>
-                        <input type='hidden' name='hashReport' value='${hashReport}'/>
+                        <input type='hidden' name='_companyId' value='${encodeURIComponent(window.data._selectedCompany)}'/>
+                        <input type='hidden' name='hashReport' value='${encodeURIComponent(hashReport)}'/>
                         <input type='hidden' name='download' value='inline'/>
-                        ${keys.map(key => `<input type='hidden' name='keys' value='${key}'/>`).join("")}
-                        ${Object.entries(params).map(([key, value]) => `<input type='hidden' name='ADMA.${key}' value='${value}'/>`).join("")}
+                        ${keys.map(key => `<input type='hidden' name='keys' value='${encodeURIComponent(key)}'/>`).join("")}
+                        ${Object.entries(params).map(([key, value]) => `<input type='hidden' name='ADMA.${key}' value='${encodeURIComponent(value)}'/>`).join("")}
                     </form>
                 </body>
                 <script>document.getElementById("formRaport").submit();</script>
