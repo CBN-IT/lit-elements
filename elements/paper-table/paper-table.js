@@ -687,6 +687,8 @@ class PaperTable extends LitElement {
             //row.style.display = index < this._filteredItems.length ? "" : "none";
             if(index >= this._filteredItems.length){
                 row.setAttribute("hidden","true");
+            }else{
+                row.removeAttribute("hidden");
             }
         });
         this.table.style.height = (this._realRowHeight * this._filteredItems.length + this.headerHeight) + "px";
