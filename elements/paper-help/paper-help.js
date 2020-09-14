@@ -52,8 +52,10 @@ class PaperHelp extends LitElement {
             <paper-fab icon="help" @click="${this._openDialog}"></paper-fab>
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">Help</div>    
-                <slot name="body"></slot>             
-                <iron-form slot="body" class="flex" url="/SaveHelp" .config="${this.config}" .model="${this.model}" collection="help" @saved-form="${this._onSavedForm}"></iron-form>
+                <div slot="body">
+                    <slot name="body"></slot>             
+                    <iron-form  class="flex" url="/SaveHelp" .config="${this.config}" .model="${this.model}" collection="help" @saved-form="${this._onSavedForm}"></iron-form>
+                </div>
             </paper-dialog>
         `;
     }
