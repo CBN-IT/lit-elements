@@ -303,11 +303,15 @@ export class IronApp extends LitElement {
         this.logoSrc = logo;
     }
 
+    _templateHelp(){
+        return html`<paper-help></paper-help>`;
+    }
+
     render() {
         // language=HTML
         return html`
             <confirm-delete></confirm-delete>
-            ${!this.noHelp ? html`<paper-help></paper-help>` : ''}
+            ${!this.noHelp ? this._templateHelp() : ''}
             <paper-toast></paper-toast>
             <get-report></get-report>
             <paper-loading></paper-loading>
