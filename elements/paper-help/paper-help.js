@@ -35,7 +35,7 @@ class PaperHelp extends LitElement {
                 --min-dialog-width: 500px;
             }
 
-            iron-form {
+            .full-width {
                 width: 100%;
             }
         `;
@@ -52,7 +52,7 @@ class PaperHelp extends LitElement {
             <paper-fab icon="help" @click="${this._openDialog}"></paper-fab>
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">Help</div>    
-                <div slot="body">
+                <div slot="body" class="full-width">
                     <slot name="body"></slot>             
                     <iron-form  class="flex" url="/SaveHelp" .config="${this.config}" .model="${this.model}" collection="help" @saved-form="${this._onSavedForm}"></iron-form>
                 </div>
