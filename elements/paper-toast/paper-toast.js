@@ -108,7 +108,7 @@ class PaperToast extends LitElement {
     _onMessage(event) {
         this.message = event.detail.message;
         this.type = event.detail.type || 'success';
-        this.timeout = event.detail.timeout || (this.type === "error") ? 10 : 70;
+        this.timeout = event.detail.timeout || ((this.type === "error") ? 10 : 70);
         this._open();
     }
 
