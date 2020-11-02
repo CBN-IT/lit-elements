@@ -10,6 +10,7 @@ import "generic|../iron-icons/cbn.svgicon";
 import "word|../iron-icons/cbn.svgicon";
 import "xml|../iron-icons/cbn.svgicon";
 import {css, html} from "lit-element";
+import {render} from "lit-html";
 
 
 class PaperReportsDropdown extends PaperIconDropdown {
@@ -42,6 +43,16 @@ class PaperReportsDropdown extends PaperIconDropdown {
             [icon="xml"] {
                 --iron-icon-color: #727d0f;
             }
+            .group {
+                padding: 10px;
+                background-color: white;
+                color: black;
+            }
+
+            .group:hover, .group.selected {
+                cursor: pointer;
+                background-color: rgba(0, 0, 0, 0.14);
+            }
         `
     }
     constructor() {
@@ -59,6 +70,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
         });
     }
     _getReport(event){
+        console.log(this);
         let path = event.currentTarget.path;
         CBNUtils.fireEvent(this, 'get-report', {
             keys: this.table.selectedItems,
@@ -103,19 +115,16 @@ class PaperReportsDropdown extends PaperIconDropdown {
                 </div>           
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <table style="border-spacing:10px 30px;">
-                        ${groups.map(arr => html`
-                            <tr>
-                                <td style="padding:0 0px 0 20px;text-align: right">${arr[0].groupName||""}</td>
-                                <td style="border-left:1px solid black;">
-                                    ${arr.map(item => html`
-                                    <div .path="${item._path}" class="option horizontal layout center" style="padding:7px" @click="${this._getReport}">
-                                        <iron-icon icon="${item.type}" size="30"></iron-icon>
-                                        ${item.label}
+                        <tr>
+                            <td style="padding:0 0px 0 20px;text-align: right; vertical-align: top;">
+                                ${groups.map(arr => html`
+                                    <div @mouseover="${this.showReports}" .reports="${arr}" class="group horizontal layout center" style="padding:7px">
+                                        ${arr[0].groupName||""}
                                     </div>
-                                    `)}
-                                </td>
-                            </tr>
-                        `)}
+                                `)}
+                            </td>
+                            <td id="reportsContainer" style="border-left:1px solid black; vertical-align: top;"></td>
+                        </tr>
                     </table>
                 </iron-overlay>
             `;
@@ -148,6 +157,22 @@ class PaperReportsDropdown extends PaperIconDropdown {
             </iron-overlay>
         `;
         }
+    }
+    showReports(event){
+        this.shadowRoot.querySelectorAll(".group.selected").forEach(value => value.classList.remove("selected"));
+        let arr =event.currentTarget.reports;
+        let reportsHtml = arr.map(item => html`
+            <div .path="${item._path}" class="option horizontal layout center" style="padding:7px" @click="${this._getReport.bind(this)}">
+                <iron-icon icon="${item.type}" size="30"></iron-icon>
+                ${item.label}
+            </div>
+        `);
+        let reportsContainer = this.shadowRoot.querySelector("#reportsContainer");
+        reportsContainer.classList.remove("hidden");
+        render(reportsHtml, reportsContainer);
+        this.shadowRoot.querySelector("iron-overlay")._resizeContainer();
+        event.currentTarget.classList.add("selected");
+
     }
 }
 
