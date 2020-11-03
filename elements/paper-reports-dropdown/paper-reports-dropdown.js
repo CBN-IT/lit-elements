@@ -44,7 +44,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
                 --iron-icon-color: #727d0f;
             }
             .group {
-                padding: 10px;
+                padding: 7px 3px 7px 20px;
                 background-color: white;
                 color: black;
             }
@@ -52,6 +52,43 @@ class PaperReportsDropdown extends PaperIconDropdown {
             .group:hover, .group.selected {
                 cursor: pointer;
                 background-color: rgba(0, 0, 0, 0.14);
+            }
+            .dropdown-submenu {
+                position: relative;
+            }
+
+            .dropdown-submenu .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                display: none;
+                z-index: 1000;
+                float: left;
+                min-width: 160px;
+                padding: 5px 0;
+                margin: 2px 0 0;
+                font-size: 14px;
+                text-align: left;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #ccc;
+                border: 1px solid rgba(0, 0, 0, .15);
+                border-radius: 4px;
+            }
+            .group.selected+.dropdown-menu{
+                display: flex;
+                flex-direction: column;
+            }
+            .dropdown-menu .option{
+                white-space: nowrap;
+            }
+            [icon="arrow-drop-down"]{
+                transform: rotate(-90deg)
             }
         `
     }
@@ -85,61 +122,66 @@ class PaperReportsDropdown extends PaperIconDropdown {
         this.ironOverlay.openOverlay();
     }
     render() {
-        let hasGroups = false;
-        for (let option of this._options) {
-            if(option.groupName){
-                hasGroups=true;
-            }
-        }
-        if(hasGroups){
-            let groups = {};
-            for (let option of this._options) {
-                if(groups[option.groupName||""]===undefined){
-                    groups[option.groupName||""]=[];
-                }
-                groups[option.groupName||""].push(option);
-            }
-            groups = Object.values(groups).sort((a, b) => (a[0].groupName||"").localeCompare(b[0].groupName||""));
-
+        if(this.isNative){
             return html`
                 <div class="container vertical layout">
                     <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
-                    ${this.isNative ? html`
-                        <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
-                            <option disabled selected></option>
-                            ${this._options.map((item, index) => html`                          
-                                <option value="${index}">${item.label}</option>
-                            `)}
-                        </select>
-                    ` : ''}
-                </div>           
-                <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
-                    <table style="border-spacing:10px 30px;">
-                        <tr>
-                            <td style="padding:0 0px 0 20px;text-align: right; vertical-align: top;">
-                                ${groups.map(arr => html`
-                                    <div @mouseover="${this.showReports}" .reports="${arr}" class="group horizontal layout center" style="padding:7px">
-                                        ${arr[0].groupName||""}
-                                    </div>
-                                `)}
-                            </td>
-                            <td id="reportsContainer" style="border-left:1px solid black; vertical-align: top;"></td>
-                        </tr>
-                    </table>
-                </iron-overlay>
-            `;
-        }else{
-            return html`
-            <div class="container vertical layout">
-                <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
-                ${this.isNative ? html`
                     <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                         <option disabled selected></option>
                         ${this._options.map((item, index) => html`                          
                             <option value="${index}">${item.label}</option>
                         `)}
                     </select>
-                ` : ''}
+                </div> 
+            `
+        }
+
+        let hasGroups = false;
+        for (let option of this._options) {
+            if(option.groupName){
+                hasGroups=true;
+            }
+        }
+        if (hasGroups) {
+            let groups = {};
+            for (let option of this._options) {
+                if (groups[option.groupName || ""] === undefined) {
+                    groups[option.groupName || ""] = [];
+                }
+                groups[option.groupName || ""].push(option);
+            }
+            groups = Object.values(groups).sort((a, b) => (a[0].groupName || "").localeCompare(b[0].groupName || ""));
+
+            return html`
+                <div class="container vertical layout">
+                    <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
+                </div>           
+                <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
+                    <div>
+                        ${groups.map(arr => html`
+                            <div class="dropdown-submenu">
+                                <div class="group horizontal layout center" @mouseover="${this.showReports}">
+                                    ${arr[0].groupName || ""}
+                                    <div style="flex:1"></div>
+                                    <iron-icon icon="arrow-drop-down" size="24"></iron-icon>
+                                </div>
+                                <div class="dropdown-menu">
+                                    ${arr.map(item => html`
+                                        <div .path="${item._path}" class="option horizontal layout center" style="padding:7px" @click="${this._getReport.bind(this)}">
+                                            <iron-icon icon="${item.type}" size="30"></iron-icon>
+                                            ${item.label}
+                                        </div>
+                                    `)}
+                                </div>
+                            </div>
+                        `)}
+                    </div>
+                </iron-overlay>
+            `;
+        } else {
+            return html`
+            <div class="container vertical layout">
+                <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
             </div>           
             <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                 <iron-selector @iron-select="${this._onIronSelect}">
@@ -160,17 +202,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
     }
     showReports(event){
         this.shadowRoot.querySelectorAll(".group.selected").forEach(value => value.classList.remove("selected"));
-        let arr =event.currentTarget.reports;
-        let reportsHtml = arr.map(item => html`
-            <div .path="${item._path}" class="option horizontal layout center" style="padding:7px" @click="${this._getReport.bind(this)}">
-                <iron-icon icon="${item.type}" size="30"></iron-icon>
-                ${item.label}
-            </div>
-        `);
-        let reportsContainer = this.shadowRoot.querySelector("#reportsContainer");
-        reportsContainer.classList.remove("hidden");
-        render(reportsHtml, reportsContainer);
-        this.shadowRoot.querySelector("iron-overlay")._resizeContainer();
+        this.ironOverlay.shadowRoot.querySelector(".container").style.overflow="visible";
         event.currentTarget.classList.add("selected");
 
     }
