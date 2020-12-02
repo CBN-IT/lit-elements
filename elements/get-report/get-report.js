@@ -69,8 +69,11 @@ class GetReport extends LitElement {
     }
 
     _getReport(event) {
-        this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => report._path === event.detail.report);
-        this.keys = event.detail.keys.map(item => typeof item === 'object' ? item._path : item);
+        this.report = typeof event.detail.report === 'object' ? event.detail.report : window.data._reports.find(report => (
+            report._path === event.detail.report ||
+            report._hash === event.detail.report
+        ));
+        this.keys = event.detail.keys.map(item => typeof item === 'object' ? (item._path||item._hash) : item);
 
         if (this.report.params) {
             this.config = JSON.parse(this.report.params);
@@ -88,7 +91,7 @@ class GetReport extends LitElement {
     }
 
     _generateReport(report, keys, params) {
-        let hashReport = `${window.data._appId}/${report._path}`;
+        let hashReport = report._hash ? report._hash : `${window.data._appId}/${report._path}`;
         keys = keys === undefined ? [] : !(keys instanceof Array) ? [keys] : keys;
         params = params !== undefined ? params : {};
 
