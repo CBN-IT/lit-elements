@@ -59,15 +59,12 @@ export class AddWithLink extends LitElement {
     get listView() {
         return 'table-view-with-link';
     }
-
-    get saveUrl() {
-        return '/SaveDocument';
-    }
     constructor() {
         super();
         this.config = {elements: []};
         this.model = this.defaultModel;
         this.getUrl = "/GetDocument";
+        this.saveUrl = "/SaveDocument";
     }
 
     shouldUpdate(changedProperties) {
