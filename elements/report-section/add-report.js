@@ -31,6 +31,7 @@ class AddReport extends AddWithLink {
         this.pages = ['Config', 'Code', 'Params'];
         this.collection = 'report';
         this._bindedSaveFormFromKeyDown = this._saveFormFromKeyDown.bind(this);
+        this.saveUrl="/SaveReport";
     }
 
     firstUpdated(changedProperties) {
@@ -45,7 +46,7 @@ class AddReport extends AddWithLink {
             <paper-tabs .pages="${this.pages}" class="flex">
                 <div class="layout vertical flex" style="background-color: white;">
                     <span style="user-select: all;padding-left:10px;">${this.model._path||""}</span>
-                    <iron-form class="flex" .config="${this.config}" .model="${this.model}" url="/SaveReport" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
+                    <iron-form class="flex" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
                 </div>
                 <ace-editor class="flex" name="code" .value="${this.model.code}" mode="ace/mode/typescript" theme="ace/theme/dracula" fontSize="14" @value-changed="${this._onValueChanged}"></ace-editor>
                 <ace-editor class="flex" name="params" .value="${this.model.params}" mode="ace/mode/json" theme="ace/theme/dracula" fontSize="14" @value-changed="${this._onValueChanged}"></ace-editor>          
