@@ -7,7 +7,7 @@ import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 import "add|../iron-icons/icons.svgicon";
 
-export class TableView extends LitElement {
+export class TableViewNoAdd extends LitElement {
 
     static get properties() {
         return {
@@ -177,7 +177,7 @@ export class TableView extends LitElement {
 
 }
 
-customElements.define("table-view", TableView);
+customElements.define("table-view-no-add", TableViewNoAdd);
 
 
 
