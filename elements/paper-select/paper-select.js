@@ -337,9 +337,7 @@ class PaperSelect extends PaperInputContainer {
             return;
         }
         this._value.splice(index, 1);
-        if (!this.allowDuplicates) {
-            this._filterOptions();
-        }
+        this._filterOptions();
         this.validate(this._value, true);
         this.requestUpdate();
     }
@@ -379,9 +377,7 @@ class PaperSelect extends PaperInputContainer {
         } else {
             this._value = [value];
         }
-        if (!this.allowDuplicates) {
-            this._filterOptions();
-        }
+        this._filterOptions();
         this.validate(this._value, true);
         this.clearInput();
     }
