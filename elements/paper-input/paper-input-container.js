@@ -116,11 +116,11 @@ export class PaperInputContainer extends LitElement {
                 padding: 0 4px;
                 color: #8a8a8a;
                 top: calc(50% - 9px);
-                left: 24px;
+                left: var(--input-label-left, 24px);
                 cursor: text;
                 background: white;
                 transition: top 0.1s;
-                max-width: calc(100% - 50px);
+                max-width: var(--input-label-max-width, calc(100% - 50px));
                 box-sizing: border-box;
                 user-select: none;
             }
