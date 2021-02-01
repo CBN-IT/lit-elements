@@ -99,7 +99,7 @@ class GetReport extends LitElement {
         let iframe = document.createElement("iframe");
         iframe.style.display = "none";
         document.body.appendChild(iframe);
-        let url = "https://raport-test.cbn-it.ro/";
+        let url = "https://raport.cbn-it.ro/";
         let html = `
             <!DOCTYPE html>
             <html>
