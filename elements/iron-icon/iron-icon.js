@@ -37,6 +37,7 @@ class IronIcon extends LitElement {
 
             svg {
                 fill: var(--iron-icon-color, currentColor);
+                vertical-align: middle;
             }
         `
     }
