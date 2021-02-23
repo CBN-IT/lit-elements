@@ -1,7 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit-element';
 
-class IronOverlay extends LitElement {
+export class IronOverlay extends LitElement {
 
     static get properties() {
         return {
