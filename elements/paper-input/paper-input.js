@@ -21,6 +21,7 @@ class PaperInput extends PaperInputContainer {
             maxLength: {type: Number},
             isCNP: {type: Boolean},
             isCIF: {type: Boolean},
+            isEmail: {type: Boolean},
             _value: {type: Object},
             disabled: {type: Boolean}
         };
@@ -84,6 +85,9 @@ class PaperInput extends PaperInputContainer {
             if (this.isCIF === true) {
                 isValid = isValid && PaperInput._validateCIF(value);
             }
+            if (this.isEmail === true) {
+                isValid = isValid && PaperInput._validateEmail(value);
+            }
         }
         this.isValid = isValid;
         this._value = value;
@@ -124,6 +128,10 @@ class PaperInput extends PaperInputContainer {
             return PaperInput._validateCNP(cif);
         }
         return false;
+    }
+    static _validateEmail(value) {
+        let pattern = /^([a-zA-Z0-9_.\-+])+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-]{2,}$/
+        return pattern.test(value)
     }
 
     static _validateCNP(cnp) {
