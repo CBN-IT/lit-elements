@@ -259,6 +259,7 @@ export class IronForm extends LitElement {
                         .step="${elementConfig.step}"
                         .isCNP="${elementConfig.isCNP}" 
                         .isCIF="${elementConfig.isCIF}" 
+                        .isEmail="${elementConfig.isEmail}" 
                         .defaultValue="${elementConfig.defaultValue}" 
                         .value="${forceWrite(this.model[elementConfig.name])}"></paper-input>`
             }
