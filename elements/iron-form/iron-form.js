@@ -52,6 +52,9 @@ export class IronForm extends LitElement {
             },
             noSubmitButton: {
                 type: Boolean
+            },
+            autocomplete: {
+                type: String
             }
         }
     }
@@ -103,6 +106,7 @@ export class IronForm extends LitElement {
         this.config = {elements: []};
         this.model = {};
         this.params = {};
+        this.autocomplete="off"
     }
 
     render() {
@@ -233,7 +237,9 @@ export class IronForm extends LitElement {
                         .maxLength="${elementConfig.maxLength}" 
                         .defaultValue="${elementConfig.defaultValue}" 
                         .value="${forceWrite(this.model[elementConfig.name])}"
-                        .rows="${elementConfig.rows}"></paper-textarea>`;
+                        .rows="${elementConfig.rows}"
+                        .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
+                    ></paper-textarea>`;
             }
             case 'paragraph': {
                 return html`
@@ -261,7 +267,9 @@ export class IronForm extends LitElement {
                         .isCIF="${elementConfig.isCIF}" 
                         .isEmail="${elementConfig.isEmail}" 
                         .defaultValue="${elementConfig.defaultValue}" 
-                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-input>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
+                    ></paper-input>`
             }
         }
     }

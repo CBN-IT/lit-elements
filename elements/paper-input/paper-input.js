@@ -23,7 +23,8 @@ class PaperInput extends PaperInputContainer {
             isCIF: {type: Boolean},
             isEmail: {type: Boolean},
             _value: {type: Object},
-            disabled: {type: Boolean}
+            disabled: {type: Boolean},
+            autocomplete: {type: String}
         };
     }
 
@@ -44,7 +45,7 @@ class PaperInput extends PaperInputContainer {
                 maxlength="${this.maxLength || ""}"
                 .value="${this._value}"
                 ?disabled="${this.disabled}"
-                autocomplete="off"
+                autocomplete="${this.autocomplete}"
             />`;
     }
 

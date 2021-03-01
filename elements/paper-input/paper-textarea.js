@@ -13,7 +13,8 @@ class PaperTextarea extends PaperInputContainer {
             maxLength: {type: Number},
             _value: {type: Object},
             disabled: {type: Boolean},
-            rows: {type: Number}
+            rows: {type: Number},
+            autocomplete: {type: String}
         };
     }
 
@@ -22,7 +23,13 @@ class PaperTextarea extends PaperInputContainer {
     }
 
     get inputElement() {
-        return html`<textarea class="input" rows="${this.rows || 1}" .value="${this._value}" ?disabled="${this.disabled}" ></textarea>`;
+        return html`<textarea 
+                class="input" 
+                rows="${this.rows || 1}" 
+                .value="${this._value}" 
+                ?disabled="${this.disabled}"
+                autocomplete="${this.autocomplete}"
+        ></textarea>`;
     }
 
     firstUpdated(changedProperties) {
