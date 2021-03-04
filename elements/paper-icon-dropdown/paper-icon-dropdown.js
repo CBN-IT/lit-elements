@@ -105,11 +105,10 @@ export class PaperIconDropdown extends LitElement {
                             <div class="option">                                
                                 ${item.label}
                             </div>
-                        `
-        )}
+                        `)}
                     </iron-selector>
                 </iron-overlay>
-`;
+        `;
     }
 
     firstUpdated(changedProperties) {
