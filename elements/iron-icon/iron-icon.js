@@ -30,14 +30,16 @@ class IronIcon extends LitElement {
         // language=CSS
         return css`
             :host {
-                display: inline-block;
+                display: flex;
                 flex-shrink: 0;
-                vertical-align: middle;
+                justify-content: center;
+                align-items: center;
             }
 
             svg {
                 fill: var(--iron-icon-color, currentColor);
-                vertical-align: middle;
+                max-width: 100%;
+                max-height: 100%;
             }
         `
     }
