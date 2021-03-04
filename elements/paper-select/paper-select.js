@@ -106,6 +106,12 @@ class PaperSelect extends PaperInputContainer {
             }
 
             .input-select {
+                min-width: 0;
+                background: none;
+                color: inherit;
+            }
+
+            .input-select:focus {
                 min-width: 100px;
             }
 
@@ -194,7 +200,7 @@ class PaperSelect extends PaperInputContainer {
             <div class="select-container horizontal layout center flex">
                 <div class=" horizontal layout wrap center flex" style="overflow: hidden">
                     ${this._value.map(this._getOptionTemplate, this)}
-                    <input ?hidden="${this.isNative || this.isDropdownMenu}" class="input input-select flex" autocomplete="off"/>
+                    <input ?hidden="${this.isNative}" class="input input-select flex" autocomplete="off"/>
                 </div>
                <iron-icon icon="arrow-drop-down"></iron-icon>
                 ${this._getNativeSelect()}
