@@ -16,7 +16,8 @@ class PaperDialog extends LitElement {
                 reflect: true
             },
             noActions: {type: Boolean},
-            preventClosing: {type: Boolean}
+            preventClosing: {type: Boolean},
+            preventOverlayClose: {type: Boolean}
         };
     }
 
@@ -90,13 +91,13 @@ class PaperDialog extends LitElement {
 
     render() {
         return html`
-            <div id="overlay" @click=${this._onCancelClick}></div>
+            <div id="overlay" @click=${this._cancelClickOverlay}></div>
             <div id="container" class="vertical layout">
                 <div id="header" class="horizontal layout center">
                     <h3 class="flex">
                         <slot name="header"></slot>
                     </h3>
-                    <paper-button small class="close-button" small icon="close" @click="${this._onCancelClick}"></paper-button>
+                    <paper-button small class="close-button" small icon="close" @click="${this._cancelClickHeaderButton}"></paper-button>
                 </div>
                 <div id="body">
                     <slot name="body"></slot>
@@ -104,7 +105,7 @@ class PaperDialog extends LitElement {
                <div id="buttons" class="horizontal layout justified">
                     <slot name="button"></slot>
                     ${!this.noActions ? html`
-                        <paper-button icon="close" style="background: var(--grey-color)" @click="${this._onCancelClick}">Cancel</paper-button>
+                        <paper-button icon="close" style="background: var(--grey-color)" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
                         <paper-button icon="check" style="background: var(--green-color)" @click="${this._onSaveClick}">Save</paper-button>
                     ` : ""}
                 </div>
@@ -113,8 +114,26 @@ class PaperDialog extends LitElement {
     }
 
 
-    _onCancelClick() {
-        let e = CBNUtils.fireEvent(this, 'cancel-click');
+    _cancelClickOverlay() {
+        if (!this.preventOverlayClose) {
+            this._onCancelClick("overlay")
+        }
+    }
+
+    _cancelClickHeaderButton() {
+        this._onCancelClick("headerButton")
+    }
+
+    _cancelClickBottomButton() {
+        this._onCancelClick("bottomButton")
+    }
+
+    _onCancelClick(button) {
+        let e = CBNUtils.fireEvent(
+            this,
+            'cancel-click',
+            {button: button}
+        );
         if (!e.defaultPrevented) {
             this.opened = false;
         }
