@@ -112,7 +112,7 @@ class PaperSelect extends PaperInputContainer {
             }
 
             .input-select:focus {
-                min-width: 100px;
+                min-width: var(--paper-select-input-min-width,100px);
             }
 
             .options-container {
