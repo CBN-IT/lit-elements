@@ -202,7 +202,9 @@ export class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}" 
                         .itemLabelProperty="${elementConfig.itemLabelProperty}" 
                         .options="${elementConfig.options}" 
-                        .value="${forceWrite(this.model[elementConfig.name])}"></paper-select>`
+                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .preventSelection="${elementConfig.preventSelection}"
+                    ></paper-select>`
             }
             case 'address': {
                 return html`
