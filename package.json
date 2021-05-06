@@ -9,8 +9,8 @@
   "dependencies": {
     "ace-builds": "1.4.12",
     "dayjs": "1.10.4",
-    "lit-element": "2.5.0",
-    "lit-html": "1.4.0",
+    "lit-element": "2.5.1",
+    "lit-html": "1.4.1",
     "pwa-helpers": "0.9.1",
     "tiny-date-picker": "3.2.8",
     "xlsx": "0.16.9"
