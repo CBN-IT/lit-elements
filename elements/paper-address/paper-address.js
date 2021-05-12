@@ -175,7 +175,7 @@ class PaperAddress extends PaperInputContainer {
                 ${this._getNativeSelect()}
             </div>
             
-            <iron-overlay .positioningElement="${this}" .openedOverlay="${live(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
+            <iron-overlay .positioningElement="${this}" ?openedOverlay="${(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
                 <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
                     ${this._filteredOptions.map((item, index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
                 </iron-selector>

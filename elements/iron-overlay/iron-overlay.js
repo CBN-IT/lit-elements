@@ -7,7 +7,10 @@ export class IronOverlay extends LitElement {
     static get properties() {
         return {
             positioningElement: {type: Object},
-            openedOverlay: {type: Boolean},
+            openedOverlay: {
+                type: Boolean,
+                reflect: true
+            },
             _openedOverlay: {type: Boolean},
             direction: {type: String},
             from: {type: String},
