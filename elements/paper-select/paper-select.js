@@ -1,6 +1,5 @@
 "use strict";
 import {html, css} from 'lit-element';
-import {live} from 'lit-html/directives/live';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
