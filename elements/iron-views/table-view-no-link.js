@@ -9,7 +9,7 @@ import "./../paper-dialog/paper-dialog.js";
 import "add|../iron-icons/icons.svgicon";
 
 
-class TableViewNoLink extends LitElement {
+export class TableViewNoLink extends LitElement {
 
     static get properties() {
         return {
