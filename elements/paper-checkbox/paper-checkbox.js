@@ -112,18 +112,20 @@ class PaperCheckbox extends PaperInputContainer {
 
     _onClick() {
         this._value = !this._value;
-        this.validate(this.value);
+        this.validate(this.value, true);
     }
 
     _isFloated() {
         return true;
     }
 
-    validate(value) {
+    validate(value, fromUser) {
         this.isValid = !this.required || this.value;
         CBNUtils.fireEvent(this, 'value-changed', {
             name: this.name,
-            value: this.value
+            value: this.value,
+            isValid: this.isValid,
+            fromUser: fromUser
         });
         return this.isValid;
     }
