@@ -332,6 +332,19 @@ export class IronForm extends LitElement {
             input.classList.remove("hidden");
         }
     }
+    enableInput(name) {
+        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        if (input) {
+            input.disabled=false;
+        }
+    }
+
+    disableInput(name) {
+        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        if (input) {
+            input.disabled=true;
+        }
+    }
     changeLabel(name,newLabel){
         let input = this.shadowRoot.querySelector('[name="' + name + '"]');
         if (input) {
