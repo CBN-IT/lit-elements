@@ -434,11 +434,7 @@ class PaperTable extends LitElement {
             cell.textContent = column._valueFunction(model);
         }
         if (column["style"]) {
-            if (typeof column["style"] === 'string') {
-                cell.style = column["style"];
-            } else if (typeof column["style"] === 'function') {
-                cell.style = column["style"](model);
-            }
+            cell.style = column["style"];
         }
         if (column['styleFunction']) {
             cell.style = column._styleFunction(model);
@@ -595,6 +591,9 @@ class PaperTable extends LitElement {
             render(column._templateFunction(model), cell);
         } else {
             cell.textContent = column._valueFunction(model);
+        }
+        if (column['styleFunction']) {
+            cell.style = column._styleFunction(model);
         }
     }
 
