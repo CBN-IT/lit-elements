@@ -552,6 +552,18 @@ class PaperTable extends LitElement {
         }
     }
 
+    updateAllRows(){
+        let rows = this.rowGroup.querySelectorAll(".row:not([hidden])");
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i]
+            let model = this._filteredItems[row.lastIndex];
+            let cells = row.querySelectorAll(".cell");
+            for (let j = 0; j < cells.length; j++) {
+                this._updateCell(cells[j], this._columns[j], model);
+            }
+        }
+    }
+
     _updateRow(row, model, index) {
         row.style = this._getRowStyle(row.translateY - row.initial, model, index);
         if (model["isSelected"]) {
