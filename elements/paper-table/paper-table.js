@@ -295,6 +295,11 @@ class PaperTable extends LitElement {
                 } else {
                     column._valueFunction = this._formatValue.bind(this, column);
                 }
+                if (column.styleFunction) {
+                    column._styleFunction = new Function(
+                        "column", "dayjs", "html",
+                        "item", "return " + column.styleFunction).bind(this, column, dayjs, html);
+                }
             });
             this._columns = columns;
         }
@@ -436,7 +441,7 @@ class PaperTable extends LitElement {
             }
         }
         if (column['styleFunction']) {
-            cell.style = column["style"](model);
+            cell.style = column._styleFunction(model);
         }
         row.appendChild(cell);
     }
