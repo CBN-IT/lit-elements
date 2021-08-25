@@ -1,6 +1,6 @@
 "use strict";
-import {LitElement} from 'lit-element';
-import {render, html, css} from 'lit-html';
+import {LitElement,css} from 'lit-element';
+import {render, html} from 'lit-html';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-icon/iron-icon.js";
 import "../paper-checkbox/paper-checkbox.js";
