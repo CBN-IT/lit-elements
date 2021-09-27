@@ -167,7 +167,7 @@ class PaperSelect extends PaperInputContainer {
         if (this.isNative) {
             return html`
                 <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
-                    <option selected></option>
+                    ${!this.multiple ? html`<option selected></option>` : ""}
                     ${this._options.map((item, index) => html`
                         <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
                     `)}
