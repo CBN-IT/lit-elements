@@ -295,7 +295,7 @@ export class IronForm extends LitElement {
                     }
                 }
                 if(toHide){
-                    for(let name of toShow){
+                    for(let name of toHide){
                         this.hideInput(name);
                     }
                 }
