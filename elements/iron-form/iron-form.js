@@ -285,22 +285,24 @@ export class IronForm extends LitElement {
         if (event.detail.label !== undefined) {
             this.model[`${name}_label`] = event.detail.label;
         }
-        this.config.elements.forEach(item => {
-            if (item.name === name) {
-                let toShow = item.toShow?.[value+""];
-                let toHide = item.toHide?.[value+""];
-                if(toShow){
-                    for(let name of toShow){
-                        this.showInput(name);
+        setTimeout(()=>{
+            this.config.elements.forEach(item => {
+                if (item.name === name) {
+                    let toShow = item.toShow?.[value+""];
+                    let toHide = item.toHide?.[value+""];
+                    if(toShow){
+                        for(let name of toShow){
+                            this.showInput(name);
+                        }
+                    }
+                    if(toHide){
+                        for(let name of toHide){
+                            this.hideInput(name);
+                        }
                     }
                 }
-                if(toHide){
-                    for(let name of toHide){
-                        this.hideInput(name);
-                    }
-                }
-            }
-        });
+            });
+        })
     }
 
     /**
