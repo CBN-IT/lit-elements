@@ -14,6 +14,13 @@ class ConfirmDelete extends LitElement {
             message: {
                 type: String
             },
+            okBtn: {
+                type: String
+            },
+            okIcon: {
+                type: String
+            },
+
             body: {
                 type: Object
             },
@@ -53,6 +60,8 @@ class ConfirmDelete extends LitElement {
     constructor() {
         super();
         this._bindedConfirmDelete = this._listenForConfirmDelete.bind(this);
+        this.okBtn="Sterge"
+        this.okIcon="delete"
     }
 
     render() {
@@ -62,22 +71,23 @@ class ConfirmDelete extends LitElement {
                 <div slot="header" class="header">Confirmare actiune</div>                  
                 <div slot="body">${this.message}</div>
                 <paper-button slot="button" icon="close" class="bgGrey" @click="${this._closeDialog}">Anulare</paper-button>
-                <paper-button slot="button" icon="delete" class="bgRed" @click="${this.confirmDelete}">Stergere</paper-button>
+                <paper-button slot="button" icon="${this.okIcon}" class="bgRed" @click="${this.confirmDelete}">${this.okBtn}</paper-button>
             </paper-dialog>
         `;
     }
 
     _listenForConfirmDelete(event) {
         console.log(event.detail);
-        this.delete(event.detail.body, event.detail.message, event.detail.callback, event.detail.url);
+        this.delete(event.detail.body, event.detail.message, event.detail.callback, event.detail.url, event.detail.okBtn);
     }
 
-    delete(body, message, callback, url) {
+    delete(body, message, callback, url,okBtn) {
         this.body = body;
         this.message = message;
         this.callback = callback || function () {
         };
         this.url = url || "/delete/DeleteEntity";
+        this.okBtn = okBtn || this.okBtn;
         this._openDialog();
     }
 
