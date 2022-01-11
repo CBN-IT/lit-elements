@@ -91,9 +91,9 @@ class ConfirmDelete extends LitElement {
         this.callback = callback || function () {
         };
         this.url = url || "/delete/DeleteEntity";
-        this.okBtnText = okBtnText || this.okBtnText;
-        this.okBtnIcon = okBtnIcon || this.okBtnIcon;
-        this.okBtnClass = okBtnClass || this.okBtnClass;
+        this.okBtnText = okBtnText || "Sterge";
+        this.okBtnIcon = okBtnIcon || "delete";
+        this.okBtnClass = okBtnClass || "bgRed";
         this._openDialog();
     }
 
