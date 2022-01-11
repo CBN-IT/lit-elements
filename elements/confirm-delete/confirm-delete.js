@@ -14,10 +14,13 @@ class ConfirmDelete extends LitElement {
             message: {
                 type: String
             },
-            okBtn: {
+            okBtnText: {
                 type: String
             },
-            okIcon: {
+            okBtnIcon: {
+                type: String
+            },
+            okBtnClass: {
                 type: String
             },
 
@@ -60,8 +63,9 @@ class ConfirmDelete extends LitElement {
     constructor() {
         super();
         this._bindedConfirmDelete = this._listenForConfirmDelete.bind(this);
-        this.okBtn="Sterge"
-        this.okIcon="delete"
+        this.okBtnText="Sterge"
+        this.okBtnIcon="delete"
+        this.okBtnClass="bgRed"
     }
 
     render() {
@@ -71,23 +75,25 @@ class ConfirmDelete extends LitElement {
                 <div slot="header" class="header">Confirmare actiune</div>                  
                 <div slot="body">${this.message}</div>
                 <paper-button slot="button" icon="close" class="bgGrey" @click="${this._closeDialog}">Anulare</paper-button>
-                <paper-button slot="button" icon="${this.okIcon}" class="bgRed" @click="${this.confirmDelete}">${this.okBtn}</paper-button>
+                <paper-button slot="button" icon="${this.okBtnIcon}" class="${this.okBtnClass}" @click="${this.confirmDelete}">${this.okBtnText}</paper-button>
             </paper-dialog>
         `;
     }
 
     _listenForConfirmDelete(event) {
         console.log(event.detail);
-        this.delete(event.detail.body, event.detail.message, event.detail.callback, event.detail.url, event.detail.okBtn);
+        this.delete(event.detail.body, event.detail.message, event.detail.callback, event.detail.url, event.detail.okBtnText, event.detail.okBtnIcon, event.detail.okBtnClass);
     }
 
-    delete(body, message, callback, url,okBtn) {
+    delete(body, message, callback, url,okBtnText,okBtnIcon,okBtnClass) {
         this.body = body;
         this.message = message;
         this.callback = callback || function () {
         };
         this.url = url || "/delete/DeleteEntity";
-        this.okBtn = okBtn || this.okBtn;
+        this.okBtnText = okBtnText || this.okBtnText;
+        this.okBtnIcon = okBtnIcon || this.okBtnIcon;
+        this.okBtnClass = okBtnClass || this.okBtnClass;
         this._openDialog();
     }
 
