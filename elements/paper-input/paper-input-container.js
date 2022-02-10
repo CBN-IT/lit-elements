@@ -193,7 +193,10 @@ export class PaperInputContainer extends LitElement {
         return !CBNUtils.isNoE(this.value);
     }
 
-    _onInput() {
+    _onInput(event) {
+        if (this.input.type === "number" && event.data === ".") {
+            return;
+        }
         this.validate(this.input.value, true);
     }
 
