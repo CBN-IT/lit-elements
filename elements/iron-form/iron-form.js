@@ -305,20 +305,24 @@ export class IronForm extends LitElement {
         })
     }
 
+    getInput(name){
+        return this.shadowRoot.querySelector('[name="' + name + '"]');
+    }
+
     /**
      * @public
      * @param name
      * @param value
      */
     changeInputValue(name, value) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input['value'] = value;
         }
     }
 
     focusInput(name) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input.focus();
         }
@@ -333,7 +337,7 @@ export class IronForm extends LitElement {
     }
 
     changeOptionsOnInput(name, items) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             // console.log(name, input, items, input.options);
             input['options'] = items;
@@ -341,33 +345,33 @@ export class IronForm extends LitElement {
     }
 
     hideInput(name) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input.classList.add("hidden");
         }
     }
 
     showInput(name) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input.classList.remove("hidden");
         }
     }
     enableInput(name) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input.disabled=false;
         }
     }
 
     disableInput(name) {
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input.disabled=true;
         }
     }
     changeLabel(name,newLabel){
-        let input = this.shadowRoot.querySelector('[name="' + name + '"]');
+        let input = this.getInput(name);
         if (input) {
             input.label=newLabel;
         }
