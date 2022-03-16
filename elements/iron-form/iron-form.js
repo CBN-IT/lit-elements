@@ -306,7 +306,7 @@ export class IronForm extends LitElement {
     }
 
     getInput(name){
-        return this.shadowRoot.querySelector('[name="' + name + '"]');
+        return this.renderRoot.querySelector('[name="' + name + '"]');
     }
 
     /**
