@@ -56,6 +56,10 @@ class IronIcon extends LitElement {
     }
 
     render() {
+        setTimeout(()=>{
+            this.renderRoot.querySelector("svg").style.width = (this.size || 24) + "px";
+            this.renderRoot.querySelector("svg").style.height = (this.size || 24) + "px";
+        },16)
         return this.svgIcon;
     }
 
