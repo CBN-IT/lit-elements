@@ -3,7 +3,6 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import "./iron-form";
-import "../paper-button/paper-button"
 
 export class MultiForm extends LitElement {
 
@@ -34,7 +33,7 @@ export class MultiForm extends LitElement {
                 border-left: 7px solid var(--blue-color);
                 border-right: 7px solid var(--blue-color);
             }
-            iron-form:nth-of-type(odd):not(:first-of-type) {
+            iron-form:nth-of-type(odd) {
                 border-left: 7px solid var(--green-color);
                 border-right: 7px solid var(--green-color);
             }
@@ -59,11 +58,15 @@ export class MultiForm extends LitElement {
                         .noSubmitButton="${true}"
                 ></iron-form>
             `)}
-            <paper-button class="bgGreen" icon="add-circle" @click="${this.incrementNrForms}">Adauga tip nou</paper-button>
+            <div @click="${this.incrementNrForms}">
+                <slot></slot>
+            </div>
+            
         `;
     }
     incrementNrForms(){
-        this.model = [...this.model,{}];
+        this.model.push({});
+        this.requestUpdate();
     }
 
 }
