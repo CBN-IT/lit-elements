@@ -32,6 +32,7 @@ export class MultiForm extends LitElement {
             .form{
                 display: flex;
                 flex-direction: row;
+                border-radius: 10px;
             }
             .form>iron-form{
                 flex:1
@@ -48,7 +49,7 @@ export class MultiForm extends LitElement {
                 border-right: 7px solid var(--green-color);
             }
             .form:not(:last-of-type){
-                margin-bottom: 30px;
+                margin-bottom: 15px;
             }
         `;
     }
