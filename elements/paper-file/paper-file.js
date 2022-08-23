@@ -69,6 +69,9 @@ class PaperFile extends PaperInputContainer {
             .input-file {
                 display: none;
             }
+            .selectable{
+                user-select: all;
+            }
         `;
     }
 
@@ -83,7 +86,7 @@ class PaperFile extends PaperInputContainer {
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
                     ${this._value.map((item, index) => html`
                             <div class="selected-option">
-                                <span>${item.label}</span>
+                                <span class="selectable">${item.label}</span>
                                 <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                             </div>
                     `)}

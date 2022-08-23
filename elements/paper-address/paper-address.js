@@ -8,21 +8,7 @@ import '../iron-overlay/iron-overlay.js';
 import '../iron-ajax/iron-ajax.js';
 
 import "arrow-drop-down|../iron-icons/icons.svgicon";
-function selectText(node) {
-    if (document.body.createTextRange) {
-        const range = document.body.createTextRange();
-        range.moveToElementText(node);
-        range.select();
-    } else if (window.getSelection) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(node);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    } else {
-        console.warn("Could not select text in node: Unsupported browser.");
-    }
-}
+
 class PaperAddress extends PaperInputContainer {
 
     static get properties() {
@@ -158,6 +144,9 @@ class PaperAddress extends PaperInputContainer {
             [hidden] {
                 display: none !important;
             }
+            .selectable{
+                user-select: all;
+            }
         `
     }
 
@@ -199,7 +188,7 @@ class PaperAddress extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
-                    <span @click="${this._allowSelection}">${item.__label}</span>
+                    <span class="selectable">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
@@ -207,9 +196,6 @@ class PaperAddress extends PaperInputContainer {
             return html`<span>${item.__label}</span>`
         }
 
-    }
-    _allowSelection(event){
-        selectText(event.currentTarget);
     }
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
