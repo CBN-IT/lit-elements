@@ -144,9 +144,6 @@ class PaperAddress extends PaperInputContainer {
             [hidden] {
                 display: none !important;
             }
-            .selectable{
-                user-select: all;
-            }
         `
     }
 
@@ -188,7 +185,7 @@ class PaperAddress extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
-                    <span class="selectable">${item.__label}</span>
+                    <span @click="${this._allowSelection}">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
@@ -196,6 +193,10 @@ class PaperAddress extends PaperInputContainer {
             return html`<span>${item.__label}</span>`
         }
 
+    }
+    _allowSelection(event){
+        navigator.clipboard.writeText(event.currentTarget.innerText);
+        CBNUtils.displayMessage(`Textul ${event.currentTarget.innerText} a fost copiat!`);
     }
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);

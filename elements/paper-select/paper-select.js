@@ -144,9 +144,6 @@ class PaperSelect extends PaperInputContainer {
             [hidden] {
                 display: none !important;
             }
-            .selectable{
-                user-select: all;
-            }
         `
     }
 
@@ -169,7 +166,7 @@ class PaperSelect extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
-                    <span class="selectable" @click="${this._allowSelection}">${item.__label}</span>
+                    <span @click="${this._allowSelection}">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
@@ -180,6 +177,7 @@ class PaperSelect extends PaperInputContainer {
     }
     _allowSelection(event){
         navigator.clipboard.writeText(event.currentTarget.innerText);
+        CBNUtils.displayMessage(`Textul ${event.currentTarget.innerText} a fost copiat!`);
     }
     get inputElement() {
         return html`
