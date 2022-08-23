@@ -83,7 +83,7 @@ class PaperFile extends PaperInputContainer {
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
                     ${this._value.map((item, index) => html`
                             <div class="selected-option">
-                                <span @click="${this._allowSelection}">${item.label}</span>
+                                <span @click="${this._allowSelection}" style="cursor: copy">${item.label}</span>
                                 <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                             </div>
                     `)}

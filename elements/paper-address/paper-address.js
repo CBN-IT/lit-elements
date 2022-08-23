@@ -185,7 +185,7 @@ class PaperAddress extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
-                    <span @click="${this._allowSelection}">${item.__label}</span>
+                    <span @click="${this._allowSelection}" style="cursor: copy">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
