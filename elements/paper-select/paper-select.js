@@ -169,7 +169,7 @@ class PaperSelect extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
-                    <span class="selectable">${item.__label}</span>
+                    <span class="selectable" @click="${this._allowSelection}">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
@@ -177,6 +177,9 @@ class PaperSelect extends PaperInputContainer {
             return html`<span>${item.__label}</span>`
         }
 
+    }
+    _allowSelection(event){
+        navigator.clipboard.writeText(event.currentTarget.innerText);
     }
     get inputElement() {
         return html`
