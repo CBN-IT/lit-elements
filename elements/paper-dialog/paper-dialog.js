@@ -102,7 +102,7 @@ class PaperDialog extends LitElement {
                 <div id="body">
                     <slot name="body"></slot>
                 </div>
-               <div id="buttons" class="horizontal layout justified">
+               <div id="buttons" class="horizontal layout justified wrap">
                     <slot name="button"></slot>
                     ${!this.noActions ? html`
                         <paper-button icon="close" style="background: var(--grey-color)" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
