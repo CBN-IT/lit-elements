@@ -4,15 +4,21 @@
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "https://voloaca_octavian@bitbucket.org/cbn-it/lit-elements.git"
+    "url": "git@bitbucket.org:cbn-it/lit-elements.git"
+  },
+  "scripts": {
+    "build-icons": "node elements/iron-icons/build.js"
   },
   "dependencies": {
-    "ace-builds": "1.4.12",
-    "dayjs": "1.10.6",
+    "ace-builds": "1.12.3",
+    "dayjs": "1.11.6",
     "lit-element": "2.5.1",
     "lit-html": "1.4.1",
     "pwa-helpers": "0.9.1",
     "tiny-date-picker": "3.2.8",
     "xlsx": "0.17.1"
+  },
+  "devDependencies": {
+    "fast-xml-parser": "3.17.4"
   }
 }

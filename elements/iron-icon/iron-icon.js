@@ -6,7 +6,7 @@ class IronIcon extends LitElement {
     static get properties() {
         return {
             icon: {
-                type: String
+                type: Object
             },
             svgIcon: {
                 type: Object
@@ -48,18 +48,22 @@ class IronIcon extends LitElement {
         if (this.icon === "" || this.icon == null) {
             return ""
         }
-        if (!window.icons || !window.icons[this.icon]) {
-            console.warn("iron-icon", `The icon ${this.icon} was not found`);
-            return "";
+        if (typeof this.icon === "string") {
+            if (!window.icons || !window.icons[this.icon]) {
+                console.warn("iron-icon", `The icon ${this.icon} was not found`);
+                return "";
+            }
+            return window.icons[this.icon];
+        } else {
+            return this.icon;
         }
-        return window.icons[this.icon];
     }
 
     render() {
-        setTimeout(()=>{
+        setTimeout(() => {
             this.renderRoot.querySelector("svg").style.width = (this.size || 24) + "px";
             this.renderRoot.querySelector("svg").style.height = (this.size || 24) + "px";
-        },16)
+        }, 16)
         return this.svgIcon;
     }
 
@@ -73,7 +77,6 @@ class IronIcon extends LitElement {
         this.style.width = (this.size || 24) + "px";
         this.style.height = (this.size || 24) + "px";
     }
-
 }
 
 customElements.define("iron-icon", IronIcon);
