@@ -14,6 +14,9 @@ class PaperButton extends LitElement {
             },
             iconSize:{
                 type:Number
+            },
+            svgIcon: {
+                type: Object
             }
         };
     }
@@ -121,7 +124,7 @@ class PaperButton extends LitElement {
     render() {
         return html`           
             <div class="container horizontal layout center">
-                <iron-icon icon="${this.icon}" .size="${this.iconSize}"></iron-icon>             
+                <iron-icon icon="${this.icon}" .svgIcon="${this.svgIcon}" .size="${this.iconSize}"></iron-icon>             
                 <div class="text">
                     <slot></slot>
                 </div>              

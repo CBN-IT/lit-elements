@@ -45,7 +45,7 @@ class IronIcon extends LitElement {
     }
 
     _updateIcon() {
-        if (this.icon === "" || this.icon == null) {
+        if (this.icon === "" || this.icon === "undefined" || this.icon == null) {
             return;
         }
         if (typeof this.icon === "string") {
