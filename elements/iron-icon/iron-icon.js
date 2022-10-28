@@ -46,14 +46,15 @@ class IronIcon extends LitElement {
 
     _updateIcon() {
         if (this.icon === "" || this.icon == null) {
-            this.svgIcon = ""
+            return;
         }
         if (typeof this.icon === "string") {
             if (!window.icons || !window.icons[this.icon]) {
                 console.warn("iron-icon", `The icon ${this.icon} was not found`);
-                return "";
+                this.svgIcon = "";
+            }else{
+                this.svgIcon = window.icons[this.icon];
             }
-            this.svgIcon = window.icons[this.icon];
         } else {
             this.svgIcon = this.icon;
         }
