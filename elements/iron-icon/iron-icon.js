@@ -44,24 +44,24 @@ class IronIcon extends LitElement {
         `
     }
 
-    get svgIcon() {
+    _updateIcon() {
         if (this.icon === "" || this.icon == null) {
-            return ""
+            this.svgIcon = ""
         }
         if (typeof this.icon === "string") {
             if (!window.icons || !window.icons[this.icon]) {
                 console.warn("iron-icon", `The icon ${this.icon} was not found`);
                 return "";
             }
-            return window.icons[this.icon];
+            this.svgIcon = window.icons[this.icon];
         } else {
-            return this.icon;
+            this.svgIcon = this.icon;
         }
     }
 
     render() {
         setTimeout(() => {
-            if(this.renderRoot.querySelector("svg")){
+            if (this.renderRoot.querySelector("svg") !== null) {
                 this.renderRoot.querySelector("svg").style.width = (this.size || 24) + "px";
                 this.renderRoot.querySelector("svg").style.height = (this.size || 24) + "px";
             }
@@ -72,6 +72,9 @@ class IronIcon extends LitElement {
     updated(changedProperties) {
         if (changedProperties.has('size')) {
             this._updateSize();
+        }
+        if (changedProperties.has('icon')) {
+            this._updateIcon();
         }
     }
 
