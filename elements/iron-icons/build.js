@@ -17,8 +17,12 @@ function getIcons(folderPaths) {
             }
         });
     });
-    console.log(Object.keys(svgs));
+    buildContent(svgs);
 
+    return svgs;
+}
+
+function buildContent(svgs){
     let used = {};
     let fileContent = ` "use strict";\nimport {svg} from 'lit-element';\n`
     for(let [key,value] of Object.entries(svgs)){
@@ -39,8 +43,8 @@ function getIcons(folderPaths) {
         fs.mkdirSync(dir);
     }
     fs.writeFileSync(dir+"icons.js", fileContent)
-    return svgs;
 }
+
 function parseFile(prefix, svgs, content) {
     let json = xmlParser.parse(content, {arrayMode: false, ignoreAttributes: false});
     if (json.g) {

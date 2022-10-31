@@ -342,7 +342,7 @@ export class IronApp extends LitElement {
                                     <div class="group-section-title full-width">${groupSection.groupTitle}</div>
                                     ${groupSection.sections.map(menuSection => html`
                                     <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
-                                        <iron-icon icon="${menuSection.icon}"></iron-icon>
+                                        <iron-icon icon="${menuSection.icon}" .svgIcon="${menuSection.svgIcon}"></iron-icon>
                                         ${menuSection.label}
                                     </a>
                                     `)}                                        
