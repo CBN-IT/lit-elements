@@ -59,7 +59,7 @@ export class IronOverlay extends LitElement {
 
 
     render() {
-        return html`                     
+        return html`
             <div class="container ${this._openedOverlay ? 'opened-overlay' : ''}">
                 <slot></slot>
             </div>
@@ -95,22 +95,61 @@ export class IronOverlay extends LitElement {
             let y = hostRect[yDirection] + (this.from.indexOf(yDirection) > -1 ? this.padding : hostRect.height - this.padding);
             let x = hostRect[xDirection] + (this.from.indexOf(xDirection) > -1 ? this.padding : hostRect.width - this.padding);
 
-            let style = `${yDirection}: calc(${y}px);${xDirection}: calc(${x}px);`;
+            let style = `${yDirection}: ${y}px;${xDirection}: ${x}px;`;
 
             if (this.fullWidth) {
-                style = `${style}min-width:${hostRect.width - (2 * this.padding)}px`
+                style = `${style}min-width:${hostRect.width - (2 * this.padding)}px;`
             }
             this.container.style.cssText = style;
             let optionsContainerRect = this._getBoundingClientRect(this.container);
             let scrollHeight = this.shadowRoot.querySelector("slot").assignedNodes()[1].getBoundingClientRect().height;
-            if (optionsContainerRect[yDirection] + scrollHeight > window.innerHeight) {
-                this.container.style.height = `${window.innerHeight - optionsContainerRect[yDirection]}px`;
-                this.container.style.overflow = 'auto';
+            let height = Math.floor(window.innerHeight - optionsContainerRect[yDirection]);
+            if (height < scrollHeight) {
+                let height = Math.floor(window.innerHeight - optionsContainerRect[yDirection]);
+                let override = this._resizeContainerOtherDirection(hostRect, height);
+                if(!override){
+                    this.container.style.cssText =`${style}height:${height}px;overflow:auto`;
+                }
             } else {
                 this.container.style.height = `${scrollHeight}px`;
                 this.container.style.overflow = 'hidden';
             }
         }
+    }
+
+    _resizeContainerOtherDirection(hostRect, otherDirectionHeight) {
+        if(this.direction !== "bottom-right" || this.from !== "bottom-left"){
+            return false;
+        }
+        let direction = this.direction === "bottom-right" ? "top-right" : this.direction;
+        let from = this.from === "bottom-left" ? "top-left" : this.from;
+
+        let yDirection = direction.split('-')[0] === 'top' ? 'bottom' : 'top';
+        let xDirection = direction.split('-')[1] === 'left' ? 'right' : 'left';
+
+        let y = hostRect[yDirection] + (from.indexOf(yDirection) > -1 ? this.padding : hostRect.height - this.padding);
+        let x = hostRect[xDirection] + (from.indexOf(xDirection) > -1 ? this.padding : hostRect.width - this.padding);
+
+        let style = `${yDirection}: ${y}px;${xDirection}: ${x}px;`;
+
+        if (this.fullWidth) {
+            style = `${style}min-width:${hostRect.width - (2 * this.padding)}px;`
+        }
+        this.container.style.cssText = style;
+        let optionsContainerRect = this._getBoundingClientRect(this.container);
+        let scrollHeight = this.shadowRoot.querySelector("slot").assignedNodes()[1].getBoundingClientRect().height;
+        let height = Math.floor(window.innerHeight - optionsContainerRect[yDirection]);
+        if (height > otherDirectionHeight) {
+            if (height < scrollHeight) {
+                this.container.style.height = `${height}px`;
+                this.container.style.overflow = 'auto';
+            }else {
+                this.container.style.height = `${scrollHeight}px`;
+                this.container.style.overflow = 'hidden';
+            }
+            return true;
+        }
+        return false;
     }
 
     _onClick(event) {
