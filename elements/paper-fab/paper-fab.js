@@ -10,6 +10,12 @@ class PaperFab extends LitElement {
         return {
             icon: {
                 type: String
+            },
+            iconSize:{
+                type:Number
+            },
+            svgIcon: {
+                type: Object
             }
         };
     }
@@ -78,7 +84,7 @@ class PaperFab extends LitElement {
             }
 
             :host([no-margin]) {
-                margin: 0px;
+                margin: 0;
             }
         `
     }
@@ -86,7 +92,7 @@ class PaperFab extends LitElement {
     render() {
         return html`           
             <div class="container horizontal layout center">
-                <iron-icon icon="${this.icon}"></iron-icon>                               
+                <iron-icon icon="${this.icon}" .svgIcon="${this.svgIcon}" .size="${this.iconSize}"></iron-icon>                               
             </div>
         `;
     }
