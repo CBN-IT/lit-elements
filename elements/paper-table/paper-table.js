@@ -9,6 +9,7 @@ import "expand-more|../iron-icons/icons.svgicon";
 import "expand-less|../iron-icons/icons.svgicon";
 import "unfold-more|../iron-icons/icons.svgicon";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
+import {XlsUtils} from "../cbn-utils/XlsUtils";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
@@ -837,7 +838,7 @@ class PaperTable extends LitElement {
             }))
         ];
 
-        await CBNUtils.saveAsXls(data);
+        await XlsUtils.saveAsXls(data);
     }
 
 }
