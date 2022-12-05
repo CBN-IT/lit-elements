@@ -302,6 +302,10 @@ class PaperSelect extends PaperInputContainer {
             selectedOptions.forEach(selectedOption => {
                 this._selectOptionByIndex(parseInt(selectedOption.value));
             });
+            if (selectedOptions.length === 0) {
+                //when you deselect all it doesn't trigger change.
+                this.validate(this._value, true);
+            }
         } else {
             if (event.currentTarget.selectedIndex === 0) {
                 this._value = [];
