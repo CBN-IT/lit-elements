@@ -131,7 +131,7 @@ export class IronForm extends LitElement {
 
     getElement(elementConfig) {
         let value = this.model[elementConfig.name];
-        if (value === undefined && elementConfig.name.match(/[^.]\.[0-9]+/)) {
+        if (value === undefined && elementConfig.name?.match(/[^.]\.[0-9]+/)) {
             let [name, idx] = elementConfig.name.split(".");
             value = this.model[name][idx];
         }
@@ -298,8 +298,8 @@ export class IronForm extends LitElement {
 
 
     _onValueChanged(event) {
-        let name=event.detail.name;
-        let value =event.detail.value;
+        let name = event.detail.name;
+        let value = event.detail.value;
         if (name.match(/[^.]\.[0-9]+/)) {
             let newValue;
             let [n, idx] = name.split(".");
