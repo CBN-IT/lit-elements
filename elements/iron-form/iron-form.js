@@ -130,6 +130,12 @@ export class IronForm extends LitElement {
     }
 
     getElement(elementConfig) {
+        let value = this.model[elementConfig.name];
+        if (value === undefined && elementConfig.name.match(/[^.]\.[0-9]+/)) {
+            let [name, idx] = elementConfig.name.split(".");
+            value = this.model[name][idx];
+        }
+
         switch (elementConfig.type) {
             case 'date': {
                 return html`
@@ -145,7 +151,7 @@ export class IronForm extends LitElement {
                         .format="${elementConfig.format}"
                         .min="${elementConfig.min}"
                         .max="${elementConfig.max}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                     ></paper-date-picker>`;
             }
             case 'time': {
@@ -159,7 +165,7 @@ export class IronForm extends LitElement {
                         .required="${elementConfig.required}"
                         .disabled="${elementConfig.disabled}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                     ></paper-date-time-picker>`;
             }
             case 'file': {
@@ -173,7 +179,7 @@ export class IronForm extends LitElement {
                         .required="${elementConfig.required}"
                         .disabled="${elementConfig.disabled}"
                         .multiple="${elementConfig.multiple}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                     ></paper-file>`
             }
             case 'checkbox': {
@@ -187,7 +193,7 @@ export class IronForm extends LitElement {
                         .required="${elementConfig.required}"
                         .disabled="${elementConfig.disabled}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                     ></paper-checkbox>`
             }
             case 'select': {
@@ -207,7 +213,7 @@ export class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}"
                         .itemLabelProperty="${elementConfig.itemLabelProperty}"
                         .options="${elementConfig.options}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                         .preventSelection="${elementConfig.preventSelection}"
                         .isDropdownMenu="${elementConfig.isDropdownMenu}"
                     ></paper-select>`
@@ -229,7 +235,7 @@ export class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}"
                         .itemLabelProperty="${elementConfig.itemLabelProperty}"
                         .options="${elementConfig.options}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                     ></paper-address>`
             }
             case 'textarea': {
@@ -245,7 +251,7 @@ export class IronForm extends LitElement {
                         .minLength="${elementConfig.minLength}"
                         .maxLength="${elementConfig.maxLength}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                         .rows="${elementConfig.rows}"
                         .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-textarea>`;
@@ -283,7 +289,7 @@ export class IronForm extends LitElement {
                         .isCIF="${elementConfig.isCIF}"
                         .isEmail="${elementConfig.isEmail}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(this.model[elementConfig.name])}"
+                        .value="${forceWrite(value)}"
                         .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-input>`
             }
@@ -294,6 +300,18 @@ export class IronForm extends LitElement {
     _onValueChanged(event) {
         let name=event.detail.name;
         let value =event.detail.value;
+        if (name.match(/[^.]\.[0-9]+/)) {
+            let newValue;
+            let [n, idx] = name.split(".");
+            if (!(this.model[n] instanceof Array)) {
+                newValue = []
+            } else {
+                newValue = this.model[n];
+            }
+            value = [...newValue]
+            value[idx] = event.detail.value;
+            name = n;
+        }
 
         this.model[name] = value;
         if (event.detail.label !== undefined) {
