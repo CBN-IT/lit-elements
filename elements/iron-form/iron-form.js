@@ -134,7 +134,7 @@ export class IronForm extends LitElement {
         let value = this.model[elementConfig.name];
         if (value === undefined && elementConfig.name?.match(/[^.]\.[0-9]+/)) {
             let [name, idx] = elementConfig.name.split(".");
-            value = this.model[name][idx];
+            value = this.model[name]?.[idx];
         }
 
         switch (elementConfig.type) {
