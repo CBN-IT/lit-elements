@@ -120,22 +120,27 @@ class IronAjax extends LitElement {
 
     _getEncodedObject(object, prefix) {
         return object !== undefined ? Object.entries(object).map(([key, value]) => {
+            let name = prefix ? `${prefix}.${key}` : key;
             if (value instanceof Array) {
                 if (value.length === 0) {
                     return `${encodeURIComponent(key)}=${encodeURIComponent("")}`;
                 }
                 return value.map((subValue, index) => {
                     if (subValue instanceof Object) {
-                        return this._getEncodedObject(subValue, prefix ? `${prefix}.${key}.${index}` : `${key}.${index}`);
+                        return this._getEncodedObject(subValue, name + `.${index}`);
                     } else {
                         return `${encodeURIComponent(key)}=${encodeURIComponent(subValue)}`;
                     }
                 }).join('&');
             } else if (value instanceof Object) {
-                return this._getEncodedObject(value, prefix ? `${prefix}.${key}` : key);
+                if (value.constructor.name === "Decimal") {
+                    return `${encodeURIComponent(name)}=${encodeURIComponent(value.toNumber())}`;
+                } else {
+                    return this._getEncodedObject(value, name);
+                }
             } else if (value !== undefined) {
-                return `${encodeURIComponent(prefix ? `${prefix}.${key}` : key)}=${encodeURIComponent(value)}`;
-            }else{
+                return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+            } else {
                 return "";
             }
         }).join('&') : '';
@@ -165,7 +170,9 @@ class IronAjax extends LitElement {
                     }
                 }).join('&');
             } else if (value instanceof Object) {
-                if (value['file']) {
+                if (value.constructor.name === "Decimal") {
+                    formData.append(prefix ? `${prefix}.${key}` : key, value.toNumber());
+                } else if (value['file']) {
                     formData.append(prefix ? `${prefix}.${key}` : key, value['file']);
                 } else {
                     this._apendToFormData(value, prefix ? `${prefix}.${key}` : key, formData);
@@ -180,7 +187,7 @@ class IronAjax extends LitElement {
         return body === undefined ? false : Object.values(body).reduce((currentValue, item) => {
             if (item instanceof File) {
                 return true;
-            } else if (item instanceof Object) {
+            } else if (item instanceof Object && item.constructor.name !== "Decimal") {
                 return currentValue || this._haveFile(item);
             } else {
                 return currentValue;
