@@ -16,6 +16,7 @@ import './../iron-ajax/iron-ajax.js';
 import './../paper-button/paper-button.js';
 import "check-circle|../iron-icons/icons.svgicon";
 import {unsafeHTML} from "lit-html/directives/unsafe-html";
+import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
 /*
 https://github.com/Polymer/lit-html/issues/877
 https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
@@ -61,7 +62,7 @@ export class IronForm extends LitElement {
     }
 
     static get styles() {
-        return [gridClasses, this.styleElement]
+        return [gridClasses, flexLayoutClasses, this.styleElement]
     }
 
     static get styleElement() {
