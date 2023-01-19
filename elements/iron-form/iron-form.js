@@ -265,7 +265,8 @@ export class IronForm extends LitElement {
                     content = "";
                 }
                 return html`
-                    <p
+                    <p 
+                        name="${elementConfig.name}"
                         style="${elementConfig.style || ""}"
                         class="${elementConfig.class || ""}"
                     >${content}</p>`
