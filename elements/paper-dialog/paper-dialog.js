@@ -66,7 +66,7 @@ class PaperDialog extends LitElement {
             }
 
             #buttons {
-                padding: 10px 0;
+                padding: 0;
             }
 
             .close-button {
@@ -99,14 +99,14 @@ class PaperDialog extends LitElement {
                     </h3>
                     <paper-button small class="close-button" small icon="close" @click="${this._cancelClickHeaderButton}"></paper-button>
                 </div>
-                <div id="body" class="flex">
+                <div id="body" class="flex-auto">
                     <slot name="body"></slot>
                 </div>
                <div id="buttons" class="horizontal layout justified wrap">
                     <slot name="button"></slot>
                     ${!this.noActions ? html`
-                        <paper-button icon="close" style="background: var(--grey-color)" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
-                        <paper-button icon="check" style="background: var(--green-color)" @click="${this._onSaveClick}">Save</paper-button>
+                        <paper-button icon="close" class="bgGrey" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
+                        <paper-button icon="check" class="bgGreen" @click="${this._onSaveClick}">Save</paper-button>
                     ` : ""}
                 </div>
             </div>      
