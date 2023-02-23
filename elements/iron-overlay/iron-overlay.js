@@ -43,6 +43,7 @@ export class IronOverlay extends LitElement {
 
                 .container.opened-overlay {
                     display: block;
+                    min-height: var(--iron-overlay-min-height, 50px);
                 }
             `
         ]

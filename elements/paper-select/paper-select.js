@@ -155,7 +155,7 @@ class PaperSelect extends PaperInputContainer {
                     ${this._options.map((item, index) => html`
                         <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
                     `)}
-                </select>   
+                </select>
             `
         } else {
             return '';
@@ -186,7 +186,7 @@ class PaperSelect extends PaperInputContainer {
                     ${this._value.map(this._getOptionTemplate, this)}
                     <input ?hidden="${this.isNative}" class="input input-select flex" autocomplete="off"/>
                 </div>
-               <iron-icon icon="arrow-drop-down"></iron-icon>
+                <iron-icon icon="arrow-drop-down"></iron-icon>
                 ${this._getNativeSelect()}
             </div>
             <iron-overlay .positioningElement="${this}" ?openedOverlay="${(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
@@ -196,7 +196,7 @@ class PaperSelect extends PaperInputContainer {
                     `)}
                 </iron-selector>
             </iron-overlay>
-              
+
         `;
     }
 
@@ -461,6 +461,10 @@ class PaperSelect extends PaperInputContainer {
         }
         this._filteredOptions = _filteredOptions;
         this._selectedOption = undefined;
+        setTimeout(()=>{
+            this.ironOverlay?._resizeContainer();
+        })
+
     }
 
     validate(value, fromUser) {
@@ -468,7 +472,6 @@ class PaperSelect extends PaperInputContainer {
             return false;
         }
         this.isValid = !this.required || (!CBNUtils.isNoE(value) && value.length > 0);
-        // if(this.isValid){
         CBNUtils.fireEvent(this, 'value-changed', {
             name: this.name,
             value: this.value,
@@ -477,7 +480,6 @@ class PaperSelect extends PaperInputContainer {
             isValid: this.isValid,
             fromUser: fromUser
         });
-        // }
         return this.isValid;
     }
 
