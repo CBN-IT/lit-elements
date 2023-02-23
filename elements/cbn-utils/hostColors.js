@@ -3,6 +3,10 @@ import {css} from 'lit-element';
 
 // language=CSS
 export const hostColors = css`
+    :host(.black) {
+        color: var(--black-color, black);
+    }
+    
     :host(.bgGreen) {
         background-color: var(--green-color);
         color: white;
