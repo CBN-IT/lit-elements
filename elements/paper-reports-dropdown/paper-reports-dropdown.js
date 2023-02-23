@@ -10,7 +10,6 @@ import "generic|../iron-icons/cbn.svgicon";
 import "word|../iron-icons/cbn.svgicon";
 import "xml|../iron-icons/cbn.svgicon";
 import {css, html} from "lit-element";
-import {render} from "lit-html";
 
 
 class PaperReportsDropdown extends PaperIconDropdown {
@@ -107,7 +106,6 @@ class PaperReportsDropdown extends PaperIconDropdown {
         });
     }
     _getReport(event){
-        console.log(this);
         let path = event.currentTarget.path;
         CBNUtils.fireEvent(this, 'get-report', {
             keys: this.table.selectedItems,
