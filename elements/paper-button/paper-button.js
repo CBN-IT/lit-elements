@@ -75,6 +75,8 @@ class PaperButton extends LitElement {
 
             .text {
                 padding: 0 5px 0 10px;
+                display: flex;
+                align-items: center;
             }
 
             :host([small]) .text, :host([smallest]) .text {

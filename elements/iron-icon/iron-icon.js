@@ -30,10 +30,11 @@ class IronIcon extends LitElement {
         // language=CSS
         return css`
             :host {
-                display: flex;
+                display: inline-flex;
                 flex-shrink: 0;
                 justify-content: center;
                 align-items: center;
+                vertical-align: middle;
             }
 
             svg {
