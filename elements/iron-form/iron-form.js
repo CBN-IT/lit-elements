@@ -132,9 +132,17 @@ export class IronForm extends LitElement {
 
     getElement(elementConfig) {
         let value = this.model[elementConfig.name];
-        if (value === undefined && elementConfig.name?.match(/[^.]\.[0-9]+/)) {
+        if (value === undefined) {
+            if (elementConfig.name?.match(/^([^.]+)\.([0-9]+)$/)) {
+                //a.0
             let [name, idx] = elementConfig.name.split(".");
             value = this.model[name]?.[idx];
+            } else if (elementConfig.name?.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
+                //a.0.prop
+                let [name, idx, prop] = elementConfig.name.split(".");
+                value = this.model[name]?.[idx]?.[prop];
+            }
+
         }
 
         switch (elementConfig.type) {
@@ -302,7 +310,7 @@ export class IronForm extends LitElement {
     _onValueChanged(event) {
         let name = event.detail.name;
         let value = event.detail.value;
-        if (name.match(/[^.]\.[0-9]+/)) {
+        if (name.match(/^([^.]+)\.([0-9]+)$/)) {
             let newValue;
             let [n, idx] = name.split(".");
             if (!(this.model[n] instanceof Array)) {
@@ -312,6 +320,21 @@ export class IronForm extends LitElement {
             }
             value = [...newValue]
             value[idx] = event.detail.value;
+            name = n;
+        }
+        if (name.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
+            let newValue;
+            let [n, idx, prop] = name.split(".");
+            if (!(this.model[n] instanceof Array)) {
+                newValue = []
+            } else {
+                newValue = this.model[n];
+            }
+            value = [...newValue];
+            if (!value[idx]) {
+                value[idx] = {};
+            }
+            value[idx][prop] = event.detail.value;
             name = n;
         }
 
