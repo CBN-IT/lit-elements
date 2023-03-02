@@ -267,10 +267,12 @@ export class IronForm extends LitElement {
             }
             case 'paragraph': {
                 let content = elementConfig.text;
-                if (!content && elementConfig.html) {
-                    content = unsafeHTML(elementConfig.html);
-                } else {
-                    content = "";
+                if (!content) {
+                    if (elementConfig.html) {
+                        content = unsafeHTML(elementConfig.html);
+                    } else {
+                        content = "";
+                    }
                 }
                 return html`
                     <p 
