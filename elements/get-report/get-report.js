@@ -86,12 +86,38 @@ class GetReport extends LitElement {
     }
 
     _generateRequest() {
-        CBNUtils.generateReport({
-            report: this.report,
-            keys: this.keys,
-            params: this.model
-        });
+        this._generateReport(this.report, this.keys, this.model);
         this.dialog.close();
+    }
+
+    _generateReport(report, keys, params) {
+        let hashReport = report._hash ? report._hash : `${window.data._appId}/${report._path}`;
+        keys = keys === undefined ? [] : !(keys instanceof Array) ? [keys] : keys;
+        params = params !== undefined ? params : {};
+
+        //maybe it fixes the popup blocked issue: https://stackoverflow.com/questions/3951768/window-open-and-pass-parameters-by-post-method
+        let iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        let url = "https://raport.cbn-it.ro/";
+        let html = `
+            <!DOCTYPE html>
+            <html>
+                <head>
+                </head>
+                <body>
+                    <form id="formRaport" action="${url}" target="_blank" method="POST">
+                        <input type="hidden" name="_companyId" value="${escapeStr(window.data._selectedCompany)}"/>
+                        <input type="hidden" name="hashReport" value="${escapeStr(hashReport)}"/>
+                        <input type="hidden" name="download" value="inline"/>
+                        ${keys.map(key => `<input type="hidden" name="keys" value="${escapeStr(key)}"/>`).join("")}
+                        ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="ADMA.${key}" value="${escapeStr(value)}"/>`).join("")}
+                    </form>
+                </body>
+                <script>document.getElementById("formRaport").submit();</script>
+            </html>
+        `;
+        iframe.contentDocument.write(html);
     }
 
 }

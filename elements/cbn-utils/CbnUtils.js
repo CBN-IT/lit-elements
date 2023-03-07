@@ -343,6 +343,9 @@ function escapeStr(val){
     if(val===undefined || val===null){
         return "";
     }
+    if(typeof val !=="string"){
+        return val;
+    }
     return val.replace(/"/g, '\\"');
 }
 
@@ -479,12 +482,12 @@ export const CBNUtils = {
         },
         generateReport({
                            report,
-                       hashReport,
-                       keys = [],
-                       params = {},
-                       url = "https://raport.cbn-it.ro/",
-                       download = "inline"
-                   }) {
+                           hashReport,
+                           keys = [],
+                           params = {},
+                           url = "https://raport.cbn-it.ro/",
+                           download = "inline"
+                       }) {
             hashReport = hashReport || (report._hash ? report._hash : `${window.data._appId}/${report._path}`);
 
             keys = !(keys instanceof Array) ? [keys] : keys;
@@ -502,8 +505,8 @@ export const CBNUtils = {
                             <input type="hidden" name="_companyId" value="Clienti"/>
                             <input type="hidden" name="hashReport" value="${escapeStr(hashReport)}"/>
                             <input type="hidden" name="download" value="${download}"/>
-                            ${keys.map(key => `<input type="hidden" name="keys" value="${escapeStr(key)}"/>`).join("")}
-                            ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="ADMA.${key}" value="${escapeStr(value)}"/>`).join("")}
+                            ${keys.map(key => `<input type="hidden" name="keys" value='${key}'/>`).join("")}
+                            ${Object.entries(params).map(([key, value]) => `<input type='hidden' name='${key}' value='${value}'/>`).join("")}
                         </form>
                     </body>
                     <script>document.getElementById("formRaport").submit();</script>
