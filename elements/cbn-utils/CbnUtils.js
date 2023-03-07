@@ -485,7 +485,7 @@ export const CBNUtils = {
                        url = "https://raport.cbn-it.ro/",
                        download = "inline"
                    }) {
-            hashReport = hashReport || report._hash ? report._hash : `${window.data._appId}/${report._path}`;
+            hashReport = hashReport || (report._hash ? report._hash : `${window.data._appId}/${report._path}`);
 
             keys = !(keys instanceof Array) ? [keys] : keys;
             //maybe it fixes the popup blocked issue: https://stackoverflow.com/questions/3951768/window-open-and-pass-parameters-by-post-method
