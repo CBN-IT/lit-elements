@@ -339,6 +339,12 @@ const defaultDiacriticsRemovalMap = [
         'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g
     }
 ];
+function escapeStr(val){
+    if(val===undefined || val===null){
+        return "";
+    }
+    return val.replace(/"/g, '\\"');
+}
 
 export const CBNUtils = {
         fireEvent(element, eventType, detail) {
@@ -463,13 +469,47 @@ export const CBNUtils = {
             }
         },
         removeDiacritics: (str) => {
-            if (str===null || str===undefined) {
+            if (str === null || str === undefined) {
                 return str;
             }
             for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
                 str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
             }
             return str;
+        },
+        generateReport({
+                           report,
+                       hashReport,
+                       keys = [],
+                       params = {},
+                       url = "https://raport.cbn-it.ro/",
+                       download = "inline"
+                   }) {
+            hashReport = hashReport || report._hash ? report._hash : `${window.data._appId}/${report._path}`;
+
+            keys = !(keys instanceof Array) ? [keys] : keys;
+            //maybe it fixes the popup blocked issue: https://stackoverflow.com/questions/3951768/window-open-and-pass-parameters-by-post-method
+            let iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            document.body.appendChild(iframe);
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                    </head>
+                    <body>
+                        <form id="formRaport" action="${url}" method="POST">
+                            <input type="hidden" name="_companyId" value="Clienti"/>
+                            <input type="hidden" name="hashReport" value="${escapeStr(hashReport)}"/>
+                            <input type="hidden" name="download" value="${download}"/>
+                            ${keys.map(key => `<input type="hidden" name="keys" value="${escapeStr(key)}"/>`).join("")}
+                            ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="ADMA.${key}" value="${escapeStr(value)}"/>`).join("")}
+                        </form>
+                    </body>
+                    <script>document.getElementById("formRaport").submit();</script>
+                </html>
+            `;
+            iframe.contentDocument.write(html);
         }
     }
 ;
