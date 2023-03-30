@@ -10,8 +10,10 @@ function radToDeg(val){
     return val*180/PI
 }
 export class WarehouseCanvasDraw extends SiloCanvasDraw {
-    maxDistBelowRoof = 0.3;
-
+    constructor() {
+        super();
+        this.maxDistBelowRoof = 0.3;
+    }
     valueChange(toDraw, name, value) {
         if (this.numberConfigElements.includes(name)) {
             if (name.includes(".")) {
