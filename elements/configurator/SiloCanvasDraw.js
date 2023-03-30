@@ -1,5 +1,5 @@
 import {Context} from '/node_modules/canvas2svg';
-import {hexToRGB} from '../utils/hexToRGB.js';
+import {hexToRGB} from './hexToRGB.js';
 import {optimize} from '/node_modules/svgo/dist/svgo.browser.js';
 import {unsafeSVG} from '/node_modules/lit-html/directives/unsafe-svg.js'
 

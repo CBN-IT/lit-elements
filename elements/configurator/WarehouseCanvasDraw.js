@@ -1,5 +1,5 @@
 import {Context} from '/node_modules/canvas2svg';
-import {hexToRGB} from '../utils/hexToRGB.js';
+import {hexToRGB} from './hexToRGB.js';
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 
 const {PI, tan} = Math;
