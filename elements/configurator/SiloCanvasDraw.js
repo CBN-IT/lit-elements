@@ -184,7 +184,7 @@ export class SiloCanvasDraw {
     }
 
     _setDefaultsCerc(toDraw, recalculate) {
-        let {hCilindru, hCon, hConFloor, hTot, scale, fClear, rSiloz, rSenzorY, hRoofCutout, roofAngleRad, floorAngleRad} = this.calcDimensions(toDraw);
+        let {hCilindru, fClear, rSiloz, rSenzorY, hRoofCutout, roofAngleRad, floorAngleRad} = this.calcDimensions(toDraw);
         let {hGrainCenter, hGrainSide} = toDraw;
         if (!toDraw.cercuri) {
             toDraw.cercuri = [];
@@ -366,7 +366,6 @@ export class SiloCanvasDraw {
     }
 
     drawNrSenzor(ctx, nrSenzori, cerc, scale, fClear, rSenzorY, yStart) {
-
         ctx.beginPath();
         ctx.font = this.fontSize + " " + this.fontFamily;
         for (let i = 0; i < nrSenzori; i++) {
@@ -383,7 +382,7 @@ export class SiloCanvasDraw {
 
     drawMain() {
         let ctx = this.ctxSiloz;
-        const {hCilindru, hCon, hConFloor, hTot, scale, fClear, rSiloz, rSenzorY} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hCon, hConFloor, scale, fClear, rSenzorY} = this.calcDimensions(this.toDraw);
         ctx.strokeStyle = 'black';
         ctx.clearRect(0, 0, this.size, this.size);
         ctx.setLineDash([]);
@@ -423,7 +422,7 @@ export class SiloCanvasDraw {
                 angle: -PI / 2,
                 posY: 50,
                 textAlign: 'center',
-                font: parseInt(this.fontSize) * 1.2 + "px"
+                fontSize: parseInt(this.fontSize) * 1.2 + "px"
             });
             this.drawSonda({
                 ctx: ctx,
@@ -503,7 +502,6 @@ export class SiloCanvasDraw {
                 y: this.size - (fClear + 0.25) * scale,
                 text: (hCilindru + hCon + hConFloor).toFixed(1) + "m",
                 posY: 20,
-                font: "30px"
             });
         }
         ctx.restore();
@@ -641,9 +639,9 @@ export class SiloCanvasDraw {
         ctx.restore();
     }
 
-    drawText({ctx, text, font, x, y, color = 'black', angle = -PI / 2, posY = 40, textAlign = 'left'}) {
+    drawText({ctx, text, fontSize, x, y, color = 'black', angle = -PI / 2, posY = 40, textAlign = 'left'}) {
         ctx.save();
-        ctx.font = (font || this.fontSize) + " " + this.fontFamily;
+        ctx.font = (fontSize || this.fontSize) + " " + this.fontFamily;
         ctx.fillStyle = color;
         ctx.translate(x, y);
         ctx.rotate(angle);
@@ -660,7 +658,7 @@ export class SiloCanvasDraw {
     }
 
     drawAcoperisSiloz(ctx) {
-        const {hCilindru, hCon, hConFloor, hTot, scale, fClear, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
         let cutoutX = (hRoofCutout + cutoutReinforced) / tan(roofAngleRad) * scale;
 
         let extraCornerX = rSiloz / 20;
@@ -716,7 +714,7 @@ export class SiloCanvasDraw {
     }
 
     drawFundSiloz(ctx) {
-        const {hCilindru, hCon, hConFloor, hTot, scale, fClear, rSiloz} = this.calcDimensions(this.toDraw);
+        const {hConFloor, scale, fClear, rSiloz} = this.calcDimensions(this.toDraw);
 
         ctx.beginPath();
         ctx.lineWidth = 4;
@@ -788,7 +786,7 @@ export class SiloCanvasDraw {
     }
 
     drawPeretiSiloz(ctx) {
-        const {hCilindru, hCon, hConFloor, hTot, scale, fClear, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
         let cutoutX = (hRoofCutout + cutoutReinforced) / tan(roofAngleRad) * scale;
 
         ctx.beginPath();
@@ -851,7 +849,7 @@ export class SiloCanvasDraw {
     }
 
     drawGrain(ctx) {
-        let {hCilindru, hCon, hConFloor, hTot, scale, fClear, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        let {hCilindru, hCon, hConFloor, scale, rSiloz, hRoofCutout} = this.calcDimensions(this.toDraw);
         let {hGrainCenter, hGrainSide} = this.toDraw;
 
         let grainAngle = this.toDraw.grainAngle;

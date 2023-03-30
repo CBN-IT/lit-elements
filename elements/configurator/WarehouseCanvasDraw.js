@@ -156,7 +156,6 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
     }
 
     _drawColumn({ctx, x, y, scale, color}){
-        //ctx.beginPath();
         ctx.setLineDash([]);
         ctx.fillStyle = hexToRGB(color, this.opacitySection);
         ctx.strokeStyle = hexToRGB('#333333', 1);
@@ -172,9 +171,6 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
             y:y,
             r: 2
         });
-        //ctx.fill();
-        //ctx.stroke();
-        //ctx.closePath();
     }
 
     drawSection() {
