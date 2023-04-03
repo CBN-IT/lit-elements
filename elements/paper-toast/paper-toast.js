@@ -82,6 +82,7 @@ class PaperToast extends LitElement {
             }
             .message{
                 flex: 1;
+                white-space: pre-wrap;
             }
         `;
     }
