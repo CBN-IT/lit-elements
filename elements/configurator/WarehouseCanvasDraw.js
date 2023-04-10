@@ -88,6 +88,10 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         return this.optimise(serialized);
     }
 
+    drawSiloHeightMarker(ctx) {
+        //we dont want the marker
+    }
+
     drawBlackByType() {
         let ctx = this.ctxCanvas;
 

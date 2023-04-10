@@ -166,7 +166,7 @@ export class SiloCanvasDraw {
         let hConFloor = toDraw.rSiloz * tan(floorAngleRad);
         let hTot = hCilindru + hCon + hConFloor;
         let scale = this.size / Math.max(hTot, 2 * toDraw.rSiloz);
-        let fClear = toDraw.floorClearance / cos((toDraw.floorAngle * PI) / 180);
+        let fClear = toDraw.floorClearance /*/ cos((toDraw.floorAngle * PI) / 180)*/;
         return {
             hCilindru,
             hCon,
@@ -253,10 +253,24 @@ export class SiloCanvasDraw {
                 toDraw.rSiloz *
                 Math.tan((toDraw.floorAngle / 180) * Math.PI)
             ).toFixed(1) * 1;
+            toDraw.hRoofCutout = (toDraw.totalHeight - toDraw.siloHeight).toFixed(1) * 1;
+            let hCon = toDraw.rSiloz * Math.tan((toDraw.roofAngle / 180) * Math.PI);
+            if (toDraw.hRoofCutout > hCon / 3 || toDraw.hRoofCutout < 0) {
+                toDraw.hRoofCutout = (hCon / 3).toFixed(1) * 1;
+                toDraw.siloHeight = (toDraw.totalHeight - toDraw.hRoofCutout).toFixed(1) * 1;
+            }
+            this._setDefaultsCerc(toDraw, true);
         }
 
-        if (['cylinderHeight', 'roofAngle', 'floorAngle', "rSiloz", "dSiloz", "totalHeight", "siloHeight"].includes(name)) {
-            toDraw.hRoofCutout = (toDraw.totalHeight - toDraw.siloHeight).toFixed(1) * 1;
+        if (["totalHeight", "siloHeight"].includes(name)) {
+            if(toDraw.siloHeight> toDraw.totalHeight){
+                toDraw.siloHeight = toDraw.totalHeight;
+                toDraw.hRoofCutout=0;
+            }else{
+                toDraw.hRoofCutout = (toDraw.totalHeight - toDraw.siloHeight).toFixed(1) * 1;
+            }
+
+
             this._setDefaultsCerc(toDraw, true);
         }
 
@@ -652,9 +666,11 @@ export class SiloCanvasDraw {
 
     drawSilo(ctx) {
         this.drawPeretiSiloz(ctx);
+        this.drawSiloHeightMarker(ctx);
         this.drawAcoperisSiloz(ctx);
-        this.drawFundSiloz(ctx);
         this.drawGrain(ctx);
+        this.drawFundSiloz(ctx);
+
     }
 
     drawAcoperisSiloz(ctx) {
@@ -848,6 +864,29 @@ export class SiloCanvasDraw {
         });
     }
 
+    drawSiloHeightMarker(ctx) {
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        //draw silo height marker
+        this.drawText({
+            ctx,
+            text: (this.toDraw.siloHeight || this.toDraw.totalHeight).toFixed(1) + 'm',
+            x: this.size / 2 + rSiloz * scale - 5,
+            y: this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale + 10,
+            angle: -PI / 2,
+            textAlign: 'right'
+        });
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.moveTo(this.size / 2 + rSiloz * scale + 20, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+        ctx.lineTo(this.size / 2 + rSiloz * scale + 40, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+        ctx.lineTo(this.size / 2 + rSiloz * scale + 40, this.size);
+        ctx.lineTo(this.size / 2 + rSiloz * scale + 20, this.size);
+
+        ctx.stroke();
+        ctx.closePath();
+    }
+
     drawGrain(ctx) {
         let {hCilindru, hCon, hConFloor, scale, rSiloz, hRoofCutout} = this.calcDimensions(this.toDraw);
         let {hGrainCenter, hGrainSide} = this.toDraw;
@@ -866,15 +905,17 @@ export class SiloCanvasDraw {
 
 
         ctx.beginPath();
+        //bottom left
         ctx.moveTo(
             this.size / 2 - rSiloz * scale + 2,
             this.size - hConFloor * scale
         );
+        //top left
         ctx.lineTo(
             this.size / 2 - rSiloz * scale + 2,
             this.size - (hCilindru + hConFloor) * scale
         );
-
+        //top center
         ctx.arcTo(
             0.5 * this.size,
             this.size - (hCilindru + hCon + hConFloor) * scale,
@@ -883,17 +924,31 @@ export class SiloCanvasDraw {
             this.size - (hCilindru + hConFloor) * scale,
             4 * scale
         );
-
+        //top right
         ctx.lineTo(
             this.size / 2 + rSiloz * scale - 2,
             this.size - (hCilindru + hConFloor) * scale
         );
-        ctx.lineTo(this.size / 2 + rSiloz * scale - 2, this.size - hConFloor * scale - 2);
-        ctx.lineTo(this.size / 2 - rSiloz * scale + 2, this.size - 2);
+        //bottom right
+        ctx.lineTo(
+            this.size / 2 + rSiloz * scale - 2,
+            this.size - hConFloor * scale - 2
+        );
+        //bottom center
+        ctx.lineTo(
+            this.size / 2,
+            this.size  - 2
+        );
+        //bottom left
+        ctx.lineTo(
+            this.size / 2 - rSiloz * scale + 2,
+            this.size - hConFloor * scale - 2
+        );
 
         ctx.fillStyle = ctx.createPattern(this.image, "repeat");
         ctx.fill();
         ctx.closePath();
+        ctx.fillStyle="";
     }
 
     drawCircle(ctx, c, nr) {
