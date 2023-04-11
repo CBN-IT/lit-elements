@@ -88,7 +88,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         return this.optimise(serialized);
     }
 
-    drawSiloHeightMarker(ctx) {
+    drawSiloMarkers(ctx) {
         //we dont want the marker
     }
 

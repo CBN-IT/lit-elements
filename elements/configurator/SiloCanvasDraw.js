@@ -178,13 +178,12 @@ export class SiloCanvasDraw {
             floorAngleRad,
             hRoofCutout: toDraw.hRoofCutout,
             rSiloz: toDraw.rSiloz,
-            rSenzorY: toDraw.rSenzorY,
             cutoutReinforced: 0.3
         }
     }
 
     _setDefaultsCerc(toDraw, recalculate) {
-        let {hCilindru, fClear, rSiloz, rSenzorY, hRoofCutout, roofAngleRad, floorAngleRad} = this.calcDimensions(toDraw);
+        let {hCilindru, fClear, rSiloz, hRoofCutout, roofAngleRad, floorAngleRad} = this.calcDimensions(toDraw);
         let {hGrainCenter, hGrainSide} = toDraw;
         if (!toDraw.cercuri) {
             toDraw.cercuri = [];
@@ -195,6 +194,8 @@ export class SiloCanvasDraw {
             grainAngle = atan((hGrainCenter - hGrainSide) / rSiloz);
             hCilindru = hGrainSide;
         }
+        /*
+
         toDraw.cercuri.sort((a, b) => {
             if (a.nr === 0) {
                 return 1;
@@ -204,11 +205,13 @@ export class SiloCanvasDraw {
             }
             return a.r - b.r
         });
+        */
         for (let cerc of toDraw.cercuri) {
             cerc.offsetAngle = cerc.offsetAngle || 0;
             cerc.above = cerc.above || 0;
             cerc.offsetX = cerc.offsetX || 0;
             cerc.offsetY = cerc.offsetY || 0;
+            cerc.rSenzorY = cerc.rSenzorY || toDraw.rSenzorY;
             if (cerc.nr === 0) {
                 cerc.nrSenzori = 0;
                 cerc.hCable = 0;
@@ -224,7 +227,7 @@ export class SiloCanvasDraw {
             let cutoutCercH = hRoofCutout - Math.min(cerc.r * tan(roofAngleRad), hRoofCutout);
             cerc.hCable = (hCilindru + hRoof + hFloorClr - fClear + cerc.above - cutoutCercH).toFixed(1) * 1;
             //always leave at least 1m below roof
-            cerc.nrSenzori = Math.ceil((cerc.hCable - cerc.above + Math.min(cerc.above - this.maxDistBelowRoof, -this.maxDistBelowRoof)) / rSenzorY)
+            cerc.nrSenzori = Math.ceil((cerc.hCable - cerc.above + Math.min(cerc.above - this.maxDistBelowRoof, -this.maxDistBelowRoof)) / cerc.rSenzorY)
         }
     }
 
@@ -263,14 +266,17 @@ export class SiloCanvasDraw {
         }
 
         if (["totalHeight", "siloHeight"].includes(name)) {
-            if(toDraw.siloHeight> toDraw.totalHeight){
+            if (toDraw.siloHeight > toDraw.totalHeight) {
                 toDraw.siloHeight = toDraw.totalHeight;
-                toDraw.hRoofCutout=0;
-            }else{
+                toDraw.hRoofCutout = 0;
+            } else {
                 toDraw.hRoofCutout = (toDraw.totalHeight - toDraw.siloHeight).toFixed(1) * 1;
             }
+        }
 
-
+        if(['cylinderHeight', 'roofAngle', 'floorAngle', "rSiloz", "dSiloz","totalHeight", "siloHeight",
+            "floorClearance", "rSenzorY"].includes(name) || name.endsWith(".rSenzorY")) {
+            //recalculate the lenth of the cables
             this._setDefaultsCerc(toDraw, true);
         }
 
@@ -396,7 +402,7 @@ export class SiloCanvasDraw {
 
     drawMain() {
         let ctx = this.ctxSiloz;
-        const {hCilindru, hCon, hConFloor, scale, fClear, rSenzorY} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hCon, hConFloor, scale, fClear} = this.calcDimensions(this.toDraw);
         ctx.strokeStyle = 'black';
         ctx.clearRect(0, 0, this.size, this.size);
         ctx.setLineDash([]);
@@ -423,6 +429,7 @@ export class SiloCanvasDraw {
             if (cerc.nr === 0) {
                 continue;
             }
+            let rSenzorY = cerc.rSenzorY;
             let hFloorStart = cerc.r * tan(degToRad(this.toDraw.floorAngle));
 
             ctx.strokeStyle = this.colors[i % this.colors.length];
@@ -451,7 +458,7 @@ export class SiloCanvasDraw {
                 r: cerc.r,
                 nrCerc: hasCenter ? i - 1 : i,
                 nrCercuri,
-                drawDistanceBetweenSensors: i === 0,
+                drawDistanceBetweenSensors: true//i === 0,
             });
 
             this.drawNrSenzor(
@@ -612,30 +619,52 @@ export class SiloCanvasDraw {
             });
         }
         if (drawDistanceBetweenSensors) {
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'black';
-            ctx.setLineDash([]);
-            ctx.moveTo(x, yStart);
-            ctx.lineTo(x - 25, yStart);
+            if (nrSenzori > 2 && this.toDraw.floorAngle > 5) {
+                //draw between sensors 2 and 3
+                this.drawText({
+                    ctx,
+                    text: rSenzorY + 'm',
+                    x: x - 75,
+                    y: yStart - (rSenzorY / 2 + rSenzorY) * scale,
+                    angle: -PI / 2,
+                    textAlign: 'center'
+                });
+                ctx.beginPath();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'black';
+                ctx.setLineDash([]);
+                ctx.moveTo(x, yStart- rSenzorY * scale);
+                ctx.lineTo(x - 25, yStart- rSenzorY * scale);
+                ctx.lineTo(x - 25, yStart - 2*rSenzorY * scale);
+                ctx.lineTo(x, yStart - 2*rSenzorY * scale);
+                ctx.stroke();
+                ctx.closePath();
+            } else {
+                //draw between sensors 1 and 2
+                this.drawText({
+                    ctx,
+                    text: rSenzorY + 'm',
+                    x: x - 75,
+                    y: yStart - (rSenzorY * scale) / 2,
+                    angle: -PI / 2,
+                    textAlign: 'center'
+                });
+                ctx.beginPath();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'black';
+                ctx.setLineDash([]);
+                ctx.moveTo(x, yStart);
+                ctx.lineTo(x - 25, yStart);
 
-            ctx.lineTo(x - 25, yStart - rSenzorY * scale);
+                ctx.lineTo(x - 25, yStart - rSenzorY * scale);
 
-            ctx.lineTo(x, yStart - rSenzorY * scale);
-            ctx.stroke();
-            ctx.closePath();
-            this.drawText({
-                ctx,
-                text: this.toDraw.rSenzorY + 'm',
-                x: x - 75,
-                y: yStart - (rSenzorY * scale) / 2,
-                angle: -PI / 2,
-                textAlign: 'center'
-            });
+                ctx.lineTo(x, yStart - rSenzorY * scale);
+                ctx.stroke();
+                ctx.closePath();
+            }
 
-            ctx.closePath();
-            this.drawArrowhead(ctx, x - 25, yStart - rSenzorY * scale, 2 * PI);
-            this.drawArrowhead(ctx, x - 25, yStart, PI);
+            //this.drawArrowhead(ctx, x - 25, yStart - rSenzorY * scale, 2 * PI);
+            //this.drawArrowhead(ctx, x - 25, yStart, PI);
         }
     }
 
@@ -666,7 +695,7 @@ export class SiloCanvasDraw {
 
     drawSilo(ctx) {
         this.drawPeretiSiloz(ctx);
-        this.drawSiloHeightMarker(ctx);
+        this.drawSiloMarkers(ctx);
         this.drawAcoperisSiloz(ctx);
         this.drawGrain(ctx);
         this.drawFundSiloz(ctx);
@@ -728,7 +757,6 @@ export class SiloCanvasDraw {
             posY: -20
         });
     }
-
     drawFundSiloz(ctx) {
         const {hConFloor, scale, fClear, rSiloz} = this.calcDimensions(this.toDraw);
 
@@ -768,25 +796,6 @@ export class SiloCanvasDraw {
                 textAlign: 'left'
             });
         }
-        this.drawText({
-            ctx,
-            text: this.toDraw.rSiloz.toFixed(2) + 'm',
-            x: this.size / 2 - (rSiloz / 2) * scale - 40,
-            y: this.size + 25,
-            angle: 0,
-            color: 'black',
-            posY: 0
-        });
-        ctx.beginPath();
-        ctx.lineWidth = 1;
-        ctx.moveTo(this.size / 2 - rSiloz * scale, this.size + 35);
-        ctx.lineTo(this.size / 2 - rSiloz * scale, this.size + 25);
-        ctx.moveTo(this.size / 2 - rSiloz * scale, this.size + 35);
-        ctx.lineTo(this.size / 2, this.size + 35);
-        ctx.lineTo(this.size / 2, this.size + 25);
-
-        ctx.stroke();
-        ctx.closePath();
 
         if (this.toDraw.floorAngle > 0) {
             this.drawText({
@@ -800,7 +809,6 @@ export class SiloCanvasDraw {
             });
         }
     }
-
     drawPeretiSiloz(ctx) {
         const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
         let cutoutX = (hRoofCutout + cutoutReinforced) / tan(roofAngleRad) * scale;
@@ -851,38 +859,6 @@ export class SiloCanvasDraw {
             this.size - (hCilindru + hConFloor) * scale
         );
         ctx.lineTo(this.size / 2 + rSiloz * scale, this.size - hConFloor * scale);
-        ctx.stroke();
-        ctx.closePath();
-
-        this.drawText({
-            ctx,
-            text: hCilindru.toFixed(2) + 'm',
-            x: this.size / 2 - rSiloz * scale - 50,
-            y: this.size - (hCilindru / 2 + hConFloor) * scale,
-            angle: -PI / 2,
-            textAlign: 'center'
-        });
-    }
-
-    drawSiloHeightMarker(ctx) {
-        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
-        //draw silo height marker
-        this.drawText({
-            ctx,
-            text: (this.toDraw.siloHeight || this.toDraw.totalHeight).toFixed(1) + 'm',
-            x: this.size / 2 + rSiloz * scale - 5,
-            y: this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale + 10,
-            angle: -PI / 2,
-            textAlign: 'right'
-        });
-        ctx.beginPath();
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 1;
-        ctx.moveTo(this.size / 2 + rSiloz * scale + 20, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
-        ctx.lineTo(this.size / 2 + rSiloz * scale + 40, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
-        ctx.lineTo(this.size / 2 + rSiloz * scale + 40, this.size);
-        ctx.lineTo(this.size / 2 + rSiloz * scale + 20, this.size);
-
         ctx.stroke();
         ctx.closePath();
     }
@@ -950,6 +926,133 @@ export class SiloCanvasDraw {
         ctx.closePath();
         ctx.fillStyle="";
     }
+
+    drawSiloMarkers(ctx) {
+        this.drawTotalHeightMarker(ctx);
+        this.drawCylinderHeightMarker(ctx);
+        this.drawRoofHeightMarker(ctx);
+        this.drawFloorHeightMarker(ctx);
+        this.drawSiloRadiusMarker(ctx);
+    }
+    drawTotalHeightMarker(ctx){
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        //draw silo height marker
+        this.drawText({
+            ctx,
+            text: (this.toDraw.siloHeight || this.toDraw.totalHeight).toFixed(1) + 'm',
+            x: this.size / 2 + rSiloz * scale -5,
+            y: this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale + 10,
+            angle: -PI / 2,
+            textAlign: 'right',
+            color:"black"
+        });
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.moveTo(this.size / 2 + rSiloz * scale + 20, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+        ctx.lineTo(this.size / 2 + rSiloz * scale + 40, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+        ctx.lineTo(this.size / 2 + rSiloz * scale + 40, this.size);
+        ctx.lineTo(this.size / 2 + rSiloz * scale + 20, this.size);
+
+        ctx.stroke();
+        ctx.closePath();
+
+    }
+    drawCylinderHeightMarker(ctx){
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        // draw cylinder heigth marker
+        this.drawText({
+            ctx,
+            text: hCilindru.toFixed(2) + 'm',
+            x: this.size / 2 - rSiloz * scale - 50,
+            y: this.size - (hCilindru / 2 + hConFloor) * scale,
+            angle: -PI / 2,
+            textAlign: 'center'
+        });
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.moveTo(this.size / 2 - rSiloz * scale - 20, this.size - (hCilindru + hConFloor ) * scale);
+        ctx.lineTo(this.size / 2 - rSiloz * scale - 40, this.size - (hCilindru + hConFloor) * scale);
+        ctx.lineTo(this.size / 2 - rSiloz * scale - 40, this.size - ( hConFloor) * scale);
+        ctx.lineTo(this.size / 2 - rSiloz * scale - 20, this.size - ( hConFloor) * scale);
+
+        ctx.stroke();
+        ctx.closePath();
+    }
+    drawRoofHeightMarker(ctx){
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        //draw roof heigth marker
+        if (this.toDraw.roofAngle > 0) {
+            this.drawText({
+                ctx,
+                text: (hCon - hRoofCutout).toFixed(1) + 'm',
+                x: this.size / 2 - rSiloz * scale - 50,
+                y: this.size - (hCilindru + hConFloor + (hCon - hRoofCutout)/2) * scale ,
+                angle: -PI / 2,
+                textAlign: 'center'
+            });
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+            ctx.moveTo(this.size / 2 - rSiloz * scale - 20, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+            ctx.lineTo(this.size / 2 - rSiloz * scale - 40, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+            ctx.lineTo(this.size / 2 - rSiloz * scale - 40, this.size - (hCilindru + hConFloor) * scale);
+            ctx.lineTo(this.size / 2 - rSiloz * scale - 20, this.size - (hCilindru + hConFloor) * scale);
+
+            ctx.stroke();
+            ctx.closePath();
+        }
+    }
+    drawFloorHeightMarker(ctx){
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        if (this.toDraw.floorAngle > 0) {
+            this.drawText({
+                ctx,
+                text: (hConFloor).toFixed(1) + 'm',
+                x: this.size / 2 - rSiloz * scale - 50,
+                y: this.size - (hConFloor / 2) * scale ,
+                angle: -PI / 2,
+                textAlign: 'center'
+            });
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+            ctx.moveTo(this.size / 2 - rSiloz * scale - 20, this.size - hConFloor * scale);
+            ctx.lineTo(this.size / 2 - rSiloz * scale - 40, this.size - hConFloor * scale);
+            ctx.lineTo(this.size / 2 - rSiloz * scale - 40, this.size);
+            ctx.lineTo(this.size / 2 - rSiloz * scale - 20, this.size);
+
+            ctx.stroke();
+            ctx.closePath();
+        }
+    }
+    drawSiloRadiusMarker(ctx){
+        const {hCilindru, hCon, hConFloor, scale, rSiloz, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        //draw silo radius
+        this.drawText({
+            ctx,
+            text: this.toDraw.rSiloz.toFixed(2) + 'm',
+            x: this.size / 2 - (rSiloz / 2) * scale - 40,
+            y: this.size + 25,
+            angle: 0,
+            color: 'black',
+            posY: 0
+        });
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.moveTo(this.size / 2 - rSiloz * scale, this.size + 35);
+        ctx.lineTo(this.size / 2 - rSiloz * scale, this.size + 25);
+        ctx.moveTo(this.size / 2 - rSiloz * scale, this.size + 35);
+        ctx.lineTo(this.size / 2, this.size + 35);
+        ctx.lineTo(this.size / 2, this.size + 25);
+
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+
+
 
     drawCircle(ctx, c, nr) {
         ctx.beginPath();
@@ -1115,11 +1218,20 @@ export class SiloCanvasDraw {
     }
 
     drawBlack() {
-        let rSenzorY = this.toDraw.rSenzorY;
         let uncovered = this.calcAreaUncovered();
-        const uncoveredArea = (rSenzorY < 1.5) ?
-            this._scale(rSenzorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
-            this._scale(rSenzorY, 1.5, 5, uncovered, 60 + this._scale(uncovered, 0, 100, 0, 40));
+        let nrSenzori = 0;
+        let uncoveredArea = 0;
+        for(let cerc of this.toDraw.cercuri){
+            nrSenzori+=cerc.nr*cerc.nrSenzori;
+            let rSenzorY = cerc.rSenzorY;
+            uncoveredArea += cerc.nr*cerc.nrSenzori * ((rSenzorY < 1.5) ?
+                this._scale(rSenzorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
+                this._scale(rSenzorY, 1.5, 5, uncovered, 40 + this._scale(uncovered, 0, 100, 0, 40)));
+        }
+        uncoveredArea = uncoveredArea/ nrSenzori;
+        if(isNaN(uncoveredArea)){
+            uncoveredArea = 100;
+        }
         const radius = this.toDraw.rSiloz;
         const hCon = this.toDraw.rSiloz * tan(degToRad(this.toDraw.roofAngle));
         const hConFloor = this.toDraw.rSiloz * tan(degToRad(this.toDraw.floorAngle));
