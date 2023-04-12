@@ -158,18 +158,11 @@ class SiloConfigurator extends LitElement {
                     <div style="">
                         Worst case loss:
                         <span class="red">
-							${vals.uncovered.toFixed(1)}% *
+							${this.toDraw.nrSilos}silos * ${vals.uncovered.toFixed(1)}% *
 							${this._formatNumber(vals.volume)}m<sup>3</sup> * 0.75t/m<sup>3</sup> *
-							150&euro;/t = <b>${this._formatNumber(vals.cost)}</b> &euro;
+							${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos || 1) * vals.cost * 5)}</b> &euro;
 						</span>
                     </div>
-                    <br/>
-                    <div id="floatingButtons">
-                        <paper-button class="bgGrey" icon="close" @click="${this.goToSiloConfigurator}">Cancel</paper-button>
-                        <paper-button class="bgGreen" icon="save" @click="${this.saveSiloConfig}">Save Silo Configuration</paper-button>
-                        <paper-button class="bgGreen" icon="pdf" @click="${()=>this.siloCanvasDraw.generatePdf()}">Genereaza PDF</paper-button>
-                    </div>
-                </div>
             `;
         } catch (e) {
             console.error(e);
@@ -192,33 +185,6 @@ class SiloConfigurator extends LitElement {
         this.toDraw = this.siloCanvasDraw.valueChange(this.toDraw,name,value);
     }
 
-
-    async saveSiloConfig() {
-        let form = this.shadowRoot.querySelector("#form");
-        if(!form.validate()){
-            CBNUtils.displayMessage("Please fix the errors in the form", "error", 15);
-            return;
-        }
-
-        let siloTypes = localStorage.getItem("siloTypes");
-        if (siloTypes == null) {
-            siloTypes = {};
-        } else {
-            siloTypes = JSON.parse(siloTypes);
-        }
-        console.log(this.toDraw);
-
-        siloTypes[this.toDraw.siloName] = this.toDraw;
-        localStorage.setItem("siloTypes", JSON.stringify(siloTypes));
-
-        CBNUtils.displayMessage("Silo config saved", "success", 5);
-        this.setDefaults();
-        this.requestUpdate();
-        CBNUtils.fireEvent(this, 'show-page', {page: "base-configurator"});
-    }
-    goToSiloConfigurator(){
-        CBNUtils.fireEvent(this, 'show-page', {page: "base-configurator"});
-    }
     get value() {
         let {vals, svgSiloz, svgSectiune} = this.siloCanvasDraw.draw(this.toDraw, {serialized:true});
         return {

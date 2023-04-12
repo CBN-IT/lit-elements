@@ -155,9 +155,9 @@ class WarehouseConfigurator extends LitElement {
                     <div style="">
                         Worst case loss:
                         <span class="red">
-							${vals.uncovered.toFixed(1)}% *
+							${this.toDraw.nrSilos}warehouses * ${vals.uncovered.toFixed(1)}% *
 							${this._formatNumber(vals.volume)}m<sup>3</sup> * 0.75t/m<sup>3</sup> *
-							150&euro;/t = <b>${this._formatNumber(vals.cost)}</b> &euro;
+							${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos||1) * vals.cost*5)}</b> &euro;
 						</span>
                     </div>
                     <br/>

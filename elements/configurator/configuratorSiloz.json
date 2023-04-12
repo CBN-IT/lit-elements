@@ -1,0 +1,168 @@
+{
+  "elements": [
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "nrSilos",
+      "label": "Number of silos",
+      "class": "col-xs-6 col-sm-4 col-lg-2",
+      "min": "1",
+      "defaultValue": 1,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "pricePerT",
+      "label": "Price €/t",
+      "class": "col-xs-6 col-sm-4 col-lg-2",
+      "min": "0",
+      "defaultValue": 200,
+      "required": true
+    },
+    {
+      "type": "text",
+      "dbType": "string",
+      "name": "siloName",
+      "label": "Name",
+      "class": "col-xs-6 col-sm-4 col-lg-8",
+      "required": false,
+      "minLength": 3,
+      "defaultValue": "Siloz 1000t"
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "rSiloz",
+      "label": "Silo Radius",
+      "class": "hidden col-xs-6 col-sm-3 col-lg-2",
+      "min": 1,
+      "max": 25,
+      "step": 0.5,
+      "defaultValue": 8,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "dSiloz",
+      "label": "Silo Diameter",
+      "class": "col-xs-12 col-sm-3 col-lg-2",
+      "min": 2,
+      "max": 50,
+      "step": 0.5,
+      "defaultValue": 16,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "cylinderHeight",
+      "label": "Cylinder Height",
+      "class": "col-xs-6 col-sm-3 col-lg-2",
+      "min": 5,
+      "max": 50,
+      "step": 0.5,
+      "defaultValue": 18,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "siloHeight",
+      "label": "Silo Height",
+      "class": "col-xs-6 col-sm-3 col-lg-2",
+      "min": 5,
+      "max": 70,
+      "step": 0.5,
+      "defaultValue": 22.3,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "roofAngle",
+      "label": "Roof Angle",
+      "class": "col-xs-4 col-sm-4 col-lg-2",
+      "min": 0,
+      "max": 75,
+      "step": 1,
+      "defaultValue": 30,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "totalHeight",
+      "label": "Total Height",
+      "class": "hidden col-xs-6 col-sm-3 col-lg-2",
+      "min": 5,
+      "max": 70,
+      "step": 0.5,
+      "defaultValue": 22.6,
+      "required": true,
+      "disabled": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "hRoofCutout",
+      "label": "Roof Cutout",
+      "class": "hidden col-xs-6 col-sm-3 col-lg-2",
+      "min": 0,
+      "max": 7,
+      "step": 0.1,
+      "defaultValue": 0.3,
+      "required": true,
+      "disabled": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "floorAngle",
+      "label": "Floor Angle",
+      "class": "col-xs-4 col-sm-4 col-lg-2",
+      "min": 0,
+      "max": 75,
+      "step": 1,
+      "defaultValue": 0,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "floorClearance",
+      "label": "Floor Clearance",
+      "class": "col-xs-4 col-sm-4 col-lg-2",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "defaultValue": 1,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "rSenzorY",
+      "label": "Vertical Sensor Distance",
+      "class": "hidden col-xs-6 col-sm-6 col-lg-6",
+      "min": 0.5,
+      "max": 5,
+      "defaultValue": 1.5,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "rSenzorX",
+      "label": "Horizontal Sensor Distance",
+      "class": "hidden col-xs-6 col-sm-6 col-lg-6",
+      "min": 0.5,
+      "max": 5,
+      "defaultValue": 3,
+      "step": 0.1,
+      "required": true
+    }
+  ]
+}

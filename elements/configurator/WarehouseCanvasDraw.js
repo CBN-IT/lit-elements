@@ -149,7 +149,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         return {
             volume: volume,
             uncovered: uncoveredArea,
-            cost: ((volume * 0.99 * uncoveredArea) / 100.0) * 150 * 0.75
+            cost: ((volume * 0.99 * uncoveredArea) / 100.0) * (this.toDraw.pricePerT || 200) * 0.75
         };
     }
     drawRect(ctx, x, y, width, length) {

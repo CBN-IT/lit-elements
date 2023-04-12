@@ -963,7 +963,7 @@ export class SiloCanvasDraw {
         // draw cylinder heigth marker
         this.drawText({
             ctx,
-            text: hCilindru.toFixed(2) + 'm',
+            text: hCilindru.toFixed(1) + 'm',
             x: this.size / 2 - rSiloz * scale - 50,
             y: this.size - (hCilindru / 2 + hConFloor) * scale,
             angle: -PI / 2,
@@ -1032,7 +1032,7 @@ export class SiloCanvasDraw {
         //draw silo radius
         this.drawText({
             ctx,
-            text: this.toDraw.rSiloz.toFixed(2) + 'm',
+            text: this.toDraw.rSiloz.toFixed(1) + 'm',
             x: this.size / 2 - (rSiloz / 2) * scale - 40,
             y: this.size + 25,
             angle: 0,
@@ -1242,7 +1242,7 @@ export class SiloCanvasDraw {
         return {
             volume: volume,
             uncovered: uncoveredArea,
-            cost: ((volume * uncoveredArea) / 100.0) * 150 * 0.75
+            cost: ((volume * uncoveredArea) / 100.0) * (this.toDraw.pricePerT || 200) * 0.75
         };
     }
 

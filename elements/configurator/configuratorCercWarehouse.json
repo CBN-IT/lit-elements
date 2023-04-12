@@ -1,0 +1,107 @@
+{
+  "elements": [
+    {
+      "type": "paragraph",
+      "class": "col-xs-12 col-sm-12 col-lg-12",
+      "style": "padding:0;height:0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Column ",
+      "class": "col-xs-12 col-sm-2 col-lg-2",
+      "style": "align-self:center;text-align:center"
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "r",
+      "label": "Radius",
+      "class": "col-xs-6 col-sm-2 col-lg-2",
+      "min": "0",
+      "max": 25,
+      "step": 0.1,
+      "defaultValue": "0",
+      "required": true,
+      "disabled": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "nr",
+      "label": "No. Cables",
+      "class": "col-xs-6 col-sm-2 col-lg-2",
+      "min": "0",
+      "max": 25,
+      "defaultValue": "0",
+      "required": true,
+      "disabled": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "hCable",
+      "label": "H Cable",
+      "class": "col-xs-6 col-sm-2 col-lg-2",
+      "step": 0.1,
+      "required": true,
+      "disabled": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "nrSenzori",
+      "label": "Nr Sensors",
+      "class": "col-xs-6 col-sm-2 col-lg-2",
+      "min": "0",
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "above",
+      "label": "Above Grain",
+      "class": "col-xs-6 col-sm-2 col-lg-2",
+      "min": -7,
+      "max": 2,
+      "step": 0.1,
+      "defaultValue": "0",
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "offsetAngle",
+      "label": "Angle",
+      "class": "hidden col-xs-6 col-sm-1 col-lg-1",
+      "min": "0",
+      "max": 360,
+      "step": 5,
+      "defaultValue": "0",
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "offsetX",
+      "label": "OffsetX",
+      "class": "hidden col-xs-6 col-sm-1 col-lg-1",
+      "min": -25,
+      "max": 25,
+      "step": 0.1,
+      "defaultValue": "0",
+      "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "string",
+      "name": "offsetY",
+      "label": "OffsetY",
+      "class": "hidden col-xs-6 col-sm-1 col-lg-1",
+      "min": -25,
+      "max": 25,
+      "step": 0.1,
+      "defaultValue": "0",
+      "required": true
+    }
+  ]
+}
