@@ -14,7 +14,7 @@ import 'pdf|lit-elements/elements/iron-icons/cbn.svgicon';
 import 'save|lit-elements/elements/iron-icons/icons.svgicon';
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 
-class SiloConfigurator extends LitElement {
+export class SiloConfigurator extends LitElement {
     static get properties() {
         return {
             toDraw: {type: Object}

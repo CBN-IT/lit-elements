@@ -14,7 +14,7 @@ import 'pdf|lit-elements/elements/iron-icons/cbn.svgicon';
 import 'save|lit-elements/elements/iron-icons/icons.svgicon';
 import {WarehouseCanvasDraw} from "./WarehouseCanvasDraw";
 
-class WarehouseConfigurator extends LitElement {
+export class WarehouseConfigurator extends LitElement {
     static get properties() {
         return {
             toDraw:{type: Object}
