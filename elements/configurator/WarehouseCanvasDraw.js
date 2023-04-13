@@ -92,66 +92,6 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         //we dont want the marker
     }
 
-    drawBlackByType() {
-        let ctx = this.ctxCanvas;
-
-        ctx.clearRect(0, 0, this.width, this.height);
-        ctx.strokeStyle = 'white';
-        ctx.fillStyle = 'white';
-        this.drawRect(ctx, this.width / 2, this.height / 2, this.width, this.height);
-
-        let scale = this.size / Math.max(this.toDraw.width, this.toDraw.length);
-        for (let i = 0; i < this.toDraw.rows; i++) {
-            let y = (this.height / (this.toDraw.rows)) * (i + 0.5);
-            for (let j = 0; j < this.toDraw.cercuri.length; j++) {
-                let cerc = this.toDraw.cercuri[j]
-                let x = cerc.r * scale;
-                this._drawColumnBlack({
-                    ctx,
-                    x: this.toDraw.width * scale / 2 + x,
-                    y,
-                    color: "black",
-                    scale
-                });
-                this._drawColumnBlack({
-                    ctx,
-                    x: this.toDraw.width * scale / 2 - x,
-                    y,
-                    color: "black",
-                    scale
-                })
-            }
-        }
-    }
-    _drawColumnBlack({ctx, x, y, scale}){
-        ctx.beginPath();
-        ctx.fillStyle = "black";
-        this.drawSenzor(ctx, {
-            x,
-            y,
-            r: this.toDraw.rSenzorX / 2 * scale,
-        });
-        ctx.fill();
-        ctx.closePath();
-    }
-    drawBlack() {
-        this.drawBlackByType();
-        let rSenzorY = this.toDraw.rSenzorY;
-        let uncovered = this.calcAreaUncovered();
-        const uncoveredArea = (rSenzorY < 1.5) ?
-            this._scale(rSenzorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
-            this._scale(rSenzorY, 1.5, 5, uncovered, 60 + this._scale(uncovered, 0, 100, 0, 40));
-
-        const hCon = this.toDraw.hGrainCenter - this.toDraw.hGrainSide;
-        const cylinderVol = this.toDraw.width * this.toDraw.length * this.toDraw.hGrainSide;
-        const topVol = (this.toDraw.width * this.toDraw.length * hCon) / 2;
-        const volume = cylinderVol + topVol;
-        return {
-            volume: volume,
-            uncovered: uncoveredArea,
-            cost: ((volume * 0.99 * uncoveredArea) / 100.0) * (this.toDraw.pricePerT || 200) * 0.75
-        };
-    }
     drawRect(ctx, x, y, width, length) {
         ctx.beginPath();
         ctx.rect(x - width / 2, y - length / 2, width, length);
@@ -242,9 +182,67 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
                         textAlign: "center",
                     })
                 }
-
             }
         }
+    }
+    drawBlackByType() {
+        let ctx = this.ctxCanvas;
 
+        ctx.clearRect(0, 0, this.width, this.height);
+        ctx.strokeStyle = 'white';
+        ctx.fillStyle = 'white';
+        this.drawRect(ctx, this.width / 2, this.height / 2, this.width, this.height);
+
+        let scale = this.size / Math.max(this.toDraw.width, this.toDraw.length);
+        for (let i = 0; i < this.toDraw.rows; i++) {
+            let y = (this.height / (this.toDraw.rows)) * (i + 0.5);
+            for (let j = 0; j < this.toDraw.cercuri.length; j++) {
+                let cerc = this.toDraw.cercuri[j]
+                let x = cerc.r * scale;
+                this._drawColumnBlack({
+                    ctx,
+                    x: this.toDraw.width * scale / 2 + x,
+                    y,
+                    color: "black",
+                    scale
+                });
+                this._drawColumnBlack({
+                    ctx,
+                    x: this.toDraw.width * scale / 2 - x,
+                    y,
+                    color: "black",
+                    scale
+                })
+            }
+        }
+    }
+    _drawColumnBlack({ctx, x, y, scale}){
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        this.drawSenzor(ctx, {
+            x,
+            y,
+            r: this.toDraw.rSenzorX / 2 * scale,
+        });
+        ctx.fill();
+        ctx.closePath();
+    }
+    drawBlack() {
+        this.drawBlackByType();
+        let rSenzorY = this.toDraw.rSenzorY;
+        let uncovered = this.calcAreaUncovered();
+        const uncoveredArea = (rSenzorY < 1.5) ?
+            this._scale(rSenzorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
+            this._scale(rSenzorY, 1.5, 5, uncovered, 60 + this._scale(uncovered, 0, 100, 0, 40));
+
+        const hCon = this.toDraw.hGrainCenter - this.toDraw.hGrainSide;
+        const cylinderVol = this.toDraw.width * this.toDraw.length * this.toDraw.hGrainSide;
+        const topVol = (this.toDraw.width * this.toDraw.length * hCon) / 2;
+        const volume = cylinderVol + topVol;
+        return {
+            volume: volume,
+            uncovered: uncoveredArea,
+            cost: ((volume * uncoveredArea) / 100.0) * (this.toDraw.pricePerT || 200) * 0.75
+        };
     }
 }

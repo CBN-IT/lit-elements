@@ -503,27 +503,6 @@ export class SiloCanvasDraw {
             ctx.lineTo(this.size / 2, this.size);
             ctx.stroke();
             ctx.closePath();
-            ctx.strokeStyle = hexToRGB('#333333', 1);
-            ctx.lineWidth = 3;
-            this.drawArrowhead(
-                ctx,
-                this.size / 2,
-                this.size - 0.05 * scale,
-                PI
-            );
-            this.drawArrowhead(
-                ctx,
-                this.size / 2,
-                this.size - (hCilindru + hCon + hConFloor - 0.1) * scale,
-                0
-            )
-            this.drawText({
-                ctx,
-                x: this.size / 2,
-                y: this.size - (fClear + 0.25) * scale,
-                text: (hCilindru + hCon + hConFloor).toFixed(1) + "m",
-                posY: 20,
-            });
         }
         ctx.restore();
     }

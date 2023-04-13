@@ -130,38 +130,36 @@ export class WarehouseConfigurator extends LitElement {
         try {
             let {vals,svgSiloz,svgSectiune} = this.warehouseCanvasDraw.draw(this.toDraw);
             return html`
-					<iron-form
-					    id="form"
-						.config="${this.config}"
-						.model="${this.toDraw}"
-						@saved-form="${this._onSavedForm}"
-						.noSubmitButton="${true}"
-						@value-changed="${this.valueChanged}"
-					></iron-form>
-                    <div id="svgContainer">
-                        ${svgSiloz}
-                        ${svgSectiune}
-                    </div>
-                    
-                    <div style="">
-                        Monitored volume:
-                        <span class="green">
-						    ${(100 - vals.uncovered).toFixed(1)}% covered
-						</span>,
-                        <span class="red">
-                            ${vals.uncovered.toFixed(1)}% uncovered
-                        </span>
-                    </div>
-                    <div style="">
-                        Worst case loss:
-                        <span class="red">
-							${this.toDraw.nrSilos}warehouses * ${vals.uncovered.toFixed(1)}% *
-							${this._formatNumber(vals.volume)}m<sup>3</sup> * 0.75t/m<sup>3</sup> *
-							${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos||1) * vals.cost*5)}</b> &euro;
-						</span>
-                    </div>
-                    <br/>
-				</div>
+                <iron-form
+                    id="form"
+                    .config="${this.config}"
+                    .model="${this.toDraw}"
+                    @saved-form="${this._onSavedForm}"
+                    .noSubmitButton="${true}"
+                    @value-changed="${this.valueChanged}"
+                ></iron-form>
+                <div id="svgContainer">
+                    ${svgSiloz}
+                    ${svgSectiune}
+                </div>
+                
+                <div style="">
+                    Monitored volume:
+                    <span class="green">
+                        ${(100 - vals.uncovered).toFixed(1)}% covered
+                    </span>,
+                    <span class="red">
+                        ${vals.uncovered.toFixed(1)}% uncovered
+                    </span>
+                </div>
+                <div style="">
+                    Worst case loss:
+                    <span class="red">
+                        ${this.toDraw.nrSilos}warehouses * ${vals.uncovered.toFixed(1)}% *
+                        ${this._formatNumber(vals.volume)}m<sup>3</sup> * 0.75t/m<sup>3</sup> *
+                        ${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos||1) * vals.cost*5)}</b> &euro;
+                    </span>
+                </div>
 			`;
         } catch (e) {
             console.error(e);
