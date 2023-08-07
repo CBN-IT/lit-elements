@@ -55,7 +55,7 @@ class PaperSelect extends PaperInputContainer {
             }
 
             .select-container {
-                padding: 5px 0;
+                padding: var(--input-container-padding, 5px 0);
                 width: 100%;
             }
 
