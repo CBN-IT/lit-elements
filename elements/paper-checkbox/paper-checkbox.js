@@ -111,6 +111,9 @@ class PaperCheckbox extends PaperInputContainer {
     }
 
     _onClick() {
+        if (this.disabled) {
+            return;
+        }
         this._value = !this._value;
         this.validate(this.value, true);
     }
