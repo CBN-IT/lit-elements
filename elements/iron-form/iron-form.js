@@ -310,6 +310,7 @@ export class IronForm extends LitElement {
 
 
     _onValueChanged(event) {
+        event.detail.form = this;
         let name = event.detail.name;
         let value = event.detail.value;
         if (name.match(/^([^.]+)\.([0-9]+)$/)) {
@@ -383,7 +384,7 @@ export class IronForm extends LitElement {
     focusInput(name) {
         let input = this.getInput(name);
         if (input) {
-            input.focus();
+            input._onFocus();
         }
     }
 
