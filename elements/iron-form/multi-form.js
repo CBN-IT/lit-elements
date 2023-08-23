@@ -89,6 +89,18 @@ export class MultiForm extends LitElement {
         this.requestUpdate();
     }
 
+    get forms(){
+        return this.renderRoot.querySelectorAll("iron-form");
+    }
+
+    get isValid(){
+        return this.validate();
+    }
+
+    validate(){
+        return Array.from(this.forms).every(form => form.isValid);
+    }
+
 }
 
 customElements.define('multi-form', MultiForm);

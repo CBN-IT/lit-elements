@@ -458,10 +458,13 @@ export class IronForm extends LitElement {
             CBNUtils.displayMessage('Invalid form', 'error');
         }
     }
+    get isValid(){
+        return this.validate();
+    }
 
     validate() {
         let formElements = this.shadowRoot.querySelectorAll('.form-element');
-        return !Array.from(formElements).some(formElement => !formElement.classList.contains("hidden") && !formElement['isValid']);
+        return !Array.from(formElements).some(formElement => !formElement.classList.contains("hidden") && !formElement.isValid);
     }
 
 }
