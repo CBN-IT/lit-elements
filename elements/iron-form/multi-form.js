@@ -90,7 +90,7 @@ export class MultiForm extends LitElement {
     }
 
     get forms(){
-        return this.renderRoot.querySelectorAll("iron-form");
+        return Array.from(this.renderRoot.querySelectorAll("iron-form"));
     }
 
     get isValid(){
@@ -98,7 +98,7 @@ export class MultiForm extends LitElement {
     }
 
     validate(){
-        return Array.from(this.forms).every(form => form.isValid);
+        return this.forms.every(form => form.isValid);
     }
 
 }

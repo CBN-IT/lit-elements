@@ -462,9 +462,12 @@ export class IronForm extends LitElement {
         return this.validate();
     }
 
+    get formElements(){
+        return Array.from(this.shadowRoot.querySelectorAll('.form-element'))
+    }
+
     validate() {
-        let formElements = this.shadowRoot.querySelectorAll('.form-element');
-        return !Array.from(formElements).some(formElement => !formElement.classList.contains("hidden") && !formElement.isValid);
+        return this.formElements.every(formElement => formElement.classList.contains("hidden") || formElement.isValid);
     }
 
 }
