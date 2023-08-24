@@ -123,13 +123,13 @@ class IronAjax extends LitElement {
             let name = prefix ? `${prefix}.${key}` : key;
             if (value instanceof Array) {
                 if (value.length === 0) {
-                    return `${encodeURIComponent(key)}=${encodeURIComponent("")}`;
+                    return `${encodeURIComponent(name)}=${encodeURIComponent("")}`;
                 }
                 return value.map((subValue, index) => {
                     if (subValue instanceof Object) {
                         return this._getEncodedObject(subValue, name + `.${index}`);
                     } else {
-                        return `${encodeURIComponent(key)}=${encodeURIComponent(subValue)}`;
+                        return `${encodeURIComponent(name)}=${encodeURIComponent(subValue)}`;
                     }
                 }).join('&');
             } else if (value instanceof Object) {
