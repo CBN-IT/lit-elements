@@ -70,17 +70,19 @@ class PaperSelect extends PaperInputContainer {
                 height: 20px;
                 /*z-index: 1;*/
                 white-space: nowrap;
-                margin: 3px 10px 3px 0;
+                margin: 3px 6px 3px 0;
                 box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
             .selected-option > span {
                 overflow: hidden;
                 text-overflow: ellipsis;
+                cursor:copy;
+                max-width: var(--paper-select-item-max-width, 200px);
             }
 
             .close-icon {
-                margin: 1px 10px;
+                margin: 1px 3px;
             }
 
             .close-icon:hover {
@@ -166,7 +168,7 @@ class PaperSelect extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
-                    <span @click="${this._allowSelection}" style="cursor: copy">${item.__label}</span>
+                    <span @click="${this._allowSelection}">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
