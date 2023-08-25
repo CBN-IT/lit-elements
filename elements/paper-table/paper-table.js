@@ -825,7 +825,7 @@ class PaperTable extends LitElement {
         }
     }
 
-    _formatValue(column, item) {
+    _formatValue(column, dayjs, html, item) {
         let splits = column.name.split(".");
         let toReturn = item;
         for (let i = 0; i < splits.length; i++) {
