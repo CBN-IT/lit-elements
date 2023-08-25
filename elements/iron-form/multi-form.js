@@ -80,12 +80,12 @@ export class MultiForm extends LitElement {
     }
 
     deleteForm(index) {
-        let e = CBNUtils.fireEvent("pre-delete-form", {index});
+        let e = CBNUtils.fireEvent(this,"pre-delete-form", {index});
 
         if (!e.defaultPrevented && confirm("Esti sigur ca vrei sa stergi aceasta inregistrare?")) {
             this.model.splice(index, 1);
             this.requestUpdate();
-            CBNUtils.fireEvent("deleted-form", {index});
+            CBNUtils.fireEvent(this,"deleted-form", {index});
         }
     }
     addForm(){
