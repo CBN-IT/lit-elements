@@ -15,6 +15,28 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 dayjs.extend(customParseFormat);
 
+function makeFunction(text,defaultFct, params){
+    if(!text){
+        return defaultFct?.bind(...params);;
+    }
+    let str = `
+        try { 
+            return ${text} 
+        } catch (e) {
+            console.error("${text}", e);
+        }
+    `
+    try {
+        return new Function(
+            "column", "dayjs", "html",
+            "item", str).bind(...params);
+    } catch (e) {
+        if (defaultFct) {
+            return defaultFct.bind(...params);
+        }
+        console.error(text,e);
+    }
+}
 
 class PaperTable extends LitElement {
     static get properties() {
@@ -284,23 +306,9 @@ class PaperTable extends LitElement {
             columns.forEach(column => {
                 column.sortType = column.sortType || 0;
                 column.icon = this._getIcon(column.sortType);
-                if (column.template) {
-                    column._templateFunction = new Function(
-                        "column", "dayjs", "html",
-                        "item", "return " + column.template).bind(this, column, dayjs, html);
-                }
-                if (column.value) {
-                    column._valueFunction = new Function(
-                        "column", "dayjs", "html",
-                        "item", "return " + column.value).bind(this, column, dayjs, html);
-                } else {
-                    column._valueFunction = this._formatValue.bind(this, column);
-                }
-                if (column.styleFunction) {
-                    column._styleFunction = new Function(
-                        "column", "dayjs", "html",
-                        "item", "return " + column.styleFunction).bind(this, column, dayjs, html);
-                }
+                column._templateFunction = makeFunction(column.template, undefined, [this, column, dayjs, html]);
+                column._valueFunction = makeFunction(column.value, this._formatValue, [this, column, dayjs, html]);
+                column._styleFunction = makeFunction(column.styleFunction, undefined, [this, column, dayjs, html]);
             });
             this._columns = columns;
         }
