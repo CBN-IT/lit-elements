@@ -69,7 +69,7 @@ export class MultiForm extends LitElement {
                         .model="${model}"
                         .noSubmitButton="${true}"
                     ></iron-form>
-                    <paper-button icon="delete" class="red" small no-margin @click="${()=>this.removeForm(index)}"></paper-button>
+                    <paper-button icon="delete" class="red" small no-margin @click="${()=>this.deleteForm(index)}"></paper-button>
                 </div>
             `)}
             <div @click="${this.addForm}" style="width: fit-content;">
@@ -78,10 +78,14 @@ export class MultiForm extends LitElement {
             
         `;
     }
-    removeForm(index){
-        if(confirm("Esti sigur ca vrei sa stergi aceasta inregistrare?")){
-            this.model.splice(index,1);
+
+    deleteForm(index) {
+        let e = CBNUtils.fireEvent("pre-delete-form", {index});
+
+        if (!e.defaultPrevented && confirm("Esti sigur ca vrei sa stergi aceasta inregistrare?")) {
+            this.model.splice(index, 1);
             this.requestUpdate();
+            CBNUtils.fireEvent("deleted-form", {index});
         }
     }
     addForm(){
