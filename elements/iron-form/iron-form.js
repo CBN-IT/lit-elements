@@ -13,7 +13,6 @@ import './../paper-file/paper-file.js';
 import './../paper-date-picker/paper-date-picker.js';
 import "./../paper-button/paper-button.js";
 import './../iron-ajax/iron-ajax.js';
-import './../paper-button/paper-button.js';
 import "check-circle|../iron-icons/icons.svgicon";
 import {unsafeHTML} from "lit-html/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
@@ -280,6 +279,21 @@ export class IronForm extends LitElement {
                         style="${elementConfig.style || ""}"
                         class="${elementConfig.class || ""}"
                     >${content}</p>`
+            }
+            case 'button': {
+                return html`
+                    <paper-button
+                        name="${elementConfig.name}"
+                        style="${elementConfig.style || ""}"
+                        class="${elementConfig.class || ""}"
+                        icon="${elementConfig.icon || ""}"
+                        small="${elementConfig.small || false}}"
+                        smallest="${elementConfig.smallest || false}}"
+                        no-margin="${elementConfig["no-margin"] || false}}"
+                        margin-left-right="${elementConfig["margin-left-right"] || false}}"
+                        .iconSize="${elementConfig["iconSize"] || ""}}"
+                        @click="${(e)=>{CBNUtils.fireEvent(e.currentTarget, elementConfig.event,{})}}"
+                    >${elementConfig.text}</paper-button>`
             }
             default: {
                 return html`
