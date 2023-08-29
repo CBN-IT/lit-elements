@@ -22,6 +22,7 @@ class PaperSelect extends PaperInputContainer {
             openedDropdown: {type: Boolean},
             itemValueProperty: {type: String},
             itemLabelProperty: {type: String},
+            itemImageProperty: {type: String},
             allowDuplicates: {type: Boolean},
             isNative: {type: Boolean},
             isDropdownMenu: {type: Boolean},
@@ -116,9 +117,12 @@ class PaperSelect extends PaperInputContainer {
             }
 
             .option {
-                padding: 10px 10px 10px 18px;
+                padding: 0px 10px 0px 18px;
+                min-height:38px;
                 background-color: white;
                 color: black;
+                display: flex;
+                align-items: center;
             }
 
             .option:hover {
@@ -146,6 +150,16 @@ class PaperSelect extends PaperInputContainer {
             [hidden] {
                 display: none !important;
             }
+            iron-overlay .optionImage{
+                max-width:38px;
+                max-height:38px;
+                vertical-align: middle;
+            }
+            .select-container .optionImage{
+                max-width:24px;
+                max-height:24px;
+                vertical-align: middle;
+            }
         `
     }
 
@@ -168,12 +182,13 @@ class PaperSelect extends PaperInputContainer {
         if (!this.isDropdownMenu) {
             return html`
                 <div class="selected-option">
+                    ${this.getImage(item)}
                     <span @click="${this._allowSelection}">${item.__label}</span>
                     <div class="close-icon" @click="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                 </div>
             `;
         } else {
-            return html`<span>${item.__label}</span>`
+            return html`<span>${this.getImage(item)}${item.__label}</span>`
         }
 
     }
@@ -184,7 +199,7 @@ class PaperSelect extends PaperInputContainer {
     get inputElement() {
         return html`
             <div class="select-container horizontal layout center flex">
-                <div class=" horizontal layout wrap center flex" style="overflow: hidden">
+                <div class="horizontal layout wrap center flex" style="overflow: hidden">
                     ${this._value.map(this._getOptionTemplate, this)}
                     <input ?hidden="${this.isNative}" class="input input-select flex" autocomplete="off"/>
                 </div>
@@ -194,12 +209,26 @@ class PaperSelect extends PaperInputContainer {
             <iron-overlay .positioningElement="${this}" ?openedOverlay="${(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
                 <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
                     ${this._filteredOptions.map((item, index) => html`
-                        <div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>
+                        <div class="option" @click="${(event) => this._selectOption(event, item, index)}">${this.getImage(item,index)}${item.__label}</div>
                     `)}
                 </iron-selector>
             </iron-overlay>
 
         `;
+    }
+
+    getImage(item) {
+        if (this.itemImageProperty && item[this.itemImageProperty]) {
+            let images = item[this.itemImageProperty];
+            if (!(images instanceof Array)) {
+                images = [images];
+            }
+            return images.map(image => {
+                return html`<img src="${typeof image === 'string' ? image : image.url}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'
+                                 class="optionImage"/>`
+            })
+        }
+        return ""
     }
 
     firstUpdated(changedProperties) {

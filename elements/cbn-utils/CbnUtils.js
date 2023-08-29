@@ -349,6 +349,17 @@ function escapeStr(val){
     return val.replace(/"/g, '\\"');
 }
 
+window.showLargeImg = (img) => {
+    let bigImage = document.createElement("img");
+    bigImage.id = "bigImage";
+    bigImage.style = `position: fixed; top:0; bottom:0; left:0; right:0; pointer-events: none; z-index: 10000; margin:auto;width: auto; height: auto;max-width:75%;max-height:75%;`
+    bigImage.src = img.src;
+    document.body.appendChild(bigImage);
+}
+window.showSmallImg = () => {
+    document.body.querySelector("#bigImage").remove();
+}
+
 export const CBNUtils = {
         fireEvent(element, eventType, detail) {
             let e = new CustomEvent(eventType,

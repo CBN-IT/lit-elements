@@ -134,8 +134,8 @@ export class IronForm extends LitElement {
         if (value === undefined) {
             if (elementConfig.name?.match(/^([^.]+)\.([0-9]+)$/)) {
                 //a.0
-            let [name, idx] = elementConfig.name.split(".");
-            value = this.model[name]?.[idx];
+                let [name, idx] = elementConfig.name.split(".");
+                value = this.model[name]?.[idx];
             } else if (elementConfig.name?.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
                 //a.0.prop
                 let [name, idx, prop] = elementConfig.name.split(".");
@@ -220,6 +220,7 @@ export class IronForm extends LitElement {
                         .allowDuplicates="${elementConfig.allowDuplicates}"
                         .itemValueProperty="${elementConfig.itemValueProperty}"
                         .itemLabelProperty="${elementConfig.itemLabelProperty}"
+                        .itemImageProperty="${elementConfig.itemImageProperty}"
                         .options="${elementConfig.options}"
                         .value="${forceWrite(value)}"
                         .preventSelection="${elementConfig.preventSelection}"
@@ -274,7 +275,7 @@ export class IronForm extends LitElement {
                     }
                 }
                 return html`
-                    <p 
+                    <p
                         name="${elementConfig.name}"
                         style="${elementConfig.style || ""}"
                         class="${elementConfig.class || ""}"
