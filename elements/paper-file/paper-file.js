@@ -89,7 +89,7 @@ class PaperFile extends PaperInputContainer {
             let filename = item.label.substr(0,item.label.lastIndexOf('.') );
             return html`
                             <div class="selected-option">
-                                <span class="option-label" @mousedown="${this._allowSelection}" .text="${item.label}">${filename}</span>
+                                <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
                                 <span>.${extension}</span>
                                 <span>(${formatFileSize(item.size)})</span>
                                 <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
@@ -105,7 +105,7 @@ class PaperFile extends PaperInputContainer {
 
     _allowSelection(event) {
         event.stopPropagation();
-        let text = event.currentTarget.text || event.currentTarget.innerText;
+        let text = event.currentTarget.title || event.currentTarget.innerText;
         navigator.clipboard.writeText(text);
         CBNUtils.displayMessage(`Textul ${text} a fost copiat!`);
     }
