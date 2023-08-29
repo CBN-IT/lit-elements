@@ -7,6 +7,7 @@ import '../iron-icon/iron-icon.js';
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 import "file-upload|../iron-icons/icons.svgicon";
+import {formatFileSize} from "../cbn-utils/formatFileSize";
 
 class PaperFile extends PaperInputContainer {
 
@@ -83,7 +84,7 @@ class PaperFile extends PaperInputContainer {
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
                     ${this._value.map((item, index) => html`
                             <div class="selected-option">
-                                <span @click="${this._allowSelection}" style="cursor: copy">${item.label}</span>
+                                <span @mousedown="${this._allowSelection}" style="cursor: copy">${item.label} (${formatFileSize(item.size)})</span>
                                 <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                             </div>
                     `)}
@@ -94,6 +95,7 @@ class PaperFile extends PaperInputContainer {
         `;
     }
     _allowSelection(event){
+        event.stopPropagation();
         navigator.clipboard.writeText(event.currentTarget.innerText);
         CBNUtils.displayMessage(`Textul ${event.currentTarget.innerText} a fost copiat!`);
     }
@@ -180,6 +182,3 @@ class PaperFile extends PaperInputContainer {
 }
 
 customElements.define('paper-file', PaperFile);
-
-
-
