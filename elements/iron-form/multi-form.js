@@ -29,27 +29,33 @@ export class MultiForm extends LitElement {
                 display: flex;
                 flex-direction: column;
             }
-            .form{
+
+            .form {
                 display: flex;
                 flex-direction: row;
                 border-radius: 10px;
             }
-            .form>iron-form{
-                flex:1
+
+            .form > iron-form {
+                flex: 1
             }
-            .form>paper-button{
+
+            .form > paper-button {
                 align-self: center;
             }
+
             .form:nth-of-type(even) {
                 border-left: 7px solid var(--blue-color);
                 border-right: 7px solid var(--blue-color);
             }
+
             .form:nth-of-type(odd) {
                 border-left: 7px solid var(--green-color);
                 border-right: 7px solid var(--green-color);
             }
-            .form:not(:last-of-type){
-                margin-bottom: 15px;
+
+            .form:not(:last-of-type) {
+                margin-bottom: var(--multi-form-form-margin-bottom, 15px);
             }
         `;
     }
