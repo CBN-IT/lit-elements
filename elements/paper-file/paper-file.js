@@ -53,9 +53,11 @@ class PaperFile extends PaperInputContainer {
                 box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
-            .selected-option > span {
+            .selected-option > .option-label {
                 overflow: hidden;
                 text-overflow: ellipsis;
+                cursor:copy;
+                max-width: var(--paper-file-item-max-width, 200px);
             }
 
             .close-icon {
@@ -82,22 +84,30 @@ class PaperFile extends PaperInputContainer {
         return html`
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
-                    ${this._value.map((item, index) => html`
+                    ${this._value.map((item, index) => {
+            let extension = item.label.substr(item.label.lastIndexOf('.') + 1);
+            let filename = item.label.substr(0,item.label.lastIndexOf('.') );
+            return html`
                             <div class="selected-option">
-                                <span @mousedown="${this._allowSelection}" style="cursor: copy">${item.label} (${formatFileSize(item.size)})</span>
+                                <span class="option-label" @mousedown="${this._allowSelection}" .text="${item.label}">${filename}</span>
+                                <span>.${extension}</span>
+                                <span>(${formatFileSize(item.size)})</span>
                                 <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                             </div>
-                    `)}
+                        `
+        })}
                 </div>
                 <iron-icon icon="file-upload"></iron-icon>
                 <input type="file" class="input input-file" ?multiple="${this.multiple}" />
             </div>                
         `;
     }
-    _allowSelection(event){
+
+    _allowSelection(event) {
         event.stopPropagation();
-        navigator.clipboard.writeText(event.currentTarget.innerText);
-        CBNUtils.displayMessage(`Textul ${event.currentTarget.innerText} a fost copiat!`);
+        let text = event.currentTarget.text || event.currentTarget.innerText;
+        navigator.clipboard.writeText(text);
+        CBNUtils.displayMessage(`Textul ${text} a fost copiat!`);
     }
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
