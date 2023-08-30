@@ -78,13 +78,22 @@ export class MultiForm extends LitElement {
                     <paper-button icon="delete" class="red" small no-margin @click="${()=>this.deleteForm(index)}"></paper-button>
                 </div>
             `)}
-            <div @click="${this.addForm}" style="width: fit-content;">
-                <slot></slot>
+            <div>
+                <div @click="${this.addForm}" style="width: fit-content;">
+                    <slot></slot>
+                </div>
+                <slot name="otherButtons"></slot>
             </div>
             
         `;
     }
-
+    shouldUpdate(changedProperties) {
+        if (changedProperties.has('model')) {
+            //to call all the Value Changed events.
+            setTimeout(() => this.forms.forEach(form=>form.requestUpdate()));
+        }
+        return true;
+    }
     deleteForm(index) {
         let model = this.model[index];
         let e = CBNUtils.fireEvent(this, "pre-delete-form", {index, model});
