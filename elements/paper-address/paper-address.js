@@ -484,7 +484,7 @@ class PaperAddress extends PaperInputContainer {
     }
 
     validate(value, fromUser) {
-        if (this.disabled) {
+        if (this.disabled && fromUser) {
             return false;
         }
         this.isValid = !this.required || (!CBNUtils.isNoE(value) && value.length > 0);

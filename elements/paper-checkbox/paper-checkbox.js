@@ -123,6 +123,9 @@ class PaperCheckbox extends PaperInputContainer {
     }
 
     validate(value, fromUser) {
+        if (this.disabled && fromUser) {
+            return false;
+        }
         this.isValid = !this.required || this.value;
         CBNUtils.fireEvent(this, 'value-changed', {
             name: this.name,

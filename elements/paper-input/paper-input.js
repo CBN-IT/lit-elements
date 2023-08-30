@@ -66,6 +66,9 @@ class PaperInput extends PaperInputContainer {
     }
 
     validate(value, fromUser) {
+        if (this.disabled && fromUser) {
+            return false;
+        }
         let isValid;
         if (!this.required && CBNUtils.isNoE(value)) {
             isValid = true;
