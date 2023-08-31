@@ -90,7 +90,8 @@ export class PaperDatePicker extends PaperInputContainer {
 
         if (changedProperties.has('_value')) {
             this.tinyDatePicker.setState({selectedDate: this._value});
-        } else if (changedProperties.has('defaultValue') && CBNUtils.isNoE(this.value)) {
+        }
+        if (changedProperties.has('defaultValue') && CBNUtils.isNoE(this.value)) {
             this.value = this.defaultValue;
         }
         this.nativeInput = this.shadowRoot.querySelector('.native-input')
