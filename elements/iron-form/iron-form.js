@@ -288,12 +288,12 @@ export class IronForm extends LitElement {
                         style="${elementConfig.style || ""}"
                         class="${elementConfig.class || ""}"
                         icon="${elementConfig.icon || ""}"
-                        ?small="${elementConfig.small || false}}"
-                        ?smallest="${elementConfig.smallest || false}}"
-                        ?no-margin="${elementConfig["no-margin"] || false}}"
-                        ?margin-left-right="${elementConfig["margin-left-right"] || false}}"
-                        .iconSize="${elementConfig["iconSize"] || ""}}"
-                        @click="${(e)=>{CBNUtils.fireEvent(e.currentTarget, elementConfig.event,{})}}"
+                        ?small="${elementConfig.small || false}"
+                        ?smallest="${elementConfig.smallest || false}"
+                        ?no-margin="${elementConfig["no-margin"] || false}"
+                        ?margin-left-right="${elementConfig["margin-left-right"] || false}"
+                        .iconSize="${elementConfig["iconSize"] || ""}"
+                        @click="${(e)=>{CBNUtils.fireEvent(e.currentTarget, elementConfig.event,{form:this})}}"
                     >${elementConfig.text}</paper-button>`
             }
             default: {
