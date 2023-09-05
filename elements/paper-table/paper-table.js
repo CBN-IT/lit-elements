@@ -680,7 +680,7 @@ class PaperTable extends LitElement {
             return CBNUtils.removeDiacritics(value.toLowerCase()).includes(filter)
         } else if (value instanceof Array) {
             for (let k = 0; k < value.length; k++) {
-                if (CBNUtils.removeDiacritics(value[k].toLowerCase()).includes(filter)) {
+                if (CBNUtils.removeDiacritics(value[k]?.toLowerCase())?.includes(filter)) {
                     return true;
                 }
             }
