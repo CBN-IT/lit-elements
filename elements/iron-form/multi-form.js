@@ -12,6 +12,9 @@ export class MultiForm extends LitElement {
             model: {
                 type: Object
             },
+            defaultSubModel: {
+                type: Object
+            },
             config: {
                 type: Object
             }
@@ -64,6 +67,8 @@ export class MultiForm extends LitElement {
         super();
         this.config = {elements: []};
         this.model = [];
+        this.defaultSubModel = {};
+        this.configs = [this.config]
     }
 
     render() {
@@ -71,7 +76,7 @@ export class MultiForm extends LitElement {
             ${this.model.map((model,index)=>html`
                 <div class="form">
                     <iron-form
-                        .config="${this.config}"
+                        .config="${this.configs[index]}"
                         .model="${model}"
                         .noSubmitButton="${true}"
                     ></iron-form>
@@ -91,6 +96,12 @@ export class MultiForm extends LitElement {
         if (changedProperties.has('model')) {
             //to call all the Value Changed events.
             setTimeout(() => this.forms.forEach(form=>form.requestUpdate()));
+            for (let i = this.configs.length; i < this.model.length; i++) {
+                this.configs.push(JSON.parse(JSON.stringify(this.config)));
+            }
+        }
+        if (changedProperties.has('config')) {
+            this.configs = this.model.map(v=>JSON.parse(JSON.stringify(this.config)));
         }
         return true;
     }
@@ -100,12 +111,14 @@ export class MultiForm extends LitElement {
 
         if (!e.defaultPrevented && confirm("Esti sigur ca vrei sa stergi aceasta inregistrare?")) {
             this.model.splice(index, 1);
+            this.configs.splice(index, 1);
             this.requestUpdate();
             CBNUtils.fireEvent(this, "deleted-form", {index, model});
         }
     }
     addForm(){
-        this.model.push({});
+        this.model.push(JSON.parse(JSON.stringify(this.defaultSubModel)));
+        this.configs.push(JSON.parse(JSON.stringify(this.config)));
         this.requestUpdate();
     }
 
