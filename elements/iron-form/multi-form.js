@@ -83,7 +83,7 @@ export class MultiForm extends LitElement {
                     <paper-button icon="delete" class="red" small no-margin @click="${()=>this.deleteForm(index)}"></paper-button>
                 </div>
             `)}
-            <div>
+            <div style="display: flex;align-items: center;">
                 <div @click="${this.addForm}" style="width: fit-content;">
                     <slot></slot>
                 </div>
