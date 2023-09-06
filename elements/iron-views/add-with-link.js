@@ -69,7 +69,7 @@ export class AddWithLink extends LitElement {
 
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
-            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+            return this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         if (changedProperties.has('collection')) {
             this.config = window.data._configs[this.collection];
@@ -98,7 +98,9 @@ export class AddWithLink extends LitElement {
     refreshPage(newPage, oldPage) {
         if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)) {
             this.newOrEditDocument(newPage);
+            return true
         }
+        return false;
     }
 
     newOrEditDocument(newPage) {
