@@ -69,7 +69,7 @@ export class AddWithLink extends LitElement {
 
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
-            return this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+            this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         if (changedProperties.has('collection')) {
             this.config = window.data._configs[this.collection];
