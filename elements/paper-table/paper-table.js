@@ -23,7 +23,7 @@ function makeFunction(text,defaultFct, params){
         try { 
             return ${text} 
         } catch (e) {
-            console.error("${text}", e);
+            console.error(e);
         }
     `
     try {
