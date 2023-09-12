@@ -312,6 +312,7 @@ class PaperSelect extends PaperInputContainer {
         }) : [];
         this._putLabels();
         this._filterOptions();
+        this.validate(this._value);
     }
 
     get options() {
