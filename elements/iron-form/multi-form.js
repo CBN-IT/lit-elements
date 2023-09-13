@@ -48,13 +48,13 @@ export class MultiForm extends LitElement {
             }
 
             .form:nth-of-type(even) {
-                border-left: 7px solid var(--blue-color);
-                border-right: 7px solid var(--blue-color);
+                border: solid var(--blue-color);
+                border-width: 1px 7px;
             }
 
             .form:nth-of-type(odd) {
-                border-left: 7px solid var(--green-color);
-                border-right: 7px solid var(--green-color);
+                border: solid var(--green-color);
+                border-width: 1px 7px;
             }
 
             .form:not(:last-of-type) {
