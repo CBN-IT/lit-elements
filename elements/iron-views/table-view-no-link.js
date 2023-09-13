@@ -22,7 +22,6 @@ export class TableViewNoLink extends LitElement {
             columns: {type: Array},
             items: {type: Array},
             reports: {type: Array},
-            addView: {type: String},
             deleteUrl: {type: String},
             disabledRequest: {type: Boolean}
         };
@@ -63,30 +62,23 @@ export class TableViewNoLink extends LitElement {
         `
     }
 
-        constructor() {
-            super();
-            this.items = [];
-            this.getUrl = '/GetDocuments';
-            this.addView = 'add-with-link';
-            this.deleteUrl = "/DeleteItem";
-        }
-
-        set collection(value) {
-            this._collection = value;
-            this.config = window.data._configs[this._collection];
-            this.columns = window.data._columns[this._collection];
-            this.reports = window.data._reports
-                .filter(item => item.collection === this._collection)
-                .sort((a, b) => a.reportName.localeCompare(b.reportName));
-        }
-
-        get collection() {
-            return this._collection;
-        }
+    constructor() {
+        super();
+        this.items = [];
+        this.getUrl = '/GetDocuments';
+        this.deleteUrl = "/DeleteItem";
+    }
 
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        if (changedProperties.has('collection')) {
+            this.config = window.data._configs[this.collection];
+            this.columns = window.data._columns[this.collection];
+            this.reports = window.data._reports
+                .filter(item => item.collection === this.collection)
+                .sort((a, b) => a.reportName.localeCompare(b.reportName));
         }
         return true;
     }

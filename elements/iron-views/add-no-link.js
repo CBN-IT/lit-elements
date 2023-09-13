@@ -15,7 +15,8 @@ export class AddNoLink extends LitElement {
             config: {type: Object},
             model: {type: Object},
             collection: {type: String},
-            formTitle: {type: String}
+            formTitle: {type: String},
+            listView: {type: String},
         };
     }
 
@@ -48,15 +49,6 @@ export class AddNoLink extends LitElement {
         `
     }
 
-    set collection(value) {
-        this._collection = value;
-        this.config = window.data._configs[this._collection];
-    }
-
-    get collection() {
-        return this._collection;
-    }
-
     get url() {
         return '/SaveDocument';
     }
@@ -65,13 +57,10 @@ export class AddNoLink extends LitElement {
         return {};
     }
 
-    get listView() {
-        return 'table-view-no-link';
-    }
-
     constructor() {
         super();
         this.model = this.defaultModel;
+        this.listView = null;
     }
 
     firstUpdated(_changedProperties) {
@@ -81,6 +70,12 @@ export class AddNoLink extends LitElement {
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        if (changedProperties.has('collection')) {
+            this.config = window.data._configs[this.collection];
+            if (!this.listView) {
+                this.listView = this.collection + "-view";
+            }
         }
         return true;
     }

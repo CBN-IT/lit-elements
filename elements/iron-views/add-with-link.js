@@ -56,9 +56,6 @@ export class AddWithLink extends LitElement {
         return {};
     }
 
-    get listView() {
-        return 'table-view-with-link';
-    }
     constructor() {
         super();
         this.config = {elements: []};
@@ -72,6 +69,9 @@ export class AddWithLink extends LitElement {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         if (changedProperties.has('collection')) {
+            if (!this.listView) {
+                this.listView = this.collection + "-view";
+            }
             this.config = window.data._configs[this.collection];
         }
         return true;

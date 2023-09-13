@@ -80,22 +80,17 @@ export class TableView extends LitElement {
         this.deleteUrl = "/DeleteItem";
     }
 
-    set collection(value) {
-        this._collection = value;
-        this.config = window.data._configs[this._collection];
-        this.columns = window.data._columns[this._collection];
-        this.reports = window.data._reports
-            .filter(item => item.collection === this._collection)
-            .sort((a, b) => a.reportName.localeCompare(b.reportName));
-        window.addEventListener(`get-${this._collection}`, this._getItems.bind(this));
-    }
-
-    get collection() {
-        return this._collection;
-    }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
+        }
+        if (changedProperties.has('collection')) {
+            this.config = window.data._configs[this.collection];
+            this.columns = window.data._columns[this.collection];
+            this.reports = window.data._reports
+                .filter(item => item.collection === this.collection)
+                .sort((a, b) => a.reportName.localeCompare(b.reportName));
+            window.addEventListener(`get-${this.collection}`, this._getItems.bind(this));
         }
         return true;
     }

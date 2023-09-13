@@ -11,7 +11,7 @@ class ReportsView extends TableViewWithLink {
         super();
         this.collection = 'report';
         this.addView = 'add-report';
-        this.columns = window.data._columns[this._collection] || [
+        this.columns = window.data._columns[this.collection] || [
             {
                 "name": "reportName",
                 "title": "Name",
