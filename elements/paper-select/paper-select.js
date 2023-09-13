@@ -312,7 +312,10 @@ class PaperSelect extends PaperInputContainer {
         }) : [];
         this._putLabels();
         this._filterOptions();
-        this.validate(this._value);
+        setTimeout(() => {
+            //wait for the element to draw and get all the other updates
+            this.validate(this._value);
+        })
     }
 
     get options() {
