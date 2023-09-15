@@ -351,13 +351,13 @@ function escapeStr(val){
 
 window.showLargeImg = (img) => {
     let bigImage = document.createElement("img");
-    bigImage.id = "bigImage";
+    bigImage.className = "bigImage";
     bigImage.style = `position: fixed; top:0; bottom:0; left:0; right:0; pointer-events: none; z-index: 10000; margin:auto;width: auto; height: auto;max-width:75%;max-height:75%;`
     bigImage.src = img.src;
     document.body.appendChild(bigImage);
 }
 window.showSmallImg = () => {
-    document.body.querySelector("#bigImage").remove();
+    document.body.querySelectorAll(".bigImage").forEach(v=>v.remove())
 }
 
 export const CBNUtils = {
