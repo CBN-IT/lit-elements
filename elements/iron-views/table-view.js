@@ -102,15 +102,23 @@ export class TableView extends LitElement {
         this.request = this.shadowRoot.querySelector('.request');
     }
 
-    render() {
-        return html`            
-            <iron-ajax class="request" .url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
+    get templateDialog(){
+        return html`
             <paper-dialog class="dialog" .noActions="${true}"> 
                 <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>                  
                 <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
-            </paper-dialog>    
+            </paper-dialog>
+        `
+    }
+    get templateAddButton(){
+        return html`<paper-button icon="add" @click="${this._openDialog}" style="background: var(--green-color)">Adauga</paper-button>`
+    }
+    render() {
+        return html`            
+            <iron-ajax class="request" .url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
+            ${this.templateDialog}
             <div class="horizontal layout paper-material top-bar center">
-                <paper-button icon="add" @click="${this._openDialog}" style="background: var(--green-color)">Adauga</paper-button>
+                ${this.templateAddButton}
                 ${this._displayReportsDropdown()}
                 <div class="flex horizontal layout center">
                     ${this._getTopBarTemplate()}
@@ -126,8 +134,6 @@ export class TableView extends LitElement {
                 @delete-item="${this._deleteItem}"
                 @cbn-table-select="${this._onTableSelect}"
             ></paper-table>
-            
-            
         `;
     }
     _onTableSelect(event){
