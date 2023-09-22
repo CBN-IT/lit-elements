@@ -18,10 +18,8 @@ export class TableViewNoAdd extends LitElement {
             columns: {type: Array},
             items: {type: Array},
             reports: {type: Array},
-            formTitle: {type: String},
             getUrl: {type: String},
             deleteUrl: {type: String},
-            getItemsOnFirstRender: {type: Boolean},
             disabledRequest: {type: Boolean}
         };
     }
