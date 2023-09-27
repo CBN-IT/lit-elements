@@ -67,6 +67,9 @@ export class TableViewWithLink extends LitElement {
         this.items = [];
         this.getUrl = '/GetDocuments';
         this.addView = null;
+        this.columns = null;
+        this.reports = null;
+        this.config = null;
         this.deleteUrl = "/DeleteItem";
     }
 
@@ -75,12 +78,11 @@ export class TableViewWithLink extends LitElement {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         if (changedProperties.has('collection')) {
-            this.config = window.data._configs[this.collection];
-            this.columns = window.data._columns[this.collection];
-            this.reports = window.data._reports
+            this.config = this.config || window.data._configs[this.collection];
+            this.columns = this.columns || window.data._columns[this.collection];
+            this.reports = this.reports || window.data._reports
                 .filter(item => item.collection === this.collection)
                 .sort((a, b) => a.reportName.localeCompare(b.reportName));
-
             if (!this.addView) {
                 this.addView = "add-" + this.collection;
             }
