@@ -12,7 +12,6 @@ import {CBNUtils} from "../cbn-utils/CbnUtils";
 import {XlsUtils} from "../cbn-utils/XlsUtils";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import {compare} from "../cbn-utils/compare";
 
 dayjs.extend(customParseFormat);
 
@@ -242,39 +241,39 @@ class PaperTable extends LitElement {
 
     render() {
         return html`
-        <div class="container">
-            <div class="table">   
-                <div class="row-group">
-                    <div class="bottom"></div>
-                </div>    
-                <div class="thead-group">
-                    <div class="thead-row">
-                        <div class="thead-cell thead-cell-nr">
-                            <div>${this._selectedItemsNumber}</div>
-                            <div class="vertical layout center">
-                                <paper-checkbox @value-changed="${this._onAllSelected}"></paper-checkbox>
-                            </div>
-                            <div>${this._filteredItemsNumber}</div>
-                        </div>
-                        ${this._columns.map((column, index) => html`
-                            <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
-                                <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
-                                    <div class="flex">${column.title}</div>
-                                    ${column.sortable ? html`
-                                      <div>
-                                        <iron-icon icon="${column.icon}"></iron-icon>
-                                       </div>
-                                    ` : ''}
-                                </div>
-                                <div class="head-input">
-                                    ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : ""}                                       
-                                </div>
-                          </div>
-                        `)}
+            <div class="container">
+                <div class="table">
+                    <div class="row-group">
+                        <div class="bottom"></div>
                     </div>
-                </div>  
-            </div>   
-        </div>                     
+                    <div class="thead-group">
+                        <div class="thead-row">
+                            <div class="thead-cell thead-cell-nr">
+                                <div>${this._selectedItemsNumber}</div>
+                                <div class="vertical layout center">
+                                    <paper-checkbox @value-changed="${this._onAllSelected}"></paper-checkbox>
+                                </div>
+                                <div>${this._filteredItemsNumber}</div>
+                            </div>
+                            ${this._columns.map((column, index) => html`
+                                <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
+                                    <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
+                                        <div class="flex">${column.title}</div>
+                                        ${column.sortable ? html`
+                                            <div>
+                                                <iron-icon icon="${column.icon}"></iron-icon>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="head-input">
+                                        ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : ""}
+                                    </div>
+                                </div>
+                            `)}
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
     }
 
@@ -620,28 +619,37 @@ class PaperTable extends LitElement {
     _sort(column) {
         let sortType = column.sortType;
         this._items.sort((a, b) => {
-            let prop1Str = this._getStrNumberVal(column._valueFunction(a));
-            let prop2Str = this._getStrNumberVal(column._valueFunction(b));
+            let [prop1Str, prop1Nr] = this._getStrNumberVal(column._valueFunction(a));
+            let [prop2Str, prop2Nr] = this._getStrNumberVal(column._valueFunction(b));
 
-            return compare(prop1Str,prop2Str) * sortType;
+            //first empty strings then strings then numbers
+            if (typeof prop1Nr === "number" && typeof prop2Nr !== "number") {
+                return -sortType;
+            } else if (typeof prop1Nr !== "number" && typeof prop2Nr === "number") {
+                return sortType;
+            } else if (typeof prop1Nr === "number" && typeof prop2Nr === "number" && prop1Nr !== prop2Nr) {
+                return (prop1Nr - prop2Nr) * sortType;
+            } else {
+                return (prop1Str + "").localeCompare(prop2Str + "") * sortType;
+            }
         });
         this._filter();
     }
 
     _getStrNumberVal(prop) {
         if (prop instanceof Date) {
-            return dayjs(prop).format("YYYY-MM-DD")
+            return [dayjs(prop).format("YYYY-MM-DD")]
         }
         if (prop instanceof Array) {
-            return prop.join(", ")
+            return [prop.join(", ")]
         }
         if (typeof prop === "number") {
-            return prop
+            return [prop + "", prop];
         }
-        if (typeof prop === "string") {
-            return prop
+        if (!isNaN(parseFloat(prop))) {
+            return [prop, parseFloat(prop)];
         }
-        return JSON.stringify(prop);
+        return [prop + ""];
     }
 
     _setFilter(event, column, index) {
@@ -661,37 +669,42 @@ class PaperTable extends LitElement {
             return true;
         }
         let filter = column.filterValue.toLowerCase();
-        let value = column._valueFunction(item);
-        if (column.filterValue === "-") {
-            if (!CBNUtils.isNoE(value)) {
-                return false;
-            }
-        } else if (CBNUtils.isNoE(value)) {
-            return false;
-        } else if (typeof value === "string") {
-            return CBNUtils.removeDiacritics(value.toLowerCase()).includes(filter)
-        } else if (value instanceof Array) {
-            for (let k = 0; k < value.length; k++) {
-                if (CBNUtils.removeDiacritics(value[k]?.toLowerCase())?.includes(filter)) {
+        let searchItems = filter.split(/[ \t]+/g);
+        return searchItems.every(searchItem =>{
+            let value = column._valueFunction(item);
+            if (searchItem === "-") {
+                if (CBNUtils.isNoE(value)) {
                     return true;
                 }
             }
-            return false;
-        }
-        if (value instanceof Date) {
-            if (column.template) {
-                let template = column._templateFunction(item);
-                if (typeof template === "string") {
-                    return template.includes(filter);
+            if (CBNUtils.isNoE(value)) {
+                return false;
+            } else if (typeof value === "string") {
+                return CBNUtils.removeDiacritics(value.toLowerCase()).includes(searchItem)
+            } else if (value instanceof Array) {
+                for (let k = 0; k < value.length; k++) {
+                    if (CBNUtils.removeDiacritics(value[k]?.toLowerCase())?.includes(searchItem)) {
+                        return true;
+                    }
                 }
+                return false;
             }
-            dayjs(value).format("YYYY-MM-DD").includes(filter)
+            if (value instanceof Date) {
+                if (column.template) {
+                    let template = column._templateFunction(item);
+                    if (typeof template === "string") {
+                        return template.includes(searchItem);
+                    }
+                }
+                dayjs(value).format("YYYY-MM-DD").includes(searchItem)
 
-        } else if (typeof value === "boolean" || typeof value === "number") {
-            return value.toString().toLowerCase().includes(filter)
-        }
+            } else if (typeof value === "boolean" || typeof value === "number") {
+                return value.toString().toLowerCase().includes(searchItem)
+            }
 
-        return true;
+            return false;
+        })
+
     }
 
     _updateFilteredItems() {

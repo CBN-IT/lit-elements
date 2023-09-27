@@ -484,7 +484,9 @@ class PaperSelect extends PaperInputContainer {
             _filteredOptions = [...this._options];
         } else {
             _filteredOptions = this._options.filter((item) => {
-                return item.__label.toLowerCase().includes(value.toLowerCase())
+                let filter = value.toLowerCase();
+                let searchItems = filter.split(/[ \t]+/g);
+                return searchItems.every(searchItem =>item.__label.toLowerCase().includes(searchItem))
             });
         }
         if (!this.allowDuplicates && this._value && value) {
