@@ -72,7 +72,9 @@ export class AddWithLink extends LitElement {
             if (!this.listView) {
                 this.listView = this.collection + "-view";
             }
-            this.config = window.data._configs[this.collection];
+            if (this.config.elements.length === 0) {
+                this.config = window.data._configs[this.collection];
+            }
         }
         return true;
     }
