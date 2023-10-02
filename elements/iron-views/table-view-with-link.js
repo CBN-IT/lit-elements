@@ -14,7 +14,7 @@ export class TableViewWithLink extends TableView {
         this.addView = null;
 
     }
-    templateDialog(){
+    get templateDialog(){
         return ""
     }
     shouldUpdate(changedProperties) {
