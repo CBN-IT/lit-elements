@@ -75,6 +75,9 @@ export class TableView extends LitElement {
         super();
         this.model = {};
         this.items = [];
+        this.columns = null;
+        this.reports = null;
+        this.config = {elements: []};
         this.saveUrl = "/SaveDocument";
         this.getUrl = "/GetDocuments";
         this.deleteUrl = "/DeleteItem";
@@ -85,9 +88,11 @@ export class TableView extends LitElement {
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         if (changedProperties.has('collection')) {
-            this.config = window.data._configs[this.collection];
-            this.columns = window.data._columns[this.collection];
-            this.reports = window.data._reports
+            if (this.config.elements.length === 0) {
+                this.config = window.data._configs[this.collection];
+            }
+            this.columns = this.columns || window.data._columns[this.collection];
+            this.reports = this.reports || window.data._reports
                 .filter(item => item.collection === this.collection)
                 .sort((a, b) => a.reportName.localeCompare(b.reportName));
             window.addEventListener(`get-${this.collection}`, this._getItems.bind(this));
@@ -111,7 +116,7 @@ export class TableView extends LitElement {
         `
     }
     get templateAddButton(){
-        return html`<paper-button icon="add" @click="${this._openDialog}" style="background: var(--green-color)">Adauga</paper-button>`
+        return html`<paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>`
     }
     render() {
         return html`            
@@ -150,7 +155,9 @@ export class TableView extends LitElement {
     _displayReportsDropdown() {
         return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
     }
-
+    async _addDocument() {
+        this._openDialog();
+    }
     _openDialog() {
         this.model = {};
         this.dialog.open();
