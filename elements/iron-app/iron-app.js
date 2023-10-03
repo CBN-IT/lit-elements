@@ -387,7 +387,12 @@ export class IronApp extends LitElement {
     }
 
     _pushState(pathname) {
-        window.history.pushState({}, '', `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}`);
+        let globalParams = window.data.globalParams || {};
+        let params = Object.entries(globalParams).map(([key,value])=>`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        if(params.length>0){
+            params = "&"+params.join("&");
+        }
+        window.history.pushState({}, '', `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}${params}`);
     }
 
     async _setPages(pathname, model) {
