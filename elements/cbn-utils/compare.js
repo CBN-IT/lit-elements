@@ -1,9 +1,9 @@
 function compare(a, b) {
-    if (!isNaN(Number(a)) && !isNaN(Number(a))) {
+    if (!isNaN(Number(a)) && !isNaN(Number(b))) {
         return Number(a) - Number(b)
     }
-    a = padNumbers(a);
-    b = padNumbers(b);
+    a = padNumbers(a).toLowerCase();
+    b = padNumbers(b).toLowerCase();
 
     if (a > b) {
         return 1

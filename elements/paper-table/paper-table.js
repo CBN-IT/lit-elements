@@ -629,6 +629,9 @@ class PaperTable extends LitElement {
     }
 
     _getStrNumberVal(prop) {
+        if (prop === null || prop === undefined) {
+            return ""
+        }
         if (prop instanceof Date) {
             return dayjs(prop).format("YYYY-MM-DD")
         }
