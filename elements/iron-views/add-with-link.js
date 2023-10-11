@@ -107,9 +107,9 @@ export class AddWithLink extends LitElement {
 
     newOrEditDocument(newPage) {
         if (newPage._id) {
-            this._getDocument(newPage._id);
+            this._getDocument(newPage._id, newPage);
         } else {
-            this._onNewDocument();
+            this._onNewDocument(newPage);
         }
     }
 
