@@ -112,9 +112,15 @@ export class AddWithLink extends LitElement {
             this._onNewDocument(newPage);
         }
     }
-
-    _onNewDocument() {
-        this.model = this.defaultModel;
+    _onNewDocument(newPage) {
+        if (newPage.model) {
+            this.model = {
+                ...this.defaultModel,
+                ...newPage.model
+            };
+        } else {
+            this.model = this.defaultModel;
+        }
     }
 
     _getDocument(_id) {
