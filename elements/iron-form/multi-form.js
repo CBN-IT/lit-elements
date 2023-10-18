@@ -4,6 +4,8 @@ import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import "./iron-form.js";
 import "../paper-button/paper-button.js";
+import {keyboard_arrow_down, keyboard_arrow_up} from "lit-elements/elements/iron-icons/icons";
+
 
 export class MultiForm extends LitElement {
 
@@ -17,6 +19,9 @@ export class MultiForm extends LitElement {
             },
             config: {
                 type: Object
+            },
+            canReorder: {
+                type: Boolean
             }
         }
     }
@@ -68,7 +73,8 @@ export class MultiForm extends LitElement {
         this.config = {elements: []};
         this.model = [];
         this.defaultSubModel = {};
-        this.configs = [this.config]
+        this.configs = [this.config];
+        this.canReorder = false;
     }
 
     render() {
@@ -80,6 +86,12 @@ export class MultiForm extends LitElement {
                         .model="${model}"
                         .noSubmitButton="${true}"
                     ></iron-form>
+                    ${this.canReorder?html`
+                        <div style="display: flex;flex-direction: column;justify-content: space-around;">
+                            <paper-button .svgIcon="${keyboard_arrow_up}" class="bgBlue" style="height:14px" small no-margin @click="${()=>this.moveUp(index)}"></paper-button>
+                            <paper-button .svgIcon="${keyboard_arrow_down}" class="bgGreen" style="height:14px" small no-margin @click="${()=>this.moveDown(index)}"></paper-button>
+                        </div>
+                    `:""}
                     <paper-button icon="delete" class="red" small no-margin @click="${()=>this.deleteForm(index)}"></paper-button>
                 </div>
             `)}
@@ -104,6 +116,23 @@ export class MultiForm extends LitElement {
             this.configs = this.model.map(v=>JSON.parse(JSON.stringify(this.config)));
         }
         return true;
+    }
+
+    moveUp(index) {
+        if (index === 0) {
+            return;
+        }
+        this.model.splice(index-1, 0, this.model.splice(index, 1)[0]);
+        this.configs.splice(index-1, 0, this.configs.splice(index, 1)[0]);
+        this.requestUpdate();
+    }
+    moveDown(index) {
+        if (index === this.model.length - 1) {
+            return;
+        }
+        this.model.splice(index+1, 0, this.model.splice(index, 1)[0]);
+        this.configs.splice(index+1, 0, this.configs.splice(index, 1)[0]);
+        this.requestUpdate();
     }
     deleteForm(index) {
         let model = this.model[index];
