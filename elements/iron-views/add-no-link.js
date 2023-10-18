@@ -1,12 +1,13 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
+import {html, css} from 'lit-element';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-table/paper-table.js";
 import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
+import {EmptyView} from "./empty-view";
 
-export class AddNoLink extends LitElement {
+export class AddNoLink extends EmptyView {
 
     static get properties() {
         return {
@@ -94,12 +95,13 @@ export class AddNoLink extends LitElement {
         CBNUtils.fireEvent(this, 'show-page', {name: this.listView});
     }
 
-    refreshPage(newPage, oldPage) {
-        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
-            this.newOrEditDocument(newPage);
-        }
+    onPageShow(page) {
+        this.newOrEditDocument(page);
     }
 
+    onPageHide() {
+
+    }
     newOrEditDocument(newPage) {
         this.model = newPage.model ? newPage.model : this.defaultModel;
     }

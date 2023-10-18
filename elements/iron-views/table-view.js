@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {html, css} from 'lit-element';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-table/paper-table.js";
@@ -6,8 +6,9 @@ import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 import "add|../iron-icons/icons.svgicon";
+import {EmptyView} from "./empty-view";
 
-export class TableView extends LitElement {
+export class TableView extends EmptyView {
 
     static get properties() {
         return {
@@ -187,10 +188,12 @@ export class TableView extends LitElement {
     onValueChanged() {
     }
 
-    refreshPage(newPage, oldPage) {
-        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
-            this._getItems();
-        }
+    onPageShow(page) {
+        this._getItems();
+    }
+
+    onPageHide() {
+
     }
 
     async _deleteItem(event) {

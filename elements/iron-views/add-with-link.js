@@ -1,14 +1,15 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
+import { html, css} from 'lit-element';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
+import {EmptyView} from "./empty-view";
 
-import("../iron-form/iron-form.js");
-import("../paper-table/paper-table.js");
-import("../paper-fab/paper-fab.js");
-import("../iron-ajax/iron-ajax.js");
+import "../iron-form/iron-form.js";
+import "../paper-table/paper-table.js";
+import "../paper-fab/paper-fab.js";
+import "../iron-ajax/iron-ajax.js";
 
 
-export class AddWithLink extends LitElement {
+export class AddWithLink extends EmptyView {
 
     static get properties() {
         return {
@@ -62,6 +63,12 @@ export class AddWithLink extends LitElement {
         this.model = this.defaultModel;
         this.getUrl = "/GetDocument";
         this.saveUrl = "/SaveDocument";
+        this.boundOnCtrlS = ((e)=>{
+            if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+                e.preventDefault();
+                this.onCtrlS();
+            }
+        });
     }
 
     shouldUpdate(changedProperties) {
@@ -82,7 +89,9 @@ export class AddWithLink extends LitElement {
     firstUpdated(_changedProperties) {
         this.request = this.shadowRoot.querySelector('.request');
     }
-
+    onCtrlS(e){
+        this.submit();
+    }
     render() {
         return html`
             <iron-ajax class="request" url="${this.getUrl}" @iron-response="${this._onIronResponse}"></iron-ajax>          
@@ -97,12 +106,13 @@ export class AddWithLink extends LitElement {
         this.model._id = event.detail.response._id;
     }
 
-    refreshPage(newPage, oldPage) {
-        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)) {
-            this.newOrEditDocument(newPage);
-            return true
-        }
-        return false;
+    onPageShow(page) {
+        this.newOrEditDocument(page);
+        document.addEventListener('keydown', this.boundOnCtrlS);
+    }
+
+    onPageHide() {
+        document.removeEventListener('keydown', this.boundOnCtrlS);
     }
 
     newOrEditDocument(newPage) {

@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
+import {html, css} from 'lit-element';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-table/paper-table.js";
@@ -9,9 +9,10 @@ import "../paper-reports-dropdown/paper-reports-dropdown.js";
 
 import "add|../iron-icons/icons.svgicon";
 import "excel|../iron-icons/cbn.svgicon";
+import {EmptyView} from "./empty-view";
 
 
-export class TableViewNoLink extends LitElement {
+export class TableViewNoLink extends EmptyView {
 
     static get properties() {
         return {
@@ -132,12 +133,13 @@ export class TableViewNoLink extends LitElement {
         CBNUtils.fireEvent(this, 'add-no-link', {page: 'add-no-link', model: event.detail.item});
     }
 
-    refreshPage(newPage, oldPage){
-        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name)) {
-            this._getItems();
-        }
+    onPageShow(page) {
+        this._getItems();
     }
 
+    onPageHide() {
+
+    }
     async _getItems() {
         if (this.request && !this.disabledRequest) {
             this.items = await this.request.generateRequest();

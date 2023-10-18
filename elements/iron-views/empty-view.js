@@ -30,19 +30,27 @@ export class EmptyView extends LitElement {
         return true;
     }
 
-    firstUpdated() {
-        this.refreshPage();
-    }
-
     render() {
         return html`               
             empty-view     
         `;
     }
 
-    refreshPage() {
+    refreshPage(newPage, oldPage) {
+        if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)) {
+            this.onPageShow(newPage);
+            return true;
+        }
+        this.onPageHide();
+        return false;
     }
 
+    onPageShow(){
+
+    }
+    onPageHide(){
+
+    }
 }
 
 customElements.define("empty-view", EmptyView);
