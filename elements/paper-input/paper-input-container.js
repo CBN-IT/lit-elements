@@ -40,14 +40,6 @@ export class PaperInputContainer extends LitElement {
                 pointer-events: none;
             }
 
-            .overlay {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-
             .form-field {
                 width: 100%;
                 padding: var(--input-padding, 10px);
@@ -156,7 +148,6 @@ export class PaperInputContainer extends LitElement {
                 </div>
             </div>
             <label class="label ${this.floated ? 'floated' : ''}">${this.label}</label>
-            <div class="${this.disabled ? 'overlay' : ''}"></div>
         `;
     }
 
