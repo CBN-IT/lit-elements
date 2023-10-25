@@ -19,6 +19,7 @@ class IronIcon extends LitElement {
 
     constructor() {
         super();
+        this.icon = null;
         this.size = 24;
     }
 
@@ -45,22 +46,6 @@ class IronIcon extends LitElement {
         `
     }
 
-    _updateIcon() {
-        if (this.icon === "" || this.icon === "undefined" || this.icon == null) {
-            return;
-        }
-        if (typeof this.icon === "string") {
-            if (!window.icons || !window.icons[this.icon]) {
-                console.warn("iron-icon", `The icon ${this.icon} was not found`);
-                this.svgIcon = "";
-            }else{
-                this.svgIcon = window.icons[this.icon];
-            }
-        } else {
-            this.svgIcon = this.icon;
-        }
-    }
-
     render() {
         setTimeout(() => {
             if (this.renderRoot.querySelector("svg") !== null) {
@@ -83,6 +68,22 @@ class IronIcon extends LitElement {
     _updateSize() {
         this.style.width = (this.size || 24) + "px";
         this.style.height = (this.size || 24) + "px";
+    }
+
+    _updateIcon() {
+        if (this.icon === "" || this.icon === "undefined" || this.icon == null) {
+            return;
+        }
+        if (typeof this.icon === "string") {
+            if (!window.icons || !window.icons[this.icon]) {
+                console.warn("iron-icon", `The icon ${this.icon} was not found`);
+                this.svgIcon = "";
+            }else{
+                this.svgIcon = window.icons[this.icon];
+            }
+        } else {
+            this.svgIcon = this.icon;
+        }
     }
 }
 
