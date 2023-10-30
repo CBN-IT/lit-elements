@@ -1,6 +1,6 @@
-const xmlParser = require('fast-xml-parser');
-const Parser = require("fast-xml-parser").j2xParser;
-const jsonParser = new Parser({ignoreAttributes:false });
+const { XMLParser, XMLBuilder} = require("fast-xml-parser");
+const xmlBuilder = new XMLBuilder({arrayMode: false, ignoreAttributes: false});
+const xmlParser = new XMLParser({ignoreAttributes: false});
 const fs = require("fs");
 const path = require("path");
 
@@ -13,7 +13,12 @@ function getIcons(folderPaths) {
             if(file.endsWith(".svg") || file.endsWith(".svgicon")){
                 let [filename, ext] = file.split(".");
                 const content = fs.readFileSync(`${folderPath}/${file}`, 'utf8');
-                parseFile(filename,svgs,content)
+                let fileSvgs = parseFile(filename,content);
+                buildContentWindow(fileSvgs, filename)
+                svgs = {
+                    ...svgs,
+                    ...fileSvgs
+                }
             }
         });
     });
@@ -22,35 +27,62 @@ function getIcons(folderPaths) {
     return svgs;
 }
 
-function buildContent(svgs){
-    let used = {};
-    let fileContent = ` "use strict";\nimport {svg} from 'lit-element';\n`
-    for(let [key,value] of Object.entries(svgs)){
+function buildContentWindow(svgs, filename){
+    let dir = "elements/iron-icons/";
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+
+    let content = `"use strict";\nimport {svg} from 'lit';\nif(window.icons === undefined){ window.icons = {}; }\n`;
+    for(let [key,svg] of Object.entries(svgs)){
         let varName = key.replace(/[\-:]/g,"_");
-        let [file,id] = key.split(":");
+        let [namespace,id] = key.split(":");
+
         id = id.replace(/[\-:]/g,"_");
-        fileContent+=`export const ${varName} = svg\`${value}\`;\n`;
+        content+=`window.icons["${namespace}:${id}"] = svg\`${svg}\`;\nwindow.icons["${id}"] = window.icons["${namespace}:${id}"];\n`
+    }
+    fs.writeFileSync(dir+filename+".js", content)
+}
+function buildContent(svgs, filename){
+    let dir = "elements/iron-icons/";
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+
+    let used = {};
+    let fileContent = `"use strict";\nimport {svg} from 'lit'\n`;
+    let windowIcons = `"use strict";\nimport {svg} from 'lit';\nif(window.icons === undefined){ window.icons = {}; }\n`;
+
+    for(let [key,svg] of Object.entries(svgs)){
+        let varName = key.replace(/[\-:]/g,"_");
+        let [namespace,id] = key.split(":");
+
+        id = id.replace(/[\-:]/g,"_");
+        fileContent+=`export const ${varName} = svg\`${svg}\`;\n`;
         if(!reservedWords.includes(id) && !id.match(/^[0-9]+/)){
             if(used[id]===undefined){
                 fileContent+=`export const ${id} = ${varName};\n`;
                 used[id] = true;
             }
-
         }
+        windowIcons+=`window.icons["${namespace}:${id}"] = svg\`${svg}\`;\nwindow.icons["${id}"] = window.icons["${namespace}:${id}"];\n`
     }
-    let dir = "elements/iron-icons/";
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
+
+
+
+
+
     fs.writeFileSync(dir+"icons.js", fileContent)
+    fs.writeFileSync(dir+"iconsWindow.js", windowIcons)
 }
 
-function parseFile(prefix, svgs, content) {
-    let json = xmlParser.parse(content, {arrayMode: false, ignoreAttributes: false});
+function parseFile(prefix, content) {
+    let svgs = {}
+    let json = xmlParser.parse(content);
     if (json.g) {
         for (let el of json.g) {
             if (el["@_id"] !== undefined) {
-                svgs[prefix + ":" + el["@_id"]] = jsonParser.parse({
+                svgs[prefix + ":" + el["@_id"]] = xmlBuilder.build({
                     svg: {
                         ["@_viewBox"]: "0 0 24 24",
                         ["@_id"]: el["@_id"],
@@ -69,12 +101,13 @@ function parseFile(prefix, svgs, content) {
         }
         for (let el of json.svg) {
             if (el["@_id"] !== undefined) {
-                svgs[prefix + ":" + el["@_id"]] = jsonParser.parse({
+                svgs[prefix + ":" + el["@_id"]] = xmlBuilder.build({
                     svg: el
                 });
             }
         }
     }
+    return svgs;
 }
 
 getIcons([

@@ -1,18 +1,7 @@
 "use strict";
-import {LitElement, html, css} from "lit-element";
-import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
-import '/elements/flex-layout/flex-layout-classes.js';
-import '/elements/iron-icon/iron-icon.js';
-import '/elements/iron-icons/iron-icons.js';
-import '/elements/iron-overlay/iron-overlay.js';
-import '/elements/iron-selector/iron-selector.js';
-import '/elements/paper-button/paper-button.js';
-import '/elements/paper-fab/paper-fab.js';
-import '/elements/paper-loading/paper-loading.js';
-import '/elements/paper-tabs/paper-tabs.js';
-import '/elements/paper-toast/paper-toast.js';
-import '/elements/paper-table/paper-table.js';
-import '/elements/paper-dialog/paper-dialog.js';
+import {LitElement, html, css} from "lit";
+import {flexLayoutClasses} from "../elements/flex-layout/flex-layout-classes.js";
+import "../elements/iron-icons/av.js"
 
 class DemoApp extends LitElement {
 

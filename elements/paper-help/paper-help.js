@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit'
 import '../paper-fab/paper-fab.js';
 import '../paper-dialog/paper-dialog.js';
 import '../cbn-utils/CbnUtils.js';

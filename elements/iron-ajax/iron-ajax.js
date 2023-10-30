@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit'
 
 class IronAjax extends LitElement {
 

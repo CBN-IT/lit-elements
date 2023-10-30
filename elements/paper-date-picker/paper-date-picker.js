@@ -1,5 +1,5 @@
 "use strict";
-import {html, css} from 'lit-element';
+import {html, css} from 'lit'
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import TinyDatePicker from 'tiny-date-picker';
 import dayjs from 'dayjs';

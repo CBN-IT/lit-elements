@@ -1,6 +1,6 @@
 "use strict";
 import {AddWithLink} from "../iron-views/add-with-link.js";
-import {html, css} from 'lit-element';
+import {html, css} from 'lit'
 import '../paper-tabs/paper-tabs.js';
 import '../iron-form/iron-form.js';
 import '../ace-editor/ace-editor.js';

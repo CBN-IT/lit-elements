@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css, unsafeCSS} from 'lit-element';
+import {LitElement, html, css, unsafeCSS} from 'lit'
 import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import '../cbn-utils/CbnUtils.js';
 import '../iron-selector/iron-selector.js';

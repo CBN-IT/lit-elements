@@ -3,15 +3,13 @@ import {
     LitElement,
     html,
     css
-} from '/node_modules/lit-element/lit-element.js';
+} from 'lit';
 import {flexLayoutClasses} from '/node_modules/lit-elements/elements/flex-layout/flex-layout-classes.js';
 import {gridClasses} from '/node_modules/lit-elements/elements/grid-layout/grid-classes.js';
 import '/node_modules/lit-elements/elements/iron-ajax/iron-ajax.js';
 import '/node_modules/lit-elements/elements/iron-icon/iron-icon.js';
 import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
 
-import 'pdf|lit-elements/elements/iron-icons/cbn.svgicon';
-import 'save|lit-elements/elements/iron-icons/icons.svgicon';
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 
 export class SiloConfigurator extends LitElement {

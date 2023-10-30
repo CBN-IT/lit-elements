@@ -1,7 +1,7 @@
 "use strict";
-import {repeat} from 'lit-html/directives/repeat';
+import {repeat} from 'lit/directives/repeat';
 import {gridClasses} from "../grid-layout/grid-classes.js";
-import {html, css, LitElement} from "lit-element";
+import {html, css, LitElement} from "lit";
 import "../paper-dialog/paper-dialog.js";
 import "../iron-form/iron-form.js";
 

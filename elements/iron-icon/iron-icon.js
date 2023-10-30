@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, css} from 'lit-element';
+import {LitElement, css} from 'lit'
 
 class IronIcon extends LitElement {
 

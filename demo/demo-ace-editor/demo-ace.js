@@ -1,26 +1,24 @@
 "use strict";
-import {LitElement, html} from 'lit'
-import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
-import "/elements/iron-form/iron-form.js";
+import {LitElement, html, css} from 'lit'
+import "../../elements/ace-editor/ace-editor.js";
 
-class IronFormDemo extends LitElement {
+class AceEditorDemo extends LitElement {
 
     static get properties() {
         return {
-            model: {type: Object},
-            config: {type: Object}
+            json: {type: Object},
+            configs: {type: Object}
         };
     }
 
     static get styles() {
-        return [flexLayoutClasses]
+        return []
     }
 
 
     constructor() {
         super();
-        this.model = {};
-        this.config = {
+        this.json = `{
             "elements": [{
                 "label": "Companie",
                 "type": "select",
@@ -561,13 +559,7 @@ class IronFormDemo extends LitElement {
                 "name": "signature",
                 "class": "hidden col-xs-12 col-sm-12 col-lg-12",
                 "required": false
-            }, {
-                "label": "Buletin",
-                "type": "file",
-                "name": "photoId",
-                "class": "col-xs-12 col-sm-12 col-lg-12",
-                "required": false
-            }, {
+            }, {"label": "Buletin", "type": "file", "name": "photoId", "class": "col-xs-12 col-sm-12 col-lg-12", "required": false}, {
                 "label": "Act spatiu",
                 "type": "file",
                 "name": "spaceDocument",
@@ -722,28 +714,24 @@ class IronFormDemo extends LitElement {
                 "options": [],
                 "required": false
             }]
-        };
+        }`;
     }
 
 
     render() {
         return html`
-            <style>              
-                :host{
-                    display: flex;  
-                }                             
+            <style>
+                :host {
+                    display: flex;
+                }
             </style>
-            <iron-form .config="${this.config}" .model="${this.model}" url="/SaveForm" collection="collection" @saved-form="${this._savedForm}"></iron-form>
-        `;
-    }
+            <ace-editor class="flex" .value="${this.json}" mode="ace/mode/json" theme="ace/theme/dracula" fontSize="14"></ace-editor>
 
-    _savedForm(event) {
-        console.log(event.detail.response);
+        `;
     }
 
 }
 
-customElements.define("iron-form-demo", IronFormDemo);
-
+customElements.define("ace-editor-demo", AceEditorDemo);
 
 

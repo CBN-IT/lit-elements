@@ -1,8 +1,7 @@
 "use strict";
-import {LitElement, html} from 'lit-element';
+import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import '../paper-button/paper-button.js'
-import {css} from "lit-element";
 
 import "close|../iron-icons/icons.svgicon";
 import "check|../iron-icons/icons.svgicon";

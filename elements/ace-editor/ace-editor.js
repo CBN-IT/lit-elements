@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit'
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 //This makes ace a global variable

@@ -1,0 +1,28 @@
+{
+  "web": {
+    "path": "",
+    "main": "",
+    "watch": [
+      "web/**/*"
+    ]
+  },
+  "build": [
+    "index.html",
+    "demo/demo-ace-editor/demo-ace.html",
+    "demo/demo-form-editor/demo-form-editor.html"
+  ],
+  "development": {
+    "buildPath": "build/dev/"
+  },
+  "production": {
+    "buildPath": "build/es6/"
+  },
+  "buildCopy": [
+    "node_modules/ace-builds/src-min-noconflict/mode-javascript.js",
+    "node_modules/ace-builds/src-min-noconflict/mode-typescript.js",
+    "node_modules/ace-builds/src-min-noconflict/mode-json.js",
+    "node_modules/ace-builds/src-min-noconflict/worker-javascript.js",
+    "node_modules/ace-builds/src-min-noconflict/worker-json.js",
+    "node_modules/ace-builds/src-min-noconflict/theme-dracula.js"
+  ]
+}

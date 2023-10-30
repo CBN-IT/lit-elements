@@ -1,11 +1,10 @@
 "use strict";
-import { html, css} from 'lit-element';
+import { html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {EmptyView} from "./empty-view";
 
 import "../iron-form/iron-form.js";
 import "../paper-table/paper-table.js";
-import "../paper-fab/paper-fab.js";
 import "../iron-ajax/iron-ajax.js";
 
 

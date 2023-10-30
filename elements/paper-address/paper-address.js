@@ -1,13 +1,11 @@
 "use strict";
-import {html, css} from 'lit-element';
+import {html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import '../iron-ajax/iron-ajax.js';
-
-import "arrow-drop-down|../iron-icons/icons.svgicon";
 
 class PaperAddress extends PaperInputContainer {
 

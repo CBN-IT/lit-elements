@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit'
 
 class PaperLoading extends LitElement {
 

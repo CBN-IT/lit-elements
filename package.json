@@ -7,13 +7,13 @@
     "url": "git@bitbucket.org:cbn-it/lit-elements.git"
   },
   "scripts": {
-    "build-icons": "node elements/iron-icons/build.js"
+    "build-icons": "node elements/iron-icons/build.js",
+    "build": "gulp-build build-parcel copy-static"
   },
   "dependencies": {
-    "ace-builds": "1.16.0",
-    "dayjs": "1.11.7",
-    "lit-element": "2.5.1",
-    "lit-html": "1.4.1",
+    "ace-builds": "1.31.1",
+    "dayjs": "1.11.10",
+    "lit": "3.0.1",
     "pwa-helpers": "0.9.1",
     "tiny-date-picker": "3.2.8",
     "xlsx": "0.18.5",
@@ -21,6 +21,6 @@
     "svgo": "3.0.2"
   },
   "devDependencies": {
-    "fast-xml-parser": "3.17.4"
+    "fast-xml-parser": "4.3.2"
   }
 }

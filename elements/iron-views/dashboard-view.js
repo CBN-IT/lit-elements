@@ -1,4 +1,4 @@
-import {html, css} from '/node_modules/lit-element/lit-element.js';
+import {html, css} from 'lit';
 import {flexLayoutClasses} from "lit-elements/elements/flex-layout/flex-layout-classes";
 import {gridClasses} from "lit-elements/elements/grid-layout/grid-classes";
 import {EmptyView} from "lit-elements/elements/iron-views/empty-view";

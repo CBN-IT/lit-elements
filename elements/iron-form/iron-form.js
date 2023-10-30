@@ -1,6 +1,6 @@
 "use strict";
-import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
-import {directive} from '/node_modules/lit-html/lit-html.js';
+import {LitElement, html, css} from 'lit';
+import {directive} from 'lit/directive.js';
 
 import {gridClasses} from "../grid-layout/grid-classes.js";
 
@@ -14,7 +14,7 @@ import './../paper-date-picker/paper-date-picker.js';
 import "./../paper-button/paper-button.js";
 import './../iron-ajax/iron-ajax.js';
 import "check-circle|../iron-icons/icons.svgicon";
-import {unsafeHTML} from "lit-html/directives/unsafe-html";
+import {unsafeHTML} from "lit/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
 /*
 https://github.com/Polymer/lit-html/issues/877

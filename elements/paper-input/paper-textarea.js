@@ -1,5 +1,5 @@
 "use strict";
-import {html} from 'lit-element';
+import {html} from 'lit'
 import {PaperInputContainer} from './paper-input-container.js';
 
 class PaperTextarea extends PaperInputContainer {

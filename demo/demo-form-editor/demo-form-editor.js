@@ -1,7 +1,7 @@
 "use strict";
-import {LitElement, html, css} from 'lit-element';
-import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
-import "/elements/form-section/add-form.js";
+import {LitElement, html, css} from 'lit'
+import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
+import "../../elements/form-section/add-form.js";
 
 class FormEditorDemo extends LitElement {
 

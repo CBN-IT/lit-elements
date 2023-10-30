@@ -1,4 +1,5 @@
 "use strict";
+import {css, html} from "lit";
 import {PaperIconDropdown} from '../paper-icon-dropdown/paper-icon-dropdown.js';
 
 import "chart|../iron-icons/cbn.svgicon";
@@ -9,7 +10,7 @@ import "pdf|../iron-icons/cbn.svgicon";
 import "generic|../iron-icons/cbn.svgicon";
 import "word|../iron-icons/cbn.svgicon";
 import "xml|../iron-icons/cbn.svgicon";
-import {css, html} from "lit-element";
+
 
 
 class PaperReportsDropdown extends PaperIconDropdown {

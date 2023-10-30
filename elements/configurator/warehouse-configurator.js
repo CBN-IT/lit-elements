@@ -3,7 +3,7 @@ import {
     LitElement,
     html,
     css
-} from '/node_modules/lit-element/lit-element.js';
+} from 'lit';
 import {flexLayoutClasses} from '/node_modules/lit-elements/elements/flex-layout/flex-layout-classes.js';
 import {gridClasses} from '/node_modules/lit-elements/elements/grid-layout/grid-classes.js';
 import '/node_modules/lit-elements/elements/iron-ajax/iron-ajax.js';

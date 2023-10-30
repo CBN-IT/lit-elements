@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit'
 
 class IronSelector extends LitElement {
 

@@ -1,7 +1,6 @@
 "use strict";
-import {LitElement, html} from 'lit-element';
+import {LitElement, html, css} from 'lit'
 import '../iron-icon/iron-icon.js';
-import {css} from "lit-element";
 
 import "error|../iron-icons/icons.svgicon";
 import "warning|../iron-icons/icons.svgicon";
