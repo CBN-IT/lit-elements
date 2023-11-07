@@ -5,18 +5,16 @@ import {html, css, LitElement} from "lit";
 import "../paper-dialog/paper-dialog.js";
 import "../iron-form/iron-form.js";
 
-import "folders|../iron-icons/cbn.svgicon"
+import "../iron-icons/icons/cbn/folders";
 
-import "phone-android|../iron-icons/hardware.svgicon"
-import "tablet|../iron-icons/hardware.svgicon"
-import "laptop|../iron-icons/hardware.svgicon"
+import "../iron-icons/icons/hardware/phone_android";
+import "../iron-icons/icons/hardware/tablet";
+import "../iron-icons/icons/hardware/laptop";
 
-import "check-circle|../iron-icons/icons.svgicon"
-import "delete|../iron-icons/icons.svgicon"
-import "create|../iron-icons/icons.svgicon"
-import "content-copy|../iron-icons/icons.svgicon"
-
-
+import "../iron-icons/icons/icons/check_circle";
+import "../iron-icons/icons/icons/delete";
+import "../iron-icons/icons/icons/create";
+import "../iron-icons/icons/icons/content_copy";
 
 
 class FormEditor extends LitElement {

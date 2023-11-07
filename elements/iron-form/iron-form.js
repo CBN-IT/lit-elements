@@ -13,7 +13,7 @@ import './../paper-file/paper-file.js';
 import './../paper-date-picker/paper-date-picker.js';
 import "./../paper-button/paper-button.js";
 import './../iron-ajax/iron-ajax.js';
-import "check-circle|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/check_circle.js";
 import {unsafeHTML} from "lit/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
 /*

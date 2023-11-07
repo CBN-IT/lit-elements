@@ -16,8 +16,8 @@ import "../confirm-delete/confirm-delete.js";
 import logo from '/web/images/logo.svg';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 
-import "file-upload|../iron-icons/icons.svgicon";
-import "menu|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/file_upload.js";
+import "../iron-icons/icons/icons/menu.js";
 
 
 export class IronApp extends LitElement {

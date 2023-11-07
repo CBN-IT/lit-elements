@@ -9,10 +9,10 @@ import {gridClasses} from '/node_modules/lit-elements/elements/grid-layout/grid-
 import '/node_modules/lit-elements/elements/iron-ajax/iron-ajax.js';
 import '/node_modules/lit-elements/elements/iron-icon/iron-icon.js';
 import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
-
-import 'pdf|lit-elements/elements/iron-icons/cbn.svgicon';
-import 'save|lit-elements/elements/iron-icons/icons.svgicon';
+import "../iron-icons/icons/cbn/pdf";
+import "../iron-icons/icons/icons/save";
 import {WarehouseCanvasDraw} from "./WarehouseCanvasDraw";
+
 
 export class WarehouseConfigurator extends LitElement {
     static get properties() {

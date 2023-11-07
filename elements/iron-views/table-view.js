@@ -5,7 +5,7 @@ import "../paper-table/paper-table.js";
 import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
-import "add|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/add.js";
 import {EmptyView} from "./empty-view";
 
 export class TableView extends EmptyView {

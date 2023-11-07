@@ -2,9 +2,9 @@
 import {LitElement, html, css} from 'lit'
 import '../iron-icon/iron-icon.js';
 
-import "error|../iron-icons/icons.svgicon";
-import "warning|../iron-icons/icons.svgicon";
-import "check-circle|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/error.js";
+import "../iron-icons/icons/icons/warning.js";
+import "../iron-icons/icons/icons/check_circle.js";
 
 
 class PaperToast extends LitElement {

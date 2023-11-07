@@ -6,7 +6,7 @@ import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 
-import "file-upload|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/file_upload.js";
 import {formatFileSize} from "../cbn-utils/formatFileSize";
 
 class PaperFile extends PaperInputContainer {

@@ -5,14 +5,16 @@ import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-icon/iron-icon.js";
 import "../paper-checkbox/paper-checkbox.js";
 
-import "expand-more|../iron-icons/icons.svgicon";
-import "expand-less|../iron-icons/icons.svgicon";
-import "unfold-more|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/expand_more.js";
+import "../iron-icons/icons/icons/expand_less.js";
+import "../iron-icons/icons/icons/unfold_more.js";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 import {XlsUtils} from "../cbn-utils/XlsUtils";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import {compare} from "../cbn-utils/compare";
+
+
 
 dayjs.extend(customParseFormat);
 

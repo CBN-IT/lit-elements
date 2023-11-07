@@ -3,8 +3,8 @@ import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import '../paper-button/paper-button.js'
 
-import "close|../iron-icons/icons.svgicon";
-import "check|../iron-icons/icons.svgicon";
+import "../iron-icons/icons/icons/close.js";
+import "../iron-icons/icons/icons/check.js";
 
 class PaperDialog extends LitElement {
 

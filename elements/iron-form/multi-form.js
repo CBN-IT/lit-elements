@@ -4,9 +4,8 @@ import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import "./iron-form.js";
 import "../paper-button/paper-button.js";
-import {keyboard_arrow_down, keyboard_arrow_up} from "lit-elements/elements/iron-icons/icons";
-
-
+import {keyboard_arrow_up} from "../iron-icons/icons/hardware/keyboard_arrow_up";
+import {keyboard_arrow_down} from "../iron-icons/icons/hardware/keyboard_arrow_down";
 export class MultiForm extends LitElement {
 
     static get properties() {

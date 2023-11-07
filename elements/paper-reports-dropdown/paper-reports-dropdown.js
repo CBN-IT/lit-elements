@@ -2,14 +2,14 @@
 import {css, html} from "lit";
 import {PaperIconDropdown} from '../paper-icon-dropdown/paper-icon-dropdown.js';
 
-import "chart|../iron-icons/cbn.svgicon";
-import "document|../iron-icons/cbn.svgicon";
-import "excel|../iron-icons/cbn.svgicon";
-import "html|../iron-icons/cbn.svgicon";
-import "pdf|../iron-icons/cbn.svgicon";
-import "generic|../iron-icons/cbn.svgicon";
-import "word|../iron-icons/cbn.svgicon";
-import "xml|../iron-icons/cbn.svgicon";
+import "../iron-icons/icons/cbn/chart.js";
+import "../iron-icons/icons/cbn/document.js";
+import "../iron-icons/icons/cbn/excel.js";
+import "../iron-icons/icons/cbn/html.js";
+import "../iron-icons/icons/cbn/pdf.js";
+import "../iron-icons/icons/cbn/generic.js";
+import "../iron-icons/icons/cbn/word.js";
+import "../iron-icons/icons/cbn/xml.js";
 
 
 

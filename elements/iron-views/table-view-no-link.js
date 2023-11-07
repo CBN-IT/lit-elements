@@ -7,8 +7,8 @@ import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 
-import "add|../iron-icons/icons.svgicon";
-import "excel|../iron-icons/cbn.svgicon";
+import "../iron-icons/icons/icons/add.js";
+import "../iron-icons/icons/cbn/excel.js";
 import {EmptyView} from "./empty-view";
 
 
