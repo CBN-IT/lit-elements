@@ -29,49 +29,41 @@ function getIcons(folderPaths) {
     return svgs;
 }
 
-function buildContentWindow(svgs, filename, dir = "elements/iron-icons/windowIcons/") {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
+function buildContentWindow(svgs, namespace, dir = "elements/iron-icons/icons/") {
+    let folder = dir + namespace
+    if (!fs.existsSync(folder)) {
+        fs.mkdirSync(folder);
     }
 
-    let fileContent = "// noinspection NestedAssignmentJS,AssignmentResultUsedJS\n\n";
+    let fileContent = "";
     fileContent += '"use strict";\n';
-    let importArray = [];
-    let assign = ""
     for(let [key,svg] of Object.entries(svgs)){
         let [namespace,id] = key.split(":");
 
         let cleanId = id.replace(/[\-:]/g,"_");
-        importArray.push(namespace+"_"+cleanId);
-        assign+=`window.icons["${namespace}:${id}"] = window.icons["${id}"] = ${namespace}_${cleanId};\n`
+        fileContent += `import './${namespace}/${cleanId}.js';\n`;
     }
-    fileContent += `import {${importArray.join(", ")}} from '../icons.js';\n\n`;
-    fileContent += `if(window.icons === undefined){ window.icons = {}; }\n`;
-    fileContent += assign;
-    fs.writeFileSync(dir + filename + ".js", fileContent)
+
+    fs.writeFileSync(folder+"/" + "allIcons.js", fileContent)
 }
-function buildContent(svgs,dir = "elements/iron-icons/"){
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
-
-    let used = {};
-    let fileContent = `"use strict";\nimport {svg} from 'lit'\n`;
-
+function buildContent(svgs,dir = "elements/iron-icons/icons/"){
     for(let [key,svg] of Object.entries(svgs)){
+        let fileContent = `import {svg} from 'lit'\n`;
         let [namespace,id] = key.split(":");
 
         let cleanId = id.replace(/[\-:]/g,"_");
         fileContent += `export const ${namespace}_${cleanId} = svg\`${svg}\`;\n`;
-        if (!reservedWords.includes(cleanId) && !cleanId.match(/^[0-9]+/)) {
-            if (used[cleanId] === undefined) {
-                fileContent += `export const ${cleanId} = ${namespace}_${cleanId};\n\n`;
-                used[cleanId] = true;
-            }
-        }
-    }
+        fileContent += `export const ${cleanId} = ${namespace}_${cleanId};\n`;
+        fileContent += `if(window.icons === undefined){ window.icons = {}; }\n`;
+        fileContent+=`window.icons["${namespace}:${id}"] = window.icons["${id}"] = ${namespace}_${cleanId};\n`;
 
-    fs.writeFileSync(dir+"icons.js", fileContent)
+
+        let folder = dir + namespace
+        if (!fs.existsSync(folder)) {
+            fs.mkdirSync(folder);
+        }
+        fs.writeFileSync(folder + "/" + cleanId + ".js", fileContent)
+    }
 }
 
 function parseFile(prefix, content) {

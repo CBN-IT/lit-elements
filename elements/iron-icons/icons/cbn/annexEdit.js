@@ -1,0 +1,5 @@
+import {svg} from 'lit'
+export const cbn_annexEdit = svg`<svg id="annexEdit" viewBox="0 0 32 32"><rect width="16" height="18" x="14" y="11" rx=".5"></rect><path d="M28 13v14H16V13h12m1-4H15a3 3 0 0 0-3 3v16a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V12a3 3 0 0 0-3-3Z"></path><path d="M20 3.6C20 2.2 18.8 1 17.4 1H2.6A2.6 2.6 0 0 0 0 3.6v16.6C0 21.7 1.3 23 2.8 23H10V12a5 5 0 0 1 5-5h5V3.6Z"></path><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M4 4h12"></path><path stroke="var(--iron-icon-color, currentColor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1h8"></path><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3h4"></path><path fill="#fff" d="M13.6 25.6v3.7h3.8l11-11-3.7-3.8-11 11Zm17.7-10.2c.4-.4.4-1 0-1.4L29 11.6a1 1 0 0 0-1.4 0l-1.8 1.8 3.7 3.8 1.8-1.8Z"></path></svg>`;
+export const annexEdit = cbn_annexEdit;
+if(window.icons === undefined){ window.icons = {}; }
+window.icons["cbn:annexEdit"] = window.icons["annexEdit"] = cbn_annexEdit;
