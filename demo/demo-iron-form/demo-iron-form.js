@@ -3,7 +3,7 @@ import {LitElement, html} from 'lit'
 import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
 import "/elements/iron-form/iron-form.js";
 
-class IronFormDemo extends LitElement {
+class DemoIronForm extends LitElement {
 
     static get properties() {
         return {
@@ -743,7 +743,7 @@ class IronFormDemo extends LitElement {
 
 }
 
-customElements.define("iron-form-demo", IronFormDemo);
+customElements.define("iron-form-demo", DemoIronForm);
 
 
 

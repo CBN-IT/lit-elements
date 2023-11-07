@@ -9,6 +9,8 @@
   "build": [
     "demo/demo-ace-editor/demo-ace.html",
     "demo/demo-form-editor/demo-form-editor.html",
+    "demo/demo-paper-table/demo-paper-table.html",
+    "demo/demo-iron-form/demo-iron-form.html",
     "index.html"
   ],
   "development": {

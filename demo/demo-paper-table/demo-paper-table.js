@@ -1,10 +1,10 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
-import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
-import "/elements/paper-table/paper-table.js";
-import "/elements/paper-button/paper-button.js";
-import "/elements/confirm-delete/confirm-delete.js";
-
+import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes";
+import "../../elements/paper-table/paper-table.js";
+import "../../elements/paper-button/paper-button.js";
+import "../../elements/confirm-delete/confirm-delete.js";
+import "../../elements/iron-icons/icons/icons/delete";
 class TableDemo extends LitElement {
 
     static get properties() {

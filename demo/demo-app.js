@@ -72,17 +72,22 @@ class DemoApp extends LitElement {
             </style>
         <div class="container">
             <div class="title">paper-table</div>
-                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('/demo/paper-table/index.html')}">Demo paper-table</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-paper-table.html')}">Demo paper-table</paper-button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="title">ace-editor</div>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-ace.html')}">Demo Ace Editor</paper-button>
             </div>
         </div>
         <div class="container">
             <div class="title">form-editor</div>
-                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('/demo/form-editor/index.html')}">Demo form-editor</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-form-editor.html')}">Demo form-editor</paper-button>
             </div>
         </div>
         <div class="container">
             <div class="title">iron-form</div>
-                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('/demo/iron-form/index.html')}">Demo iron-form</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo/iron-form/index.html')}">Demo iron-form</paper-button>
             </div>
         </div>
        
