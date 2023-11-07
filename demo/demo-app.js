@@ -1,8 +1,22 @@
 "use strict";
-import {LitElement, html, css} from "lit";
+import {LitElement, html} from "lit";
 import {flexLayoutClasses} from "../elements/flex-layout/flex-layout-classes.js";
-import "../elements/iron-icons/av.js"
+import "../elements/paper-button/paper-button"
+import "../elements/iron-overlay/iron-overlay"
+import "../elements/iron-selector/iron-selector"
+import "../elements/paper-fab/paper-fab"
+import "../elements/paper-toast/paper-toast"
+import "../elements/paper-loading/paper-loading"
+import "../elements/paper-tabs/paper-tabs"
+import "../elements/paper-dialog/paper-dialog"
 
+
+import "../elements/iron-icons/icons/icons/dns"
+import "../elements/iron-icons/icons/icons/assignment";
+import "../elements/iron-icons/icons/maps/layers";
+import "../elements/iron-icons/icons/icons/add";
+import "../elements/iron-icons/icons/icons/settings";
+import "../elements/iron-icons/icons/icons/file_upload";
 class DemoApp extends LitElement {
 
     static get properties() {
@@ -39,7 +53,7 @@ class DemoApp extends LitElement {
                     padding: 10px;
                     display: flex;
                     align-items: center;
-                    border-bottom: 1px solid gray;
+                    border-bottom: 1px solid grey;
                     overflow: auto;
                 }
                 .title{
@@ -130,13 +144,13 @@ class DemoApp extends LitElement {
             <paper-button icon="assignment" class="bgGreen" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - success'})}">Open toast - success</paper-button>
             <paper-button icon="assignment" class="bgYellow" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - warning', type: 'warning'})}">Open toast - warning</paper-button>
             <paper-button icon="assignment" class="bgRed" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - error', type: 'error'})}">Open toast - error</paper-button>
-            <paper-button icon="assignment" class="bgRed" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error Toast - error'})}">Big message</paper-button>
+            <paper-button icon="assignment" class="bgGreen" @click="${() => CBNUtils.fireEvent(this, 'display-message', {message: 'Toast - error '.repeat(15)})}">Big message</paper-button>
             <paper-toast></paper-toast>
         </div>
        
         <div class="container">
             <div class="title">paper-loading</div>
-            <paper-button icon="assignment" class="bgGreen" @click="${() => {CBNUtils.fireEvent(this, 'start-loading');setTimeout(()=>CBNUtils.fireEvent(this, 'stop-loading'),2000)}}">Start loading</paper-button>
+            <paper-button icon="assignment" class="bgGreen" @click="${() => {CBNUtils.fireEvent(this, 'start-loading');setTimeout(()=>CBNUtils.fireEvent(this, 'stop-loading'),2000)}}">Start loading for 2 seconds</paper-button>
             <paper-button icon="assignment" class="bgRed" @click="${() => CBNUtils.fireEvent(this, 'stop-loading')}">Stop loading</paper-button>
             <paper-loading></paper-loading>
         </div>

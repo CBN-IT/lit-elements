@@ -7,9 +7,9 @@
     ]
   },
   "build": [
-    "index.html",
     "demo/demo-ace-editor/demo-ace.html",
-    "demo/demo-form-editor/demo-form-editor.html"
+    "demo/demo-form-editor/demo-form-editor.html",
+    "index.html"
   ],
   "development": {
     "buildPath": "build/dev/"
