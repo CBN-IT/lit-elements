@@ -1,5 +1,5 @@
 import {svg} from 'lit'
+import {iconMap} from '../../iconMap.js'
 export const device_battery_charging_50 = svg`<svg viewBox="0 0 24 24" id="battery-charging-50"><g><path d="M14.47 13.5L11 20v-5.5H9l.53-1H7v7.17C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V13.5h-2.53z"></path><path fill-opacity=".3" d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v8.17h2.53L13 7v5.5h2l-.53 1H17V5.33C17 4.6 16.4 4 15.67 4z"></path></g></svg>`;
 export const battery_charging_50 = device_battery_charging_50;
-if(window.icons === undefined){ window.icons = {}; }
-window.icons["device:battery-charging-50"] = window.icons["battery-charging-50"] = device_battery_charging_50;
+iconMap["device:battery-charging-50"] = iconMap["battery-charging-50"] = device_battery_charging_50;

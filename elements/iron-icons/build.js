@@ -48,6 +48,7 @@ function buildContentWindow(svgs, namespace, dir = "elements/iron-icons/icons/")
 function buildContent(svgs,dir = "elements/iron-icons/icons/"){
     for(let [key,svg] of Object.entries(svgs)){
         let fileContent = `import {svg} from 'lit'\n`;
+        fileContent += `import {iconMap} from '../../iconMap.js'\n`;
         let [namespace,id] = key.split(":");
 
         let cleanId = id.replace(/[\-:]/g,"_");
@@ -55,8 +56,7 @@ function buildContent(svgs,dir = "elements/iron-icons/icons/"){
         if (!reservedWords.includes(cleanId)) {
             fileContent += `export const ${cleanId} = ${namespace}_${cleanId};\n`;
         }
-        fileContent += `if(window.icons === undefined){ window.icons = {}; }\n`;
-        fileContent += `window.icons["${namespace}:${id}"] = window.icons["${id}"] = ${namespace}_${cleanId};\n`;
+        fileContent += `iconMap["${namespace}:${id}"] = iconMap["${id}"] = ${namespace}_${cleanId};\n`;
 
 
         let folder = dir + namespace

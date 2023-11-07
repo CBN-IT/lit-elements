@@ -1,5 +1,5 @@
 import {svg} from 'lit'
+import {iconMap} from '../../iconMap.js'
 export const icons_restore = svg`<svg viewBox="0 0 24 24" id="restore"><g><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></g></svg>`;
 export const restore = icons_restore;
-if(window.icons === undefined){ window.icons = {}; }
-window.icons["icons:restore"] = window.icons["restore"] = icons_restore;
+iconMap["icons:restore"] = iconMap["restore"] = icons_restore;

@@ -1,5 +1,5 @@
 import {svg} from 'lit'
+import {iconMap} from '../../iconMap.js'
 export const image_remove_red_eye = svg`<svg viewBox="0 0 24 24" id="remove-red-eye"><g><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></g></svg>`;
 export const remove_red_eye = image_remove_red_eye;
-if(window.icons === undefined){ window.icons = {}; }
-window.icons["image:remove-red-eye"] = window.icons["remove-red-eye"] = image_remove_red_eye;
+iconMap["image:remove-red-eye"] = iconMap["remove-red-eye"] = image_remove_red_eye;

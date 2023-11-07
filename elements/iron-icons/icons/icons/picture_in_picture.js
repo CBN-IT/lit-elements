@@ -1,5 +1,5 @@
 import {svg} from 'lit'
+import {iconMap} from '../../iconMap.js'
 export const icons_picture_in_picture = svg`<svg viewBox="0 0 24 24" id="picture-in-picture"><g><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"></path></g></svg>`;
 export const picture_in_picture = icons_picture_in_picture;
-if(window.icons === undefined){ window.icons = {}; }
-window.icons["icons:picture-in-picture"] = window.icons["picture-in-picture"] = icons_picture_in_picture;
+iconMap["icons:picture-in-picture"] = iconMap["picture-in-picture"] = icons_picture_in_picture;

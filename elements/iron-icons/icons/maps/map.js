@@ -1,5 +1,5 @@
 import {svg} from 'lit'
+import {iconMap} from '../../iconMap.js'
 export const maps_map = svg`<svg viewBox="0 0 24 24" id="map"><g><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"></path></g></svg>`;
 export const map = maps_map;
-if(window.icons === undefined){ window.icons = {}; }
-window.icons["maps:map"] = window.icons["map"] = maps_map;
+iconMap["maps:map"] = iconMap["map"] = maps_map;

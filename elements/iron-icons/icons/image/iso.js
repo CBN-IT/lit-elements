@@ -1,5 +1,5 @@
 import {svg} from 'lit'
+import {iconMap} from '../../iconMap.js'
 export const image_iso = svg`<svg viewBox="0 0 24 24" id="iso"><g><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5.5 7.5h2v-2H9v2h2V9H9v2H7.5V9h-2V7.5zM19 19H5L19 5v14zm-2-2v-1.5h-5V17h5z"></path></g></svg>`;
 export const iso = image_iso;
-if(window.icons === undefined){ window.icons = {}; }
-window.icons["image:iso"] = window.icons["iso"] = image_iso;
+iconMap["image:iso"] = iconMap["iso"] = image_iso;
