@@ -1,0 +1,56 @@
+// noinspection NestedAssignmentJS,AssignmentResultUsedJS
+
+"use strict";
+import {communication_business, communication_call, communication_call_end, communication_call_made, communication_call_merge, communication_call_missed, communication_call_missed_outgoing, communication_call_received, communication_call_split, communication_chat, communication_chat_bubble, communication_chat_bubble_outline, communication_clear_all, communication_comment, communication_contact_mail, communication_contact_phone, communication_contacts, communication_dialer_sip, communication_dialpad, communication_email, communication_forum, communication_import_contacts, communication_import_export, communication_invert_colors_off, communication_live_help, communication_location_off, communication_location_on, communication_mail_outline, communication_message, communication_no_sim, communication_phone, communication_phonelink_erase, communication_phonelink_lock, communication_phonelink_ring, communication_phonelink_setup, communication_portable_wifi_off, communication_present_to_all, communication_ring_volume, communication_rss_feed, communication_screen_share, communication_speaker_phone, communication_stay_current_landscape, communication_stay_current_portrait, communication_stay_primary_landscape, communication_stay_primary_portrait, communication_stop_screen_share, communication_swap_calls, communication_textsms, communication_voicemail, communication_vpn_key} from '../icons.js';
+
+if(window.icons === undefined){ window.icons = {}; }
+window.icons["communication:business"] = window.icons["business"] = communication_business;
+window.icons["communication:call"] = window.icons["call"] = communication_call;
+window.icons["communication:call-end"] = window.icons["call-end"] = communication_call_end;
+window.icons["communication:call-made"] = window.icons["call-made"] = communication_call_made;
+window.icons["communication:call-merge"] = window.icons["call-merge"] = communication_call_merge;
+window.icons["communication:call-missed"] = window.icons["call-missed"] = communication_call_missed;
+window.icons["communication:call-missed-outgoing"] = window.icons["call-missed-outgoing"] = communication_call_missed_outgoing;
+window.icons["communication:call-received"] = window.icons["call-received"] = communication_call_received;
+window.icons["communication:call-split"] = window.icons["call-split"] = communication_call_split;
+window.icons["communication:chat"] = window.icons["chat"] = communication_chat;
+window.icons["communication:chat-bubble"] = window.icons["chat-bubble"] = communication_chat_bubble;
+window.icons["communication:chat-bubble-outline"] = window.icons["chat-bubble-outline"] = communication_chat_bubble_outline;
+window.icons["communication:clear-all"] = window.icons["clear-all"] = communication_clear_all;
+window.icons["communication:comment"] = window.icons["comment"] = communication_comment;
+window.icons["communication:contact-mail"] = window.icons["contact-mail"] = communication_contact_mail;
+window.icons["communication:contact-phone"] = window.icons["contact-phone"] = communication_contact_phone;
+window.icons["communication:contacts"] = window.icons["contacts"] = communication_contacts;
+window.icons["communication:dialer-sip"] = window.icons["dialer-sip"] = communication_dialer_sip;
+window.icons["communication:dialpad"] = window.icons["dialpad"] = communication_dialpad;
+window.icons["communication:email"] = window.icons["email"] = communication_email;
+window.icons["communication:forum"] = window.icons["forum"] = communication_forum;
+window.icons["communication:import-contacts"] = window.icons["import-contacts"] = communication_import_contacts;
+window.icons["communication:import-export"] = window.icons["import-export"] = communication_import_export;
+window.icons["communication:invert-colors-off"] = window.icons["invert-colors-off"] = communication_invert_colors_off;
+window.icons["communication:live-help"] = window.icons["live-help"] = communication_live_help;
+window.icons["communication:location-off"] = window.icons["location-off"] = communication_location_off;
+window.icons["communication:location-on"] = window.icons["location-on"] = communication_location_on;
+window.icons["communication:mail-outline"] = window.icons["mail-outline"] = communication_mail_outline;
+window.icons["communication:message"] = window.icons["message"] = communication_message;
+window.icons["communication:no-sim"] = window.icons["no-sim"] = communication_no_sim;
+window.icons["communication:phone"] = window.icons["phone"] = communication_phone;
+window.icons["communication:phonelink-erase"] = window.icons["phonelink-erase"] = communication_phonelink_erase;
+window.icons["communication:phonelink-lock"] = window.icons["phonelink-lock"] = communication_phonelink_lock;
+window.icons["communication:phonelink-ring"] = window.icons["phonelink-ring"] = communication_phonelink_ring;
+window.icons["communication:phonelink-setup"] = window.icons["phonelink-setup"] = communication_phonelink_setup;
+window.icons["communication:portable-wifi-off"] = window.icons["portable-wifi-off"] = communication_portable_wifi_off;
+window.icons["communication:present-to-all"] = window.icons["present-to-all"] = communication_present_to_all;
+window.icons["communication:ring-volume"] = window.icons["ring-volume"] = communication_ring_volume;
+window.icons["communication:rss-feed"] = window.icons["rss-feed"] = communication_rss_feed;
+window.icons["communication:screen-share"] = window.icons["screen-share"] = communication_screen_share;
+window.icons["communication:speaker-phone"] = window.icons["speaker-phone"] = communication_speaker_phone;
+window.icons["communication:stay-current-landscape"] = window.icons["stay-current-landscape"] = communication_stay_current_landscape;
+window.icons["communication:stay-current-portrait"] = window.icons["stay-current-portrait"] = communication_stay_current_portrait;
+window.icons["communication:stay-primary-landscape"] = window.icons["stay-primary-landscape"] = communication_stay_primary_landscape;
+window.icons["communication:stay-primary-portrait"] = window.icons["stay-primary-portrait"] = communication_stay_primary_portrait;
+window.icons["communication:stop-screen-share"] = window.icons["stop-screen-share"] = communication_stop_screen_share;
+window.icons["communication:swap-calls"] = window.icons["swap-calls"] = communication_swap_calls;
+window.icons["communication:textsms"] = window.icons["textsms"] = communication_textsms;
+window.icons["communication:voicemail"] = window.icons["voicemail"] = communication_voicemail;
+window.icons["communication:vpn-key"] = window.icons["vpn-key"] = communication_vpn_key;
