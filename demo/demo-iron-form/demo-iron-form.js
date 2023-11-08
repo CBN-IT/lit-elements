@@ -1,7 +1,7 @@
 "use strict";
 import {LitElement, html} from 'lit'
-import {flexLayoutClasses} from "/elements/flex-layout/flex-layout-classes.js";
-import "/elements/iron-form/iron-form.js";
+import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
+import "../../elements/iron-form/iron-form.js";
 
 class DemoIronForm extends LitElement {
 
