@@ -110,7 +110,7 @@ class IronAjax extends LitElement {
         let encodedCompanyId = (window.data !== undefined && window.data._selectedCompany !== undefined) ?
             `${encodeURIComponent('_companyId')}=${encodeURIComponent(window.data._selectedCompany)}` :
             '';
-        if (window.data.globalParams) {
+        if (window.data?.globalParams) {
             encodedCompanyId += '&' + this._getEncodedObject(window.data.globalParams)
         }
         return (params !== undefined) ?

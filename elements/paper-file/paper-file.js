@@ -125,6 +125,9 @@ class PaperFile extends PaperInputContainer {
     }
 
     get value() {
+        if (this._value === undefined) {
+            this._value = [];
+        }
         return this.multiple ? this._value : (this._value.length > 0 ? this._value[0] : '');
     }
 
