@@ -1,6 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit';
 import {live} from 'lit/directives/live.js';
+import {repeat} from 'lit/directives/repeat.js';
 import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import './../paper-input/paper-input.js';
@@ -15,6 +16,7 @@ import './../iron-ajax/iron-ajax.js';
 import "../iron-icons/icons/icons/check_circle.js";
 import {unsafeHTML} from "lit/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 export class IronForm extends LitElement {
 
@@ -97,14 +99,16 @@ export class IronForm extends LitElement {
         this.config = {elements: []};
         this.model = {};
         this.params = {};
-        this.autocomplete="off"
+        this.autocomplete="off";
+        this.getElementBound = this.getElement.bind(this);
+        this._initialModel = {};
     }
 
     render() {
         return html`
             <iron-ajax id="request" .url="${this.url}" method="POST"></iron-ajax>
             <div class="form" id="form">
-                ${this.config ? this.config.elements.map(item => this.getElement(item)) : ''}
+                ${repeat(this.config.elements, (el, idx) => el.name || idx, this.getElementBound)}
             </div>
             <div class="actions">
                 ${!this.noSubmitButton ? html`
@@ -117,6 +121,46 @@ export class IronForm extends LitElement {
 
     firstUpdated() {
         this.request = this.shadowRoot.querySelector('#request');
+
+    }
+
+    updated(changedProperties) {
+        if (changedProperties.has('model')) {
+            this._initialModel = JSON.parse(JSON.stringify(this.model));
+        }
+    }
+
+    get isDirty() {
+        return this.dirtyList.length > 0
+    }
+
+    get dirtyList() {
+        let dirtyList = [];
+        for (let elementConfig of this.config.elements) {
+            let newValue = this._getValueFromModel(this.model, elementConfig.name);
+            let oldValue = this._getValueFromModel(this._initialModel, elementConfig.name);
+            if (!CBNUtils.deepEqual(oldValue, newValue)) {
+                dirtyList.push({
+                    name: elementConfig.name,
+                    newValue,
+                    oldValue
+                })
+            }
+        }
+        return dirtyList
+    }
+
+    _getValueFromModel(model, name){
+        if (name?.match(/^([^.]+)\.([0-9]+)$/)) {
+            //a.0
+            let [name, idx] = name.split(".");
+            return model[name]?.[idx];
+        } else if (name?.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
+            //a.0.prop
+            let [name, idx, prop] = name.split(".");
+            return model[name]?.[idx]?.[prop];
+        }
+        return model[name];
     }
 
     getElement(elementConfig) {
@@ -350,18 +394,18 @@ export class IronForm extends LitElement {
         if (event.detail.label !== undefined) {
             this.model[`${name}_label`] = event.detail.label;
         }
-        setTimeout(()=>{
+        setTimeout(() => {
             this.config.elements.forEach(item => {
                 if (item.name === name) {
-                    let toShow = item.toShow?.[value+""];
-                    let toHide = item.toHide?.[value+""];
-                    if(toShow){
-                        for(let name of toShow){
+                    let toShow = item.toShow?.[value + ""];
+                    let toHide = item.toHide?.[value + ""];
+                    if (toShow) {
+                        for (let name of toShow) {
                             this.showInput(name);
                         }
                     }
-                    if(toHide){
-                        for(let name of toHide){
+                    if (toHide) {
+                        for (let name of toHide) {
                             this.hideInput(name);
                         }
                     }
