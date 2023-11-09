@@ -18,10 +18,11 @@ class DemoIronForm extends LitElement {
         return [flexLayoutClasses]
     }
 
+
     constructor() {
         super();
         this.model = {
-            location: "x"
+            location:"x"
         };
         this.config = {
             "elements": [
@@ -70,12 +71,12 @@ class DemoIronForm extends LitElement {
                     "dbCollection": "locations",
                     "options": [
                         {
-                            value: "x",
-                            label: "X",
-                        },
+                        value:"x",
+                        label:"X",
+                    },
                         {
-                            value: "y",
-                            label: "Y",
+                            value:"y",
+                            label:"Y",
                         }
                     ],
                     "isDropdownMenu": true,
@@ -196,13 +197,24 @@ class DemoIronForm extends LitElement {
         };
     }
 
+
     render() {
         return html`
-            <iron-form .config="${this.config}" .model="${this.model}" url="/SaveForm" collection="collection" @saved-form="${this._savedForm}"></iron-form>
+            <iron-form 
+                    .config="${this.config}" 
+                    .model="${this.model}" 
+                    url="/SaveForm" 
+                    collection="collection" 
+                    @saved-form="${this._savedForm}"
+                    @value-changed="${this.onValueChange}"
+            ></iron-form>
             <paper-button icon="asd" class="bgBlue" @click="${this.changeModel}">Change Model</paper-button>
         `;
     }
-
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+        this.form = this.renderRoot.querySelector("iron-form")
+    }
     changeModel() {
         this.model = {
             date: "2023-10-15",
@@ -212,9 +224,12 @@ class DemoIronForm extends LitElement {
         setTimeout(() => {
             console.log(this.model)
         })
-
+    }
+    onValueChange(){
+        console.log(this.form.dirtyList);
     }
 
+    }
     _savedForm(event) {
         console.log(event.detail.response);
     }
@@ -222,3 +237,6 @@ class DemoIronForm extends LitElement {
 }
 
 customElements.define("iron-form-demo", DemoIronForm);
+
+
+

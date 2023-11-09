@@ -222,7 +222,9 @@ class PaperSelect extends PaperInputContainer {
                 images = [images];
             }
             return images.map(image => {
-                return html`<img src="${typeof image === 'string' ? image : image.url}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'
+                return html`<img src="${typeof image === 'string' ? image : image.url}" 
+                                 onmouseover='showLargeImg(this)' 
+                                 onmouseout='showSmallImg(this)'
                                  class="optionImage"/>`
             })
         }
@@ -458,7 +460,7 @@ class PaperSelect extends PaperInputContainer {
             }
             case "Backspace": {
                 if (CBNUtils.isNoE(this.input.value)) {
-                    this._value.pop();
+                    this._deleteItem(event, this._value[this._value.length-1], this._value.length-1)
                     this.requestUpdate();
                 }
             }
