@@ -50,7 +50,7 @@ class DemoIronForm extends LitElement {
                 {
                     "label": "Stock Adjustment Date",
                     "type": "date",
-                    "name": "date",
+                    "name": "date2",
                     "dbType": "string",
                     "class": "col-xs-12 col-sm-3 col-lg-3",
                     "required": false,
@@ -89,7 +89,7 @@ class DemoIronForm extends LitElement {
                 {
                     "label": "Selectie",
                     "type": "select",
-                    "name": "location",
+                    "name": "location2",
                     "dbType": "string",
                     "dbCollection": "locations",
                     "options": [
@@ -200,19 +200,35 @@ class DemoIronForm extends LitElement {
 
     render() {
         return html`
-            <iron-form .config="${this.config}" .model="${this.model}" url="/SaveForm" collection="collection" @saved-form="${this._savedForm}"></iron-form>
+            <iron-form 
+                    .config="${this.config}" 
+                    .model="${this.model}" 
+                    url="/SaveForm" 
+                    collection="collection" 
+                    @saved-form="${this._savedForm}"
+                    @value-changed="${this.onValueChange}"
+            ></iron-form>
             <paper-button icon="asd" class="bgBlue" @click="${this.changeModel}">Change Model</paper-button>
         `;
     }
-    changeModel(){
-        this.model = {
-            date:"2023-10-15",
-            reason:"Tra la la",
-            location:"y"
-        }
-        setTimeout(() => {console.log(this.model)})
-
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+        this.form = this.renderRoot.querySelector("iron-form")
     }
+    changeModel() {
+        this.model = {
+            date: "2023-10-15",
+            reason: "Tra la la",
+            location: "y"
+        }
+        setTimeout(() => {
+            console.log(this.model)
+        })
+    }
+    onValueChange(){
+        console.log(this.form.dirtyList);
+    }
+
     _savedForm(event) {
         console.log(event.detail.response);
     }
