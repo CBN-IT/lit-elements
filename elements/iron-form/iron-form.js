@@ -1,7 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit';
 import {directive} from 'lit/directive.js';
-
+import {live} from 'lit/directives/live.js';
 import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import './../paper-input/paper-input.js';
@@ -159,7 +159,7 @@ export class IronForm extends LitElement {
                         .format="${elementConfig.format}"
                         .min="${elementConfig.min}"
                         .max="${elementConfig.max}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                     ></paper-date-picker>`;
             }
             case 'time': {
@@ -173,7 +173,7 @@ export class IronForm extends LitElement {
                         .required="${elementConfig.required}"
                         .disabled="${elementConfig.disabled}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                     ></paper-date-time-picker>`;
             }
             case 'file': {
@@ -187,7 +187,7 @@ export class IronForm extends LitElement {
                         .required="${elementConfig.required}"
                         .disabled="${elementConfig.disabled}"
                         .multiple="${elementConfig.multiple}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                     ></paper-file>`
             }
             case 'checkbox': {
@@ -201,7 +201,7 @@ export class IronForm extends LitElement {
                         .required="${elementConfig.required}"
                         .disabled="${elementConfig.disabled}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                     ></paper-checkbox>`
             }
             case 'select': {
@@ -222,7 +222,7 @@ export class IronForm extends LitElement {
                         .itemLabelProperty="${elementConfig.itemLabelProperty}"
                         .itemImageProperty="${elementConfig.itemImageProperty}"
                         .options="${elementConfig.options}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                         .preventSelection="${elementConfig.preventSelection}"
                         .isDropdownMenu="${elementConfig.isDropdownMenu}"
                     ></paper-select>`
@@ -244,7 +244,7 @@ export class IronForm extends LitElement {
                         .itemValueProperty="${elementConfig.itemValueProperty}"
                         .itemLabelProperty="${elementConfig.itemLabelProperty}"
                         .options="${elementConfig.options}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                     ></paper-address>`
             }
             case 'textarea': {
@@ -260,7 +260,7 @@ export class IronForm extends LitElement {
                         .minLength="${elementConfig.minLength}"
                         .maxLength="${elementConfig.maxLength}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                         .rows="${elementConfig.rows}"
                         .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-textarea>`;
@@ -316,7 +316,7 @@ export class IronForm extends LitElement {
                         .isCIF="${elementConfig.isCIF}"
                         .isEmail="${elementConfig.isEmail}"
                         .defaultValue="${elementConfig.defaultValue}"
-                        .value="${forceWrite(value)}"
+                        .value="${live(value)}"
                         .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-input>`
             }
