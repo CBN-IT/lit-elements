@@ -1,6 +1,5 @@
 "use strict";
 import {LitElement, html, css} from 'lit';
-import {directive} from 'lit/directive.js';
 import {live} from 'lit/directives/live.js';
 import {gridClasses} from "../grid-layout/grid-classes.js";
 
@@ -16,15 +15,6 @@ import './../iron-ajax/iron-ajax.js';
 import "../iron-icons/icons/icons/check_circle.js";
 import {unsafeHTML} from "lit/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
-/*
-https://github.com/Polymer/lit-html/issues/877
-https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
-Does not work with live, cause when we change the model,
-the select doesn't throw a changed event and we dont populate the model with _label
-*/
-const forceWrite = directive((value) => (part) => {
-    part.setValue(value);
-});
 
 export class IronForm extends LitElement {
 
