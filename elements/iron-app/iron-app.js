@@ -13,7 +13,7 @@ import '../paper-button/paper-button.js';
 import '../get-report/get-report.js';
 import '../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
-import logo from '/web/images/logo.svg';
+// import logo from '/web/images/logo.svg';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 
 import "../iron-icons/icons/icons/file_upload.js";
@@ -86,189 +86,189 @@ export class IronApp extends LitElement {
     static get layoutStyles() {
         // language= CSS
         return css`
-            .header {
-                height: 47px;
-            }
+          .header {
+            height: 47px;
+          }
 
-            .header.logo {
-                padding: 2px;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
+          .header.logo {
+            padding: 2px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
 
-            .collapsed .header.logo {
-                align-items: flex-start;
-            }
+          .collapsed .header.logo {
+            align-items: flex-start;
+          }
 
-            .header.toolbar {
-                background: var(--app-primary-color);
-            }
+          .header.toolbar {
+            background: var(--app-primary-color);
+          }
 
-            .left-side {
-                background: var(--app-primary-color);
-                box-sizing: border-box;
-                overflow: hidden;
-                transition: width 0.3s;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                z-index: 40;
-            }
+          .left-side {
+            background: var(--app-primary-color);
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: width 0.3s;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 40;
+          }
 
-            .right-side {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                background: rgb(216, 216, 216);
-            }
+          .right-side {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background: rgb(216, 216, 216);
+          }
 
-            .right-side-bottom {
-                overflow: auto;
-            }
+          .right-side-bottom {
+            overflow: auto;
+          }
 
-            .collapsed-icon {
-                transform: rotateZ(+90deg);
-            }
+          .collapsed-icon {
+            transform: rotateZ(+90deg);
+          }
 
-            .extended-icon {
-                transform: rotateZ(-90deg);
-            }
+          .extended-icon {
+            transform: rotateZ(-90deg);
+          }
 
-            .collapsed {
-                width: 46px;
-            }
+          .collapsed {
+            width: 46px;
+          }
 
-            .full-collapsed {
-                width: 0;
-            }
+          .full-collapsed {
+            width: 0;
+          }
 
-            .collapsed:hover, .extended {
-                width: 200px;
-            }
+          .collapsed:hover, .extended {
+            width: 200px;
+          }
 
-            .full-window {
-                left: 0;
-            }
+          .full-window {
+            left: 0;
+          }
 
-            .small-window {
-                left: 200px;
-            }
+          .small-window {
+            left: 200px;
+          }
 
-            .big-window {
-                left: 46px;
-            }
+          .big-window {
+            left: 46px;
+          }
 
-            .menu-buttons-container {
-                min-width: 200px;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
+          .menu-buttons-container {
+            min-width: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+          }
 
-            .overlay {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: rgba(0, 0, 0, .43);
-                z-index: 40;
-            }
+          .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, .43);
+            z-index: 40;
+          }
 
-            paper-fab {
-                bottom: 0;
-                left: 0;
-                background: var(--highlight-color);
-                z-index: 40;
-            }
+          paper-fab {
+            bottom: 0;
+            left: 0;
+            background: var(--highlight-color);
+            z-index: 40;
+          }
 
-            .menu-button:hover, .menu-button.iron-selected {
-                color: var(--selected-menu-color, white);
-                background-color: var(--selected-menu-background-color, rgba(255, 255, 255, 0.30));
-                border-left: 3px solid var(--selected-menu-border-color, white);
-                cursor: pointer;
-            }
+          .menu-button:hover, .menu-button.iron-selected {
+            color: var(--selected-menu-color, white);
+            background-color: var(--selected-menu-background-color, rgba(255, 255, 255, 0.30));
+            border-left: 3px solid var(--selected-menu-border-color, white);
+            cursor: pointer;
+          }
 
-            .menu-button:hover {
-                cursor: pointer;
-            }
+          .menu-button:hover {
+            cursor: pointer;
+          }
 
-            .menu-button {
-                text-decoration: none;
-                height: 32px;
-                flex-shrink: 0;
-                border-left: 3px solid var(--app-primary-color);
-                padding: 0 8px;
-                cursor: pointer;
-                white-space: nowrap;
-                background: var(--app-primary-color);
-                border-top-right-radius: 25px;
-                border-bottom-right-radius: 25px;
-                box-sizing: border-box;
-                color: var(--menu-color, white);
-            }
+          .menu-button {
+            text-decoration: none;
+            height: 32px;
+            flex-shrink: 0;
+            border-left: 3px solid var(--app-primary-color);
+            padding: 0 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            background: var(--app-primary-color);
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-sizing: border-box;
+            color: var(--menu-color, white);
+          }
 
-            .menu-button > iron-icon {
-                margin-right: 12px;
-                color: var(--menu-color, white);
+          .menu-button > iron-icon {
+            margin-right: 12px;
+            color: var(--menu-color, white);
 
-            }
+          }
 
-            .small.menu-button > iron-icon {
-                margin-right: 0;
-            }
+          .small.menu-button > iron-icon {
+            margin-right: 0;
+          }
 
-            .menu-button:hover > iron-icon, .menu-button.iron-selected > iron-icon {
-                color: var(--selected-menu-border-color, white);
-            }
+          .menu-button:hover > iron-icon, .menu-button.iron-selected > iron-icon {
+            color: var(--selected-menu-border-color, white);
+          }
 
 
-            a, a:visited, a:hover, a:active {
-                color: var(--menu-color, white);
-            }
+          a, a:visited, a:hover, a:active {
+            color: var(--menu-color, white);
+          }
 
-            .big-logo {
-                width: var(--logo-width, 160px);
-                user-select: none;
-                max-height: 100%;
-            }
+          .big-logo {
+            width: var(--logo-width, 160px);
+            user-select: none;
+            max-height: 100%;
+          }
 
-            .company-dropdown {
-                --input-container-padding: 1px;
-                --input-container-border: 0px;
-                --input-container-min-height: 30px;
-                --input-padding: 0 10px 5px 10px;
-                color: var(--menu-color);
-                width: 300px;
-            }
+          .company-dropdown {
+            --input-container-padding: 1px;
+            --input-container-border: 0px;
+            --input-container-min-height: 30px;
+            --input-padding: 0 10px 5px 10px;
+            color: var(--menu-color);
+            width: 300px;
+          }
 
-            .big {
-                max-width: 80%;
-            }
+          .big {
+            max-width: 80%;
+          }
 
-            .small {
-                max-width: 20%;
-            }
+          .small {
+            max-width: 20%;
+          }
 
-            .full-width {
-                min-width: 100%;
-            }
+          .full-width {
+            min-width: 100%;
+          }
 
-            .group-section-title {
-                color: var(--group-section-color, white);
-                font-weight: bold;
-                background: var(--group-section-background-color, rgba(255, 255, 255, 0.2));
-                border-top: 2px solid var(--menu-color, white);
-                padding: 5px 0 5px 15px;
-            }
+          .group-section-title {
+            color: var(--group-section-color, white);
+            font-weight: bold;
+            background: var(--group-section-background-color, rgba(255, 255, 255, 0.2));
+            border-top: 2px solid var(--menu-color, white);
+            padding: 5px 0 5px 15px;
+          }
 
-            .collapse-button {
-                color: var(--menu-color);
-            }
+          .collapse-button {
+            color: var(--menu-color);
+          }
         `;
     }
 
@@ -291,7 +291,6 @@ export class IronApp extends LitElement {
         this._companies = window.data._companies;
         this._selectedCompany = window.data._selectedCompany;
 
-
         window.addEventListener('popstate', this._onPopstate.bind(this));
         window.addEventListener('show-page', this._showPage.bind(this)); //for layout
         window.addEventListener('click', this._onClick.bind(this));
@@ -300,11 +299,12 @@ export class IronApp extends LitElement {
             this.isMobile = matches || this.constructor._isMobile();
             this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
         });
-        this.logoSrc = logo;
+        this.logoSrc = ""
     }
 
-    _templateHelp(){
-        return html`<paper-help></paper-help>`;
+    _templateHelp() {
+        return html`
+            <paper-help></paper-help>`;
     }
 
     render() {
@@ -324,37 +324,42 @@ export class IronApp extends LitElement {
                         <iron-selector class="flex vertical layout" attrForSelected="name" .selected="${this.page}" slot="pages" isPages>
                             ${this.views}
                         </iron-selector>
-                    </div>    
+                    </div>
                     <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
-                </div>  
-                <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>                    
+                </div>
+                <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>
                 <div class="${this.collapsed ? this.isMobile ? 'full-collapsed' : 'collapsed' : 'extended'} vertical layout left-side">
-                    <div class="header logo">                                                        
-                        <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
+                    <div class="header logo">
+                        <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">
                     </div>
                     <div slot="company-dropdown" class="horizontal layout">
-                        <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
+                        <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}"
+                                      .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName"
+                                      itemValueProperty="_id"></paper-select>
                     </div>
-                    <div class="vertical layout flex left-menu">      
-                        <div class="flex menu-buttons-container" >
-                            <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap" @iron-select="${this._onPageSelect.bind(this)}">
+                    <div class="vertical layout flex left-menu">
+                        <div class="flex menu-buttons-container">
+                            <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap"
+                                           @iron-select="${this._onPageSelect.bind(this)}">
                                 ${this.menuSections.map(groupSection => html`
                                     <div class="group-section-title full-width">${groupSection.groupTitle}</div>
                                     ${groupSection.sections.map(menuSection => html`
-                                    <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
-                                        <iron-icon icon="${menuSection.icon}" .svgIcon="${menuSection.svgIcon}"></iron-icon>
-                                        ${menuSection.label}
-                                    </a>
-                                    `)}                                        
+                                        <a href="/${menuSection.name}" name="${menuSection.name}"
+                                           class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
+                                            <iron-icon icon="${menuSection.icon}" .svgIcon="${menuSection.svgIcon}"></iron-icon>
+                                            ${menuSection.label}
+                                        </a>
+                                    `)}
                                 `)}
                             </iron-selector>
-                        </div>                                            
-                        <div class="horizontal layout start-justified"> 
-                            <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'} collapse-button" icon="file-upload" small no-margin no-background
-                            style="display:${this.isMobile ? 'none' : 'inline-block'}" @click="${this._toggle}"></paper-button>
-                        </div>                       
-                    </div>                                       
-                </div>                                                        
+                        </div>
+                        <div class="horizontal layout start-justified">
+                            <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'} collapse-button" icon="file-upload" small no-margin
+                                          no-background
+                                          style="display:${this.isMobile ? 'none' : 'inline-block'}" @click="${this._toggle}"></paper-button>
+                        </div>
+                    </div>
+                </div>
             </div>`;
     }
 
@@ -363,7 +368,7 @@ export class IronApp extends LitElement {
     }
 
     async _showPage(event) {
-        let {page,_id, ...model} = event.detail;
+        let {page, _id, ...model} = event.detail;
         await this._setPages((this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : ''), model);
     }
 
@@ -388,9 +393,9 @@ export class IronApp extends LitElement {
 
     _pushState(pathname) {
         let globalParams = window.data.globalParams || {};
-        let params = Object.entries(globalParams).map(([key,value])=>`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-        if(params.length>0){
-            params = "&"+params.join("&");
+        let params = Object.entries(globalParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        if (params.length > 0) {
+            params = "&" + params.join("&");
         }
         window.history.pushState({}, '', `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}${params}`);
     }
@@ -423,9 +428,9 @@ export class IronApp extends LitElement {
 
     _onCompanySelection(event) {
         let globalParams = window.data.globalParams || {};
-        let params = Object.entries(globalParams).map(([key,value])=>`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-        if(params.length>0){
-            params = "&"+params.join("&");
+        let params = Object.entries(globalParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        if (params.length > 0) {
+            params = "&" + params.join("&");
         }
         window.open(`/${this.base || ""}?_companyId=${encodeURIComponent(event.detail.value._id)}${params}`);
     } //layout functions

@@ -26,6 +26,7 @@ class DemoApp extends LitElement {
     }
 
     static get styles(){
+        
         return [flexLayoutClasses]
     }
 
@@ -181,6 +182,3 @@ class DemoApp extends LitElement {
 
 }
 customElements.define("demo-app", DemoApp);
-
-
-
