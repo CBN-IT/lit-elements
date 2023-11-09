@@ -258,6 +258,9 @@ class PaperSelect extends PaperInputContainer {
     }
 
     get value() {
+        if (this._value === undefined) {
+            this._value = [];
+        }
         return this.multiple ? this._value.map(item => item.__value) : (this._value.length > 0 ? this._value[0].__value : '');
     }
 
