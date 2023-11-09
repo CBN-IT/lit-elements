@@ -79,7 +79,6 @@ class DemoIronForm extends LitElement {
                             label:"Y",
                         }
                     ],
-                    "isDropdownMenu": true,
                     "saveLabel": true,
                     "itemValueProperty": "value",
                     "itemLabelProperty": "label",
@@ -95,15 +94,15 @@ class DemoIronForm extends LitElement {
                     "options": [
                         {
                         value:"x",
-                        label:"X",
+                        label:"XXXXX",
                     },
                         {
                             value:"y",
-                            label:"Y",
+                            label:"YYYYY",
                         },
                         {
                             value:"z",
-                            label:"Z",
+                            label:"ZZZZZZ",
                         }
                     ],
                     "isDropdownMenu": true,
