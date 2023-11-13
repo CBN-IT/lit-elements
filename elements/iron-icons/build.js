@@ -40,7 +40,7 @@ function buildContentWindow(svgs, namespace, dir = "elements/iron-icons/icons/")
         let [namespace,id] = key.split(":");
 
         let cleanId = id.replace(/[\-:]/g,"_");
-        fileContent += `import './${namespace}/${cleanId}.js';\n`;
+        fileContent += `import './${cleanId}.js';\n`;
     }
 
     fs.writeFileSync(folder+"/" + "allIcons.js", fileContent)
@@ -53,7 +53,7 @@ function buildContent(svgs,dir = "elements/iron-icons/icons/"){
 
         let cleanId = id.replace(/[\-:]/g,"_");
         fileContent += `export const ${namespace}_${cleanId} = svg\`${svg}\`;\n`;
-        if (!reservedWords.includes(cleanId)) {
+        if (!reservedWords.includes(cleanId) && !cleanId[0].match(/[0-9]/)) {
             fileContent += `export const ${cleanId} = ${namespace}_${cleanId};\n`;
         }
         fileContent += `iconMap["${namespace}:${id}"] = iconMap["${id}"] = ${namespace}_${cleanId};\n`;
