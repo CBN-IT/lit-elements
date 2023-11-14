@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
+import { repeat } from 'lit-html/directives/repeat.js';
 import {directive} from '/node_modules/lit-html/lit-html.js';
 
 import {gridClasses} from "../grid-layout/grid-classes.js";
@@ -17,7 +18,6 @@ import "check-circle|../iron-icons/icons.svgicon";
 import {unsafeHTML} from "lit-html/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
 /*
-https://github.com/Polymer/lit-html/issues/877
 https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
 Does not work with live, cause when we change the model,
 the select doesn't throw a changed event and we dont populate the model with _label
@@ -107,14 +107,15 @@ export class IronForm extends LitElement {
         this.config = {elements: []};
         this.model = {};
         this.params = {};
-        this.autocomplete="off"
+        this.autocomplete="off";
+        this.getElementBound = this.getElement.bind(this);
     }
 
     render() {
         return html`
             <iron-ajax id="request" .url="${this.url}" method="POST"></iron-ajax>
             <div class="form" id="form">
-                ${this.config ? this.config.elements.map(item => this.getElement(item)) : ''}
+                ${repeat(this.config.elements, (el, idx) => el.name || idx, this.getElementBound)}
             </div>
             <div class="actions">
                 ${!this.noSubmitButton ? html`
@@ -141,14 +142,13 @@ export class IronForm extends LitElement {
                 let [name, idx, prop] = elementConfig.name.split(".");
                 value = this.model[name]?.[idx]?.[prop];
             }
-
         }
 
         switch (elementConfig.type) {
             case 'date': {
                 return html`
                     <paper-date-picker
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -165,7 +165,7 @@ export class IronForm extends LitElement {
             case 'time': {
                 return html`
                     <paper-date-time-picker
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -179,7 +179,7 @@ export class IronForm extends LitElement {
             case 'file': {
                 return html`
                     <paper-file
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -193,7 +193,7 @@ export class IronForm extends LitElement {
             case 'checkbox': {
                 return html`
                     <paper-checkbox
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -207,7 +207,7 @@ export class IronForm extends LitElement {
             case 'select': {
                 return html`
                     <paper-select
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -230,7 +230,7 @@ export class IronForm extends LitElement {
             case 'address': {
                 return html`
                     <paper-address
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -250,7 +250,7 @@ export class IronForm extends LitElement {
             case 'textarea': {
                 return html`
                     <paper-textarea
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -278,15 +278,15 @@ export class IronForm extends LitElement {
                     <p
                         name="${elementConfig.name}"
                         style="${elementConfig.style || ""}"
-                        class="${elementConfig.class || ""}"
+                        class="${forceWrite(elementConfig.class || "")}"
                     >${content}</p>`
             }
             case 'button': {
                 return html`
                     <paper-button
+                        class="${forceWrite(elementConfig.class || "")}"
                         name="${elementConfig.name}"
                         style="${elementConfig.style || ""}"
-                        class="${elementConfig.class || ""}"
                         icon="${elementConfig.icon || ""}"
                         ?small="${elementConfig.small || false}"
                         ?smallest="${elementConfig.smallest || false}"
@@ -299,7 +299,7 @@ export class IronForm extends LitElement {
             default: {
                 return html`
                     <paper-input
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         .type="${elementConfig.type}"
