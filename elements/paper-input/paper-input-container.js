@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
+import {classMap} from 'lit/directives/class-map.js';
 
 export class PaperInputContainer extends LitElement {
 
@@ -142,12 +143,12 @@ export class PaperInputContainer extends LitElement {
 
     render() {
         return html`
-            <div class="form-field ${this.focused ? 'focused' : ''} ${this.isValid ? 'valid' : 'invalid'} ${this.disabled ? 'disabled' : ''}">
-                <div class="input-container">   
-                    ${this.inputElement}                                                                             
+            <div class="form-field ${classMap({focused: this.focused, valid: this.isValid, invalid: !this.isValid, disabled: this.disabled})}">
+                <div class="input-container">
+                    ${this.inputElement}
                 </div>
             </div>
-            <label class="label ${this.floated ? 'floated' : ''}">${this.label}</label>
+            <label class="label  ${classMap({floated: this.floated})}">${this.label}</label>
         `;
     }
 

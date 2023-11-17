@@ -2,6 +2,7 @@
 import {html, css} from 'lit'
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
+import {classMap} from 'lit/directives/class-map.js';
 
 class PaperCheckbox extends PaperInputContainer {
 
@@ -77,14 +78,14 @@ class PaperCheckbox extends PaperInputContainer {
     get inputElement() {
         // language=html
         return html`
-                <div class="checkbox-container">
-                    <div class="checkbox ${this._value ? 'checked' : ''}">
-                        <div>&#10004;</div>
-                    </div>
-                    <label class="checkbox-label">${this.label}</label>
-                    <input type="checkbox" class="input" ?checked="${this._value}">
-                </div>                
-            `;
+            <div class="checkbox-container">
+                <div class="checkbox ${classMap({checked: this._value})}">
+                    <div>&#10004;</div>
+                </div>
+                <label class="checkbox-label">${this.label}</label>
+                <input type="checkbox" class="input" ?checked="${this._value}">
+            </div>
+        `;
     }
 
     firstUpdated(changedProperties) {
@@ -138,7 +139,7 @@ class PaperCheckbox extends PaperInputContainer {
 
 }
 
-    customElements.define('paper-checkbox', PaperCheckbox);
+customElements.define('paper-checkbox', PaperCheckbox);
 
 
 

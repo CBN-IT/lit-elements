@@ -4,11 +4,11 @@ import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-dialog/paper-dialog.js";
 
-function escapeStr(val){
-    if(val===undefined || val===null){
+function escapeStr(val) {
+    if (val === undefined || val === null) {
         return "";
     }
-return val.replace(/"/g, '\\"');
+    return val.replace(/"/g, '\\"');
 }
 
 class GetReport extends LitElement {
@@ -61,10 +61,11 @@ class GetReport extends LitElement {
     }
 
     render() {
-        return html`            
-            <paper-dialog class="dialog" .noActions="${true}">                   
-                <iron-form slot="body" preventSubmit .config="${this.config}" .model="${this.model}" url="/GetReport" @pre-submit="${this._generateRequest}"></iron-form>
-            </paper-dialog>    
+        return html`
+            <paper-dialog class="dialog" .noActions="${true}">
+                <iron-form slot="body" preventSubmit .config="${this.config}" .model="${this.model}" url="/GetReport"
+                           @pre-submit="${this._generateRequest}"></iron-form>
+            </paper-dialog>
         `;
     }
 
@@ -73,7 +74,7 @@ class GetReport extends LitElement {
             report._path === event.detail.report ||
             report._hash === event.detail.report
         ));
-        this.keys = event.detail.keys.map(item => typeof item === 'object' ? (item._path||item._hash) : item);
+        this.keys = event.detail.keys.map(item => typeof item === 'object' ? (item._path || item._hash) : item);
 
         if (this.report.params) {
             this.config = JSON.parse(this.report.params);
@@ -119,10 +120,6 @@ class GetReport extends LitElement {
         `;
         iframe.contentDocument.write(html);
     }
-
 }
 
 customElements.define("get-report", GetReport);
-
-
-

@@ -99,15 +99,15 @@ class PaperToggleButton extends LitElement {
     }
 
     render() {
-        return html`           
+        return html`
             <div class="container horizontal layout center">
-                <div class="bar"></div>           
-                <div class="circle"></div>                              
+                <div class="bar"></div>
+                <div class="circle"></div>
             </div>
             <div>
                 <slot></slot>
             </div>
-              
+
         `;
     }
 
@@ -124,10 +124,6 @@ class PaperToggleButton extends LitElement {
         this.value = !this.value;
         CBNUtils.fireEvent(this, 'value-changed', {value: this.value});
     }
-
 }
 
 customElements.define("paper-toggle-button", PaperToggleButton);
-
-
-

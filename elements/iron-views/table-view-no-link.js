@@ -9,6 +9,7 @@ import "../paper-reports-dropdown/paper-reports-dropdown.js";
 
 import "../iron-icons/icons/icons/add.js";
 import "../iron-icons/icons/cbn/excel.js";
+import {when} from 'lit/directives/when.js';
 import {EmptyView} from "./empty-view";
 
 
@@ -28,14 +29,14 @@ export class TableViewNoLink extends EmptyView {
         };
     }
 
-    static get styles(){
+    static get styles() {
         return [flexLayoutClasses, this.styleElement]
     }
 
-    static get styleElement(){
+    static get styleElement() {
         // language=CSS
         return css`
-            :host{
+            :host {
                 display: flex;
                 flex-direction: column;
                 position: relative;
@@ -57,6 +58,7 @@ export class TableViewNoLink extends EmptyView {
             .top-bar {
                 margin-bottom: 0;
             }
+
             [icon="excel"] {
                 --iron-icon-color: #207245;
             }
@@ -84,14 +86,14 @@ export class TableViewNoLink extends EmptyView {
         return true;
     }
 
-    firstUpdated(){
+    firstUpdated() {
         this.table = this.shadowRoot.querySelector('paper-table');
         this.request = this.shadowRoot.querySelector('.request');
     }
 
     render() {
-        return html`               
-            <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>  
+        return html`
+            <iron-ajax class="request" url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
             <div class="horizontal layout paper-material top-bar center">
                 <paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>
                 ${this._displayReportsDropdown()}
@@ -102,34 +104,40 @@ export class TableViewNoLink extends EmptyView {
                 <div style="width:44px;"></div>
             </div>
             <paper-table
-                class="flex paper-material" 
-                .columns="${this.columns}" 
-                .items="${this.items}" 
-                @dbl-click="${this._onDblClick}" 
-                @delete-item="${this._deleteItem}"
-                @cbn-table-select="${this._onTableSelect}"
+                    class="flex paper-material"
+                    .columns="${this.columns}"
+                    .items="${this.items}"
+                    @dbl-click="${this._onDblClick}"
+                    @delete-item="${this._deleteItem}"
+                    @cbn-table-select="${this._onTableSelect}"
             ></paper-table>
         `;
     }
-    _onTableSelect(event){
+
+    _onTableSelect(event) {
     }
+
     _getTopBarTemplate() {
         return '';
     }
-    async saveAsExcel(){
+
+    async saveAsExcel() {
         CBNUtils.startLoading();
         await this.table.saveXls();
         CBNUtils.stopLoading();
     }
+
+
     _displayReportsDropdown() {
-        return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
+        return when(this.reports && this.reports.length > 0, () => html`
+            <paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>`, () => '')
     }
 
-    async _addDocument(){
+    async _addDocument() {
         CBNUtils.fireEvent(this, 'show-page', {page: 'add-no-link'});
     }
 
-    async _onDblClick(event){
+    async _onDblClick(event) {
         CBNUtils.fireEvent(this, 'add-no-link', {page: 'add-no-link', model: event.detail.item});
     }
 
@@ -140,6 +148,7 @@ export class TableViewNoLink extends EmptyView {
     onPageHide() {
 
     }
+
     async _getItems() {
         if (this.request && !this.disabledRequest) {
             this.items = await this.request.generateRequest();
@@ -163,6 +172,7 @@ export class TableViewNoLink extends EmptyView {
     }
 
 }
+
 customElements.define("table-view-no-link", TableViewNoLink);
 
 

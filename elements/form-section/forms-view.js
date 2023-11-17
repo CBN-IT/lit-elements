@@ -6,7 +6,6 @@ class FormsView extends TableViewWithLink {
     static get styles() {
         return super.styles;
     }
-
     constructor() {
         super();
         this.collection = 'form';

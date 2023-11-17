@@ -2,6 +2,7 @@
 import {html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
+import {when} from 'lit/directives/when.js';
 import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
@@ -150,21 +151,24 @@ class PaperAddress extends PaperInputContainer {
             <iron-ajax id="request" .url="${this.url}" noAjaxHeader noLoading></iron-ajax>
             <div class="select-container horizontal layout center flex">
                 <div class=" horizontal layout wrap center flex" style="overflow: hidden">
-                    ${this._value.map(this._getOptionTemplate,this)}
+                    ${this._value.map(this._getOptionTemplate, this)}
                     <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" autocomplete="off"/>
                 </div>
-                
-                ${this.isDropdownMenu ? html`<iron-icon icon="arrow-drop-down"></iron-icon>` : ''}
+
+                ${when(this.isDropdownMenu, () => html`
+                    <iron-icon icon="arrow-drop-down"></iron-icon>`)}
                 ${this._getNativeSelect()}
             </div>
-            
+
             <iron-overlay .positioningElement="${this}" ?openedOverlay="${(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
                 <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
-                    ${this._filteredOptions.map((item, index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
+                    ${this._filteredOptions.map((item, index) => html`
+                        <div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
                 </iron-selector>
             </iron-overlay>
         `;
     }
+
     _getNativeSelect() {
         if (this.isNative) {
             return html`
@@ -173,12 +177,13 @@ class PaperAddress extends PaperInputContainer {
                     ${this._options.map((item, index) => html`
                         <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
                     `)}
-                </select>   
+                </select>
             `
         } else {
             return '';
         }
     }
+
     _getOptionTemplate(item, index) {
         if (!this.isDropdownMenu) {
             return html`
@@ -192,10 +197,12 @@ class PaperAddress extends PaperInputContainer {
         }
 
     }
-    _allowSelection(event){
+
+    _allowSelection(event) {
         navigator.clipboard.writeText(event.currentTarget.innerText);
         CBNUtils.displayMessage(`Textul ${event.currentTarget.innerText} a fost copiat!`);
     }
+
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
         this.ironOverlay = this.shadowRoot.querySelector('iron-overlay');
@@ -456,7 +463,7 @@ class PaperAddress extends PaperInputContainer {
                         nume_judet: address.name,
                         id: address.id,
                         ancestor: address.id,
-                        prescurtare_judet:address.metaData.shortCountyName
+                        prescurtare_judet: address.metaData.shortCountyName
                     };
                     break;
                 case 1:
@@ -466,7 +473,7 @@ class PaperAddress extends PaperInputContainer {
                         nume_superior: address.name,
                         id: address.id,
                         ancestor: address.ancestors[0].id,
-                        prescurtare_judet:address.ancestors[0].metaData.shortCountyName
+                        prescurtare_judet: address.ancestors[0].metaData.shortCountyName
                     };
                     break;
                 case 2:
@@ -477,7 +484,7 @@ class PaperAddress extends PaperInputContainer {
                         nume_localitate: address.name,
                         id: address.id,
                         ancestor: address.ancestors[0].id,
-                        prescurtare_judet:address.ancestors[1].metaData.shortCountyName
+                        prescurtare_judet: address.ancestors[1].metaData.shortCountyName
                     };
                     break;
             }

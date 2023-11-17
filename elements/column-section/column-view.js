@@ -25,4 +25,3 @@ class ColumnView extends TableViewWithLink {
 }
 
 customElements.define('column-view', ColumnView);
-

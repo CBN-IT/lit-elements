@@ -124,6 +124,3 @@ class PaperToast extends LitElement {
 }
 
 customElements.define("paper-toast", PaperToast);
-
-
-
