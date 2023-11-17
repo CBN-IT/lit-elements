@@ -12,14 +12,14 @@
     "build-dev": "gulp-build build-parcel copy-static"
   },
   "dependencies": {
-    "ace-builds": "1.31.1",
+    "ace-builds": "1.31.2",
     "dayjs": "1.11.10",
-    "lit": "3.0.1",
+    "lit": "3.1.0",
     "pwa-helpers": "0.9.1",
     "tiny-date-picker": "3.2.8",
     "xlsx": "0.18.5",
     "canvas2svg": "git+https://github.com/bogdan-nourescu/canvas-to-svg.git",
-    "svgo": "3.0.2"
+    "svgo": "3.0.3"
   },
   "devDependencies": {
     "fast-xml-parser": "4.3.2"
