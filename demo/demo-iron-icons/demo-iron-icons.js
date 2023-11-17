@@ -79,8 +79,9 @@ class DemoIronIcons extends LitElement {
                         ([ns, keys]) =>  html`
                    ${keys.some(v => v.includes(this.searchInput)) ? html` <h1 style="text-align: center;">${ns}</h1>` : ''}
                     <div style="width: 98vw; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));gap: 1em; ">
-                        ${keys.filter(v => v.includes(this.searchInput))
-                                .map((key) => html`
+                        ${repeat(keys.filter(v => v.includes(this.searchInput)),
+                                (key) => key,
+                                (key) => html`
                             <div>
                                 <iron-icon size="50" icon="${key}"></iron-icon>
                                 ${key.split(":")[1]}
