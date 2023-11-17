@@ -77,7 +77,6 @@ class PaperReportsDropdown extends PaperIconDropdown {
                 text-align: left;
                 background-color: #fff;
                 background-clip: padding-box;
-                border: 1px solid #ccc;
                 border: 1px solid rgba(0, 0, 0, .15);
                 border-radius: 4px;
             }
