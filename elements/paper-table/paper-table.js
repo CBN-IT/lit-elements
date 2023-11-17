@@ -1,6 +1,7 @@
 "use strict";
 import {LitElement,css} from 'lit'
 import {render, html} from 'lit-html';
+import {when} from 'lit/directives/when'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-icon/iron-icon.js";
 import "../paper-checkbox/paper-checkbox.js";
@@ -265,14 +266,17 @@ class PaperTable extends LitElement {
                                 <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
                                     <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
                                         <div class="flex">${column.title}</div>
-                                        ${column.sortable ? html`
+                                        ${when(column.sortable,
+                                        () => html`
                                             <div>
                                                 <iron-icon icon="${column.icon}"></iron-icon>
                                             </div>
-                                        ` : ''}
+                                        ` , () => '')}
                                     </div>
                                     <div class="head-input">
-                                        ${column.filterable ? html`<input @input="${event => this._setFilter(event, column, index)}"/>` : ""}
+                                        ${when(column.filterable,
+                                                () => html`<input @input="${event => this._setFilter(event, column, index)}"/>`, 
+                                                () => '')}
                                     </div>
                                 </div>
                             `)}
