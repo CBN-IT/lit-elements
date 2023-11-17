@@ -13,6 +13,7 @@ import {XlsUtils} from "../cbn-utils/XlsUtils";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import {compare} from "../cbn-utils/compare";
+import {repeat} from 'lit/directives/repeat'
 
 
 
@@ -258,7 +259,9 @@ class PaperTable extends LitElement {
                                 </div>
                                 <div>${this._filteredItemsNumber}</div>
                             </div>
-                            ${this._columns.map((column, index) => html`
+                            ${repeat(this._columns,
+                                    column => column.name,
+                                    (column, index) => html`
                                 <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
                                     <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
                                         <div class="flex">${column.title}</div>

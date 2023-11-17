@@ -175,7 +175,12 @@ class DemoApp extends LitElement {
                 <div slot="header">Dialog title</div>
                 <div slot="body">Dialog body</div>
             </paper-dialog>
-        </div> 
+        </div>
+            <div class="container">
+                <div class="title">multi-form</div>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-multi-form.html')}">Demo multi-form</paper-button>
+
+            </div>
         `;
     }
 

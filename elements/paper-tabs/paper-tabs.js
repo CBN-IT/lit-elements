@@ -3,6 +3,7 @@ import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import '../iron-selector/iron-selector.js'
 import '../cbn-utils/CbnUtils.js'
+import {map} from 'lit/directives/map.js'
 
 //
 class PaperTabs extends LitElement {
@@ -54,7 +55,7 @@ class PaperTabs extends LitElement {
     render() {
         return html`             
             <iron-selector .selected="${this.selectedTab}" slot="menu-buttons" class="horizontal layout" @iron-select="${this._onPageSelect.bind(this)}">
-                ${this.pages.map(page => html`
+                ${map(this.pages, page => html`
                     <div class="flex paper-tab vertical layout center center-justified">${page}</div>
                 `)}
             </iron-selector>
