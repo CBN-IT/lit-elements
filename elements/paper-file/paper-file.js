@@ -102,7 +102,6 @@ class PaperFile extends PaperInputContainer {
                                 isImage = true;
                             }
                         }
-                        console.log(item.file);
                         return html`
                             <div class="selected-option">
                                 ${when(isImage, 
