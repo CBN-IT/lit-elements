@@ -9,8 +9,6 @@ import "../elements/paper-toast/paper-toast"
 import "../elements/paper-loading/paper-loading"
 import "../elements/paper-tabs/paper-tabs"
 import "../elements/paper-dialog/paper-dialog"
-
-
 import "../elements/iron-icons/icons/icons/dns"
 import "../elements/iron-icons/icons/icons/assignment";
 import "../elements/iron-icons/icons/maps/layers";
@@ -87,13 +85,14 @@ class DemoApp extends LitElement {
         </div>
         <div class="container">
             <div class="title">iron-form</div>
-                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo/iron-form/index.html')}">Demo iron-form</paper-button>
+                <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-iron-form.html')}">Demo iron-form</paper-button>
             </div>
         </div>
        
         <div class="container">
             <div class="title">iron-icons</div>
-            ${Object.keys(window.icons).map(value => html`<iron-icon title="${value}" icon="${value}"></iron-icon>`)}
+            <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-iron-icons.html')}">Iron Icons</paper-button>
+
         </div>
         <div class="container">
             <div class="title">iron-overlay</div>

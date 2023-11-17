@@ -67,8 +67,6 @@ class DemoIronIcons extends LitElement {
     }
 
     render() {
-            console.log(this.searchInput)
-
         let groupedKeys = Object.keys(window.icons).reduce((obj,key)=>{
             if(key.includes(":")){
                 if(obj[key.split(":")[0]]===undefined){
