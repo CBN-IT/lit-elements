@@ -4,8 +4,8 @@ import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import "./iron-form.js";
 import "../paper-button/paper-button.js";
-import {keyboard_arrow_up} from "../iron-icons/icons/hardware/keyboard_arrow_up";
-import {keyboard_arrow_down} from "../iron-icons/icons/hardware/keyboard_arrow_down";
+import "../iron-icons/icons/hardware/keyboard_arrow_up";
+import "../iron-icons/icons/hardware/keyboard_arrow_down";
 import { map } from 'lit/directives/map.js';
 export class MultiForm extends LitElement {
 
@@ -88,8 +88,8 @@ export class MultiForm extends LitElement {
                     ></iron-form>
                     ${this.canReorder?html`
                         <div style="display: flex;flex-direction: column;justify-content: space-around;">
-                            <paper-button .svgIcon="${keyboard_arrow_up}" class="bgBlue" style="height:14px" small no-margin @click="${()=>this.moveUp(index)}"></paper-button>
-                            <paper-button .svgIcon="${keyboard_arrow_down}" class="bgGreen" style="height:14px" small no-margin @click="${()=>this.moveDown(index)}"></paper-button>
+                            <paper-button icon="keyboard-arrow-up" class="bgBlue" style="height:14px" small no-margin @click="${()=>this.moveUp(index)}"></paper-button>
+                            <paper-button icon="keyboard-arrow-down" class="bgGreen" style="height:14px" small no-margin @click="${()=>this.moveDown(index)}"></paper-button>
                         </div>
                     `:""}
                     <paper-button icon="delete" class="red" small no-margin @click="${()=>this.deleteForm(index)}"></paper-button>
@@ -103,7 +103,7 @@ export class MultiForm extends LitElement {
             </div>
         `;
     }
-    shouldUpdate(changedProperties) {
+    willUpdate(changedProperties) {
         if (changedProperties.has('model')) {
             //to call all the Value Changed events.
             setTimeout(() => this.forms.forEach(form=>form.requestUpdate()));
@@ -114,7 +114,6 @@ export class MultiForm extends LitElement {
         if (changedProperties.has('config')) {
             this.configs = this.model.map(v=>JSON.parse(JSON.stringify(this.config)));
         }
-        return true;
     }
 
     moveUp(index) {
