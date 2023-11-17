@@ -271,12 +271,11 @@ class PaperTable extends LitElement {
                                             <div>
                                                 <iron-icon icon="${column.icon}"></iron-icon>
                                             </div>
-                                        ` , () => '')}
+                                        `)}
                                     </div>
                                     <div class="head-input">
                                         ${when(column.filterable,
-                                                () => html`<input @input="${event => this._setFilter(event, column, index)}"/>`, 
-                                                () => '')}
+                                                () => html`<input @input="${event => this._setFilter(event, column, index)}"/>`)}
                                     </div>
                                 </div>
                             `)}

@@ -95,8 +95,7 @@ export class PaperIconDropdown extends LitElement {
                                     <option value="${index}">${item.label}</option>
                                 `)}
                             </select>
-                        `,
-                        () => '')}
+                        `)}
             </div>
             <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                 <iron-selector @iron-select="${this._onIronSelect}">
