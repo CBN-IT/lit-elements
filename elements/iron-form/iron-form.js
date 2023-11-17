@@ -175,14 +175,13 @@ export class IronForm extends LitElement {
                 let [name, idx, prop] = elementConfig.name.split(".");
                 value = this.model[name]?.[idx]?.[prop];
             }
-
         }
 
         switch (elementConfig.type) {
             case 'date': {
                 return html`
                     <paper-date-picker
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -199,7 +198,7 @@ export class IronForm extends LitElement {
             case 'time': {
                 return html`
                     <paper-date-time-picker
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -213,7 +212,7 @@ export class IronForm extends LitElement {
             case 'file': {
                 return html`
                     <paper-file
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -227,7 +226,7 @@ export class IronForm extends LitElement {
             case 'checkbox': {
                 return html`
                     <paper-checkbox
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -241,7 +240,7 @@ export class IronForm extends LitElement {
             case 'select': {
                 return html`
                     <paper-select
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -264,7 +263,7 @@ export class IronForm extends LitElement {
             case 'address': {
                 return html`
                     <paper-address
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -284,7 +283,7 @@ export class IronForm extends LitElement {
             case 'textarea': {
                 return html`
                     <paper-textarea
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -312,15 +311,15 @@ export class IronForm extends LitElement {
                     <p
                         name="${elementConfig.name}"
                         style="${elementConfig.style || ""}"
-                        class="${elementConfig.class || ""}"
+                        class="${forceWrite(elementConfig.class || "")}"
                     >${content}</p>`
             }
             case 'button': {
                 return html`
                     <paper-button
+                        class="${forceWrite(elementConfig.class || "")}"
                         name="${elementConfig.name}"
                         style="${elementConfig.style || ""}"
-                        class="${elementConfig.class || ""}"
                         icon="${elementConfig.icon || ""}"
                         ?small="${elementConfig.small || false}"
                         ?smallest="${elementConfig.smallest || false}"
@@ -333,7 +332,7 @@ export class IronForm extends LitElement {
             default: {
                 return html`
                     <paper-input
-                        class="form-element ${elementConfig.class || ""}"
+                        class="form-element ${forceWrite(elementConfig.class || "")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         .type="${elementConfig.type}"
