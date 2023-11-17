@@ -164,18 +164,7 @@ export class IronForm extends LitElement {
     }
 
     getElement(elementConfig) {
-        let value = this.model[elementConfig.name];
-        if (value === undefined) {
-            if (elementConfig.name?.match(/^([^.]+)\.([0-9]+)$/)) {
-                //a.0
-                let [name, idx] = elementConfig.name.split(".");
-                value = this.model[name]?.[idx];
-            } else if (elementConfig.name?.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
-                //a.0.prop
-                let [name, idx, prop] = elementConfig.name.split(".");
-                value = this.model[name]?.[idx]?.[prop];
-            }
-        }
+        let value = this._getValueFromModel(this.model, elementConfig.name);
 
         switch (elementConfig.type) {
             case 'date': {
