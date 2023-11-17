@@ -6,6 +6,7 @@ import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import "../iron-icons/icons/icons/arrow_drop_down.js";
+import {map} from 'lit/directives/map'
 class PaperSelect extends PaperInputContainer {
 
     static get properties() {
@@ -168,7 +169,7 @@ class PaperSelect extends PaperInputContainer {
             return html`
                 <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
                     ${!this.multiple ? html`<option selected></option>` : ""}
-                    ${this._options.map((item, index) => html`
+                    ${map(this._options, (item, index) => html`
                         <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
                     `)}
                 </select>
@@ -208,7 +209,7 @@ class PaperSelect extends PaperInputContainer {
             </div>
             <iron-overlay .positioningElement="${this}" ?openedOverlay="${(!this.isNative && this.focused && !this.disabled)}" padding="10" fullWidth preventFocus>
                 <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
-                    ${this._filteredOptions.map((item, index) => html`
+                    ${map(this._filteredOptions, (item, index) => html`
                         <div class="option" @click="${(event) => this._selectOption(event, item, index)}">${this.getImage(item,index)}${item.__label}</div>
                     `)}
                 </iron-selector>
@@ -223,7 +224,7 @@ class PaperSelect extends PaperInputContainer {
             if (!(images instanceof Array)) {
                 images = [images];
             }
-            return images.map(image => {
+            return map(images, image => {
                 return html`<img src="${typeof image === 'string' ? image : image.url}" 
                                  onmouseover='showLargeImg(this)' 
                                  onmouseout='showSmallImg(this)'
