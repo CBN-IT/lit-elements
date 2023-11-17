@@ -32,7 +32,6 @@ class DemoIronIcons extends LitElement {
 
     static get styles() {
         return css`
-
           .search-bar {
             position: fixed;
             background-color: rgba(30, 88, 54, 0.7);
@@ -72,7 +71,6 @@ class DemoIronIcons extends LitElement {
             }
             return obj
         },{});
-
 
         return html`
             <div>
