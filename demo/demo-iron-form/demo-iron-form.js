@@ -129,7 +129,8 @@ class DemoIronForm extends LitElement {
                     "name": "file",
                     "dbType": "file",
                     "class": "col-xs-12 col-sm-12 col-lg-12",
-                    "multiple": true
+                    "multiple": true,
+                    accept:"image/*"
                 },
                 {
                     "type": "address",
@@ -223,11 +224,12 @@ class DemoIronForm extends LitElement {
             location: "y"
         }
         setTimeout(() => {
-            console.log(this.model)
+            //console.log(this.model)
         })
     }
 
-    onValueChange() {
+    onValueChange(event) {
+        console.log(event.detail.name)
         console.log(this.form.dirtyList);
     }
 
