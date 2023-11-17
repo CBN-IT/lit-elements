@@ -13,8 +13,8 @@ import '../../elements/iron-icons/icons/places/allIcons'
 import '../../elements/iron-icons/icons/social/allIcons'
 import '../../elements/iron-icon/iron-icon'
 import '../../elements/paper-input/paper-input.js'
-
 import {LitElement} from "lit";
+import {repeat} from "lit/directives/repeat";
 
 class DemoIronIcons extends LitElement {
 
@@ -51,19 +51,13 @@ class DemoIronIcons extends LitElement {
             padding: 12px 24px;
             border-radius: 24px;
             font-size: 16px;
-            border: 0px;
+            border: 0;
             outline: none;
-          }
-
-          .search-bar [list]::-webkit-list-button,
-          .search-bar [list]::-webkit-calendar-picker-indicator {
-            display: none !important;
           }
         `}
 
     getSearchInput(event) {
         this.searchInput = event.target?.value;
-        this.requestUpdate()
     }
 
     render() {
@@ -80,8 +74,10 @@ class DemoIronIcons extends LitElement {
 
         return html`
             <div>
-                ${Object.entries(groupedKeys).map(([ns, keys]) => html`
-                    <h1 style="text-align: center;">${keys.filter(v => v.includes(this.searchInput)).length > 0 ? ns : ''}</h1>
+                ${repeat(Object.entries(groupedKeys), 
+                        ([ns]) => ns,
+                        ([ns, keys]) =>  html`
+                   ${keys.some(v => v.includes(this.searchInput)) ? html` <h1 style="text-align: center;">${ns}</h1>` : ''}
                     <div style="width: 98vw; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));gap: 1em; ">
                         ${keys.filter(v => v.includes(this.searchInput))
                                 .map((key) => html`
