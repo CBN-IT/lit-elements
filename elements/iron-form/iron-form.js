@@ -124,7 +124,7 @@ export class IronForm extends LitElement {
 
     }
 
-    updated(changedProperties) {
+    willUpdate(changedProperties) {
         if (changedProperties.has('model')) {
             this._initialModel = JSON.parse(JSON.stringify(this.model));
         }
@@ -181,7 +181,7 @@ export class IronForm extends LitElement {
             case 'date': {
                 return html`
                     <paper-date-picker
-                        class="form-element ${live(elementConfig.class || "")}"
+                        class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -198,7 +198,7 @@ export class IronForm extends LitElement {
             case 'time': {
                 return html`
                     <paper-date-time-picker
-                        class="form-element ${live(elementConfig.class || "")}"
+                        class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -212,7 +212,7 @@ export class IronForm extends LitElement {
             case 'file': {
                 return html`
                     <paper-file
-                        class="form-element ${live(elementConfig.class || "")}"
+                        class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -226,7 +226,7 @@ export class IronForm extends LitElement {
             case 'checkbox': {
                 return html`
                     <paper-checkbox
-                        class="form-element ${live(elementConfig.class || "")}"
+                            class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -240,7 +240,7 @@ export class IronForm extends LitElement {
             case 'select': {
                 return html`
                     <paper-select
-                        class="form-element ${live(elementConfig.class || "")}"
+                            class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -263,7 +263,7 @@ export class IronForm extends LitElement {
             case 'address': {
                 return html`
                     <paper-address
-                        class="form-element ${live(elementConfig.class || "")}"
+                            class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -283,7 +283,7 @@ export class IronForm extends LitElement {
             case 'textarea': {
                 return html`
                     <paper-textarea
-                        class="form-element ${live(elementConfig.class || "")}"
+                            class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         name="${elementConfig.name}"
@@ -332,7 +332,7 @@ export class IronForm extends LitElement {
             default: {
                 return html`
                     <paper-input
-                        class="form-element ${live(elementConfig.class || "")}"
+                            class="${live((elementConfig.class || "")+" form-element")}"
                         style="${elementConfig.style || ""}"
                         @value-changed="${this._onValueChanged}"
                         .type="${elementConfig.type}"
