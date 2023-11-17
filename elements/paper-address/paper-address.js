@@ -7,6 +7,7 @@ import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import '../iron-ajax/iron-ajax.js';
+import {when} from "lit/directives/when";
 
 class PaperAddress extends PaperInputContainer {
 
@@ -155,7 +156,9 @@ class PaperAddress extends PaperInputContainer {
                     <input style="display:${this.isNative || this.isDropdownMenu ? 'none' : 'block'}" class="input input-select flex" autocomplete="off"/>
                 </div>
                 
-                ${this.isDropdownMenu ? html`<iron-icon icon="arrow-drop-down"></iron-icon>` : ''}
+                ${when(this.isDropdownMenu,
+                        () => html`
+                            <iron-icon icon="arrow-drop-down"></iron-icon>`)}
                 ${this._getNativeSelect()}
             </div>
             

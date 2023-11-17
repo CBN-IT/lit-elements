@@ -108,8 +108,7 @@ class PaperDialog extends LitElement {
                             () => html`
                                 <paper-button icon="close" class="bgGrey" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
                                 <paper-button icon="check" class="bgGreen" @click="${this._onSaveClick}">Save</paper-button>
-                            `,
-                            () => '')}
+                            `)}
                 </div>
             </div>
         `;
