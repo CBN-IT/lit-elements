@@ -2,6 +2,7 @@
 import {html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
+import {map} from 'lit/directives/map'
 import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
@@ -75,7 +76,7 @@ class PaperAddress extends PaperInputContainer {
                 /*z-index: 1;*/
                 white-space: nowrap;
                 margin: 3px 10px 3px 0;
-                box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
             .selected-option > span {
@@ -103,7 +104,7 @@ class PaperAddress extends PaperInputContainer {
                 z-index: 2;
                 border-radius: 4px;
                 background-color: white;
-                box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
                 transition: height 0.1s;
             }
 
@@ -160,7 +161,7 @@ class PaperAddress extends PaperInputContainer {
             
             <iron-overlay .positioningElement="${this}" ?openedOverlay="${(!this.isNative && this.focused)}" padding="10" fullWidth preventFocus>
                 <iron-selector .selected="${this._selectedOption}" @iron-select="${this._onIronSelect}">
-                    ${this._filteredOptions.map((item, index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
+                    ${map(this._filteredOptions, (item, index) => html`<div class="option" @click="${(event) => this._selectOption(event, item, index)}">${item.__label}</div>`)}
                 </iron-selector>
             </iron-overlay>
         `;
@@ -170,7 +171,7 @@ class PaperAddress extends PaperInputContainer {
             return html`
                 <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
                     <option selected></option>
-                    ${this._options.map((item, index) => html`
+                    ${map(this._options, (item, index) => html`
                         <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
                     `)}
                 </select>   
