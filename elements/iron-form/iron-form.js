@@ -124,7 +124,7 @@ export class IronForm extends LitElement {
 
     }
 
-    willUpdate(changedProperties) {
+    updated(changedProperties) {
         if (changedProperties.has('model')) {
             this._initialModel = JSON.parse(JSON.stringify(this.model));
         }
@@ -137,6 +137,9 @@ export class IronForm extends LitElement {
     get dirtyList() {
         let dirtyList = [];
         for (let elementConfig of this.config.elements) {
+            if (!elementConfig.name) {
+                continue
+            }
             let newValue = this._getValueFromModel(this.model, elementConfig.name);
             let oldValue = this._getValueFromModel(this._initialModel, elementConfig.name);
             if (!CBNUtils.deepEqual(oldValue, newValue)) {
@@ -207,6 +210,7 @@ export class IronForm extends LitElement {
                         name="${elementConfig.name}"
                         .label="${elementConfig.label}"
                         .required="${elementConfig.required}"
+                        .accept="${elementConfig.accept || ""}"
                         .disabled="${elementConfig.disabled}"
                         .multiple="${elementConfig.multiple}"
                         .value="${live(value)}"
