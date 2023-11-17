@@ -51,7 +51,7 @@ class TableDemo extends LitElement {
                 "title": "",
                 "filterable": false,
                 "sortable": false,
-                "template": "html`<div class='vertical layout center'><paper-button class='red' style='padding:0;margin:auto' small icon='delete' @click='${(event) => {CBNUtils.fireEvent(this, 'confirm-delete', {url: 'asdasd', body: {asdasd: 'asdasd'}, message: 'Are you sure you want to delete asdasd?'});event.stopPropagation();}}'></paper-button></div>`"
+                "template": "html`<div class='vertical layout center'><paper-button class='red' style='padding:0;margin:auto' small icon='delete' @click='${(event) => {CBNUtils.fireEvent(this, 'confirm-delete', {url: 'asdasd', body: {asdasd: 'asdasd'}, message: 'Are you sure you want to delete?'});event.stopPropagation();}}'></paper-button></div>`"
             }
         ];
         let items = new Array(1000).fill(5);

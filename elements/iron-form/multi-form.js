@@ -6,6 +6,7 @@ import "./iron-form.js";
 import "../paper-button/paper-button.js";
 import {keyboard_arrow_up} from "../iron-icons/icons/hardware/keyboard_arrow_up";
 import {keyboard_arrow_down} from "../iron-icons/icons/hardware/keyboard_arrow_down";
+import { map } from 'lit/directives/map.js';
 export class MultiForm extends LitElement {
 
     static get properties() {
@@ -78,7 +79,7 @@ export class MultiForm extends LitElement {
 
     render() {
         return html`
-            ${this.model.map((model,index)=>html`
+            ${map(this.model, (model,index)=>html`
                 <div class="form">
                     <iron-form
                         .config="${this.configs[index]}"
