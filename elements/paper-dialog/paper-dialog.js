@@ -5,6 +5,7 @@ import '../paper-button/paper-button.js'
 
 import "../iron-icons/icons/icons/close.js";
 import "../iron-icons/icons/icons/check.js";
+import {when} from "lit/directives/when";
 
 class PaperDialog extends LitElement {
 
@@ -101,14 +102,16 @@ class PaperDialog extends LitElement {
                 <div id="body" class="flex-auto">
                     <slot name="body"></slot>
                 </div>
-               <div id="buttons" class="horizontal layout justified wrap">
+                <div id="buttons" class="horizontal layout justified wrap">
                     <slot name="button"></slot>
-                    ${!this.noActions ? html`
-                        <paper-button icon="close" class="bgGrey" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
-                        <paper-button icon="check" class="bgGreen" @click="${this._onSaveClick}">Save</paper-button>
-                    ` : ""}
+                    ${when(!this.noActions,
+                            () => html`
+                                <paper-button icon="close" class="bgGrey" @click="${this._cancelClickBottomButton}">Cancel</paper-button>
+                                <paper-button icon="check" class="bgGreen" @click="${this._onSaveClick}">Save</paper-button>
+                            `,
+                            () => '')}
                 </div>
-            </div>      
+            </div>
         `;
     }
 
