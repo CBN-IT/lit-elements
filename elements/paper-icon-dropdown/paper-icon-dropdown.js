@@ -1,6 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
+import {map} from 'lit/directives/map'
 import '../iron-selector/iron-selector.js';
 import '../paper-button/paper-button.js';
 import '../iron-icon/iron-icon.js';
@@ -88,7 +89,7 @@ export class PaperIconDropdown extends LitElement {
                     ${this.isNative ? html`
                         <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                             <option disabled selected></option>
-                            ${this._options.map((item, index) => html`                          
+                            ${map(this._options, (item, index) => html`                          
                                 <option value="${index}">${item.label}</option>
                             `)}
                         </select>
@@ -96,7 +97,7 @@ export class PaperIconDropdown extends LitElement {
                 </div>           
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <iron-selector @iron-select="${this._onIronSelect}">
-                        ${this._options.map((item, index) => item.type ? html`
+                        ${map(this._options,(item) => item.type ? html`
                             <div class="option horizontal layout center" style="padding:7px">
                                 <iron-icon icon="${item.type}" size="30"></iron-icon>
                                 ${item.label}
