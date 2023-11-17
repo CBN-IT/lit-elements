@@ -1,6 +1,7 @@
 "use strict";
 import {html, css} from 'lit'
 import {when} from 'lit/directives/when.js';
+import {map} from 'lit/directives/map'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
@@ -19,6 +20,7 @@ class PaperFile extends PaperInputContainer {
             value: {type: Object},
             required: {type: Boolean},
             multiple: {type: Boolean},
+            accept:{type:String},
             _value: {type: Array}
         };
     }
@@ -52,7 +54,7 @@ class PaperFile extends PaperInputContainer {
                 white-space: nowrap;
                 margin: 3px 0;
                 margin-right: 10px;
-                box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
             .selected-option > .option-label {
@@ -79,31 +81,38 @@ class PaperFile extends PaperInputContainer {
                 max-height:24px;
                 vertical-align: middle;
             }
+            a{
+                color:black;
+            }
+            .selected-option.invalid{
+                background-color: #ffcdcd;
+            }
         `;
     }
 
     constructor() {
         super();
         this._value = [];
+        this.accept = "";
     }
 
     get inputElement() {
+        let MIMEtype = new RegExp(this.accept.replace('*', '.\*'));
+
         return html`
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
-                    ${this._value.map((item, index) => {
+                    ${map(this._value, (item, index) => {
                         let extension = item.label.substring(item.label.lastIndexOf('.') + 1);
                         let filename = item.label.substring(0, item.label.lastIndexOf('.'));
                         let url = item.url;
-                        let isImage = false;
+                        let isImage = item.type.startsWith("image/");
                         if (item.file instanceof File) {
                             url = URL.createObjectURL(item.file)
-                            if (item.file.type.startsWith("image/")) {
-                                isImage = true;
-                            }
                         }
+                        let isValid = MIMEtype.test(item.type);
                         return html`
-                            <div class="selected-option">
+                            <div class="selected-option ${isValid?"":"invalid"}">
                                 ${when(isImage, 
                                         ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
                                         ()=>html`<a href="${url}" download="${filename}" onmousedown="event.stopPropagation()"><iron-icon icon="file-download"></iron-icon></a>`,
@@ -117,7 +126,7 @@ class PaperFile extends PaperInputContainer {
                     })}
                 </div>
                 <iron-icon icon="file-upload"></iron-icon>
-                <input type="file" class="input input-file" ?multiple="${this.multiple}" />
+                <input type="file" class="input input-file" ?multiple="${this.multiple}" accept="${this.accept}"/>
             </div>                
         `;
     }
@@ -185,7 +194,7 @@ class PaperFile extends PaperInputContainer {
         let file = this.input.files[0];
         let processedFiles = [];
         for (let i = 0; i < this.input.files.length; i++) {
-            let file = this.input.files[i];
+            file = this.input.files[i];
             processedFiles.push({
                 label: file.name,
                 size: file.size,
@@ -201,7 +210,23 @@ class PaperFile extends PaperInputContainer {
     }
 
     validate(value) {
-        this.isValid = !this.required || (!CBNUtils.isNoE(value) && value.length > 0);
+        if (this.disabled && fromUser) {
+            return false;
+        }
+        let isValid;
+        if (!this.required && CBNUtils.isNoE(value)) {
+            isValid = true;
+        } else {
+            isValid = !this.required || !CBNUtils.isNoE(value);
+            if (this.accept) {
+                let MIMEtype = new RegExp(this.accept.replace('*', '.\*'));
+                isValid = isValid && value.every((v) => MIMEtype.test(v.type));
+            }
+        }
+
+        this.isValid = isValid;
+
+
         if (this.isValid) {
             CBNUtils.fireEvent(this, 'value-changed', {
                 name: this.name,

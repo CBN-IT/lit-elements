@@ -1,5 +1,6 @@
 "use strict";
 import {repeat} from 'lit/directives/repeat';
+import {map} from 'lit/directives/map'
 import {gridClasses} from "../grid-layout/grid-classes.js";
 import {html, css, LitElement} from "lit";
 import "../paper-dialog/paper-dialog.js";
@@ -1087,7 +1088,7 @@ class FormEditor extends LitElement {
                                     <span class="tag class"><iron-icon size="18" icon="phone-android"></iron-icon>${this._getCol("xs", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="tablet"></iron-icon>${this._getCol("sm", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="laptop"></iron-icon>${this._getCol("lg", el.class)}</span>
-                                    ${this._simplifyClass(el.class).map(value => html`<span class="tag class">${value}</span>`)}
+                                    ${map(this._simplifyClass(el.class), value => html`<span class="tag class">${value}</span>`)}
                                     ${el.multiple ? html`<iron-icon size="24" icon="folders"></iron-icon>` : ""}
                                     ${el.freeText ? html`<iron-icon size="24" icon="create"></iron-icon>` : ""}
                                     ${el.allowDuplicates ? html`<iron-icon size="24" icon="content-copy"></iron-icon>` : ""}

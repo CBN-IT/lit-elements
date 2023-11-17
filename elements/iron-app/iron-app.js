@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, html, css} from 'lit';
+import {map} from 'lit/directives/map'
 import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import '../cbn-utils/CbnUtils.js'; // TODO
 import '../iron-selector/iron-selector.js';
@@ -341,9 +342,9 @@ export class IronApp extends LitElement {
                         <div class="flex menu-buttons-container">
                             <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap"
                                            @iron-select="${this._onPageSelect.bind(this)}">
-                                ${this.menuSections.map(groupSection => html`
+                                ${map(this.menuSections, groupSection => html`
                                     <div class="group-section-title full-width">${groupSection.groupTitle}</div>
-                                    ${groupSection.sections.map(menuSection => html`
+                                    ${map(groupSection.sections, menuSection => html`
                                         <a href="/${menuSection.name}" name="${menuSection.name}"
                                            class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
                                             <iron-icon icon="${menuSection.icon}" .svgIcon="${menuSection.svgIcon}"></iron-icon>

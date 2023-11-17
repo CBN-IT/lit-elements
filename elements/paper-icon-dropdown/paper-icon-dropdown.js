@@ -1,10 +1,12 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
+import {map} from 'lit/directives/map'
 import '../iron-selector/iron-selector.js';
 import '../paper-button/paper-button.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
+import {when} from "lit/directives/when";
 
 export class PaperIconDropdown extends LitElement {
 
@@ -83,31 +85,34 @@ export class PaperIconDropdown extends LitElement {
 
     render() {
         return html`
-                <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
-                    ${this.isNative ? html`
-                        <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
-                            <option disabled selected></option>
-                            ${this._options.map((item, index) => html`                          
-                                <option value="${index}">${item.label}</option>
-                            `)}
-                        </select>
-                    ` : ''}
-                </div>           
-                <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
-                    <iron-selector @iron-select="${this._onIronSelect}">
-                        ${this._options.map((item, index) => item.type ? html`
-                            <div class="option horizontal layout center" style="padding:7px">
-                                <iron-icon icon="${item.type}" size="30"></iron-icon>
-                                ${item.label}
-                            </div>
-                        ` : html`
-                            <div class="option">                                
-                                ${item.label}
-                            </div>
+            <div class="container vertical layout">
+                <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
+                ${when(this.isNative,
+                        () => html`
+                            <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
+                                <option disabled selected></option>
+                                ${map(this._options, (item, index) => html`
+                                    <option value="${index}">${item.label}</option>
+                                `)}
+                            </select>
                         `)}
-                    </iron-selector>
-                </iron-overlay>
+            </div>
+            <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
+                <iron-selector @iron-select="${this._onIronSelect}">
+                    ${map(this._options, (item) => when(item.type,
+                            () => html`
+                                <div class="option horizontal layout center" style="padding:7px">
+                                    <iron-icon icon="${item.type}" size="30"></iron-icon>
+                                    ${item.label}
+                                </div>
+                            `,
+                            () => html`
+                                <div class="option">
+                                    ${item.label}
+                                </div>
+                            `))}
+                </iron-selector>
+            </iron-overlay>
         `;
     }
 

@@ -48,9 +48,9 @@ class DemoIronForm extends LitElement {
                     "format": "DD-MM-YYYY",
                 },
                 {
-                    "label": "Stock Adjustment Date",
+                    "label": "Date",
                     "type": "date",
-                    "name": "date",
+                    "name": "newDate",
                     "dbType": "string",
                     "class": "col-xs-12 col-sm-3 col-lg-3",
                     "required": false,
@@ -88,7 +88,7 @@ class DemoIronForm extends LitElement {
                 {
                     "label": "Selectie",
                     "type": "select",
-                    "name": "location",
+                    "name": "items",
                     "dbType": "string",
                     "dbCollection": "locations",
                     "options": [
@@ -129,7 +129,8 @@ class DemoIronForm extends LitElement {
                     "name": "file",
                     "dbType": "file",
                     "class": "col-xs-12 col-sm-12 col-lg-12",
-                    "multiple": true
+                    "multiple": true,
+                    accept:"image/*"
                 },
                 {
                     "type": "address",
@@ -161,7 +162,7 @@ class DemoIronForm extends LitElement {
                 {
                     "type": "input",
                     "label": "Email",
-                    "name": "input",
+                    "name": "email",
                     "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "isEmail": true
@@ -169,7 +170,7 @@ class DemoIronForm extends LitElement {
                 {
                     "type": "input",
                     "label": "CIF",
-                    "name": "input",
+                    "name": "cif",
                     "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "isCIF": true,
@@ -177,7 +178,7 @@ class DemoIronForm extends LitElement {
                 {
                     "type": "input",
                     "label": "CNP",
-                    "name": "input",
+                    "name": "cnp",
                     "dbType": "number",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "isCNP": true,
@@ -187,7 +188,7 @@ class DemoIronForm extends LitElement {
                 {
                     "type": "number",
                     "label": "Step",
-                    "name": "input",
+                    "name": "step",
                     "dbType": "number",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "step": 2
@@ -223,11 +224,12 @@ class DemoIronForm extends LitElement {
             location: "y"
         }
         setTimeout(() => {
-            console.log(this.model)
+            //console.log(this.model)
         })
     }
 
-    onValueChange() {
+    onValueChange(event) {
+        console.log(event.detail.name)
         console.log(this.form.dirtyList);
     }
 
