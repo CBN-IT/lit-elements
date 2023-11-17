@@ -1,5 +1,6 @@
 "use strict";
 import {html, css} from 'lit'
+import {when} from 'lit/directives/when'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
@@ -73,7 +74,7 @@ class PaperSelect extends PaperInputContainer {
                 /*z-index: 1;*/
                 white-space: nowrap;
                 margin: 3px 6px 3px 0;
-                box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
             .selected-option > span {
@@ -109,7 +110,7 @@ class PaperSelect extends PaperInputContainer {
                 z-index: 2;
                 border-radius: 4px;
                 background-color: white;
-                box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
                 transition: height 0.1s;
             }
 
@@ -118,7 +119,7 @@ class PaperSelect extends PaperInputContainer {
             }
 
             .option {
-                padding: 0px 10px 0px 18px;
+                padding: 0 10px 0 18px;
                 min-height:38px;
                 background-color: white;
                 color: black;
@@ -168,7 +169,9 @@ class PaperSelect extends PaperInputContainer {
         if (this.isNative) {
             return html`
                 <select class="native-input" @change="${this._onChange}" ?multiple="${this.multiple}" ?disabled="${this.disabled}">
-                    ${!this.multiple ? html`<option selected></option>` : ""}
+                    ${when(!this.multiple, 
+                            () => html`<option selected></option>`,
+                            () => '')}
                     ${map(this._options, (item, index) => html`
                         <option value="${index}" ?selected="${this._value.find((value) => value.__value === item.__value)}">${item.__label}</option>
                     `)}
