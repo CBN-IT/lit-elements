@@ -3,7 +3,7 @@ import {LitElement, html} from 'lit'
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/iron-form/iron-form.js";
 import "../../elements/iron-icons/icons/icons/add";
-
+import "../../elements/iron-icons/icons/icons/autorenew";
 
 class DemoIronForm extends LitElement {
 
@@ -128,7 +128,7 @@ class DemoIronForm extends LitElement {
                     "label": "File",
                     "name": "file",
                     "dbType": "file",
-                    "class": "col-xs-12 col-sm-2 col-lg-2",
+                    "class": "col-xs-12 col-sm-12 col-lg-12",
                     "multiple": true
                 },
                 {
@@ -207,7 +207,7 @@ class DemoIronForm extends LitElement {
                     @saved-form="${this._savedForm}"
                     @value-changed="${this.onValueChange}"
             ></iron-form>
-            <paper-button icon="asd" class="bgBlue" @click="${this.changeModel}">Change Model</paper-button>
+            <paper-button icon="autorenew" class="bgBlue" @click="${this.changeModel}">Change Model</paper-button>
         `;
     }
 
