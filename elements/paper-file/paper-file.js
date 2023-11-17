@@ -97,7 +97,7 @@ class PaperFile extends PaperInputContainer {
     }
 
     get inputElement() {
-        let MIMEtype = new RegExp(this.accept.replace('*', '.\*'));
+        let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
 
         return html`
             <div class="select-container horizontal layout center flex">
@@ -219,14 +219,12 @@ class PaperFile extends PaperInputContainer {
         } else {
             isValid = !this.required || !CBNUtils.isNoE(value);
             if (this.accept) {
-                let MIMEtype = new RegExp(this.accept.replace('*', '.\*'));
+                let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
                 isValid = isValid && value.every((v) => MIMEtype.test(v.type));
             }
         }
 
         this.isValid = isValid;
-
-
         if (this.isValid) {
             CBNUtils.fireEvent(this, 'value-changed', {
                 name: this.name,
