@@ -61,7 +61,9 @@ class DemoIronIcons extends LitElement {
     }
 
     render() {
-        let groupedKeys = Object.keys(window.icons).reduce((obj,key)=>{
+        let groupedKeys = Object.keys(window.icons)
+            .filter(v => v.includes(this.searchInput))
+            .reduce((obj,key)=>{
             if(key.includes(":")){
                 if(obj[key.split(":")[0]]===undefined){
                     obj[key.split(":")[0]] = [];
@@ -76,17 +78,17 @@ class DemoIronIcons extends LitElement {
             <div>
                 ${repeat(Object.entries(groupedKeys), 
                         ([ns]) => ns,
-                        ([ns, keys]) =>  html`
-                   ${keys.some(v => v.includes(this.searchInput)) ? html` <h1 style="text-align: center;">${ns}</h1>` : ''}
+                        ([ns, keys]) =>html`
+                   <h1 style="text-align: center;">${ns}</h1>
                     <div style="width: 98vw; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));gap: 1em; ">
-                        ${repeat(keys.filter(v => v.includes(this.searchInput)),
-                                (key) => key,
+                        ${repeat(keys, 
+                                (key) => key, 
                                 (key) => html`
-                            <div>
-                                <iron-icon size="50" icon="${key}"></iron-icon>
-                                ${key.split(":")[1]}
-                            </div>
-                        `)}
+                                    <div>
+                                        <iron-icon size="50" icon="${key}"></iron-icon>
+                                        ${key.split(":")[1]}
+                                    </div>
+                                `)}
                     </div>
                 `)}
                 <div class="search-bar">
