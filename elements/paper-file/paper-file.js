@@ -1,5 +1,6 @@
 "use strict";
 import {html, css} from 'lit'
+import {when} from 'lit/directives/when.js';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
@@ -8,6 +9,7 @@ import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 import "../iron-icons/icons/icons/file_upload.js";
 import {formatFileSize} from "../cbn-utils/formatFileSize";
+import "../iron-icons/icons/icons/file_download";
 
 class PaperFile extends PaperInputContainer {
 
@@ -72,6 +74,11 @@ class PaperFile extends PaperInputContainer {
             .input-file {
                 display: none;
             }
+            .optionImage{
+                max-width:24px;
+                max-height:24px;
+                vertical-align: middle;
+            }
         `;
     }
 
@@ -85,17 +92,30 @@ class PaperFile extends PaperInputContainer {
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
                     ${this._value.map((item, index) => {
-            let extension = item.label.substr(item.label.lastIndexOf('.') + 1);
-            let filename = item.label.substr(0,item.label.lastIndexOf('.') );
-            return html`
+                        let extension = item.label.substring(item.label.lastIndexOf('.') + 1);
+                        let filename = item.label.substring(0, item.label.lastIndexOf('.'));
+                        let url = item.url;
+                        let isImage = false;
+                        if (item.file instanceof File) {
+                            url = URL.createObjectURL(item.file)
+                            if (item.file.type.startsWith("image/")) {
+                                isImage = true;
+                            }
+                        }
+                        console.log(item.file);
+                        return html`
                             <div class="selected-option">
+                                ${when(isImage, 
+                                        ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
+                                        ()=>html`<a href="${url}" download="${filename}" onmousedown="event.stopPropagation()"><iron-icon icon="file-download"></iron-icon></a>`,
+                                )}
                                 <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
                                 <span>.${extension}</span>
                                 <span>(${formatFileSize(item.size)})</span>
                                 <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
                             </div>
                         `
-        })}
+                    })}
                 </div>
                 <iron-icon icon="file-upload"></iron-icon>
                 <input type="file" class="input input-file" ?multiple="${this.multiple}" />
