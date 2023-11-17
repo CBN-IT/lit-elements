@@ -24,7 +24,9 @@ class PaperSelect extends PaperInputContainer {
             allowDuplicates: {type: Boolean},
             isNative: {type: Boolean},
             isDropdownMenu: {type: Boolean},
-            preventSelection: {type: Boolean},
+            preventSelection: {type: Boolean},//it`s a boolean property that prevent an option selection from the list of options,
+            // but it can fire a new event that can be managed using the selection-attempt property in the paper-table tag
+            // and the value of the selected option in a function
             _value: {type: Array},
             _filteredOptions: {type: Array},
             _selectedOption: {type: Number},

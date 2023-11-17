@@ -11,8 +11,7 @@
     "demo/demo-form-editor/demo-form-editor.html",
     "demo/demo-paper-table/demo-paper-table.html",
     "demo/demo-iron-form/demo-iron-form.html",
-    "demo/demo-iron-app/demo-iron-app.html",
-    "demo/demo-multi-form/demo-multi-form.html",
+    "demo/demo-iron-icons/demo-iron-icons.html",
     "index.html"
   ],
   "development": {
