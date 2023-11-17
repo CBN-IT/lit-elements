@@ -228,6 +228,3 @@ export class PaperInputContainer extends LitElement {
     }
 
 }
-
-
-

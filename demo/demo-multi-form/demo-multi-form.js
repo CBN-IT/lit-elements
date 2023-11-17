@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html} from 'lit'
+import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/iron-form/multi-form.js";
 
@@ -13,7 +13,19 @@ class DemoMultiForm extends LitElement {
     }
 
     static get styles() {
-        return [flexLayoutClasses]
+        return [flexLayoutClasses, this.styleElement]
+    }
+
+    static get styleElement() {
+        return css`
+          .defaultButton {
+            height: 125%;
+            width: 125%;
+            background-color: var(--blue-color);
+            color: #fff;
+            border-radius: 5px;
+            border: none
+          }`
     }
 
     constructor() {
@@ -110,8 +122,11 @@ class DemoMultiForm extends LitElement {
     render() {
         return html`
             <div>
-                <multi-form .config="${this.config}" .model="${this.model}"></multi-form>
-            </div>`
+                <multi-form .config="${this.config}" .model="${this.model}">
+                    <button class="defaultButton">What the button!</button>
+                </multi-form>
+            </div>
+        `
     }
 }
 

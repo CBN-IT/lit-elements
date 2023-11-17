@@ -8,7 +8,8 @@ class DemoIronApp extends LitElement {
     render() {
         return html`
             <div>Hej</div>
-            <iron-app></iron-app>`
+            <iron-app></iron-app>
+        `
     }
 
 }

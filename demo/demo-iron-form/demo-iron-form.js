@@ -22,7 +22,7 @@ class DemoIronForm extends LitElement {
     constructor() {
         super();
         this.model = {
-            location:"x"
+            location: "x"
         };
         this.config = {
             "elements": [
@@ -71,12 +71,12 @@ class DemoIronForm extends LitElement {
                     "dbCollection": "locations",
                     "options": [
                         {
-                        value:"x",
-                        label:"X",
-                    },
+                            value: "x",
+                            label: "X",
+                        },
                         {
-                            value:"y",
-                            label:"Y",
+                            value: "y",
+                            label: "Y",
                         }
                     ],
                     "saveLabel": true,
@@ -93,16 +93,16 @@ class DemoIronForm extends LitElement {
                     "dbCollection": "locations",
                     "options": [
                         {
-                        value:"x",
-                        label:"XXXXX",
-                    },
-                        {
-                            value:"y",
-                            label:"YYYYY",
+                            value: "x",
+                            label: "XXXXX",
                         },
                         {
-                            value:"z",
-                            label:"ZZZZZZ",
+                            value: "y",
+                            label: "YYYYY",
+                        },
+                        {
+                            value: "z",
+                            label: "ZZZZZZ",
                         }
                     ],
                     "isDropdownMenu": true,
@@ -118,7 +118,7 @@ class DemoIronForm extends LitElement {
                     "type": "checkbox",
                     "label": "Required",
                     "name": "required",
-                    "dbType":"string",
+                    "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "required": true,
                     "value": "value"
@@ -127,7 +127,7 @@ class DemoIronForm extends LitElement {
                     "type": "file",
                     "label": "File",
                     "name": "file",
-                    "dbType":"file",
+                    "dbType": "file",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "multiple": true
                 },
@@ -135,25 +135,25 @@ class DemoIronForm extends LitElement {
                     "type": "address",
                     "label": "Address",
                     "name": "address",
-                    "dbType":"string",
+                    "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                 },
                 {
                     "type": "textarea",
                     "label": "Text area",
                     "name": "textarea",
-                    "dbType":"string",
+                    "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "minLength": 15,
                     "maxLength": 35,
-                    "rows":3,
+                    "rows": 3,
                     "autocomplete": true
                 },
                 {
                     "type": "button",
                     "label": "Button",
                     "name": "button",
-                    "dbType":"string",
+                    "dbType": "string",
                     "class": "bgBlue",
                     "text": "text",
                     "icon": "add"
@@ -162,7 +162,7 @@ class DemoIronForm extends LitElement {
                     "type": "input",
                     "label": "Email",
                     "name": "input",
-                    "dbType":"string",
+                    "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "isEmail": true
                 },
@@ -170,7 +170,7 @@ class DemoIronForm extends LitElement {
                     "type": "input",
                     "label": "CIF",
                     "name": "input",
-                    "dbType":"string",
+                    "dbType": "string",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "isCIF": true,
                 },
@@ -178,7 +178,7 @@ class DemoIronForm extends LitElement {
                     "type": "input",
                     "label": "CNP",
                     "name": "input",
-                    "dbType":"number",
+                    "dbType": "number",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "isCNP": true,
                     "minLength": 13,
@@ -188,7 +188,7 @@ class DemoIronForm extends LitElement {
                     "type": "number",
                     "label": "Step",
                     "name": "input",
-                    "dbType":"number",
+                    "dbType": "number",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "step": 2
                 }
@@ -199,21 +199,23 @@ class DemoIronForm extends LitElement {
 
     render() {
         return html`
-            <iron-form 
-                    .config="${this.config}" 
-                    .model="${this.model}" 
-                    url="/SaveForm" 
-                    collection="collection" 
+            <iron-form
+                    .config="${this.config}"
+                    .model="${this.model}"
+                    url="/SaveForm"
+                    collection="collection"
                     @saved-form="${this._savedForm}"
                     @value-changed="${this.onValueChange}"
             ></iron-form>
             <paper-button icon="asd" class="bgBlue" @click="${this.changeModel}">Change Model</paper-button>
         `;
     }
+
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
         this.form = this.renderRoot.querySelector("iron-form")
     }
+
     changeModel() {
         this.model = {
             date: "2023-10-15",
@@ -224,11 +226,11 @@ class DemoIronForm extends LitElement {
             console.log(this.model)
         })
     }
-    onValueChange(){
+
+    onValueChange() {
         console.log(this.form.dirtyList);
     }
 
-    }
     _savedForm(event) {
         console.log(event.detail.response);
     }
