@@ -25,7 +25,7 @@ class DemoIronIcons extends LitElement {
         }
     }
 
-    constructor(){
+    constructor() {
         super();
         this.searchInput = ''
     }

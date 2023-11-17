@@ -21,7 +21,6 @@ class ConfirmDelete extends LitElement {
             okBtnClass: {
                 type: String
             },
-
             body: {
                 type: Object
             },

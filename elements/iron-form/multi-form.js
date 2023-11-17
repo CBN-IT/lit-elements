@@ -100,7 +100,6 @@ export class MultiForm extends LitElement {
                 </div>
                 <slot name="otherButtons"></slot>
             </div>
-            
         `;
     }
     shouldUpdate(changedProperties) {
@@ -165,6 +164,3 @@ export class MultiForm extends LitElement {
 }
 
 customElements.define('multi-form', MultiForm);
-
-
-

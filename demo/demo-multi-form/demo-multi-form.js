@@ -1,16 +1,11 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
+import {classMap} from 'lit/directives/class-map.js';
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/iron-form/multi-form.js";
 
 class DemoMultiForm extends LitElement {
 
-    static get properties() {
-        return {
-            model: {type: Object},
-            config: {type: Object}
-        }
-    }
 
     static get styles() {
         return [flexLayoutClasses, this.styleElement]
@@ -25,7 +20,31 @@ class DemoMultiForm extends LitElement {
             color: #fff;
             border-radius: 5px;
             border: none
+          }
+
+          .redBackground {
+            background-color: var(--red-color);
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            margin-left: 50px
+          }
+
+          .greenBackground {
+            background-color: var(--green-color);
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            margin-left: 50px
           }`
+    }
+
+    static get properties() {
+        return {
+            model: {type: Object},
+            config: {type: Object},
+            background: {type: Boolean}
+        }
     }
 
     constructor() {
@@ -33,6 +52,7 @@ class DemoMultiForm extends LitElement {
         this.model = [{
             location: "x"
         }]
+        this.background = true
         this.config = {
             "elements": [
                 {
@@ -124,9 +144,16 @@ class DemoMultiForm extends LitElement {
             <div>
                 <multi-form .config="${this.config}" .model="${this.model}">
                     <button class="defaultButton">What the button!</button>
+                    <button @click="${() => this.delete()}" slot="otherButtons"
+                            class="${classMap({redBackground: this.background, greenBackground: !this.background})}">Button 2
+                    </button>
                 </multi-form>
             </div>
         `
+    }
+
+    delete() {
+        this.background = !this.background
     }
 }
 
