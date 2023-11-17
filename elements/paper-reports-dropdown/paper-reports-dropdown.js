@@ -1,6 +1,7 @@
 "use strict";
 import {css, html} from "lit";
 import {PaperIconDropdown} from '../paper-icon-dropdown/paper-icon-dropdown.js';
+import{map} from 'lit/directives/map'
 
 import "../iron-icons/icons/cbn/chart.js";
 import "../iron-icons/icons/cbn/document.js";
@@ -127,7 +128,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
                     <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
                     <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                         <option disabled selected></option>
-                        ${this._options.map((item, index) => html`                          
+                        ${map(this._options, (item, index) => html`
                             <option value="${index}">${item.label}</option>
                         `)}
                     </select>
@@ -157,7 +158,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
                 </div>           
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <div>
-                        ${groups.map(arr => html`
+                        ${map(groups, arr => html`
                             <div class="dropdown-submenu">
                                 <div class="group horizontal layout center" @mouseover="${this.showReports}">
                                     ${arr[0].groupName || ""}
@@ -165,7 +166,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
                                     <iron-icon icon="arrow-drop-down" size="24"></iron-icon>
                                 </div>
                                 <div class="dropdown-menu">
-                                    ${arr.map(item => html`
+                                    ${map(arr, item => html`
                                         <div .path="${item._path}" class="option horizontal layout center" style="padding:7px" @click="${this._getReport.bind(this)}">
                                             <iron-icon icon="${item.type}" size="30"></iron-icon>
                                             ${item.label}
@@ -184,7 +185,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
             </div>           
             <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                 <iron-selector @iron-select="${this._onIronSelect}">
-                    ${this._options.map((item, index) => item.type ? html`
+                    ${map(this._options, (item) => item.type ? html`
                         <div class="option horizontal layout center" style="padding:7px">
                             <iron-icon icon="${item.type}" size="30"></iron-icon>
                             ${item.label}
