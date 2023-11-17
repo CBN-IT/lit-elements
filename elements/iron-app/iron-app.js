@@ -19,6 +19,7 @@ import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 
 import "../iron-icons/icons/icons/file_upload.js";
 import "../iron-icons/icons/icons/menu.js";
+import {classMap} from "lit/directives/class-map.js";
 
 
 export class IronApp extends LitElement {
@@ -317,7 +318,7 @@ export class IronApp extends LitElement {
             <get-report></get-report>
             <paper-loading></paper-loading>
             <div class="flex horizontal layout" style="position: relative">
-                <div class="flex vertical layout right-side ${this.isMobile ? 'full-window' : this.collapsed ? 'big-window' : 'small-window'}">
+                <div class="flex vertical layout right-side ${classMap({"full-window":this.isMobile,  "big-window": this.collapsed, "small-window": !this.collapsed})}">
                     <div class="header toolbar horizontal layout center" style="display:none">
                         <slot name="toolbar"></slot>
                     </div>

@@ -6,7 +6,6 @@ import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 import "../iron-icons/icons/icons/add.js";
-import {when} from 'lit/directives/when.js';
 import {EmptyView} from "./empty-view";
 
 export class TableView extends EmptyView {
@@ -67,7 +66,6 @@ export class TableView extends EmptyView {
             .top-bar {
                 margin-bottom: 0;
             }
-
             [icon="excel"] {
                 --iron-icon-color: #207245;
             }
@@ -110,23 +108,19 @@ export class TableView extends EmptyView {
         this.request = this.shadowRoot.querySelector('.request');
     }
 
-    get templateDialog() {
+    get templateDialog(){
         return html`
-            <paper-dialog class="dialog" .noActions="${true}">
-                <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>
-                <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}"
-                           @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
+            <paper-dialog class="dialog" .noActions="${true}"> 
+                <div slot="header" class="header">${this.formTitle ? this.formTitle : this.collection}</div>                  
+                <iron-form slot="body" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}" @value-changed="${this.onValueChanged}"></iron-form>
             </paper-dialog>
         `
     }
-
-    get templateAddButton() {
-        return html`
-            <paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>`
+    get templateAddButton(){
+        return html`<paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>`
     }
-
     render() {
-        return html`
+        return html`            
             <iron-ajax class="request" .url="${this.getUrl}" .params="${{'collection': this.collection}}" @iron-response="${this._onIronResponse}"></iron-ajax>
             ${this.templateDialog}
             <div class="horizontal layout paper-material top-bar center">
@@ -138,40 +132,33 @@ export class TableView extends EmptyView {
                 <paper-button title="Salveaza ca Excel" icon="excel" small @click="${this.saveAsExcel}"></paper-button>
                 <div style="width:44px;"></div>
             </div>
-            <paper-table
-                    class="flex paper-material"
-                    .columns="${this.columns}"
-                    .items="${this.items}"
-                    @dbl-click="${this._onDblClick}"
-                    @delete-item="${this._deleteItem}"
-                    @cbn-table-select="${this._onTableSelect}"
+            <paper-table 
+                class="flex paper-material" 
+                .columns="${this.columns}" 
+                .items="${this.items}" 
+                @dbl-click="${this._onDblClick}" 
+                @delete-item="${this._deleteItem}"
+                @cbn-table-select="${this._onTableSelect}"
             ></paper-table>
         `;
     }
-
-    _onTableSelect(event) {
+    _onTableSelect(event){
 
     }
-
     _getTopBarTemplate() {
         return '';
     }
-
-    async saveAsExcel() {
+    async saveAsExcel(){
         CBNUtils.startLoading();
         await this.table.saveXls();
         CBNUtils.stopLoading();
     }
-
     _displayReportsDropdown() {
-        return when(this.reports && this.reports.length > 0, () => html`
-            <paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>`, () => '');
+        return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}"></paper-reports-dropdown>` : '';
     }
-
     async _addDocument() {
         this._openDialog();
     }
-
     _openDialog() {
         this.model = {};
         this.dialog.open();

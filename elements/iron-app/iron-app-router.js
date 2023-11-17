@@ -15,6 +15,7 @@ import '../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
 import logo from '/web/images/logo.svg';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
+import {when} from "lit/directives/when";
 
 export class IronAppRouter extends LitElement {
 
@@ -306,7 +307,9 @@ export class IronAppRouter extends LitElement {
         // language=HTML
         return html`
             <confirm-delete></confirm-delete>
-            ${!this.noHelp ? html`<paper-help></paper-help>` : ''}
+            ${when(!this.noHelp,
+                    () => html`
+                        <paper-help></paper-help>`)}
             <paper-toast></paper-toast>
             <get-report></get-report>
             <paper-loading></paper-loading>
@@ -316,36 +319,41 @@ export class IronAppRouter extends LitElement {
                         <slot name="toolbar"></slot>
                     </div>
                     <div class="flex vertical layout right-side-bottom">
-                    </div>    
-                    ${!this.hideMenu ? html`<paper-fab icon="menu" @click="${this._showMenu}"></paper-fab>` : ""}
-                </div>  
-                <div class="overlay"></div>                    
+                    </div>
+                    ${when(!this.hideMenu,
+                            () => html`
+                                <paper-fab icon="menu" @click="${this._showMenu}"></paper-fab>`)}
+                </div>
+                <div class="overlay"></div>
                 <div class="vertical layout left-side">
-                    <div class="header logo">                                                        
-                        <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">                                             
+                    <div class="header logo">
+                        <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">
                     </div>
                     <div slot="company-dropdown" class="horizontal layout">
-                        <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}" .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName" itemValueProperty="_id"></paper-select>
+                        <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}"
+                                      .options="${this._companies}" .value="${this._selectedCompany}" itemLabelProperty="companyName"
+                                      itemValueProperty="_id"></paper-select>
                     </div>
-                    <div class="vertical layout flex left-menu">      
-                        <div class="flex menu-buttons-container" >
+                    <div class="vertical layout flex left-menu">
+                        <div class="flex menu-buttons-container">
                             <iron-selector attrForSelected="name" .selected="${this.page}" slot="menu-buttons" class="horizontal layout wrap">
                                 ${this.menuSections.map(groupSection => html`
                                     <div class="group-section-title full-width">${groupSection.groupTitle}</div>
                                     ${groupSection.sections.map(menuSection => html`
-                                    <a href="/${menuSection.name}" name="${menuSection.name}" class="menu-button horizontal layout center flex ${menuSection.class}">
-                                        <iron-icon icon="${menuSection.icon}"></iron-icon>
-                                        ${menuSection.label}
-                                    </a>
-                                    `)}                                        
+                                        <a href="/${menuSection.name}" name="${menuSection.name}"
+                                           class="menu-button horizontal layout center flex ${menuSection.class}">
+                                            <iron-icon icon="${menuSection.icon}"></iron-icon>
+                                            ${menuSection.label}
+                                        </a>
+                                    `)}
                                 `)}
                             </iron-selector>
-                        </div>                                            
-                        <div class="horizontal layout start-justified"> 
+                        </div>
+                        <div class="horizontal layout start-justified">
                             <paper-button class="collapse-button" icon="file-upload" small no-margin no-background @click="${this._toggle}"></paper-button>
-                        </div>                       
-                    </div>                                       
-                </div>                                                        
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
     }
