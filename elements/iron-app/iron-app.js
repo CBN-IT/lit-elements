@@ -330,7 +330,7 @@ export class IronApp extends LitElement {
                     <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                 </div>
                 <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>
-                <div class="${this.collapsed ? this.isMobile ? 'full-collapsed' : 'collapsed' : 'extended'} vertical layout left-side">
+                <div class="${classMap({'full-collapsed': this.isMobile && this.collapsed, 'collapsed': !this.isMobile && this.collapsed,'extended': !this.collapsed })} vertical layout left-side">
                     <div class="header logo">
                         <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">
                     </div>
@@ -356,7 +356,7 @@ export class IronApp extends LitElement {
                             </iron-selector>
                         </div>
                         <div class="horizontal layout start-justified">
-                            <paper-button class="${this.collapsed ? 'collapsed-icon' : 'extended-icon'} collapse-button" icon="file-upload" small no-margin
+                            <paper-button class="${classMap({'collapsed-icon':this.collapsed, 'extended-icon': !this.collapsed })} collapse-button" icon="file-upload" small no-margin
                                           no-background
                                           style="display:${this.isMobile ? 'none' : 'inline-block'}" @click="${this._toggle}"></paper-button>
                         </div>
