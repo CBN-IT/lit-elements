@@ -168,6 +168,15 @@ class DemoIronForm extends LitElement {
                     "isEmail": true
                 },
                 {
+                    "type": "file",
+                    "label": "File 2",
+                    "name": "file2",
+                    "dbType": "file",
+                    "class": "col-xs-12 col-sm-12 col-lg-12",
+                    "multiple": true,
+                    "accept":"image/*, application/pdf"
+                },
+                {
                     "type": "input",
                     "label": "CIF",
                     "name": "cif",

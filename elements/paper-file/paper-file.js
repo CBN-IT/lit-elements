@@ -45,12 +45,18 @@ class PaperFile extends PaperInputContainer {
                 justify-content: center;
                 align-items: center;
                 z-index: 2;
-                font-size:2em
+                font-size: 2em;
             }
+
             :host(.dropZone) #dropZone {
                 display: flex;
-                
             }
+
+            :host(.dropZone.green) #dropZone {
+                background-color: var(--green-color);
+                color: white;
+            }
+
             .form-field:hover, label:hover {
                 cursor: pointer;
             }
@@ -71,15 +77,14 @@ class PaperFile extends PaperInputContainer {
                 height: 20px;
                 z-index: 1;
                 white-space: nowrap;
-                margin: 3px 0;
-                margin-right: 10px;
+                margin: 3px 10px 3px 0;
                 box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
             .selected-option > .option-label {
                 overflow: hidden;
                 text-overflow: ellipsis;
-                cursor:copy;
+                cursor: copy;
                 max-width: var(--paper-file-item-max-width, 200px);
             }
 
@@ -95,15 +100,18 @@ class PaperFile extends PaperInputContainer {
             .input-file {
                 display: none;
             }
-            .optionImage{
-                max-width:24px;
-                max-height:24px;
+
+            .optionImage {
+                max-width: 24px;
+                max-height: 24px;
                 vertical-align: middle;
             }
-            a{
-                color:black;
+
+            a {
+                color: black;
             }
-            .selected-option.invalid{
+
+            .selected-option.invalid {
                 background-color: #ffcdcd;
             }
         `;
@@ -120,12 +128,14 @@ class PaperFile extends PaperInputContainer {
         super.connectedCallback();
         document.body.addEventListener("dragend", this.bound_unhighlightDropZone);
         document.body.addEventListener("dragleave", this.bound_unhighlightDropZone);
+        document.body.addEventListener("drop", this.bound_unhighlightDropZone);
         document.body.addEventListener("dragenter", this.bound_highlightDropZone);
     }
     disconnectedCallback() {
         super.disconnectedCallback();
         document.body.removeEventListener("dragend", this.bound_unhighlightDropZone);
         document.body.removeEventListener("dragleave", this.bound_unhighlightDropZone);
+        document.body.removeEventListener("drop", this.bound_unhighlightDropZone);
         document.body.removeEventListener("dragenter", this.bound_highlightDropZone);
     }
 
@@ -144,7 +154,12 @@ class PaperFile extends PaperInputContainer {
                 </div>
             </div>
             <label class="label  ${classMap({floated: this.floated})}">${this.label}</label>
-            <div id="dropZone" @dragover="${this.preventDefault}" @drop="${this.dropFiles}">
+            <div id="dropZone" 
+                 @dragover="${this.preventDefault}" 
+                 @drop="${this.dropFiles}"
+                 @dragenter="${this.highlightDropZoneGreen}"
+                 @dragleave="${this.unhighlightDropZoneGreen}"
+            >
                 ${this.label}<iron-icon size="40" icon="file-upload"></iron-icon>
             </div>
         `;
@@ -164,7 +179,15 @@ class PaperFile extends PaperInputContainer {
     }
     unhighlightDropZone(event){
         this.classList.remove('dropZone');
+        this.classList.remove('green');
     }
+    highlightDropZoneGreen(event){
+        this.classList.add('green');
+    }
+    unhighlightDropZoneGreen(event){
+        this.classList.remove('green');
+    }
+
     get inputElement() {
         let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
 

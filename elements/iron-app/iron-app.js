@@ -297,6 +297,10 @@ export class IronApp extends LitElement {
         window.addEventListener('show-page', this._showPage.bind(this)); //for layout
         window.addEventListener('click', this._onClick.bind(this));
 
+        //prevent file drop in non-drop zones.
+        window.addEventListener('drop' ,(event)=>event.preventDefault())
+        window.addEventListener('dragover' ,(event)=>event.preventDefault())
+
         installMediaQueryWatcher('(max-width: 992px)', (matches) => {
             this.isMobile = matches || this.constructor._isMobile();
             this.collapsed = this.isMobile ? true : window.localStorage.getItem('collapsed') === 'true';
