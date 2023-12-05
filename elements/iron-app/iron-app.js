@@ -314,6 +314,17 @@ export class IronApp extends LitElement {
     }
 
     render() {
+        let rightSideClassMap = classMap({
+            "full-window": this.isMobile,
+            "big-window": !this.isMobile && this.collapsed,
+            "small-window": !this.isMobile && !this.collapsed
+        });
+        let leftSideClassMap = classMap({
+            'full-collapsed': this.isMobile && this.collapsed,
+            'collapsed': !this.isMobile && this.collapsed,
+            'extended': !this.collapsed
+        })
+
         // language=HTML
         return html`
             <confirm-delete></confirm-delete>
@@ -322,7 +333,7 @@ export class IronApp extends LitElement {
             <get-report></get-report>
             <paper-loading></paper-loading>
             <div class="flex horizontal layout" style="position: relative">
-                <div class="flex vertical layout right-side ${classMap({"full-window":this.isMobile,  "big-window": this.collapsed, "small-window": !this.collapsed})}">
+                <div class="flex vertical layout right-side ${rightSideClassMap}">
                     <div class="header toolbar horizontal layout center" style="display:none">
                         <slot name="toolbar"></slot>
                     </div>
@@ -334,7 +345,7 @@ export class IronApp extends LitElement {
                     <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                 </div>
                 <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>
-                <div class="${classMap({'full-collapsed': this.isMobile && this.collapsed, 'collapsed': !this.isMobile && this.collapsed,'extended': !this.collapsed })} vertical layout left-side">
+                <div class="${classMap(leftSideClassMap)} vertical layout left-side">
                     <div class="header logo">
                         <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">
                     </div>
