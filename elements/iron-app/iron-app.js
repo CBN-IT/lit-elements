@@ -310,7 +310,7 @@ export class IronApp extends LitElement {
 
     _templateHelp() {
         return html`
-            <paper-help></paper-help>`;
+            <paper-help --paper-help-left:100px></paper-help>`;
     }
 
     render() {
