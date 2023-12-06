@@ -181,11 +181,13 @@ export class IronApp extends LitElement {
             z-index: 40;
           }
 
-          paper-fab {
-            bottom: 0;
-            left: 70px;
-            background: var(--highlight-color);
-            z-index: 40;
+          #menuIcon {
+            background: var(--menu-icon-background, --highlight-color);
+            z-index: var(--menu-icon-z-index, 40);
+            top: var(--menu-icon-top, auto);
+            right: var(--menu-icon-right, auto);
+            bottom: var(--menu-icon-bottom, 0);
+            left: var(--menu-icon-left, 70px);
           }
 
           .menu-button:hover, .menu-button.iron-selected {
@@ -310,7 +312,7 @@ export class IronApp extends LitElement {
 
     _templateHelp() {
         return html`
-            <paper-help --paper-help-left:100px></paper-help>`;
+            <paper-help></paper-help>`;
     }
 
     render() {
@@ -342,7 +344,7 @@ export class IronApp extends LitElement {
                             ${this.views}
                         </iron-selector>
                     </div>
-                    <paper-fab icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
+                    <paper-fab id="menuIcon" icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                 </div>
                 <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>
                 <div class="${classMap(leftSideClassMap)} vertical layout left-side">
