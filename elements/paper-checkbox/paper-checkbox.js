@@ -92,7 +92,6 @@ class PaperCheckbox extends PaperInputContainer {
         super.firstUpdated(changedProperties);
         this.floated = true;
         this.addEventListener('click', this._onClick.bind(this));
-
     }
 
     set value(value) {

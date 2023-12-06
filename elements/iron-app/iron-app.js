@@ -183,7 +183,7 @@ export class IronApp extends LitElement {
 
           paper-fab {
             bottom: 0;
-            left: 0;
+            left: 70px;
             background: var(--highlight-color);
             z-index: 40;
           }
