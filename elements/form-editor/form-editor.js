@@ -16,6 +16,7 @@ import "../iron-icons/icons/icons/check_circle";
 import "../iron-icons/icons/icons/delete";
 import "../iron-icons/icons/icons/create";
 import "../iron-icons/icons/icons/content_copy";
+import {when} from "lit/directives/when";
 
 
 class FormEditor extends LitElement {
@@ -1089,9 +1090,12 @@ class FormEditor extends LitElement {
                                     <span class="tag class"><iron-icon size="18" icon="tablet"></iron-icon>${this._getCol("sm", el.class)}</span>
                                     <span class="tag class"><iron-icon size="18" icon="laptop"></iron-icon>${this._getCol("lg", el.class)}</span>
                                     ${map(this._simplifyClass(el.class), value => html`<span class="tag class">${value}</span>`)}
-                                    ${el.multiple ? html`<iron-icon size="24" icon="folders"></iron-icon>` : ""}
-                                    ${el.freeText ? html`<iron-icon size="24" icon="create"></iron-icon>` : ""}
-                                    ${el.allowDuplicates ? html`<iron-icon size="24" icon="content-copy"></iron-icon>` : ""}
+                                    ${when(el.multiple,
+                                            () => html`<iron-icon size="24" icon="folders"></iron-icon>`)}
+                                    ${when(el.freeText,
+                                            () => html`<iron-icon size="24" icon="create"></iron-icon>`)}
+                                    ${when(el.allowDuplicates,
+                                            () => html`<iron-icon size="24" icon="content-copy"></iron-icon>`)}
                                 </div>
                             </div>
                         </div>

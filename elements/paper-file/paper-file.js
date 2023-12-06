@@ -11,6 +11,7 @@ import {CBNUtils} from "../cbn-utils/CbnUtils";
 import "../iron-icons/icons/icons/file_upload.js";
 import {formatFileSize} from "../cbn-utils/formatFileSize";
 import "../iron-icons/icons/icons/file_download";
+import {classMap} from "lit/directives/class-map.js";
 
 class PaperFile extends PaperInputContainer {
 
@@ -32,6 +33,30 @@ class PaperFile extends PaperInputContainer {
     static get styleElement() {
         // language=CSS
         return css`
+            #dropZone {
+                display: none;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: var(--selected-menu-background-color);
+                color: var(--highlight-color);
+                justify-content: center;
+                align-items: center;
+                z-index: 2;
+                font-size: 2em;
+            }
+
+            :host(.dropZone) #dropZone {
+                display: flex;
+            }
+
+            :host(.dropZone.green) #dropZone {
+                background-color: var(--green-color);
+                color: white;
+            }
+
             .form-field:hover, label:hover {
                 cursor: pointer;
             }
@@ -52,15 +77,14 @@ class PaperFile extends PaperInputContainer {
                 height: 20px;
                 z-index: 1;
                 white-space: nowrap;
-                margin: 3px 0;
-                margin-right: 10px;
+                margin: 3px 10px 3px 0;
                 box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
             }
 
             .selected-option > .option-label {
                 overflow: hidden;
                 text-overflow: ellipsis;
-                cursor:copy;
+                cursor: copy;
                 max-width: var(--paper-file-item-max-width, 200px);
             }
 
@@ -76,15 +100,18 @@ class PaperFile extends PaperInputContainer {
             .input-file {
                 display: none;
             }
-            .optionImage{
-                max-width:24px;
-                max-height:24px;
+
+            .optionImage {
+                max-width: 24px;
+                max-height: 24px;
                 vertical-align: middle;
             }
-            a{
-                color:black;
+
+            a {
+                color: black;
             }
-            .selected-option.invalid{
+
+            .selected-option.invalid {
                 background-color: #ffcdcd;
             }
         `;
@@ -94,6 +121,71 @@ class PaperFile extends PaperInputContainer {
         super();
         this._value = [];
         this.accept = "";
+        this.bound_highlightDropZone = this.highlightDropZone.bind(this);
+        this.bound_unhighlightDropZone = this.unhighlightDropZone.bind(this);
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        document.body.addEventListener("dragend", this.bound_unhighlightDropZone);
+        document.body.addEventListener("dragleave", this.bound_unhighlightDropZone);
+        document.body.addEventListener("drop", this.bound_unhighlightDropZone);
+        document.body.addEventListener("dragenter", this.bound_highlightDropZone);
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        document.body.removeEventListener("dragend", this.bound_unhighlightDropZone);
+        document.body.removeEventListener("dragleave", this.bound_unhighlightDropZone);
+        document.body.removeEventListener("drop", this.bound_unhighlightDropZone);
+        document.body.removeEventListener("dragenter", this.bound_highlightDropZone);
+    }
+
+    render() {
+        let classes = classMap({
+            focused: this.focused,
+            valid: this.isValid,
+            invalid: !this.isValid,
+            disabled: this.disabled
+        })
+        return html`
+            <div class="form-field ${classes}"
+            >
+                <div class="input-container">
+                    ${this.inputElement}
+                </div>
+            </div>
+            <label class="label  ${classMap({floated: this.floated})}">${this.label}</label>
+            <div id="dropZone" 
+                 @dragover="${this.preventDefault}" 
+                 @drop="${this.dropFiles}"
+                 @dragenter="${this.highlightDropZoneGreen}"
+                 @dragleave="${this.unhighlightDropZoneGreen}"
+            >
+                ${this.label}<iron-icon size="40" icon="file-upload"></iron-icon>
+            </div>
+        `;
+    }
+    preventDefault(event){
+        event.preventDefault();
+    }
+    dropFiles(event){
+        event.preventDefault();
+        this.input.files = event.dataTransfer.files;
+        this._onInput();
+        this.unhighlightDropZone(event);
+        this.blur();
+    }
+    highlightDropZone(event){
+        this.classList.add('dropZone');
+    }
+    unhighlightDropZone(event){
+        this.classList.remove('dropZone');
+        this.classList.remove('green');
+    }
+    highlightDropZoneGreen(event){
+        this.classList.add('green');
+    }
+    unhighlightDropZoneGreen(event){
+        this.classList.remove('green');
     }
 
     get inputElement() {
@@ -184,17 +276,17 @@ class PaperFile extends PaperInputContainer {
         this.validate(this._value);
         this.requestUpdate();
         event.stopPropagation();
+        this.blur()
     }
 
     _isFloated() {
         return !CBNUtils.isNoE(this._value) && this._value.length > 0;
     }
 
-    _onInput(event) {
-        let file = this.input.files[0];
+    _onInput() {
         let processedFiles = [];
         for (let i = 0; i < this.input.files.length; i++) {
-            file = this.input.files[i];
+            let file = this.input.files[i];
             processedFiles.push({
                 label: file.name,
                 size: file.size,
