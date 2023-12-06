@@ -12,7 +12,7 @@
     "build-dev": "gulp-build build-parcel copy-static"
   },
   "dependencies": {
-    "ace-builds": "1.31.2",
+    "ace-builds": "1.32.0",
     "dayjs": "1.11.10",
     "lit": "3.1.0",
     "pwa-helpers": "0.9.1",
