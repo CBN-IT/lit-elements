@@ -182,7 +182,7 @@ export class IronApp extends LitElement {
           }
 
           #menuIcon {
-            background: var(--menu-icon-background, --highlight-color);
+            background: var(--menu-icon-background, var(--highlight-color));
             z-index: var(--menu-icon-z-index, 40);
             top: var(--menu-icon-top, auto);
             right: var(--menu-icon-right, auto);
