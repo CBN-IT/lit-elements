@@ -15,6 +15,8 @@ import '../../elements/iron-icon/iron-icon'
 import '../../elements/paper-input/paper-input.js'
 import {LitElement} from "lit";
 import {repeat} from "lit/directives/repeat";
+import {CBNUtils} from "../../elements/cbn-utils/CbnUtils";
+import '../../elements/paper-toast/paper-toast';
 
 class DemoIronIcons extends LitElement {
 
@@ -82,7 +84,7 @@ class DemoIronIcons extends LitElement {
                         ${repeat(keys, 
                                 (key) => key, 
                                 (key) => html`
-                                    <div>
+                                    <div @click="${() => this.copyURL(ns, key)}" style="cursor: pointer">
                                         <iron-icon size="50" icon="${key}"></iron-icon>
                                         ${key.split(":")[1]}
                                     </div>
@@ -98,8 +100,16 @@ class DemoIronIcons extends LitElement {
                     />
                 </div>
             </div>
+            <paper-toast></paper-toast>
 
         `
+    }
+
+    copyURL(category, icon){
+        let iconText = icon.split(":")[1].replaceAll("-","_")
+        let text = `lit-elements/elements/iron-icons/icons/${category}/${iconText}`
+        navigator.clipboard.writeText(text)
+        CBNUtils.displayMessage(`URL-ul "${text}" a fost copiat in clipboard!`);
     }
 
 }
