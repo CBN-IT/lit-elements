@@ -347,7 +347,7 @@ export class IronApp extends LitElement {
                     <paper-fab id="menuIcon" icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                 </div>
                 <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>
-                <div class="${classMap(leftSideClassMap)} vertical layout left-side">
+                <div class="${leftSideClassMap} vertical layout left-side">
                     <div class="header logo">
                         <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">
                     </div>
