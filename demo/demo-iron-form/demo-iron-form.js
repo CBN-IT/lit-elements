@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html} from 'lit'
+import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/iron-form/iron-form.js";
 import "../../elements/iron-icons/icons/icons/add";
@@ -15,9 +15,20 @@ class DemoIronForm extends LitElement {
     }
 
     static get styles() {
-        return [flexLayoutClasses]
+        return [flexLayoutClasses, css`
+          #form2{
+            --input-padding: 10px 2px 0px 2px;
+            --input-container-padding: 2px 1px 0px 3px;
+            --input-label-left: 4px;
+            --input-label-max-width: calc(100% - 2px);
+            --input-container-min-height: 30px;
+            --multi-form-form-margin-bottom: 5px;
+            --iron-overlay-min-height: 30px;
+          }
+        
+        
+        `]
     }
-
 
     constructor() {
         super();
@@ -201,14 +212,20 @@ class DemoIronForm extends LitElement {
                     "dbType": "number",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "step": 2
-                }
+                },
+                {
+                    "type": "checkbox",
+                    "name": "checked",
+                    "dbType": "boolean",
+                    "style": "width:fit-content;"
+                },
             ]
         };
     }
 
-
     render() {
         return html`
+            <h4>IRON FORM 1</h4>
             <iron-form
                     .config="${this.config}"
                     .model="${this.model}"
@@ -218,6 +235,15 @@ class DemoIronForm extends LitElement {
                     @value-changed="${this.onValueChange}"
             ></iron-form>
             <paper-button icon="autorenew" class="bgBlue" @click="${this.changeModel}">Change Model</paper-button>
+            <h4>IRON FORM with lower paddings</h4>
+            <iron-form id="form2"
+                        .config="${this.config}"
+                       .model="${this.model}"
+                       url="/SaveForm"
+                       collection="collection"
+                       @saved-form="${this._savedForm}"
+                       @value-changed="${this.onValueChange}"
+            ></iron-form>
         `;
     }
 

@@ -72,6 +72,10 @@ class PaperCheckbox extends PaperInputContainer {
                 padding-left: var(--checkbox-label-padding, 8px);
                 user-select: none;
             }
+
+            .checkbox-label:empty {
+                display: none;
+            }
         `;
     }
 
