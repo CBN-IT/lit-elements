@@ -187,7 +187,7 @@ export class IronApp extends LitElement {
             top: var(--menu-icon-top, auto);
             right: var(--menu-icon-right, auto);
             bottom: var(--menu-icon-bottom, 0);
-            left: var(--menu-icon-left, 70px);
+            left: var(--menu-icon-left, 20px);
           }
 
           .menu-button:hover, .menu-button.iron-selected {

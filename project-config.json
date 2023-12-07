@@ -13,6 +13,7 @@
     "demo/demo-iron-form/demo-iron-form.html",
     "demo/demo-iron-icons/demo-iron-icons.html",
     "demo/demo-multi-form/demo-multi-form.html",
+    "demo/demo-paper-color-picker/demo-paper-color-picker.html",
     "index.html"
   ],
   "development": {
