@@ -303,6 +303,7 @@ export class IronForm extends LitElement {
                             .validate="${elementConfig.validate}"
                             .fromUser="${elementConfig.fromUser}"
                             .value="${live(value)}"
+                            size="${elementConfig.size}"
                     ></paper-color-picker>`;
             }
             case 'paragraph': {
