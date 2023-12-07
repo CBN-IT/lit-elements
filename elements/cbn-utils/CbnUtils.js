@@ -497,11 +497,32 @@ export const CBNUtils = {
                            keys = [],
                            params = {},
                            url = "https://raport.cbn-it.ro/",
-                           download = "inline"
+                           download = "inline",
+                           _companyId = window.data._selectedCompany
                        }) {
             hashReport = hashReport || (report._hash ? report._hash : `${window.data._appId}/${report._path}`);
 
             keys = !(keys instanceof Array) ? [keys] : keys;
+            keys = keys.map(item => typeof item === 'object' ? (item._path||item._hash) : item);
+
+            let urlObj = new URL(url);
+            let urlSearchParams = urlObj.searchParams;
+            urlSearchParams.append("_companyId", _companyId);
+            urlSearchParams.append("hashReport", hashReport);
+            urlSearchParams.append("download", download);
+            keys.forEach((key) => {
+                urlSearchParams.append("keys", key);
+            });
+            Object.entries(params).forEach(([key, value]) => {
+                urlSearchParams.append(key, value);
+            });
+            let urlSearchParamsStr = urlSearchParams.toString();
+            if (urlSearchParamsStr.length < 2000) {
+                window.open(urlObj);
+                return;
+            }
+
+
             //maybe it fixes the popup blocked issue: https://stackoverflow.com/questions/3951768/window-open-and-pass-parameters-by-post-method
             let iframe = document.createElement("iframe");
             iframe.style.display = "none";

@@ -112,7 +112,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
     }
 
     _selectedOptionByValue(value) {
-        CBNUtils.fireEvent(this, 'get-report', {
+        CBNUtils.generateReport({
             keys: this.table.selectedItems,
             report: value
         });
@@ -120,7 +120,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
 
     _getReport(event) {
         let path = event.currentTarget.path;
-        CBNUtils.fireEvent(this, 'get-report', {
+        CBNUtils.generateReport({
             keys: this.table.selectedItems,
             report: this._options.find(value => value._path === path)
         });
