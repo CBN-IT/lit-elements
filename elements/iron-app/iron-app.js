@@ -412,7 +412,7 @@ export class IronApp extends LitElement {
 
     _pushState(pathname) {
         let globalParams = window.data.globalParams || {};
-        let params = Object.entries(globalParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        let params = Object.entries(globalParams).filter(([key, value]) => value !== undefined).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
         if (params.length > 0) {
             params = "&" + params.join("&");
         }
