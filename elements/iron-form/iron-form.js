@@ -5,6 +5,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import {gridClasses} from "../grid-layout/grid-classes.js";
 
 import './../paper-input/paper-input.js';
+import './../paper-color-picker/paper-color-picker';
 import './../paper-input/paper-textarea.js';
 import './../paper-select/paper-select.js';
 import './../paper-address/paper-address.js';
@@ -99,7 +100,7 @@ export class IronForm extends LitElement {
         this.config = {elements: []};
         this.model = {};
         this.params = {};
-        this.autocomplete="off";
+        this.autocomplete = "off";
         this.getElementBound = this.getElement.bind(this);
         this._initialModel = {};
     }
@@ -153,7 +154,7 @@ export class IronForm extends LitElement {
         return dirtyList
     }
 
-    _getValueFromModel(model, name){
+    _getValueFromModel(model, name) {
         if (name?.match(/^([^.]+)\.([0-9]+)$/)) {
             //a.0
             let [name, idx] = name.split(".");
@@ -173,123 +174,137 @@ export class IronForm extends LitElement {
             case 'date': {
                 return html`
                     <paper-date-picker
-                        class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .format="${elementConfig.format}"
-                        .min="${elementConfig.min}"
-                        .max="${elementConfig.max}"
-                        .value="${live(value)}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .format="${elementConfig.format}"
+                            .min="${elementConfig.min}"
+                            .max="${elementConfig.max}"
+                            .value="${live(value)}"
                     ></paper-date-picker>`;
             }
             case 'time': {
                 return html`
                     <paper-date-time-picker
-                        class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .value="${live(value)}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .value="${live(value)}"
                     ></paper-date-time-picker>`;
             }
             case 'file': {
                 return html`
                     <paper-file
-                        class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .accept="${elementConfig.accept || ""}"
-                        .disabled="${elementConfig.disabled}"
-                        .multiple="${elementConfig.multiple}"
-                        .value="${live(value)}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .accept="${elementConfig.accept || ""}"
+                            .disabled="${elementConfig.disabled}"
+                            .multiple="${elementConfig.multiple}"
+                            .value="${live(value)}"
                     ></paper-file>`
             }
             case 'checkbox': {
                 return html`
                     <paper-checkbox
-                            class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .value="${live(value)}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .value="${live(value)}"
                     ></paper-checkbox>`
             }
             case 'select': {
                 return html`
                     <paper-select
-                            class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .multiple="${elementConfig.multiple}"
-                        .freeText="${elementConfig.freeText}"
-                        .allowDuplicates="${elementConfig.allowDuplicates}"
-                        .itemValueProperty="${elementConfig.itemValueProperty}"
-                        .itemLabelProperty="${elementConfig.itemLabelProperty}"
-                        .itemImageProperty="${elementConfig.itemImageProperty}"
-                        .options="${elementConfig.options}"
-                        .value="${live(value)}"
-                        .preventSelection="${elementConfig.preventSelection}"
-                        .isDropdownMenu="${elementConfig.isDropdownMenu}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .multiple="${elementConfig.multiple}"
+                            .freeText="${elementConfig.freeText}"
+                            .allowDuplicates="${elementConfig.allowDuplicates}"
+                            .itemValueProperty="${elementConfig.itemValueProperty}"
+                            .itemLabelProperty="${elementConfig.itemLabelProperty}"
+                            .itemImageProperty="${elementConfig.itemImageProperty}"
+                            .options="${elementConfig.options}"
+                            .value="${live(value)}"
+                            .preventSelection="${elementConfig.preventSelection}"
+                            .isDropdownMenu="${elementConfig.isDropdownMenu}"
                     ></paper-select>`
             }
             case 'address': {
                 return html`
                     <paper-address
-                            class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .multiple="${elementConfig.multiple}"
-                        .freeText="${elementConfig.freeText}"
-                        .allowDuplicates="${elementConfig.allowDuplicates}"
-                        .itemValueProperty="${elementConfig.itemValueProperty}"
-                        .itemLabelProperty="${elementConfig.itemLabelProperty}"
-                        .options="${elementConfig.options}"
-                        .value="${live(value)}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .multiple="${elementConfig.multiple}"
+                            .freeText="${elementConfig.freeText}"
+                            .allowDuplicates="${elementConfig.allowDuplicates}"
+                            .itemValueProperty="${elementConfig.itemValueProperty}"
+                            .itemLabelProperty="${elementConfig.itemLabelProperty}"
+                            .options="${elementConfig.options}"
+                            .value="${live(value)}"
                     ></paper-address>`
             }
             case 'textarea': {
                 return html`
                     <paper-textarea
-                            class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .minLength="${elementConfig.minLength}"
-                        .maxLength="${elementConfig.maxLength}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .value="${live(value)}"
-                        .rows="${elementConfig.rows}"
-                        .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .minLength="${elementConfig.minLength}"
+                            .maxLength="${elementConfig.maxLength}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .value="${live(value)}"
+                            .rows="${elementConfig.rows}"
+                            .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-textarea>`;
+            }
+            case 'colorPicker': {
+                return html`
+                    <paper-color-picker
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            name="${elementConfig.name}"
+                            .required="${elementConfig.required}"
+                            .validate="${elementConfig.validate}"
+                            .fromUser="${elementConfig.fromUser}"
+                            .value="${live(value)}"
+                            size="${elementConfig.size}"
+                    ></paper-color-picker>`;
             }
             case 'paragraph': {
                 let content = elementConfig.text;
@@ -302,48 +317,51 @@ export class IronForm extends LitElement {
                 }
                 return html`
                     <p
-                        name="${elementConfig.name}"
-                        style="${elementConfig.style || ""}"
-                        class="${live(elementConfig.class || "")}"
+                            name="${elementConfig.name}"
+                            style="${elementConfig.style || ""}"
+                            class="${live(elementConfig.class || "")}"
                     >${content}</p>`
             }
             case 'button': {
                 return html`
                     <paper-button
-                        class="${live(elementConfig.class || "")}"
-                        name="${elementConfig.name}"
-                        style="${elementConfig.style || ""}"
-                        icon="${elementConfig.icon || ""}"
-                        ?small="${elementConfig.small || false}"
-                        ?smallest="${elementConfig.smallest || false}"
-                        ?no-margin="${elementConfig["no-margin"] || false}"
-                        ?margin-left-right="${elementConfig["margin-left-right"] || false}"
-                        .iconSize="${elementConfig["iconSize"] || ""}"
-                        @click="${(e)=>{CBNUtils.fireEvent(e.currentTarget, elementConfig.event,{form:this})}}"
-                    >${elementConfig.text}</paper-button>`
+                            class="${live(elementConfig.class || "")}"
+                            name="${elementConfig.name}"
+                            style="${elementConfig.style || ""}"
+                            icon="${elementConfig.icon || ""}"
+                            ?small="${elementConfig.small || false}"
+                            ?smallest="${elementConfig.smallest || false}"
+                            ?no-margin="${elementConfig["no-margin"] || false}"
+                            ?margin-left-right="${elementConfig["margin-left-right"] || false}"
+                            .iconSize="${elementConfig["iconSize"] || ""}"
+                            @click="${(e) => {
+                                CBNUtils.fireEvent(e.currentTarget, elementConfig.event, {form: this})
+                            }}"
+                    >${elementConfig.text}
+                    </paper-button>`
             }
             default: {
                 return html`
                     <paper-input
-                            class="${live((elementConfig.class || "")+" form-element")}"
-                        style="${elementConfig.style || ""}"
-                        @value-changed="${this._onValueChanged}"
-                        .type="${elementConfig.type}"
-                        name="${elementConfig.name}"
-                        .label="${elementConfig.label}"
-                        .required="${elementConfig.required}"
-                        .disabled="${elementConfig.disabled}"
-                        .minLength="${elementConfig.minLength}"
-                        .maxLength="${elementConfig.maxLength}"
-                        .min="${elementConfig.min}"
-                        .max="${elementConfig.max}"
-                        .step="${elementConfig.step}"
-                        .isCNP="${elementConfig.isCNP}"
-                        .isCIF="${elementConfig.isCIF}"
-                        .isEmail="${elementConfig.isEmail}"
-                        .defaultValue="${elementConfig.defaultValue}"
-                        .value="${live(value)}"
-                        .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
+                            class="${live((elementConfig.class || "") + " form-element")}"
+                            style="${elementConfig.style || ""}"
+                            @value-changed="${this._onValueChanged}"
+                            .type="${elementConfig.type}"
+                            name="${elementConfig.name}"
+                            .label="${elementConfig.label}"
+                            .required="${elementConfig.required}"
+                            .disabled="${elementConfig.disabled}"
+                            .minLength="${elementConfig.minLength}"
+                            .maxLength="${elementConfig.maxLength}"
+                            .min="${elementConfig.min}"
+                            .max="${elementConfig.max}"
+                            .step="${elementConfig.step}"
+                            .isCNP="${elementConfig.isCNP}"
+                            .isCIF="${elementConfig.isCIF}"
+                            .isEmail="${elementConfig.isEmail}"
+                            .defaultValue="${elementConfig.defaultValue}"
+                            .value="${live(value)}"
+                            .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-input>`
             }
         }
@@ -406,7 +424,7 @@ export class IronForm extends LitElement {
         })
     }
 
-    getInput(name){
+    getInput(name) {
         return this.renderRoot.querySelector('[name="' + name + '"]');
     }
 
@@ -458,23 +476,25 @@ export class IronForm extends LitElement {
             input.classList.remove("hidden");
         }
     }
+
     enableInput(name) {
         let input = this.getInput(name);
         if (input) {
-            input.disabled=false;
+            input.disabled = false;
         }
     }
 
     disableInput(name) {
         let input = this.getInput(name);
         if (input) {
-            input.disabled=true;
+            input.disabled = true;
         }
     }
-    changeLabel(name,newLabel){
+
+    changeLabel(name, newLabel) {
         let input = this.getInput(name);
         if (input) {
-            input.label=newLabel;
+            input.label = newLabel;
         }
     }
 
@@ -499,11 +519,12 @@ export class IronForm extends LitElement {
             CBNUtils.displayMessage('Invalid form', 'error');
         }
     }
-    get isValid(){
+
+    get isValid() {
         return this.validate();
     }
 
-    get formElements(){
+    get formElements() {
         return Array.from(this.shadowRoot.querySelectorAll('.form-element'))
     }
 

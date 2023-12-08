@@ -4,7 +4,6 @@ import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.
 import "../../elements/iron-form/iron-form.js";
 import "../../elements/iron-icons/icons/icons/add";
 import "../../elements/iron-icons/icons/icons/autorenew";
-
 class DemoIronForm extends LitElement {
 
     static get properties() {
