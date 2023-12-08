@@ -302,7 +302,7 @@ export class IronForm extends LitElement {
                             .required="${elementConfig.required}"
                             .validate="${elementConfig.validate}"
                             .fromUser="${elementConfig.fromUser}"
-                            .value="${live(value)}"
+                            value="${live(value)}"
                             size="${elementConfig.size}"
                     ></paper-color-picker>`;
             }

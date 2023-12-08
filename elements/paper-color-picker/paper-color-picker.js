@@ -39,7 +39,7 @@ export class PaperColorPicker extends LitElement {
     static get properties() {
         return {
             size: {type: String},
-            color: {type: String},
+            value: {type: String},
         }
     }
 
@@ -47,7 +47,7 @@ export class PaperColorPicker extends LitElement {
     constructor() {
         super();
         this.size = "35"
-        this.color ="black"
+        this.value ="black"
     }
 
     static get styles() {
@@ -73,7 +73,7 @@ export class PaperColorPicker extends LitElement {
     render() {
         return html`
             <div class="container vertical layout">
-                <iron-icon size="${this.size}" icon="format-color-fill" style="color: ${this.color}" @click="${this.openPickerDialog}"></iron-icon>
+                <iron-icon size="${this.size}" icon="format-color-fill" style="color: ${this.value}" @click="${this.openPickerDialog}"></iron-icon>
             </div>
             <paper-dialog class="dialog" .noActions="${true}">
                 <div slot="body" style="display: flex; flex-direction: column; flex-wrap: wrap; height: 200px">
@@ -96,7 +96,7 @@ export class PaperColorPicker extends LitElement {
     pickColor(e){
         let color = e.currentTarget.value
         this.colorPalette.close()
-        this.color = color
+        this.value = color
     }
 }
 
