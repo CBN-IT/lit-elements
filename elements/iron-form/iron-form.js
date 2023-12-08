@@ -154,17 +154,17 @@ export class IronForm extends LitElement {
         return dirtyList
     }
 
-    _getValueFromModel(model, name) {
-        if (name?.match(/^([^.]+)\.([0-9]+)$/)) {
+    _getValueFromModel(model, nameParam) {
+        if (nameParam?.match(/^([^.]+)\.([0-9]+)$/)) {
             //a.0
-            let [name, idx] = name.split(".");
+            let [name, idx] = nameParam.split(".");
             return model[name]?.[idx];
-        } else if (name?.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
+        } else if (nameParam?.match(/^([^.]+)\.([0-9]+)\.([^.]+)$/)) {
             //a.0.prop
-            let [name, idx, prop] = name.split(".");
+            let [name, idx, prop] = nameParam.split(".");
             return model[name]?.[idx]?.[prop];
         }
-        return model[name];
+        return model[nameParam];
     }
 
     getElement(elementConfig) {
