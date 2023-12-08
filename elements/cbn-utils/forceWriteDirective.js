@@ -1,24 +1,6 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.forceWrite = void 0;
-var lit_1 = require("lit");
-var directive_1 = require("lit/directive");
-var directive_helpers_1 = require("lit/directive-helpers");
+import { noChange, nothing } from "lit";
+import { directive, Directive, PartType, } from 'lit/directive';
+import { isSingleExpression, setCommittedValue } from "lit/directive-helpers";
 /*
 https://github.com/Polymer/lit-html/issues/877
 https://github.com/Polymer/lit-html/issues/872#issuecomment-474698152
@@ -29,50 +11,46 @@ const forceWrite = directive((value) => (part) => {
     part.setValue(value);
 });
 */
-var ForceWriteDirective = /** @class */ (function (_super) {
-    __extends(ForceWriteDirective, _super);
-    function ForceWriteDirective(partInfo) {
-        var _this = _super.call(this, partInfo) || this;
-        if (!(partInfo.type === directive_1.PartType.PROPERTY ||
-            partInfo.type === directive_1.PartType.ATTRIBUTE ||
-            partInfo.type === directive_1.PartType.BOOLEAN_ATTRIBUTE)) {
+class ForceWriteDirective extends Directive {
+    constructor(partInfo) {
+        super(partInfo);
+        if (!(partInfo.type === PartType.PROPERTY ||
+            partInfo.type === PartType.ATTRIBUTE ||
+            partInfo.type === PartType.BOOLEAN_ATTRIBUTE)) {
             throw new Error('The `live` directive is not allowed on child or event bindings');
         }
-        if (!(0, directive_helpers_1.isSingleExpression)(partInfo)) {
+        if (!isSingleExpression(partInfo)) {
             throw new Error('`live` bindings can only contain a single expression');
         }
-        return _this;
     }
-    ForceWriteDirective.prototype.render = function (value) {
+    render(value) {
         return value;
-    };
-    ForceWriteDirective.prototype.update = function (part, _a) {
-        var value = _a[0];
-        if (value === lit_1.noChange || value === lit_1.nothing) {
+    }
+    update(part, [value]) {
+        if (value === noChange || value === nothing) {
             return value;
         }
-        var element = part.element;
-        var name = part.name;
-        if (part.type === directive_1.PartType.PROPERTY) {
+        const element = part.element;
+        const name = part.name;
+        if (part.type === PartType.PROPERTY) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }
-        else if (part.type === directive_1.PartType.BOOLEAN_ATTRIBUTE) {
+        else if (part.type === PartType.BOOLEAN_ATTRIBUTE) {
             if (!!value === element.hasAttribute(name)) {
-                return lit_1.noChange;
+                return noChange;
             }
         }
-        else if (part.type === directive_1.PartType.ATTRIBUTE) {
+        else if (part.type === PartType.ATTRIBUTE) {
             if (element.getAttribute(name) === String(value)) {
-                return lit_1.noChange;
+                return noChange;
             }
         }
         // Resets the part's value, causing its dirty-check to fail so that it
         // always sets the value.
-        (0, directive_helpers_1.setCommittedValue)(part);
+        setCommittedValue(part);
         return value;
-    };
-    return ForceWriteDirective;
-}(directive_1.Directive));
+    }
+}
 /**
  * Checks binding values against live DOM values, instead of previously bound
  * values, when determining whether to update the value.
@@ -97,4 +75,5 @@ var ForceWriteDirective = /** @class */ (function (_super) {
  * you use `live()` with an attribute binding, make sure that only strings are
  * passed in, or the binding will update every render.
  */
-exports.forceWrite = (0, directive_1.directive)(ForceWriteDirective);
+export const forceWrite = directive(ForceWriteDirective);
+//# sourceMappingURL=forceWriteDirective.js.map

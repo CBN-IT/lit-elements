@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build-icons": "node elements/iron-icons/build.js",
-    "build-prod": "gulp-build build-parcel copy-static --prod",
-    "build-dev": "gulp-build build-parcel copy-static"
+    "build-prod": "tsc & gulp-build build-parcel copy-static --prod",
+    "build-dev": "tsc & gulp-build build-parcel copy-static"
   },
   "dependencies": {
     "ace-builds": "1.32.0",

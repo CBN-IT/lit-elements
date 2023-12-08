@@ -1,6 +1,4 @@
 "use strict";
-
-
 const defaultDiacriticsRemovalMap = [
     {
         'base': 'A',
@@ -339,174 +337,161 @@ const defaultDiacriticsRemovalMap = [
         'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g
     }
 ];
-function escapeStr(val){
-    if(val===undefined || val===null){
+function escapeStr(val) {
+    if (val === undefined || val === null) {
         return "";
     }
-    if(typeof val !=="string"){
+    if (typeof val !== "string") {
         return val;
     }
     return val.replace(/"/g, '\\"');
 }
-
-window.showLargeImg = (img) => {
+const showLargeImg = (img) => {
     let bigImage = document.createElement("img");
     bigImage.className = "bigImage";
-    bigImage.style = `position: fixed; top:0; bottom:0; left:0; right:0; pointer-events: none; z-index: 10000; margin:auto;width: auto; height: auto;max-width:75%;max-height:75%;`
+    bigImage.setAttribute("style", `position: fixed; top:0; bottom:0; left:0; right:0; pointer-events: none; z-index: 10000; margin:auto;width: auto; height: auto;max-width:75%;max-height:75%;`);
     bigImage.src = img.src;
     document.body.appendChild(bigImage);
-}
-window.showSmallImg = () => {
-    document.body.querySelectorAll(".bigImage").forEach(v=>v.remove())
-}
-
+};
+const showSmallImg = () => {
+    document.body.querySelectorAll(".bigImage").forEach(v => v.remove());
+};
 export const CBNUtils = {
-        fireEvent(element, eventType, detail) {
-            let e = new CustomEvent(eventType,
-                {
-                    bubbles: true,
-                    composed: true,
-                    cancelable: true,
-                    detail: detail
-                });
-            element.dispatchEvent(e);
-            return e;
-        },
-        isNoE(value) {
-            return value === undefined || value === null || value === '' || value.length ===0
-        },
-        async(callback, ms) {
+    fireEvent(element, eventType, detail) {
+        let e = new CustomEvent(eventType, {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+            detail: detail
+        });
+        element.dispatchEvent(e);
+        return e;
+    },
+    isNoE(value) {
+        return value === undefined || value === null || value === '' || value.length === 0;
+    },
+    async(callback, ms) {
+        setTimeout(() => {
+            callback();
+        }, ms || 1);
+    },
+    wait(ms) {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                callback();
+                resolve(null);
             }, ms || 1);
-        },
-        wait(ms) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve();
-                }, ms || 1);
-            });
-        },
-        displayMessage(message, type, timeout) {
-            this.fireEvent(window, 'display-message',
-                {
-                    message: message,
-                    type: type,
-                    timeout: timeout
-                })
-        },
-        debounce(fn, time) {
-            let timeout;
-            return () => {
-                const functionCall = () => fn.apply(this, arguments);
-
-                clearTimeout(timeout);
-                timeout = setTimeout(functionCall, time);
+        });
+    },
+    displayMessage(message, type, timeout) {
+        this.fireEvent(window, 'display-message', {
+            message: message,
+            type: type,
+            timeout: timeout
+        });
+    },
+    debounce(fn, time) {
+        let timeout;
+        return () => {
+            const functionCall = () => fn.apply(this, arguments);
+            clearTimeout(timeout);
+            timeout = setTimeout(functionCall, time);
+        };
+    },
+    startLoading() {
+        CBNUtils.fireEvent(window, 'start-loading', {});
+    },
+    stopLoading() {
+        CBNUtils.fireEvent(window, 'stop-loading', {});
+    },
+    copyProperties(to, from, prefix, properties) {
+        properties.forEach(key => {
+            to[`${prefix}_${key}`] = from[key];
+        });
+    },
+    copyPropertiesNoPrefix(to, from, prefix, properties) {
+        properties.forEach(key => {
+            to[key] = from[key];
+        });
+    },
+    updateInArray(array, itemToUpdate, propertiesToKeep, atTheBeginning) {
+        let index = array.findIndex(item => item._id === itemToUpdate._id);
+        if (index === -1) {
+            if (atTheBeginning) {
+                array.unshift(itemToUpdate);
             }
-        },
-        startLoading() {
-            CBNUtils.fireEvent(window, 'start-loading')
-        },
-        stopLoading() {
-            CBNUtils.fireEvent(window, 'stop-loading')
-        },
-        copyProperties(to, from, prefix, properties) {
-            properties.forEach(key => {
-                to[`${prefix}_${key}`] = from[key];
-            });
-        },
-        copyPropertiesNoPrefix(to, from, prefix, properties) {
-            properties.forEach(key => {
-                to[key] = from[key];
-            });
-        },
-        updateInArray(array, itemToUpdate, propertiesToKeep, atTheBeginning) {
-            let index = array.findIndex(item => item._id === itemToUpdate._id);
-            if (index === -1) {
-                if (atTheBeginning) {
-                    array.unshift(itemToUpdate);
-                } else {
-                    array.push(itemToUpdate);
-                }
-            } else {
-                if (propertiesToKeep) {
-                    propertiesToKeep.forEach(property => {
-                        if (itemToUpdate[property]) {
-                            itemToUpdate[property] = array[index][property]
-                        }
-                    })
-                }
-                array.splice(index, 1, itemToUpdate);
+            else {
+                array.push(itemToUpdate);
             }
-            return array;
-        },
-
-        updateOptionsInConfig(config, inputName, items) {
-            config.elements.forEach(item => {
-                if (item.name === inputName) {
-                    item.options = items;
-                }
-            });
-        },
-
-        updateOptions(config, inputName, items, newItem) {
-            let newItems = this.updateInArray(items, newItem);
-            this.updateOptionsInConfig(config, inputName, newItems)
-        },
-
-        deleteFromArray(array, itemToDelete) {
-            let index = array.findIndex(item => item._id === itemToDelete._id);
-            array.splice(index, 1);
-            return [...array];
-        },
-        deepEqual(a, b) {
-            if ((typeof a == 'object' && a != null) &&
-                (typeof b == 'object' && b != null)) {
-                let keysA = Object.keys(a);
-                let keysB = Object.keys(b);
-                if (keysA.length !== keysB.length) {
+        }
+        else {
+            if (propertiesToKeep) {
+                propertiesToKeep.forEach(property => {
+                    if (itemToUpdate[property]) {
+                        itemToUpdate[property] = array[index][property];
+                    }
+                });
+            }
+            array.splice(index, 1, itemToUpdate);
+        }
+        return array;
+    },
+    updateOptionsInConfig(config, inputName, items) {
+        config.elements.forEach(item => {
+            if (item.name === inputName) {
+                item.options = items;
+            }
+        });
+    },
+    updateOptions(config, inputName, items, newItem) {
+        let newItems = this.updateInArray(items, newItem);
+        this.updateOptionsInConfig(config, inputName, newItems);
+    },
+    deleteFromArray(array, itemToDelete) {
+        let index = array.findIndex(item => item._id === itemToDelete._id);
+        array.splice(index, 1);
+        return [...array];
+    },
+    deepEqual(a, b) {
+        if ((typeof a == 'object' && a != null) &&
+            (typeof b == 'object' && b != null)) {
+            let keysA = Object.keys(a);
+            let keysB = Object.keys(b);
+            if (keysA.length !== keysB.length) {
+                return false;
+            }
+            for (let key of keysA) {
+                if (!(key in b) || !CBNUtils.deepEqual(a[key], b[key])) {
                     return false;
                 }
-                for (let key of keysA) {
-                    if (!(key in b) || !CBNUtils.deepEqual(a[key], b[key])) {
-                        return false;
-                    }
+            }
+            for (let key of keysB) {
+                if (!(key in a) || !CBNUtils.deepEqual(b[key], a[key])) {
+                    return false;
                 }
-                for (let key of keysB) {
-                    if (!(key in a) || !CBNUtils.deepEqual(b[key], a[key])) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return a === b;
             }
-        },
-        removeDiacritics: (str) => {
-            if (str === null || str === undefined) {
-                return str;
-            }
-            for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
-                str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
-            }
+            return true;
+        }
+        else {
+            return a === b;
+        }
+    },
+    removeDiacritics: (str) => {
+        if (str === null || str === undefined) {
             return str;
-        },
-        generateReport({
-                           report,
-                           hashReport,
-                           keys = [],
-                           params = {},
-                           url = "https://raport.cbn-it.ro/",
-                           download = "inline"
-                       }) {
-            hashReport = hashReport || (report._hash ? report._hash : `${window.data._appId}/${report._path}`);
-
-            keys = !(keys instanceof Array) ? [keys] : keys;
-            //maybe it fixes the popup blocked issue: https://stackoverflow.com/questions/3951768/window-open-and-pass-parameters-by-post-method
-            let iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            document.body.appendChild(iframe);
-            let html = `
+        }
+        for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
+            str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
+        }
+        return str;
+    },
+    generateReport({ report, hashReport, keys = [], params = {}, url = "https://raport.cbn-it.ro/", download = "inline" }) {
+        hashReport = hashReport || (report._hash ? report._hash : `${window["data"]._appId}/${report._path}`);
+        keys = !(keys instanceof Array) ? [keys] : keys;
+        //maybe it fixes the popup blocked issue: https://stackoverflow.com/questions/3951768/window-open-and-pass-parameters-by-post-method
+        let iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        let html = `
                 <!DOCTYPE html>
                 <html>
                     <head>
@@ -523,11 +508,10 @@ export const CBNUtils = {
                     <script>document.getElementById("formRaport").submit();</script>
                 </html>
             `;
-            iframe.contentDocument.write(html);
-        }
+        iframe.contentDocument.write(html);
     }
-;
-
-
-window.CBNUtils = CBNUtils;
-
+};
+window["showLargeImg"] = showLargeImg;
+window["showSmallImg"] = showSmallImg;
+window["CBNUtils"] = CBNUtils;
+//# sourceMappingURL=CbnUtils.js.map
