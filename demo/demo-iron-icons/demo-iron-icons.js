@@ -107,7 +107,7 @@ class DemoIronIcons extends LitElement {
 
     copyURL(category, icon){
         let iconText = icon.split(":")[1].replaceAll("-","_")
-        let text = `lit-elements/elements/iron-icons/icons/${category}/${iconText}`
+        let text = `import "lit-elements/elements/iron-icons/icons/${category}/${iconText}"`
         navigator.clipboard.writeText(text)
         CBNUtils.displayMessage(`URL-ul "${text}" a fost copiat in clipboard!`);
     }
