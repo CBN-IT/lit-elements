@@ -349,7 +349,7 @@ function escapeStr(val) {
     return val.replace(/"/g, '\\"');
 }
 
-const showLargeImg = (img) => {
+const showLargeImg = (img:HTMLImageElement) => {
     let bigImage = document.createElement("img") as HTMLImageElement;
     bigImage.className = "bigImage";
     bigImage.setAttribute("style", `position: fixed; top:0; bottom:0; left:0; right:0; pointer-events: none; z-index: 10000; margin:auto;width: auto; height: auto;max-width:75%;max-height:75%;`)
@@ -357,12 +357,12 @@ const showLargeImg = (img) => {
     document.body.appendChild(bigImage);
 }
 const showSmallImg = () => {
-    document.body.querySelectorAll(".bigImage").forEach(v => v.remove())
+    document.body.querySelectorAll<HTMLImageElement>(".bigImage").forEach(v => v.remove())
 }
 
 export const CBNUtils = {
-    fireEvent(element, eventType, detail) {
-        let e = new CustomEvent(eventType,
+    fireEvent<T>(element: EventTarget, eventName: string, detail: T): CustomEvent<T> {
+        let e = new CustomEvent(eventName,
             {
                 bubbles: true,
                 composed: true,
@@ -372,19 +372,19 @@ export const CBNUtils = {
         element.dispatchEvent(e);
         return e;
     },
-    isNoE(value) {
+    isNoE(value: any) {
         return value === undefined || value === null || value === '' || value.length === 0
     },
-    async(callback, ms) {
+    async(callback:Function, ms = 1) {
         setTimeout(() => {
             callback();
-        }, ms || 1);
+        }, ms);
     },
-    wait(ms) {
+    wait(ms = 1) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(null);
-            }, ms || 1);
+            }, ms);
         });
     },
     displayMessage(message, type, timeout) {
@@ -410,17 +410,17 @@ export const CBNUtils = {
     stopLoading() {
         CBNUtils.fireEvent(window, 'stop-loading', {})
     },
-    copyProperties(to, from, prefix, properties) {
+    copyProperties(to: object, from: object, prefix, properties: string[]) {
         properties.forEach(key => {
             to[`${prefix}_${key}`] = from[key];
         });
     },
-    copyPropertiesNoPrefix(to, from, prefix, properties) {
+    copyPropertiesNoPrefix(to: object, from: object, prefix, properties: string[]) {
         properties.forEach(key => {
             to[key] = from[key];
         });
     },
-    updateInArray(array, itemToUpdate, propertiesToKeep, atTheBeginning) {
+    updateInArray<T extends {_id:string}>(array: T[], itemToUpdate: T, propertiesToKeep: string[] = [], atTheBeginning = false) {
         let index = array.findIndex(item => item._id === itemToUpdate._id);
         if (index === -1) {
             if (atTheBeginning) {
@@ -454,12 +454,12 @@ export const CBNUtils = {
         this.updateOptionsInConfig(config, inputName, newItems)
     },
 
-    deleteFromArray(array, itemToDelete) {
+    deleteFromArray<T extends {_id:string}>(array: T[], itemToDelete: T) {
         let index = array.findIndex(item => item._id === itemToDelete._id);
         array.splice(index, 1);
         return [...array];
     },
-    deepEqual(a, b) {
+    deepEqual<T>(a:T, b:T) {
         if ((typeof a == 'object' && a != null) &&
             (typeof b == 'object' && b != null)) {
             let keysA = Object.keys(a);
@@ -482,7 +482,7 @@ export const CBNUtils = {
             return a === b;
         }
     },
-    removeDiacritics: (str) => {
+    removeDiacritics: (str: string) => {
         if (str === null || str === undefined) {
             return str;
         }

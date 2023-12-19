@@ -357,8 +357,8 @@ const showSmallImg = () => {
     document.body.querySelectorAll(".bigImage").forEach(v => v.remove());
 };
 export const CBNUtils = {
-    fireEvent(element, eventType, detail) {
-        let e = new CustomEvent(eventType, {
+    fireEvent(element, eventName, detail) {
+        let e = new CustomEvent(eventName, {
             bubbles: true,
             composed: true,
             cancelable: true,
@@ -370,16 +370,16 @@ export const CBNUtils = {
     isNoE(value) {
         return value === undefined || value === null || value === '' || value.length === 0;
     },
-    async(callback, ms) {
+    async(callback, ms = 1) {
         setTimeout(() => {
             callback();
-        }, ms || 1);
+        }, ms);
     },
-    wait(ms) {
+    wait(ms = 1) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(null);
-            }, ms || 1);
+            }, ms);
         });
     },
     displayMessage(message, type, timeout) {
@@ -413,7 +413,7 @@ export const CBNUtils = {
             to[key] = from[key];
         });
     },
-    updateInArray(array, itemToUpdate, propertiesToKeep, atTheBeginning) {
+    updateInArray(array, itemToUpdate, propertiesToKeep = [], atTheBeginning = false) {
         let index = array.findIndex(item => item._id === itemToUpdate._id);
         if (index === -1) {
             if (atTheBeginning) {
