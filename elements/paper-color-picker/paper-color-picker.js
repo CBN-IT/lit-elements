@@ -64,6 +64,7 @@ export class PaperColorPicker extends LitElement {
             }
             .color:hover{
                 transform: scale( 1.3);
+                outline: 1px solid white;
             }
 
         `
@@ -73,12 +74,12 @@ export class PaperColorPicker extends LitElement {
     render() {
         return html`
             <div class="container vertical layout">
-                <iron-icon size="${this.size}" icon="format-color-fill" style="color: ${this.value}" @click="${this.openPickerDialog}"></iron-icon>
+                <paper-button class="blue" size="${this.size}" icon="format-color-fill" smallest style="color: ${this.value};" @click="${this.openPickerDialog}"></paper-button>
             </div>
             <paper-dialog class="dialog" .noActions="${true}">
                 <div slot="body" style="display: flex; flex-direction: column; flex-wrap: wrap; height: 200px">
                     ${colors.map( v=> html `
-                    <span class="color" .value="${v}" style="width: 20px; height: 20px; background-color: ${v}; cursor: pointer" @click="${(e) => this.pickColor(e)}"></span>`)}
+                    <span class="color" .value="${v}" style="width: 20px; height: 20px; background-color: ${v}; cursor: pointer;" @click="${(e) => this.pickColor(e)}"></span>`)}
                 </div>
             </paper-dialog>
         `
