@@ -205,10 +205,12 @@ class PaperFile extends PaperInputContainer {
                         let isValid = MIMEtype.test(item.type);
                         return html`
                             <div class="selected-option ${isValid?"":"invalid"}">
-                                ${when(isImage, 
-                                        ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
-                                        ()=>html`<a href="${url}" download="${filename}" onmousedown="event.stopPropagation()"><iron-icon icon="file-download"></iron-icon></a>`,
-                                )}
+                                <a href="${url}" download="${filename}" onmousedown="event.stopPropagation()">
+                                    ${when(isImage, 
+                                            ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
+                                            ()=>html`<iron-icon icon="file-download"></iron-icon>`,
+                                    )}
+                                </a>
                                 <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
                                 <span>.${extension}</span>
                                 <span>(${formatFileSize(item.size)})</span>
