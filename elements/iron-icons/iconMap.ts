@@ -1,7 +1,7 @@
-import {svg, TemplateResult} from "lit";
+import {svg} from "lit";
 
 type IconMap = {
-    [iconName: string]: TemplateResult<2>
+    [iconName: string]: unknown
 }
 let initialIconMap: IconMap = {
     emptyIcon: svg`<svg viewBox="0 0 24 24" id="warning" style="fill:red"><g><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></g></svg>`
