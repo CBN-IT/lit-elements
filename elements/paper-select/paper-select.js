@@ -335,7 +335,8 @@ class PaperSelect extends PaperInputContainer {
             this._value = [];
             let selectedOptions = Array.from(event.currentTarget.selectedOptions);
             selectedOptions.forEach(selectedOption => {
-                this._selectOptionByIndex(parseInt(selectedOption.value));
+                let index = selectedOption.value;
+                this._selectOption(event, this._filteredOptions[index], index)
             });
             if (selectedOptions.length === 0) {
                 //when you deselect all it doesn't trigger change.
@@ -449,7 +450,7 @@ class PaperSelect extends PaperInputContainer {
             }
             case "Enter": {
                 if (this._filteredOptions.length > this._selectedOption) {
-                    this._selectOptionByIndex(this._selectedOption);
+                    this._selectOption(event, this._filteredOptions[this._selectedOption], this._selectedOption)
                 } else {
                     this._selectFreeTextValue();
                 }
