@@ -1,6 +1,6 @@
-import { css } from 'lit';
+import {css} from 'lit';
 // language=CSS
-export const customUplotCSS = css `
+export const customUplotCSS = css`
     .uplot {
         width: 100%;
     }
@@ -48,5 +48,4 @@ export const customUplotCSS = css `
     .u-cursor-pt {
         filter: brightness(85%);
     }
-`;
-//# sourceMappingURL=customUplotCSS.js.map
+`

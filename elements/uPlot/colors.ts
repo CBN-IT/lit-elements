@@ -23,7 +23,8 @@ export const darkerColors = [
     "#004f77",
     "#001f79",
     "#0a004d"
-];
+]
+
 export const lighterColors = [
     "#6e40aa",
     "#a06ddc",
@@ -37,10 +38,10 @@ export const lighterColors = [
     "#6bddff",
     "#849cff",
     "#a06ddc"
-];
+]
+
 export const colors = [
     ...baseColors,
     ...darkerColors,
     ...lighterColors
 ];
-//# sourceMappingURL=colors.js.map
