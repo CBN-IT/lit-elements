@@ -2,7 +2,7 @@ import uPlot from "uplot";
 
 declare module "uPlot" {
     interface Series {
-        _focus:boolean
+        _focus?:boolean
     }
 }
 
