@@ -3,6 +3,17 @@
  */
 
 import THREE from "./threejs/three"
+import seedImg from "./images/seed3.png"
+import helvetikerRegular from 	"./fonts/helvetiker_regular.typeface.json"
+import helvetikerBold from 	"./fonts/helvetiker_bold.typeface.json"
+import silozuri from "./data/silozuri.json"
+import siloFrontVert from "./shaders/silo_front_vert.glsl"
+import siloTowerFrontFrag from "./shaders/silo_tower_front_frag.glsl"
+import siloHouseFrontFrag from  "./shaders/silo_house_front_frag.glsl"
+import siloBlackVert from "./shaders/silo_back_vert.glsl"
+import siloBlackFrag from  "./shaders/silo_back_frag.glsl"
+import seedVert from "./shaders/seed_vert.glsl"
+import seedFrag from  "./shaders/seed_frag.glsl"
 export const CBN_Resources = (() => {
 	let _class = {};
 
@@ -36,27 +47,27 @@ export const CBN_Resources = (() => {
 		compassTrans:		null
 	};
 	_class.textures = {
-		seedColor:			null,
+		seedColor:			seedImg,
 		seedNormal: 		null
 	};
 	_class.shaders = {
-		siloFrontVert:		null,
-		siloTowerFrontFrag: null,
-		siloHouseFrontFrag: null,
-		siloBackVert: 		null,
-		siloBackFrag: 		null,
-		seedVert: 			null,
-		seedFrag: 			null
+		siloFrontVert:		siloFrontVert,
+		siloTowerFrontFrag: siloTowerFrontFrag,
+		siloHouseFrontFrag: siloHouseFrontFrag,
+		siloBackVert: 		siloBlackVert,
+		siloBackFrag: 		siloBlackFrag,
+		seedVert: 			seedVert,
+		seedFrag: 			seedFrag
 	};
 	_class.fonts = {
-		helvetikerRegular:	null,
-		helvetikerBold: 	null
+		helvetikerRegular:	helvetikerRegular,
+		helvetikerBold: 	helvetikerBold
 	};
 	_class.models = {
 		silo:				null
 	};
 	_class.jsons = {
-		siloData:			null
+		siloData:			silozuri
 	};
 	_class.textSymbols = {
 		// object example
