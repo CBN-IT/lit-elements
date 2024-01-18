@@ -14,9 +14,9 @@ import siloBlackVert from "./shaders/silo_back_vert.glsl"
 import siloBlackFrag from  "./shaders/silo_back_frag.glsl"
 import seedVert from "./shaders/seed_vert.glsl"
 import seedFrag from  "./shaders/seed_frag.glsl"
+
 export const CBN_Resources = (() => {
 	let _class = {};
-
 
 	/* static public */
 	_class.MAGIC_NUMBER = 1.1 / 58;
@@ -47,7 +47,7 @@ export const CBN_Resources = (() => {
 		compassTrans:		null
 	};
 	_class.textures = {
-		seedColor:			seedImg,
+		seedColor:			null,
 		seedNormal: 		null
 	};
 	_class.shaders = {
@@ -59,15 +59,16 @@ export const CBN_Resources = (() => {
 		seedVert: 			seedVert,
 		seedFrag: 			seedFrag
 	};
+
 	_class.fonts = {
-		helvetikerRegular:	helvetikerRegular,
-		helvetikerBold: 	helvetikerBold
+		helvetikerRegular:	new THREE.FontLoader().parse(helvetikerRegular) ,
+		helvetikerBold: 	new THREE.FontLoader().parse(helvetikerBold)
 	};
 	_class.models = {
 		silo:				null
 	};
 	_class.jsons = {
-		siloData:			silozuri
+		siloData:			 silozuri
 	};
 	_class.textSymbols = {
 		// object example
@@ -77,26 +78,9 @@ export const CBN_Resources = (() => {
 		}
 	};
 
-
 	/* static private */
 	_class.TEXTURE_URLS = {
-		seedColor: 			"elements/siloz-webgl/images/seed3.png"
-	};
-	_class.SHADER_URLS = {
-		siloFrontVert: 		"elements/siloz-webgl/shaders/silo_front_vert.glsl",
-		siloTowerFrontFrag: "elements/siloz-webgl/shaders/silo_tower_front_frag.glsl",
-		siloHouseFrontFrag: "elements/siloz-webgl/shaders/silo_house_front_frag.glsl",
-		siloBackVert: 		"elements/siloz-webgl/shaders/silo_back_vert.glsl",
-		siloBackFrag: 		"elements/siloz-webgl/shaders/silo_back_frag.glsl",
-		seedVert: 			"elements/siloz-webgl/shaders/seed_vert.glsl",
-		seedFrag: 			"elements/siloz-webgl/shaders/seed_frag.glsl"
-	};
-	_class.FONT_URLS = {
-		helvetikerRegular: 	"elements/siloz-webgl/fonts/helvetiker_regular.typeface.json",
-		helvetikerBold: 	"elements/siloz-webgl/fonts/helvetiker_bold.typeface.json"
-	};
-	_class.JSON_URLS = {
-		siloData: 			"elements/siloz-webgl/data/silozuri.json"
+		seedColor: 			seedImg
 	};
 	let TEXT_SYMBOLS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', 'N','a','-'];
 
@@ -109,61 +93,6 @@ export const CBN_Resources = (() => {
 	 /* static public */
 	_class.loadAll = onDoneFunc => {
 		let leftToLoad = 0;
-
-		// load shaders
-		for ( let key in _class.SHADER_URLS ) {
-			// needs closure for key
-			(key => {
-				leftToLoad++;
-				let client = new XMLHttpRequest();
-				client.addEventListener("load", data => {
-					_class.shaders[key] = data.target.response;
-					// callback
-					leftToLoad--;
-					if ( leftToLoad === 0 ) {
-						onDoneFunc();
-					}
-				});
-				client.open( 'GET', _class.SHADER_URLS[key] );
-				client.send();
-			})( key );
-		}
-
-		// load fonts
-		for ( let key in _class.FONT_URLS ) {
-			// needs closure for key
-			(key => {
-				leftToLoad++;
-				let loader = new THREE.FontLoader();
-				loader.load( _class.FONT_URLS[key], font => {
-					_class.fonts[key] = font;
-					// callback
-					leftToLoad--;
-					if ( leftToLoad === 0 ) {
-						onDoneFunc();
-					}
-				});
-			})( key );
-		}
-
-		// load server data
-		for ( let key in _class.JSON_URLS ) {
-			// needs closure for key
-			(key => {
-				leftToLoad++;
-				let client = new XMLHttpRequest();
-				client.addEventListener("load", data => {
-					_class.jsons[key] = JSON.parse( data.target.response );
-					// callback
-					leftToLoad--;
-					if ( leftToLoad === 0 ) {
-						onDoneFunc();
-					}
-				});
-				client.open( 'GET', _class.JSON_URLS[key] );
-				client.send();
-			})( key );
-		}
 
 		// load wheat texture
 		for ( let key in _class.TEXTURE_URLS ) {
@@ -181,6 +110,7 @@ export const CBN_Resources = (() => {
 				});
 			})( key );
 		}
+		// onDoneFunc()
 	};
 
 
