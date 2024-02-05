@@ -396,7 +396,7 @@ export const CBNUtils = {
             })
     },
     debounce(fn:Function, ms = 100) {
-        let timeout: number;
+        let timeout: ReturnType<typeof setTimeout>;
         return () => {
             const functionCall = () => fn.apply(this, arguments);
 
