@@ -382,19 +382,19 @@ export const CBNUtils = {
             }, ms);
         });
     },
-    displayMessage(message, type, timeout) {
+    displayMessage(message, type, timeoutSec) {
         this.fireEvent(window, 'display-message', {
             message: message,
             type: type,
-            timeout: timeout
+            timeout: timeoutSec
         });
     },
-    debounce(fn, time) {
+    debounce(fn, ms = 100) {
         let timeout;
         return () => {
             const functionCall = () => fn.apply(this, arguments);
             clearTimeout(timeout);
-            timeout = setTimeout(functionCall, time);
+            timeout = setTimeout(functionCall, ms);
         };
     },
     startLoading() {

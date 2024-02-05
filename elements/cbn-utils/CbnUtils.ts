@@ -387,21 +387,21 @@ export const CBNUtils = {
             }, ms);
         });
     },
-    displayMessage(message, type, timeout) {
+    displayMessage(message:string, type:"success"|"warning"|"error", timeoutSec?:number) {
         this.fireEvent(window, 'display-message',
             {
                 message: message,
                 type: type,
-                timeout: timeout
+                timeout: timeoutSec
             })
     },
-    debounce(fn, time) {
-        let timeout;
+    debounce(fn:Function, ms = 100) {
+        let timeout: number;
         return () => {
             const functionCall = () => fn.apply(this, arguments);
 
             clearTimeout(timeout);
-            timeout = setTimeout(functionCall, time);
+            timeout = setTimeout(functionCall, ms);
         }
     },
     startLoading() {
@@ -410,12 +410,12 @@ export const CBNUtils = {
     stopLoading() {
         CBNUtils.fireEvent(window, 'stop-loading', {})
     },
-    copyProperties(to: object, from: object, prefix, properties: string[]) {
+    copyProperties(to: object, from: object, prefix:string, properties: string[]) {
         properties.forEach(key => {
             to[`${prefix}_${key}`] = from[key];
         });
     },
-    copyPropertiesNoPrefix(to: object, from: object, prefix, properties: string[]) {
+    copyPropertiesNoPrefix(to: object, from: object, prefix:string, properties: string[]) {
         properties.forEach(key => {
             to[key] = from[key];
         });
@@ -441,7 +441,7 @@ export const CBNUtils = {
         return array;
     },
 
-    updateOptionsInConfig(config, inputName, items) {
+    updateOptionsInConfig(config:any, inputName:string, items:any[]) {
         config.elements.forEach(item => {
             if (item.name === inputName) {
                 item.options = items;
@@ -449,7 +449,7 @@ export const CBNUtils = {
         });
     },
 
-    updateOptions(config, inputName, items, newItem) {
+    updateOptions(config, inputName:string, items, newItem) {
         let newItems = this.updateInArray(items, newItem);
         this.updateOptionsInConfig(config, inputName, newItems)
     },
