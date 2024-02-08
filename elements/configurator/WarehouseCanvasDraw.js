@@ -1,4 +1,4 @@
-import {Context} from '/node_modules/canvas2svg';
+import {Context} from 'canvas2svg';
 import {hexToRGB} from './hexToRGB.js';
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 

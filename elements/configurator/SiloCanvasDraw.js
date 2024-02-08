@@ -1,6 +1,6 @@
-import {Context} from '/node_modules/canvas2svg';
+import {Context} from 'canvas2svg';
 import {hexToRGB} from './hexToRGB.js';
-import {optimize} from '/svgo/dist/svgo.browser.js';
+import {optimize} from 'svgo/dist/svgo.browser.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js'
 
 const {PI, tan, cos, sin, atan} = Math;
