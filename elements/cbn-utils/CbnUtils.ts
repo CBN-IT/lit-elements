@@ -387,7 +387,7 @@ export const CBNUtils = {
             }, ms);
         });
     },
-    displayMessage(message:string, type:"success"|"warning"|"error", timeoutSec?:number) {
+    displayMessage(message:unknown, type:"success"|"warning"|"error", timeoutSec?:number) {
         this.fireEvent(window, 'display-message',
             {
                 message: message,
