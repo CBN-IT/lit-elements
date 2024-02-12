@@ -16,6 +16,11 @@ class PaperCheckbox extends PaperInputContainer {
         };
     }
 
+    constructor() {
+        super();
+        this.noLabel = true;
+    }
+
     static get styles() {
         return [...super.styles, this.styleElement, flexLayoutClasses];
     }

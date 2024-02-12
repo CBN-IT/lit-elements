@@ -1,8 +1,9 @@
 "use strict";
-import {LitElement, html, css} from 'lit'
+import {LitElement, html, css, nothing} from 'lit'
 import {classMap} from 'lit/directives/class-map.js';
 
 export class PaperInputContainer extends LitElement {
+
 
     static get properties() {
         return {
@@ -139,6 +140,7 @@ export class PaperInputContainer extends LitElement {
         super();
         this.tabindex = "1";
         this.value = this.defaultValue;
+        this.noLabel=false;
     }
 
     render() {
@@ -148,7 +150,7 @@ export class PaperInputContainer extends LitElement {
                     ${this.inputElement}
                 </div>
             </div>
-            <label class="label  ${classMap({floated: this.floated})}">${this.label}</label>
+            ${!this.noLabel ? html`<label class="label  ${classMap({floated: this.floated})}">${this.label}</label>`: nothing}
         `;
     }
 
