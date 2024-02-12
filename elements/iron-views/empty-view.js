@@ -1,59 +1,49 @@
 "use strict";
-import {LitElement, html, css} from 'lit'
-
+import { LitElement, html, css } from 'lit';
 export class EmptyView extends LitElement {
-
     static get properties() {
         return {
-            currentPage: {type: String},
-            name: {type: String}
+            currentPage: { type: String },
+            name: { type: String }
         };
     }
-
     static get styles() {
-        return [this.styleElement]
+        return [this.styleElement];
     }
-
     static get styleElement() {
         // language=CSS
-        return css`
+        return css `
             :host {
                 display: flex;
             }
-        `
+        `;
     }
-
     shouldUpdate(changedProperties) {
         if (changedProperties.has('currentPage')) {
+            // @ts-ignore
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
         }
         return true;
     }
-
     render() {
-        return html`               
+        return html `               
             empty-view     
         `;
     }
-
     refreshPage(newPage, oldPage) {
+        // @ts-ignore
         if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)) {
+            // @ts-ignore
             this.onPageShow(newPage);
             return true;
         }
         this.onPageHide();
         return false;
     }
-
-    onPageShow(){
-
+    onPageShow() {
     }
-    onPageHide(){
-
+    onPageHide() {
     }
 }
-
 customElements.define("empty-view", EmptyView);
-
-
-
+//# sourceMappingURL=empty-view.js.map

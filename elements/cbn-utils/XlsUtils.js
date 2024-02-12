@@ -1,7 +1,7 @@
 "use strict";
 
 export const XlsUtils = {
-    async saveAsXls(data, {filename = "out", sheetName="Sheet1", xls=!!window.data._office2003}={}) {
+    async saveAsXls(data, {filename = "out", sheetName="Sheet1", xls=!!window.data?._office2003}={}) {
         const XLSX = await import("xlsx");
 
         let wb = XLSX.utils.book_new();

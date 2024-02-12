@@ -1,6 +1,6 @@
-import {css} from '/node_modules/lit-element/lit-element.js';
+import { css } from 'lit';
 // language=CSS
-export const uplotCSS = css`
+export const uplotCSS = css `
     .uplot, .uplot *, .uplot *::before, .uplot *::after {
         box-sizing: border-box;
     }
@@ -138,3 +138,4 @@ export const uplotCSS = css`
     }
     
 `;
+//# sourceMappingURL=uplotCSS.js.map

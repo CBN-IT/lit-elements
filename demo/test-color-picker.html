@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5e5e5;
+        }
+
+        .middle {
+            position: relative;
+            width: 50%;
+            max-width: 500px;
+        }
+
+        .slider {
+            position: relative;
+            z-index: 1;
+            height: 10px;
+            margin: 0 15px;
+        }
+        .slider > .track {
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-radius: 5px;
+        }
+        .slider > .range {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            bottom: 0;
+            border-radius: 5px;
+        }
+        .slider > .thumb {
+            position: absolute;
+            z-index: 3;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(98,0,238,.1);
+            transition: box-shadow .3s ease-in-out;
+            transform: translate(-15px, -10px);
+        }
+        .slider > .thumb.hover {
+            box-shadow: 0 0 0 10px rgba(98,0,238,.1);
+        }
+        .slider > .thumb.active {
+            box-shadow: 0 0 0 20px rgba(98,0,238,.2);
+        }
+
+        input[type=range] {
+            position: absolute;
+            pointer-events: none;
+            -webkit-appearance: none;
+            z-index: 2;
+            height: 10px;
+            width: 100%;
+            opacity: 0;
+            margin:0;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            pointer-events: all;
+            width: 30px;
+            height: 30px;
+            border-radius: 0;
+            border: 0 none;
+            background-color: red;
+            -webkit-appearance: none;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="middle">
+    <div class="multi-range-slider">
+        <input type="range" class="input" min="0" max="100" value="15">
+        <input type="range" class="input" min="0" max="100" value="25">
+        <input type="range" class="input" min="0" max="100" value="75">
+        <input type="range" class="input" min="0" max="100" value="100">
+
+        <div class="slider">
+            <div class="track"></div>
+            <div class="range" style="background-color: red"></div>
+            <div class="thumb" style="background-color: red"></div>
+
+            <div class="range" style="background-color: green"></div>
+            <div class="thumb" style="background-color: green"></div>
+
+            <div class="range" style="background-color: blue"></div>
+            <div class="thumb" style="background-color: blue"></div>
+
+            <div class="range" style="background-color: orange"></div>
+            <div class="thumb" style="background-color: orange"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var inputs = document.querySelectorAll(".input");
+    var thumbs = document.querySelectorAll(".slider > .thumb");
+    var ranges = document.querySelectorAll(".slider > .range");
+
+    inputs.forEach(((input, idx)=> {
+        function updateSliderPosition(idx) {
+            let min = parseInt(this.min)
+
+            let max = parseInt(this.max);
+
+            let percent = ((this.value - min) / (max - min)) * 100;
+            thumbs[idx].style.left = percent + "%";
+
+            ranges.forEach((range, i) => {
+                if (i === 0) {
+                    range.style.left = 0;
+                    range.style.right = (100 - inputs[i].value) + "%";
+                } else {
+                    range.style.left = inputs[i - 1].value + "%";
+                    range.style.right = (100 - inputs[i].value) + "%";
+                }
+            })
+
+
+
+        }
+        let f = updateSliderPosition.bind(input, idx);
+        f();
+        input.addEventListener("input", f);
+        input.addEventListener("mouseover", function() {
+            thumbs[idx].classList.add("hover");
+        });
+        input.addEventListener("mouseout", function() {
+            thumbs[idx].classList.remove("hover");
+        });
+        input.addEventListener("mousedown", function() {
+            thumbs[idx].classList.add("active");
+        });
+        input.addEventListener("mouseup", function() {
+            thumbs[idx].classList.remove("active");
+        });
+    }))
+
+
+</script>
+</body>
+</html>

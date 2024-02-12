@@ -4,6 +4,7 @@ import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import '../iron-selector/iron-selector.js'
 import '../cbn-utils/CbnUtils.js'
 import {repeat} from 'lit/directives/repeat.js';
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 
 //
@@ -70,9 +71,14 @@ class PaperTabs extends LitElement {
 
     _onPageSelect(event) {
         if (this.selectedTab !== event.detail.selected) {
-            let old = this.selectedTab;
-            this.selectedTab = event.detail.selected;
-            CBNUtils.fireEvent(this, 'tab-select', {selected: this.selectedTab, oldTab: old});
+            let e = CBNUtils.fireEvent(this, 'tab-select', {
+                selected: this.selectedTab,
+                oldTab: this.selectedTab,
+                newTab: event.detail.selected
+            });
+            if (!e.defaultPrevented) {
+                this.selectedTab = event.detail.selected;
+            }
         }
     }
 

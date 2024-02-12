@@ -2,6 +2,7 @@
 import {LitElement, html} from "lit";
 import {flexLayoutClasses} from "../elements/flex-layout/flex-layout-classes.js";
 import "../elements/paper-button/paper-button"
+import "../elements/paper-color-picker/paper-color-picker"
 import "../elements/iron-overlay/iron-overlay"
 import "../elements/iron-selector/iron-selector"
 import "../elements/paper-fab/paper-fab"
@@ -179,6 +180,11 @@ class DemoApp extends LitElement {
             <div class="container">
                 <div class="title">multi-form</div>
                 <paper-button icon="assignment" class="bgBlue" @click="${() => window.open('demo-multi-form.html')}">Demo multi-form</paper-button>
+
+            </div>
+            <div class="container">
+                <div class="title" style=" margin-right: 3em">paper-color-picker</div>
+                <paper-color-picker></paper-color-picker>
 
             </div>
         `;

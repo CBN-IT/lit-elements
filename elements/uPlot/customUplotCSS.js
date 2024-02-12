@@ -1,6 +1,6 @@
-import {css} from '/node_modules/lit-element/lit-element.js';
+import { css } from 'lit';
 // language=CSS
-export const customUplotCSS = css`
+export const customUplotCSS = css `
     .uplot {
         width: 100%;
     }
@@ -33,7 +33,7 @@ export const customUplotCSS = css`
     }
 
     .u-series > * {
-        padding: 0px;
+        padding: 0;
     }
 
     .u-legend .u-marker {
@@ -48,4 +48,5 @@ export const customUplotCSS = css`
     .u-cursor-pt {
         filter: brightness(85%);
     }
-`
+`;
+//# sourceMappingURL=customUplotCSS.js.map

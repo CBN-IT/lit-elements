@@ -1,4 +1,4 @@
-import {Context} from '/node_modules/canvas2svg';
+import {Context} from 'canvas2svg';
 import {hexToRGB} from './hexToRGB.js';
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 
@@ -12,7 +12,7 @@ function radToDeg(val){
 export class WarehouseCanvasDraw extends SiloCanvasDraw {
     constructor(args) {
         super(args);
-        this.maxDistBelowRoof = 0.3;
+        this.minDistBelowRoof = 0.3;
     }
     valueChange(toDraw, name, value) {
         if (this.numberConfigElements.includes(name)) {

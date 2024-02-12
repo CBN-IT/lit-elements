@@ -119,6 +119,7 @@ export class IronApp extends LitElement {
             bottom: 0;
             left: 0;
             z-index: 40;
+            border-right: 1px solid #d0d0d0;
           }
 
           .right-side {
@@ -126,7 +127,7 @@ export class IronApp extends LitElement {
             top: 0;
             bottom: 0;
             right: 0;
-            background: rgb(216, 216, 216);
+            background: #d0d0d0;
           }
 
           .right-side-bottom {
@@ -187,7 +188,7 @@ export class IronApp extends LitElement {
             top: var(--menu-icon-top, auto);
             right: var(--menu-icon-right, auto);
             bottom: var(--menu-icon-bottom, 0);
-            left: var(--menu-icon-left, 70px);
+            left: var(--menu-icon-left, 20px);
           }
 
           .menu-button:hover, .menu-button.iron-selected {
@@ -297,7 +298,6 @@ export class IronApp extends LitElement {
 
         window.addEventListener('popstate', this._onPopstate.bind(this));
         window.addEventListener('show-page', this._showPage.bind(this)); //for layout
-        window.addEventListener('click', this._onClick.bind(this));
 
         //prevent file drop in non-drop zones.
         window.addEventListener('drop' ,(event)=>event.preventDefault())
@@ -346,10 +346,10 @@ export class IronApp extends LitElement {
                     </div>
                     <paper-fab id="menuIcon" icon="menu" style="display:${this.isMobile && !this.hideMenu ? 'inline-block' : 'none'}" @click="${this._showMenu}"></paper-fab>
                 </div>
-                <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}"></div>
+                <div class="overlay" style="display:${this.isMobile && !this.collapsed ? 'block' : 'none'}" @click="${this._hideMenu}"></div>
                 <div class="${leftSideClassMap} vertical layout left-side">
-                    <div class="header logo">
-                        <img src="${this.logoSrc}" class="big-logo" alt="logo" @click="${this._openSite}">
+                    <div class="header logo" @click="${this._openSite}">
+                        <img src="${this.logoSrc}" class="big-logo" alt="logo">
                     </div>
                     <div slot="company-dropdown" class="horizontal layout">
                         <paper-select class="company-dropdown" isDropdownMenu preventSelection @selection-attempt="${this._onCompanySelection}"
@@ -407,12 +407,13 @@ export class IronApp extends LitElement {
         if (this.page !== event.detail.selected) {
             await this._setPages(this.base ? `/${this.base}/${event.detail.selected}` : `/${event.detail.selected}`);
             this._pushState(this.pathname);
+            this._hideMenu()
         }
     }
 
     _pushState(pathname) {
         let globalParams = window.data.globalParams || {};
-        let params = Object.entries(globalParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        let params = Object.entries(globalParams).filter(([key, value]) => value !== undefined).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
         if (params.length > 0) {
             params = "&" + params.join("&");
         }
@@ -452,16 +453,14 @@ export class IronApp extends LitElement {
             params = "&" + params.join("&");
         }
         window.open(`/${this.base || ""}?_companyId=${encodeURIComponent(event.detail.value._id)}${params}`);
-    } //layout functions
+    }
 
-    //layout functions
     _toggle() {
         this.collapsed = !this.collapsed;
         window.localStorage.setItem('collapsed', this.collapsed);
     }
 
-    _onClick(event) {
-        // event.preventDefault();
+    _hideMenu() {
         if (this.isMobile) {
             this.collapsed = true;
         }
@@ -469,7 +468,7 @@ export class IronApp extends LitElement {
 
     _showMenu(event) {
         event.stopPropagation();
-        this.collapsed = false;
+        this.collapsed = !this.collapsed;
     }
 
     _openSite() {
