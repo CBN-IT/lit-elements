@@ -339,7 +339,7 @@ const defaultDiacriticsRemovalMap = [
     }
 ];
 
-function escapeStr(val) {
+function escapeStr<T>(val:T):string|T {
     if (val === undefined || val === null) {
         return "";
     }
