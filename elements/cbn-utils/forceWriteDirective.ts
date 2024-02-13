@@ -50,6 +50,9 @@ class ForceWriteDirective extends Directive {
 
         if (part.type === PartType.PROPERTY) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // if (value === (element as any)[name]) {
+            //     return noChange;
+            // }
         } else if (part.type === PartType.BOOLEAN_ATTRIBUTE) {
             if (!!value === element.hasAttribute(name)) {
                 return noChange;

@@ -18,6 +18,7 @@ import "../iron-icons/icons/icons/check_circle.js";
 import {unsafeHTML} from "lit/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
+import {forceWrite} from "../cbn-utils/forceWriteDirective";
 
 export class IronForm extends LitElement {
 
@@ -185,7 +186,7 @@ export class IronForm extends LitElement {
                             .format="${elementConfig.format}"
                             .min="${elementConfig.min}"
                             .max="${elementConfig.max}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                     ></paper-date-picker>`;
             }
             case 'time': {
@@ -199,7 +200,7 @@ export class IronForm extends LitElement {
                             .required="${elementConfig.required}"
                             .disabled="${elementConfig.disabled}"
                             .defaultValue="${elementConfig.defaultValue}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                     ></paper-date-time-picker>`;
             }
             case 'file': {
@@ -214,7 +215,7 @@ export class IronForm extends LitElement {
                             .accept="${elementConfig.accept || ""}"
                             .disabled="${elementConfig.disabled}"
                             .multiple="${elementConfig.multiple}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                     ></paper-file>`
             }
             case 'checkbox': {
@@ -228,7 +229,7 @@ export class IronForm extends LitElement {
                             .required="${elementConfig.required}"
                             .disabled="${elementConfig.disabled}"
                             .defaultValue="${elementConfig.defaultValue}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                     ></paper-checkbox>`
             }
             case 'select': {
@@ -249,7 +250,7 @@ export class IronForm extends LitElement {
                             .itemLabelProperty="${elementConfig.itemLabelProperty}"
                             .itemImageProperty="${elementConfig.itemImageProperty}"
                             .options="${elementConfig.options}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                             .preventSelection="${elementConfig.preventSelection}"
                             .isDropdownMenu="${elementConfig.isDropdownMenu}"
                     ></paper-select>`
@@ -271,7 +272,7 @@ export class IronForm extends LitElement {
                             .itemValueProperty="${elementConfig.itemValueProperty}"
                             .itemLabelProperty="${elementConfig.itemLabelProperty}"
                             .options="${elementConfig.options}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                     ></paper-address>`
             }
             case 'textarea': {
@@ -287,7 +288,7 @@ export class IronForm extends LitElement {
                             .minLength="${elementConfig.minLength}"
                             .maxLength="${elementConfig.maxLength}"
                             .defaultValue="${elementConfig.defaultValue}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                             .rows="${elementConfig.rows}"
                             .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-textarea>`;
@@ -302,7 +303,7 @@ export class IronForm extends LitElement {
                             .required="${elementConfig.required}"
                             .validate="${elementConfig.validate}"
                             .fromUser="${elementConfig.fromUser}"
-                            value="${live(value)}"
+                            value="${forceWrite(value)}"
                             size="${elementConfig.size}"
                     ></paper-color-picker>`;
             }
@@ -360,7 +361,7 @@ export class IronForm extends LitElement {
                             .isCIF="${elementConfig.isCIF}"
                             .isEmail="${elementConfig.isEmail}"
                             .defaultValue="${elementConfig.defaultValue}"
-                            .value="${live(value)}"
+                            .value="${forceWrite(value)}"
                             .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                     ></paper-input>`
             }
