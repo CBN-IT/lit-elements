@@ -293,6 +293,7 @@ export class IronApp extends LitElement {
     constructor() {
         super();
         this._setPages(window.location.pathname);
+        this._pushState(this.pathname)
         this._companies = window.data._companies;
         this._selectedCompany = window.data._selectedCompany;
 
@@ -389,6 +390,7 @@ export class IronApp extends LitElement {
     async _showPage(event) {
         let {page, _id, ...model} = event.detail;
         await this._setPages((this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : ''), model);
+        this._pushState(this.pathname,model);
     }
 
     async checkAndImportDependencies(page) {
@@ -406,26 +408,24 @@ export class IronApp extends LitElement {
     async _onPageSelect(event) {
         if (this.page !== event.detail.selected) {
             await this._setPages(this.base ? `/${this.base}/${event.detail.selected}` : `/${event.detail.selected}`);
-            this._pushState(this.pathname);
+            this._pushState(this.pathname,{});
             this._hideMenu()
         }
     }
 
-    _pushState(pathname) {
+    _pushState(pathname,model={}) {
         let globalParams = window.data.globalParams || {};
         let params = Object.entries(globalParams).filter(([key, value]) => value !== undefined).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
         if (params.length > 0) {
             params = "&" + params.join("&");
         }
-        window.history.pushState({}, '', `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}${params}`);
+        let url = `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}${params}`;
+        window.history.pushState(model, '', url);
     }
 
     async _setPages(pathname, model) {
         pathname = (this.base && pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
 
-        if (this.pathname !== pathname) {
-            this._pushState(pathname);
-        }
         this.pathname = pathname;
         let currentPage = this.getCurrentPageFromPath(pathname, model);
 
