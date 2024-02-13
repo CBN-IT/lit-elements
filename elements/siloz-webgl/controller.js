@@ -80,7 +80,6 @@ export const CBN_Controller = (() => {
     /* static private */
 	function _onMouseUp( event )
 	{
-		event.preventDefault();
 		// mark flag
 		_isMouseDown = false;
 	}
