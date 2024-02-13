@@ -81,7 +81,7 @@ class GetReport extends LitElement {
             this.model = {};
             this.dialog.open();
         } else {
-            this._generateRequest();
+            this._generateReport(this.report, this.keys, {});
         }
 
     }
@@ -109,10 +109,11 @@ class GetReport extends LitElement {
                 <body>
                     <form id="formRaport" action="${url}" target="_blank" method="POST">
                         <input type="hidden" name="_companyId" value="${escapeStr(window.data._selectedCompany)}"/>
+                        <input type="hidden" name="namespace" value="${escapeStr(window.data._selectedCompany)}"/>
                         <input type="hidden" name="hashReport" value="${escapeStr(hashReport)}"/>
                         <input type="hidden" name="download" value="inline"/>
                         ${keys.map(key => `<input type="hidden" name="keys" value="${escapeStr(key)}"/>`).join("")}
-                        ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="ADMA.${key}" value="${escapeStr(value)}"/>`).join("")}
+                        ${Object.entries(params).map(([key, value]) => `<input type="hidden" name="${key}" value="${escapeStr(value)}"/>`).join("")}
                     </form>
                 </body>
                 <script>document.getElementById("formRaport").submit();</script>
