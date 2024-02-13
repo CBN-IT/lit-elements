@@ -3,7 +3,6 @@
  */
 import {CBN_Controller} from "./controller";
 import THREE from "./threejs/three"
-import Stats from "./threejs/stats.min";
 
 export const CBN_Context = (() => {
 	let _class = {};
@@ -37,7 +36,7 @@ export const CBN_Context = (() => {
 		_htmlCanvas.appendChild( _glRenderer.domElement );
 
 		// create stats
-		_glStats = new Stats();
+		//_glStats = new Stats();
 		// _htmlCanvas.appendChild( _glStats.dom );
 
 		// start render loop
@@ -64,7 +63,7 @@ export const CBN_Context = (() => {
 			_class.renderFrame();
 		}
 		// update stats
-		_glStats.update();
+		//_glStats.update();
 	};
 
 

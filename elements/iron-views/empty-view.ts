@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit'
+import {LitElement, html, css, PropertyValues} from 'lit'
 
 export class EmptyView extends LitElement {
 
@@ -23,7 +23,7 @@ export class EmptyView extends LitElement {
         `
     }
 
-    shouldUpdate(changedProperties) {
+    shouldUpdate(changedProperties: PropertyValues) {
         if (changedProperties.has('currentPage')) {
             // @ts-ignore
             this.refreshPage(this.currentPage, changedProperties.get("currentPage"));
@@ -37,7 +37,7 @@ export class EmptyView extends LitElement {
         `;
     }
 
-    refreshPage(newPage, oldPage) {
+    refreshPage(newPage: string, oldPage) {
         // @ts-ignore
         if (newPage && newPage.page === this.name && (!oldPage || oldPage.page !== this.name || oldPage._id !== newPage._id)) {
             // @ts-ignore
