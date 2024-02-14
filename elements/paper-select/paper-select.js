@@ -304,12 +304,13 @@ class PaperSelect extends PaperInputContainer {
 
     set options(options) {
         //we should consider the options immutable. Since we change them, we make a clone;
-        this._options = options ? JSON.parse(JSON.stringify(options)).map((item) => {
+        this._options = options ? options.map((item) => {
             return typeof item === 'object' ?
-                Object.assign(item, {
+                {
+                    ...item,
                     '__label': this.itemLabelProperty ? item[this.itemLabelProperty] || "" : item.label,
                     '__value': this.itemValueProperty ? item[this.itemValueProperty] || "" : item.value
-                })
+                }
                 : {
                     '__label': item,
                     '__value': item,
