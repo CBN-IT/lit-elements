@@ -28,3 +28,6 @@ dist/
 .sass-cache
 .tmp
 package-lock.json
+/elements/iron-form/types.js
+/elements/iron-form/types.js.map
+tsconfig.tsbuildinfo
