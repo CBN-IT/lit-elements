@@ -130,3 +130,64 @@ export type ConfigElem = DatePickerConfigElem | CheckboxConfigElem | FileConfigE
 export type Configs = {
     elements: ConfigElem[]
 }
+
+export type IconDropdownElem = {
+    icon: string,
+    direction?: string,
+    eventToFire?: string,
+    options: string[],
+    openedDropdown?: boolean,
+    itemValueProperty?: string,
+    itemLabelProperty?: string,
+    isNative?: boolean
+}
+
+export type LoadingElem = {
+    opened?: boolean
+}
+
+export type TableElem = {
+    columns?: Column[],
+    items?:Item[],
+    viewHieght?: number,
+    rowHeight?: number,
+    selectedItems: Item[],
+}
+
+export type Column = {
+    filterable?: boolean,
+    name?: string,
+    sortable?: boolean,
+    title?: string
+}
+
+
+export type Item = {
+    initialIndex?: number,
+    isSelected?: boolean
+}
+
+export type TabElem = {
+    pages?: string[],
+    selectedTab?: number
+}
+
+export type IconElem = {
+    icon: string,
+    svgIcon?: SVGElement,
+    size?: number
+}
+
+export type ToastElem = {
+    message: string,
+    icon: object,
+    type?: string,
+    opened?: boolean,
+    timeout?: number
+}
+
+export type ToggleButtonElem = {
+    checked?: boolean,
+    value?: boolean
+}
+
