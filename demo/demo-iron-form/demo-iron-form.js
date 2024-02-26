@@ -170,7 +170,7 @@ class DemoIronForm extends LitElement {
                     "icon": "add"
                 },
                 {
-                    "type": "input",
+                    "type": "text",
                     "label": "Email",
                     "name": "email",
                     "dbType": "string",
@@ -187,7 +187,7 @@ class DemoIronForm extends LitElement {
                     "accept":"image/*, application/pdf"
                 },
                 {
-                    "type": "input",
+                    "type": "text",
                     "label": "CIF",
                     "name": "cif",
                     "dbType": "string",
@@ -195,7 +195,7 @@ class DemoIronForm extends LitElement {
                     "isCIF": true,
                 },
                 {
-                    "type": "input",
+                    "type": "text",
                     "label": "CNP",
                     "name": "cnp",
                     "dbType": "number",
@@ -210,7 +210,8 @@ class DemoIronForm extends LitElement {
                     "name": "step",
                     "dbType": "number",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
-                    "step": 2
+                    "step": 2,
+                    "defaultValue":5.5
                 },
                 {
                     "type": "checkbox",

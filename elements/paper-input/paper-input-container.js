@@ -188,9 +188,6 @@ export class PaperInputContainer extends LitElement {
     }
 
     _onInput(event) {
-        if (this.input.type === "number" && event.data === ".") {
-            return;
-        }
         this.validate(this.input.value, true);
     }
 

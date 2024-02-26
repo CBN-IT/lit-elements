@@ -36,7 +36,7 @@ class PaperInput extends PaperInputContainer {
         return html`
             <input 
                 class="input"
-                type="${this.type}"
+                type="text"
                 name="${this.name}"
                 min="${this.min || ""}"
                 max="${this.max || ""}"
@@ -46,6 +46,7 @@ class PaperInput extends PaperInputContainer {
                 .value="${this._value}"
                 ?disabled="${this.disabled}"
                 autocomplete="${this.autocomplete}"
+                inputmode="${this.isEmail?"email":this.type==="number"?"numeric":"text"}"
             />`;
     }
 
@@ -153,7 +154,7 @@ class PaperInput extends PaperInputContainer {
                 sum += (controlNumber[i] * 1) * (cnp[i] * 1);
             }
             let controlDigit = sum % 11;
-            if (sum % 11 === 10) {
+            if (controlDigit === 10) {
                 controlDigit = 1;
             }
             return (controlDigit === 1 * cnp[12]);
@@ -164,6 +165,7 @@ class PaperInput extends PaperInputContainer {
     _validateNumber(value) {
         return CBNUtils.isNoE(value) ||
             (
+                ((typeof value === "number") || ((typeof value === "string") && /^[-+]?[0-9]*(\.[0-9]+)?$/g.test(value))) &&
                 (isNaN(this.min) || parseFloat(value) >= this.min) &&
                 (isNaN(this.max) || parseFloat(value) <= this.max)
             )
