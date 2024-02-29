@@ -92,7 +92,7 @@ export class AddNoLink extends EmptyView {
     }
 
     async _onSavedForm() {
-        CBNUtils.fireEvent(this, 'show-page', {name: this.listView});
+        window.historyRouter.showPage(this.listView);
     }
 
     onPageShow(page) {

@@ -30,11 +30,11 @@ export class TableViewWithLink extends TableView {
 
 
     async _addDocument() {
-        CBNUtils.fireEvent(this, 'show-page', {page: this.addView});
+        window.historyRouter.showPage(this.addView)
     }
 
     async _onDblClick(event) {
-        CBNUtils.fireEvent(this, 'show-page', {...event.detail.item, page: this.addView});
+        window.historyRouter.showPage(this.addView, event.detail.item)
     }
 }
 

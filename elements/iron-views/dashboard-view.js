@@ -46,7 +46,7 @@ export class DashboardView extends EmptyView {
 
     render() {
         return this.pages.map((v)=>html`
-            <div class="box col-xs-12 col-sm-6 col-md-4" @click="${()=>{CBNUtils.fireEvent(this, 'show-page', {page: v.name});}}">
+            <div class="box col-xs-12 col-sm-6 col-md-4" @click="${()=>{window.historyRouter.showPage(v.name);}}">
                 <h3>${v.label}</h3>
                 <iron-icon icon="${v.icon}" .svgIcon="${v.svgIcon}" size="150"></iron-icon>
             </div>

@@ -14,12 +14,12 @@ import '../paper-button/paper-button.js';
 import '../get-report/get-report.js';
 import '../paper-help/paper-help.js';
 import "../confirm-delete/confirm-delete.js";
-// import logo from '/web/images/logo.svg';
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js';
 
 import "../iron-icons/icons/icons/file_upload.js";
 import "../iron-icons/icons/icons/menu.js";
 import {classMap} from "lit/directives/class-map.js";
+import {HistoryRouter} from "../cbn-utils/HistoryRouter";
 
 
 export class IronApp extends LitElement {
@@ -292,13 +292,15 @@ export class IronApp extends LitElement {
 
     constructor() {
         super();
-        this._setPages(window.location.pathname);
-        this._pushState(this.pathname)
+        window.historyRouter = new HistoryRouter({
+            base: this.base,
+            home: this.home,
+            onShowPage: this._showPage.bind(this)
+        });
+        window.historyRouter.replaceState(null, null, window.location.pathname);
+
         this._companies = window.data._companies;
         this._selectedCompany = window.data._selectedCompany;
-
-        window.addEventListener('popstate', this._onPopstate.bind(this));
-        window.addEventListener('show-page', this._showPage.bind(this)); //for layout
 
         //prevent file drop in non-drop zones.
         window.addEventListener('drop' ,(event)=>event.preventDefault())
@@ -312,8 +314,7 @@ export class IronApp extends LitElement {
     }
 
     _templateHelp() {
-        return html`
-            <paper-help></paper-help>`;
+        return html`<paper-help></paper-help>`;
     }
 
     render() {
@@ -383,16 +384,6 @@ export class IronApp extends LitElement {
             </div>`;
     }
 
-    async _onPopstate(event) {
-        await this._setPages(window.location.pathname);
-    }
-
-    async _showPage(event) {
-        let {page, _id, ...model} = event.detail;
-        await this._setPages((this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : ''), model);
-        this._pushState(this.pathname,model);
-    }
-
     async checkAndImportDependencies(page) {
         let dependencies = this.importDependencies[page];
         if (dependencies) {
@@ -407,43 +398,17 @@ export class IronApp extends LitElement {
 
     async _onPageSelect(event) {
         if (this.page !== event.detail.selected) {
-            await this._setPages(this.base ? `/${this.base}/${event.detail.selected}` : `/${event.detail.selected}`);
-            this._pushState(this.pathname,{});
+            window.historyRouter.showPage(event.detail.selected);
             this._hideMenu()
         }
     }
 
-    _pushState(pathname,model={}) {
-        let globalParams = window.data.globalParams || {};
-        let params = Object.entries(globalParams).filter(([key, value]) => value !== undefined).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-        if (params.length > 0) {
-            params = "&" + params.join("&");
-        }
-        let url = `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}${params}`;
-        window.history.pushState(model, '', url);
-    }
-
-    async _setPages(pathname, model) {
-        pathname = (this.base && pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
-
-        this.pathname = pathname;
-        let currentPage = this.getCurrentPageFromPath(pathname, model);
-
+    async _showPage(page) {
         CBNUtils.startLoading();
-        await this.checkAndImportDependencies(currentPage.page);
+        await this.checkAndImportDependencies(page.page);
         CBNUtils.stopLoading();
-        this.currentPage = currentPage;
+        this.currentPage = page;
         this.page = this.currentPage.page;
-
-    }
-
-    getCurrentPageFromPath(path, model) {
-        let splits = this.pathname.split('/').filter(item => item !== '' && item !== this.base);
-        return {
-            page: decodeURIComponent(splits[0]),
-            _id: splits[1] === undefined ? undefined : decodeURIComponent(splits[1]),
-            model: model
-        };
     }
 
     _onCompanySelection(event) {

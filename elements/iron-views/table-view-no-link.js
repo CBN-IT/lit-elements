@@ -126,7 +126,7 @@ export class TableViewNoLink extends EmptyView {
     }
 
     async _addDocument(){
-        CBNUtils.fireEvent(this, 'show-page', {page: 'add-no-link'});
+        window.historyRouter.showPage('add-no-link')
     }
 
     async _onDblClick(event){
