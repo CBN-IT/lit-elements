@@ -1,11 +1,16 @@
-export function compare(a, b) {
+export function compare(a, b, insensitive = false) {
     if (!isNaN(Number(a)) && !isNaN(Number(a))) {
         //both can be converted to numbers, so we can compare them as numbers
         return Number(a) - Number(b);
     }
     a = padNumbers(a);
     b = padNumbers(b);
-    return a.localeCompare(b);
+    if (insensitive) {
+        return a.localeCompare(b);
+    }
+    else {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+    }
 }
 function padNumbers(a) {
     const paddingValue = "0000000000";
@@ -16,7 +21,7 @@ function padNumbers(a) {
         return "";
     }
     else if (typeof a === "string") {
-        a = a.replace(/(\d+)(?:\.(\d+))?/g, (match, beforeDot, afterDot) => {
+        a = a.trim().replace(/(\d+)(?:\.(\d+))?/g, (match, beforeDot, afterDot) => {
             if (afterDot === undefined) {
                 return (paddingValue + beforeDot * 1).slice(-paddingValue.length);
             }
@@ -27,7 +32,7 @@ function padNumbers(a) {
     }
     return a;
 }
-export function sortCompareObj(key) {
-    return (a, b) => compare(a[key], b[key]);
+export function sortCompareObj(key, insensitive = false) {
+    return (a, b) => compare(a[key], b[key], insensitive);
 }
 //# sourceMappingURL=compare.js.map

@@ -321,7 +321,7 @@ class PaperSelect extends PaperInputContainer {
                 };
 
         }) : [];
-        this._options.sort(sortCompareObj("__label"))
+        this._options.sort(sortCompareObj("__label", true))
         if (this._options.length > 100) {
             this.isNative = false;
         } else {
