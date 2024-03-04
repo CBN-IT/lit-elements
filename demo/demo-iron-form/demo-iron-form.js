@@ -122,7 +122,7 @@ class DemoIronForm extends LitElement {
                     "class": "col-xs-12 col-sm-4 col-lg-4",
                     "required": true,
                     "freeText": true,
-                    "multiple": true,
+                    "multiple": false,
                 },
                 {
                     "type": "checkbox",

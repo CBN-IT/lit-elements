@@ -8,6 +8,7 @@ import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import "../iron-icons/icons/icons/arrow_drop_down.js";
 import {map} from 'lit/directives/map'
+import {sortCompareObj} from "../cbn-utils/compare";
 class PaperSelect extends PaperInputContainer {
 
     static get properties() {
@@ -36,14 +37,7 @@ class PaperSelect extends PaperInputContainer {
         };
     }
 
-    constructor() {
-        super();
-        this._value = [];
-        this._options = [];
-        this._filteredOptions = [];
-        this.isNative = this._isNative();
-        this.addEventListener('click', this._onClick.bind(this));
-    }
+
 
     static get styles() {
         return [...super.styles, this.styleElement, flexLayoutClasses];
@@ -165,6 +159,14 @@ class PaperSelect extends PaperInputContainer {
         `
     }
 
+    constructor() {
+        super();
+        this._value = [];
+        this._options = [];
+        this._filteredOptions = [];
+        this.isNative = this._isNative();
+        this.addEventListener('click', this._onClick.bind(this));
+    }
     _getNativeSelect() {
         if (this.isNative) {
             return html`
@@ -319,6 +321,12 @@ class PaperSelect extends PaperInputContainer {
                 };
 
         }) : [];
+        this._options.sort(sortCompareObj("__label"))
+        if (this._options.length > 100) {
+            this.isNative = false;
+        } else {
+            this.isNative = this._isNative()
+        }
         this._putLabels();
         this._filterOptions();
         setTimeout(() => {
