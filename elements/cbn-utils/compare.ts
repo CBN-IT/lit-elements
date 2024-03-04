@@ -1,9 +1,8 @@
 type CompareAcceptedTypes = number | string | null | undefined
 
 export function compare(a: CompareAcceptedTypes, b: CompareAcceptedTypes, insensitive=false) {
-    if (!isNaN(Number(a)) && !isNaN(Number(a))) {
-        //both can be converted to numbers, so we can compare them as numbers
-        return Number(a) - Number(b)
+    if ((typeof a === "number") && (typeof b === "number")) {
+        return a - b
     }
     a = padNumbers(a);
     b = padNumbers(b);
@@ -37,6 +36,6 @@ type CompareObject = {
     [key: string]: CompareAcceptedTypes;
 }
 
-export function sortCompareObj(key: string, insensitive=false) {
-    return (a: CompareObject, b: CompareObject) => compare(a[key], b[key], insensitive)
+export function sortCompareObj(key: string, {insensitive = false, ascending = true}) {
+    return (a: CompareObject, b: CompareObject) => (ascending ? 1 : -1) * compare(a[key], b[key], insensitive)
 }

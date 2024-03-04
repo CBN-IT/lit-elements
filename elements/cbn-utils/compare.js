@@ -1,7 +1,6 @@
 export function compare(a, b, insensitive = false) {
-    if (!isNaN(Number(a)) && !isNaN(Number(a))) {
-        //both can be converted to numbers, so we can compare them as numbers
-        return Number(a) - Number(b);
+    if ((typeof a === "number") && (typeof b === "number")) {
+        return a - b;
     }
     a = padNumbers(a);
     b = padNumbers(b);
@@ -32,7 +31,7 @@ function padNumbers(a) {
     }
     return a;
 }
-export function sortCompareObj(key, insensitive = false) {
-    return (a, b) => compare(a[key], b[key], insensitive);
+export function sortCompareObj(key, { insensitive = false, ascending = true }) {
+    return (a, b) => (ascending ? 1 : -1) * compare(a[key], b[key], insensitive);
 }
 //# sourceMappingURL=compare.js.map
