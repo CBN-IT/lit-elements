@@ -6,10 +6,10 @@ export function compare(a, b, insensitive = false) {
     a = padNumbers(a);
     b = padNumbers(b);
     if (insensitive) {
-        return a.localeCompare(b);
+        return a.toLowerCase().localeCompare(b.toLowerCase());
     }
     else {
-        return a.toLowerCase().localeCompare(b.toLowerCase());
+        return a.localeCompare(b);
     }
 }
 function padNumbers(a) {

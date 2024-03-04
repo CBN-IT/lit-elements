@@ -8,9 +8,9 @@ export function compare(a: CompareAcceptedTypes, b: CompareAcceptedTypes, insens
     a = padNumbers(a);
     b = padNumbers(b);
     if (insensitive) {
-        return a.localeCompare(b)
-    } else {
         return a.toLowerCase().localeCompare(b.toLowerCase())
+    } else {
+        return a.localeCompare(b)
     }
 }
 
