@@ -35,6 +35,7 @@ class PaperInput extends PaperInputContainer {
     }
 
     get inputElement() {
+        //https://stackoverflow.com/questions/45396280/customizing-increment-arrows-on-input-of-type-number-using-css
         return html`
             <input 
                 class="input"
@@ -82,7 +83,7 @@ class PaperInput extends PaperInputContainer {
             } else {
                 isValid = isValid && this._validateText(value);
             }
-            isValid = isValid && this._validatePattern(value, this.pattern)
+            isValid = isValid && PaperInput._validatePattern(value, this.pattern)
             if (this.isCNP === true) {
                 isValid = isValid && PaperInput._validateCNP(value);
             }

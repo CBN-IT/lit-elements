@@ -12,6 +12,10 @@ import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
 
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 
+function isNumberInput(field){
+    return (field.type === "number" || ["double" ,"integer"].includes(field.dbType))
+}
+
 export class SiloConfigurator extends LitElement {
     static get properties() {
         return {
@@ -103,7 +107,7 @@ export class SiloConfigurator extends LitElement {
         for (let field of config.elements) {
             if (field.defaultValue !== null &&
                 field.defaultValue !== undefined &&
-                field.type === "number") {
+                isNumberInput(field)) {
 
                 defaults[field.name] = Number(field.defaultValue);
             }
@@ -122,7 +126,7 @@ export class SiloConfigurator extends LitElement {
         }
 
         this.config = config;
-        this.numberConfigElements = this.config.elements.filter((elem) => [elem.type, elem.t].includes("number")).map((elem) => elem.name)
+        this.numberConfigElements = this.config.elements.filter((field) => isNumberInput(field)).map((elem) => elem.name)
         this.defaultCircleValues = window.data._configs.defaultCircleValues;
         this.toDraw = defaults;
     }

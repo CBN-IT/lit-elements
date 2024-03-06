@@ -12,8 +12,8 @@
       "style": "align-self:center;text-align:center"
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "r",
       "label": "Radius",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -26,7 +26,7 @@
     },
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "integer",
       "name": "nr",
       "label": "No. Cables",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -38,7 +38,7 @@
     },
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "double",
       "name": "hCable",
       "label": "H Cable",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -47,8 +47,8 @@
       "disabled": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "integer",
       "name": "nrSenzori",
       "label": "Nr Sensors",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -56,8 +56,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "above",
       "label": "Above Grain",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -68,8 +68,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "offsetAngle",
       "label": "Angle",
       "class": "hidden col-xs-6 col-sm-1 col-lg-1",
@@ -80,8 +80,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "offsetX",
       "label": "OffsetX",
       "class": "hidden col-xs-6 col-sm-1 col-lg-1",
@@ -92,8 +92,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "offsetY",
       "label": "OffsetY",
       "class": "hidden col-xs-6 col-sm-1 col-lg-1",

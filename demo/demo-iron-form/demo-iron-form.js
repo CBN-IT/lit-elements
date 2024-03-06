@@ -206,12 +206,39 @@ class DemoIronForm extends LitElement {
                 },
                 {
                     "type": "number",
-                    "label": "Step",
+                    "label": "Number Double",
                     "name": "step",
-                    "dbType": "number",
+                    "dbType": "double",
                     "class": "col-xs-12 col-sm-2 col-lg-2",
                     "step": 2,
                     "defaultValue":5.5
+                },
+                {
+                    "type": "text",
+                    "label": "Text double",
+                    "name": "step",
+                    "dbType": "double",
+                    "class": "col-xs-12 col-sm-2 col-lg-2",
+                    "step": 2,
+                    "defaultValue":5.5
+                },
+                {
+                    "type": "text",
+                    "label": "Text integer",
+                    "name": "step",
+                    "dbType": "integer",
+                    "class": "col-xs-12 col-sm-2 col-lg-2",
+                    "step": 2,
+                    "defaultValue":5.5
+                },
+                {
+                    "type": "number",
+                    "label": "Number integer",
+                    "name": "step",
+                    "dbType": "integer",
+                    "class": "col-xs-12 col-sm-2 col-lg-2",
+                    "step": 1,
+                    "defaultValue":5
                 },
                 {
                     "type": "checkbox",

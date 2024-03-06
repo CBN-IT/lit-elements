@@ -2,7 +2,7 @@
   "elements": [
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "integer",
       "name": "nrSilos",
       "label": "Number of warehouses",
       "class": "col-xs-6 col-sm-6 col-lg-2",
@@ -12,7 +12,7 @@
     },
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "integer",
       "name": "pricePerT",
       "label": "Price €/t",
       "class": "col-xs-6 col-sm-4 col-lg-2",
@@ -31,8 +31,8 @@
       "defaultValue": "Magazie 1000t"
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "width",
       "label": "Width",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -41,8 +41,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "length",
       "label": "Length",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -51,8 +51,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "hGrainSide",
       "label": "H Side Product",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -62,8 +62,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "hGrainCenter",
       "label": "H Center Product",
       "class": "col-xs-6 col-sm-2 col-lg-2",
@@ -74,8 +74,8 @@
     },
 
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "cylinderHeight",
       "label": "H Side Cladire",
       "class": "hidden col-xs-6 col-sm-2 col-lg-2",
@@ -86,8 +86,8 @@
       "disabled": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "totalHeight",
       "label": "H Center Cladire",
       "class": "hidden col-xs-6 col-sm-2 col-lg-2",
@@ -99,7 +99,7 @@
     },
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "integer",
       "name": "roofAngle",
       "label": "Roof Angle",
       "class": "hidden col-xs-4 col-sm-2 col-lg-2",
@@ -110,7 +110,7 @@
     },
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "integer",
       "name": "rows",
       "label": "Rows",
       "class": "col-xs-4 col-sm-2 col-lg-2",
@@ -121,7 +121,7 @@
     },
     {
       "type": "number",
-      "dbType": "string",
+      "dbType": "integer",
       "name": "columns",
       "label": "Columns",
       "class": "col-xs-4 col-sm-2 col-lg-2",
@@ -131,8 +131,8 @@
       "required": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "rSenzorY",
       "label": "Vertical Sensor Distance",
       "class": "hidden col-xs-6 col-sm-2 col-lg-2",
@@ -144,8 +144,8 @@
       "disabled": true
     },
     {
-      "type": "number",
-      "dbType": "string",
+      "type": "text",
+      "dbType": "double",
       "name": "rSenzorX",
       "label": "Horizontal Sensor Distance",
       "class": "hidden col-xs-6 col-sm-2 col-lg-2",

@@ -1208,7 +1208,7 @@ export class SiloCanvasDraw {
                 this._scale(rSenzorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
                 this._scale(rSenzorY, 1.5, 5, uncovered, 40 + this._scale(uncovered, 0, 100, 0, 40)));
         }
-        uncoveredArea = uncoveredArea/ nrSenzori;
+        uncoveredArea /= nrSenzori;
         if(isNaN(uncoveredArea)){
             uncoveredArea = 100;
         }

@@ -363,8 +363,8 @@ export class IronForm extends LitElement {
                             .defaultValue="${elementConfig.defaultValue}"
                             .value="${forceWrite(value)}"
                             .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
-                            .inputmode="${elementConfig.inputmode || "text"}"
-                            .pattern="${elementConfig.pattern || ""}"
+                            .inputmode="${elementConfig.inputmode || (["integer", "double"].includes(elementConfig.dbType) ? "numeric" : "")}"
+                            .pattern="${elementConfig.pattern || ("integer"=== elementConfig.dbType?"^[-+]?[0-9]*$":"")}"
                     ></paper-input>`
             }
         }
