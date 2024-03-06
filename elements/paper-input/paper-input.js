@@ -24,7 +24,9 @@ class PaperInput extends PaperInputContainer {
             isEmail: {type: Boolean},
             _value: {type: Object},
             disabled: {type: Boolean},
-            autocomplete: {type: String}
+            autocomplete: {type: String},
+            inputmode: {type: String},
+            pattern: {type: String}
         };
     }
 
@@ -36,7 +38,7 @@ class PaperInput extends PaperInputContainer {
         return html`
             <input 
                 class="input"
-                type="text"
+                type="${this.type}"
                 name="${this.name}"
                 min="${this.min || ""}"
                 max="${this.max || ""}"
@@ -46,7 +48,7 @@ class PaperInput extends PaperInputContainer {
                 .value="${this._value}"
                 ?disabled="${this.disabled}"
                 autocomplete="${this.autocomplete}"
-                inputmode="${this.isEmail?"email":this.type==="number"?"numeric":"text"}"
+                inputmode="${this.inputmode || (this.isEmail ? "email" : this.type === "number" ? "numeric" : "text")}"
             />`;
     }
 
@@ -75,15 +77,12 @@ class PaperInput extends PaperInputContainer {
             isValid = true;
         } else {
             isValid = !this.required || !CBNUtils.isNoE(value);
-            switch (this.type) {
-                case 'number': {
-                    isValid = isValid && this._validateNumber(value);
-                    break;
-                }
-                case 'text': {
-                    isValid = isValid && this._validateText(value);
-                }
+            if (this.type === "number" || this.inputmode === "numeric") {
+                isValid = isValid && this._validateNumber(value);
+            } else {
+                isValid = isValid && this._validateText(value);
             }
+            isValid = isValid && this._validatePattern(value, this.pattern)
             if (this.isCNP === true) {
                 isValid = isValid && PaperInput._validateCNP(value);
             }
@@ -91,7 +90,7 @@ class PaperInput extends PaperInputContainer {
                 isValid = isValid && PaperInput._validateCIF(value);
             }
             if (this.isEmail === true) {
-                isValid = isValid && PaperInput._validateEmail(value);
+                isValid = isValid && PaperInput._validatePattern(value, "^([a-zA-Z0-9_.\\-+])+@[a-zA-Z0-9-.]+\\.[a-zA-Z0-9-]{2,}$");
             }
         }
         this.isValid = isValid;
@@ -134,10 +133,6 @@ class PaperInput extends PaperInputContainer {
         }
         return false;
     }
-    static _validateEmail(value) {
-        let pattern = /^([a-zA-Z0-9_.\-+])+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-]{2,}$/
-        return pattern.test(value)
-    }
 
     static _validateCNP(cnp) {
         if (!cnp) return false;
@@ -160,6 +155,14 @@ class PaperInput extends PaperInputContainer {
             return (controlDigit === 1 * cnp[12]);
         }
         return false;
+    }
+
+    static _validatePattern(value, pattern) {
+        if (!pattern) {
+            return true;
+        }
+        let rexexp = new RegExp(pattern, "g");
+        return rexexp.test(value)
     }
 
     _validateNumber(value) {
