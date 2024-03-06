@@ -36,3 +36,4 @@ import './stock.js';
 import './storage.js';
 import './waze.js';
 import './googleMaps.js';
+import './link.js';
