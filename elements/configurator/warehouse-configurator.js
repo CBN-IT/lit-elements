@@ -13,7 +13,9 @@ import "../iron-icons/icons/cbn/pdf";
 import "../iron-icons/icons/icons/save";
 import {WarehouseCanvasDraw} from "./WarehouseCanvasDraw";
 
-
+function isNumberInput(field){
+    return (field.type === "number" || ["double" ,"integer"].includes(field.dbType))
+}
 export class WarehouseConfigurator extends LitElement {
     static get properties() {
         return {
@@ -105,7 +107,7 @@ export class WarehouseConfigurator extends LitElement {
         for (let field of config.elements) {
             if (field.defaultValue !== null &&
                 field.defaultValue !== undefined &&
-                field.type === "number") {
+                isNumberInput(field)) {
 
                 defaults[field.name] = Number(field.defaultValue);
             }
@@ -122,7 +124,7 @@ export class WarehouseConfigurator extends LitElement {
             config.elements.push(...cerc.elements)
         }
         this.config = config;
-        this.numberConfigElements = this.config.elements.filter((elem) => [elem.type, elem.t].includes("number")).map((elem) => elem.name)
+        this.numberConfigElements = this.config.elements.filter((field) => isNumberInput(field)).map((elem) => elem.name)
         this.toDraw = defaults;
     }
 
