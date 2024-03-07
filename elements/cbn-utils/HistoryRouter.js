@@ -79,11 +79,14 @@ export class HistoryRouter {
     }
     _showPage(e) {
         let { page, _id, ...model } = e.detail;
-        page = (this.base ? "/" + this.base : "") + `/${page}` + (_id ? `/${_id}` : '');
+        page = `${this.base ? "/" + this.base : ""}/${page}${_id ? `/${_id}` : ''}`;
         this.pushState(e.detail, null, page);
         this.onShowPage(this.urls[this.urls.length - 1]);
     }
     showPage(url, data) {
+        if (this.base && !url.startsWith("/" + this.base)) {
+            url = `/${this.base}/${url}`;
+        }
         this.pushState(data, null, url);
     }
 }
