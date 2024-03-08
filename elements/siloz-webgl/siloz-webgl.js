@@ -4,6 +4,7 @@ import {CBN_Controller} from "./controller"
 import {CBN_Resources} from "./resources";
 import {CBN_TowerSilo} from "./silos/tower_silo";
 import {CBN_HouseSilo} from "./silos/house_silo";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class CbnSilozWebgl extends LitElement {
 
@@ -413,4 +414,4 @@ export class CbnSilozWebgl extends LitElement {
     }
 }
 
-customElements.define("cbn-siloz-webgl", CbnSilozWebgl)
+defineCustomTag("cbn-siloz-webgl", CbnSilozWebgl)

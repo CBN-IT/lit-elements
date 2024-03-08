@@ -5,6 +5,7 @@ import {html} from 'lit'
 import '../paper-tabs/paper-tabs.js';
 import '../iron-form/iron-form.js';
 import '../ace-editor/ace-editor.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class AddReport extends AddWithLink {
 
@@ -79,5 +80,5 @@ class AddReport extends AddWithLink {
 
 }
 
-customElements.define("add-report", AddReport);
+defineCustomTag("add-report", AddReport);
 

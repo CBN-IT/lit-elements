@@ -3,6 +3,7 @@ import {LitElement, html, css} from 'lit'
 import {classMap} from 'lit/directives/class-map.js';
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/iron-form/multi-form.js";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 
 class DemoMultiForm extends LitElement {
 
@@ -157,4 +158,4 @@ class DemoMultiForm extends LitElement {
     }
 }
 
-customElements.define("multi-form-demo", DemoMultiForm)
+defineCustomTag("multi-form-demo", DemoMultiForm)

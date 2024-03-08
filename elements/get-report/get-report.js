@@ -3,6 +3,7 @@ import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-dialog/paper-dialog.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 function escapeStr(val) {
     if (val === undefined || val === null) {
@@ -123,4 +124,4 @@ class GetReport extends LitElement {
     }
 }
 
-customElements.define("get-report", GetReport);
+defineCustomTag("get-report", GetReport);

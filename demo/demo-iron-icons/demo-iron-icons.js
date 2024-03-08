@@ -17,6 +17,7 @@ import {LitElement} from "lit";
 import {repeat} from "lit/directives/repeat";
 import {CBNUtils} from "../../elements/cbn-utils/CbnUtils";
 import '../../elements/paper-toast/paper-toast';
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 
 class DemoIronIcons extends LitElement {
 
@@ -114,4 +115,4 @@ class DemoIronIcons extends LitElement {
 
 }
 
-customElements.define("demo-iron-icons", DemoIronIcons);
+defineCustomTag("demo-iron-icons", DemoIronIcons);

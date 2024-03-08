@@ -12,6 +12,7 @@ import "../iron-icons/icons/icons/file_upload.js";
 import {formatFileSize} from "../cbn-utils/formatFileSize";
 import "../iron-icons/icons/icons/file_download";
 import {classMap} from "lit/directives/class-map.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperFile extends PaperInputContainer {
 
@@ -330,4 +331,4 @@ class PaperFile extends PaperInputContainer {
 
 }
 
-customElements.define('paper-file', PaperFile);
+defineCustomTag('paper-file', PaperFile);

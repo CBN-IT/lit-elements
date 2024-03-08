@@ -6,6 +6,7 @@ import '../paper-button/paper-button.js'
 import "../iron-icons/icons/icons/close.js";
 import "../iron-icons/icons/icons/check.js";
 import {when} from "lit/directives/when";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperDialog extends LitElement {
 
@@ -157,7 +158,7 @@ class PaperDialog extends LitElement {
 
 }
 
-customElements.define('paper-dialog', PaperDialog);
+defineCustomTag('paper-dialog', PaperDialog);
 
 
 

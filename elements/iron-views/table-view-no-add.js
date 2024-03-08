@@ -1,4 +1,5 @@
 import {TableView} from "./table-view";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class TableViewNoAdd extends TableView {
 
@@ -14,7 +15,7 @@ export class TableViewNoAdd extends TableView {
     }
 }
 
-customElements.define("table-view-no-add", TableViewNoAdd);
+defineCustomTag("table-view-no-add", TableViewNoAdd);
 
 
 

@@ -5,6 +5,7 @@ import '../paper-dialog/paper-dialog.js';
 import '../cbn-utils/CbnUtils.js';
 
 import "../iron-icons/icons/icons/help.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperHelp extends LitElement {
 
@@ -71,5 +72,5 @@ class PaperHelp extends LitElement {
 
 }
 
-customElements.define("paper-help", PaperHelp);
+defineCustomTag("paper-help", PaperHelp);
 

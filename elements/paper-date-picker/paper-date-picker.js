@@ -4,6 +4,7 @@ import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import TinyDatePicker from 'tiny-date-picker';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 dayjs.extend(customParseFormat);
@@ -242,7 +243,7 @@ export class PaperDatePicker extends PaperInputContainer {
     }
 }
 
-customElements.define('paper-date-picker', PaperDatePicker);
+defineCustomTag('paper-date-picker', PaperDatePicker);
 
 
 

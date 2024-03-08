@@ -20,6 +20,7 @@ import "../iron-icons/icons/icons/file_upload.js";
 import "../iron-icons/icons/icons/menu.js";
 import {classMap} from "lit/directives/class-map.js";
 import {HistoryRouter} from "../cbn-utils/HistoryRouter";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 export class IronApp extends LitElement {
@@ -444,6 +445,6 @@ export class IronApp extends LitElement {
 
 }
 
-customElements.define("iron-app", IronApp);
+defineCustomTag("iron-app", IronApp);
 
 

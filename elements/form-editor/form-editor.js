@@ -17,6 +17,7 @@ import "../iron-icons/icons/icons/delete";
 import "../iron-icons/icons/icons/create";
 import "../iron-icons/icons/icons/content_copy";
 import {when} from "lit/directives/when";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 class FormEditor extends LitElement {
@@ -1287,4 +1288,4 @@ class FormEditor extends LitElement {
     }
 }
 
-customElements.define("form-editor", FormEditor);
+defineCustomTag("form-editor", FormEditor);

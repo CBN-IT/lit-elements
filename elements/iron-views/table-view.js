@@ -7,6 +7,7 @@ import "../paper-dialog/paper-dialog.js";
 import "../paper-reports-dropdown/paper-reports-dropdown.js";
 import "../iron-icons/icons/icons/add.js";
 import {EmptyView} from "./empty-view";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class TableView extends EmptyView {
 
@@ -214,7 +215,7 @@ export class TableView extends EmptyView {
 
 }
 
-customElements.define("table-view", TableView);
+defineCustomTag("table-view", TableView);
 
 
 

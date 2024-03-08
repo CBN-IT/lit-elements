@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, html, css, PropertyValues} from 'lit'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class EmptyView extends LitElement {
 
@@ -32,8 +33,8 @@ export class EmptyView extends LitElement {
     }
 
     render() {
-        return html`               
-            empty-view     
+        return html`
+            empty-view
         `;
     }
 
@@ -48,15 +49,16 @@ export class EmptyView extends LitElement {
         return false;
     }
 
-    onPageShow(){
+    onPageShow() {
 
     }
-    onPageHide(){
+
+    onPageHide() {
 
     }
 }
 
-customElements.define("empty-view", EmptyView);
+defineCustomTag('empty-view', EmptyView)
 
 
 

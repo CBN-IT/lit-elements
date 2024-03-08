@@ -2,6 +2,7 @@
 import {LitElement, html} from 'lit'
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/iron-app/iron-app.js";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 
 class DemoIronApp extends LitElement {
 
@@ -14,4 +15,4 @@ class DemoIronApp extends LitElement {
 
 }
 
-customElements.define("iron-app-demo", DemoIronApp)
+defineCustomTag("iron-app-demo", DemoIronApp)

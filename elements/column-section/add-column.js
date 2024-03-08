@@ -6,6 +6,7 @@ import '../paper-table/paper-table.js';
 import '../iron-form/iron-form.js';
 import '../ace-editor/ace-editor.js';
 import '../form-editor/form-editor.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class AddColumn extends AddWithLink {
 
@@ -140,6 +141,6 @@ class AddColumn extends AddWithLink {
 
 }
 
-customElements.define("add-column", AddColumn);
+defineCustomTag("add-column", AddColumn);
 
 

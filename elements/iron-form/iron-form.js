@@ -19,6 +19,7 @@ import {unsafeHTML} from "lit/directives/unsafe-html";
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 import {forceWrite} from "../cbn-utils/forceWriteDirective";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class IronForm extends LitElement {
 
@@ -537,7 +538,7 @@ export class IronForm extends LitElement {
 
 }
 
-customElements.define('iron-form', IronForm);
+defineCustomTag('iron-form', IronForm);
 
 
 

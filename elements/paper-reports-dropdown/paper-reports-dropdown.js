@@ -12,6 +12,7 @@ import "../iron-icons/icons/cbn/generic.js";
 import "../iron-icons/icons/cbn/word.js";
 import "../iron-icons/icons/cbn/xml.js";
 import {when} from "lit/directives/when";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 class PaperReportsDropdown extends PaperIconDropdown {
@@ -225,7 +226,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
     }
 }
 
-customElements.define('paper-reports-dropdown', PaperReportsDropdown);
+defineCustomTag('paper-reports-dropdown', PaperReportsDropdown);
 
 
 

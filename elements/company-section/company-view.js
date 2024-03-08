@@ -1,4 +1,5 @@
 import {TableView} from "../iron-views/table-view.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class CompanyView extends TableView {
 
@@ -19,5 +20,5 @@ export class CompanyView extends TableView {
     }
 }
 
-customElements.define("company-view", CompanyView);
+defineCustomTag("company-view", CompanyView);
 

@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import {compare} from "../cbn-utils/compare";
 import {repeat} from 'lit/directives/repeat'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 
@@ -858,7 +859,7 @@ class PaperTable extends LitElement {
 
 }
 
-customElements.define('paper-table', PaperTable);
+defineCustomTag('paper-table', PaperTable);
 
 
 

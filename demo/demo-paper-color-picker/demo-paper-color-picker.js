@@ -1,6 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
 import "../../elements/paper-color-picker/paper-color-picker"
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 class DemoPaperColorPicker extends LitElement {
 constructor() {
     super();
@@ -22,4 +23,4 @@ this.size = "50"
         `;
     }
 }
-customElements.define("paper-color-picker-demo", DemoPaperColorPicker);
+defineCustomTag("paper-color-picker-demo", DemoPaperColorPicker);

@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, html} from 'lit'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class IronSelector extends LitElement {
 
@@ -114,7 +115,7 @@ class IronSelector extends LitElement {
 
 }
 
-customElements.define("iron-selector", IronSelector);
+defineCustomTag("iron-selector", IronSelector);
 
 
 

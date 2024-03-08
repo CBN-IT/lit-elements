@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement} from 'lit'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class IronAjax extends LitElement {
 
@@ -197,7 +198,7 @@ class IronAjax extends LitElement {
 
 }
 
-customElements.define("iron-ajax", IronAjax);
+defineCustomTag("iron-ajax", IronAjax);
 
 
 

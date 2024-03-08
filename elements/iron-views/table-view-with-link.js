@@ -1,4 +1,5 @@
 import {TableView} from "./table-view";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class TableViewWithLink extends TableView {
 
@@ -38,6 +39,6 @@ export class TableViewWithLink extends TableView {
     }
 }
 
-customElements.define("table-view-with-link", TableViewWithLink);
+defineCustomTag("table-view-with-link", TableViewWithLink);
 
 

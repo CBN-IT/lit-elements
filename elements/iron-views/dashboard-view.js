@@ -2,6 +2,7 @@ import {html, css} from 'lit';
 import {flexLayoutClasses} from "lit-elements/elements/flex-layout/flex-layout-classes";
 import {gridClasses} from "lit-elements/elements/grid-layout/grid-classes";
 import {EmptyView} from "lit-elements/elements/iron-views/empty-view";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class DashboardView extends EmptyView {
     static get properties() {
@@ -55,4 +56,4 @@ export class DashboardView extends EmptyView {
 
 }
 
-customElements.define("dashboard-view", DashboardView);
+defineCustomTag("dashboard-view", DashboardView);

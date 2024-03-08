@@ -2,6 +2,7 @@
 import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.js";
 import "../../elements/form-section/add-form.js";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 
 class FormEditorDemo extends LitElement {
 
@@ -39,6 +40,6 @@ class FormEditorDemo extends LitElement {
     }
 
 }
-customElements.define("form-editor-demo", FormEditorDemo);
+defineCustomTag("form-editor-demo", FormEditorDemo);
 
 

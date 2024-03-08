@@ -1,6 +1,7 @@
 "use strict";
 import {html} from 'lit'
 import {PaperInputContainer} from './paper-input-container.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperInput extends PaperInputContainer {
 
@@ -185,7 +186,7 @@ class PaperInput extends PaperInputContainer {
 
 }
 
-customElements.define('paper-input', PaperInput);
+defineCustomTag('paper-input', PaperInput);
 
 
 

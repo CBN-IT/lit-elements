@@ -1,6 +1,7 @@
 "use strict";
 import {html} from 'lit'
 import {PaperInputContainer} from './paper-input-container.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperTextarea extends PaperInputContainer {
 
@@ -79,7 +80,7 @@ class PaperTextarea extends PaperInputContainer {
 
 }
 
-customElements.define('paper-textarea', PaperTextarea);
+defineCustomTag('paper-textarea', PaperTextarea);
 
 
 

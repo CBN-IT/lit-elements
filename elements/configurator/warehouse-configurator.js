@@ -12,6 +12,7 @@ import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
 import "../iron-icons/icons/cbn/pdf";
 import "../iron-icons/icons/icons/save";
 import {WarehouseCanvasDraw} from "./WarehouseCanvasDraw";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 function isNumberInput(field){
     return (field.type === "number" || ["double" ,"integer"].includes(field.dbType))
@@ -197,4 +198,4 @@ export class WarehouseConfigurator extends LitElement {
     }
 }
 
-customElements.define('warehouse-configurator', WarehouseConfigurator);
+defineCustomTag('warehouse-configurator', WarehouseConfigurator);

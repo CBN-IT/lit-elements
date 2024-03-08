@@ -1,5 +1,6 @@
 "use strict";
 import {TableViewWithLink} from '../iron-views/table-view-with-link.js'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class ColumnView extends TableViewWithLink {
 
@@ -24,4 +25,4 @@ class ColumnView extends TableViewWithLink {
     }
 }
 
-customElements.define('column-view', ColumnView);
+defineCustomTag('column-view', ColumnView);

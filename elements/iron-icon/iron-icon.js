@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, css} from 'lit'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class IronIcon extends LitElement {
 
@@ -87,6 +88,6 @@ class IronIcon extends LitElement {
     }
 }
 
-customElements.define("iron-icon", IronIcon);
+defineCustomTag("iron-icon", IronIcon);
 
 

@@ -6,6 +6,7 @@ import {EmptyView} from "./empty-view";
 import "../iron-form/iron-form.js";
 import "../paper-table/paper-table.js";
 import "../iron-ajax/iron-ajax.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 export class AddWithLink extends EmptyView {
@@ -143,7 +144,7 @@ export class AddWithLink extends EmptyView {
 
 }
 
-customElements.define("add-with-link", AddWithLink);
+defineCustomTag("add-with-link", AddWithLink);
 
 
 

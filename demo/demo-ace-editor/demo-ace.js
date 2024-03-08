@@ -1,6 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
 import "../../elements/ace-editor/ace-editor.js";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 
 class AceEditorDemo extends LitElement {
 
@@ -732,6 +733,6 @@ class AceEditorDemo extends LitElement {
 
 }
 
-customElements.define("ace-editor-demo", AceEditorDemo);
+defineCustomTag("ace-editor-demo", AceEditorDemo);
 
 

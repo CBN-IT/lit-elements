@@ -5,6 +5,7 @@ import {CBNUtils} from "../cbn-utils/CbnUtils";
 //This makes ace a global variable
 // noinspection ES6UnusedImports
 import * as acem from 'ace-builds/src-min-noconflict/ace';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 class AceEditor extends LitElement {
@@ -179,7 +180,7 @@ class AceEditor extends LitElement {
 
 }
 
-customElements.define("ace-editor", AceEditor);
+defineCustomTag("ace-editor", AceEditor);
 
 
 

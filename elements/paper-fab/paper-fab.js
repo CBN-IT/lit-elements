@@ -3,6 +3,7 @@ import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-icon/iron-icon.js";
 import {hostColors} from '../cbn-utils/hostColors.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperFab extends LitElement {
 
@@ -99,7 +100,7 @@ class PaperFab extends LitElement {
 
 }
 
-customElements.define("paper-fab", PaperFab);
+defineCustomTag("paper-fab", PaperFab);
 
 
 

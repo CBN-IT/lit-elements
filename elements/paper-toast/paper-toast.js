@@ -5,6 +5,7 @@ import '../iron-icon/iron-icon.js';
 import "../iron-icons/icons/icons/error.js";
 import "../iron-icons/icons/icons/warning.js";
 import "../iron-icons/icons/icons/check_circle.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 class PaperToast extends LitElement {
@@ -123,4 +124,4 @@ class PaperToast extends LitElement {
     }
 }
 
-customElements.define("paper-toast", PaperToast);
+defineCustomTag("paper-toast", PaperToast);

@@ -5,6 +5,7 @@ import '../paper-tabs/paper-tabs.js';
 import '../iron-form/iron-form.js';
 import '../ace-editor/ace-editor.js';
 import '../form-editor/form-editor.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class AddForm extends AddWithLink {
 
@@ -158,5 +159,5 @@ class AddForm extends AddWithLink {
 
 }
 
-customElements.define("add-form", AddForm);
+defineCustomTag("add-form", AddForm);
 

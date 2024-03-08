@@ -3,6 +3,7 @@ import {LitElement, html, css} from 'lit'
 import '../paper-dialog/paper-dialog.js';
 import '../iron-ajax/iron-ajax.js';
 import '../paper-button/paper-button.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 class ConfirmDelete extends LitElement {
@@ -113,5 +114,5 @@ class ConfirmDelete extends LitElement {
 
 }
 
-customElements.define("confirm-delete", ConfirmDelete);
+defineCustomTag("confirm-delete", ConfirmDelete);
 

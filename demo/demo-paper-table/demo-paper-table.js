@@ -8,6 +8,7 @@ import "../../elements/iron-icons/icons/icons/delete";
 import "../../elements/iron-icons/icons/cbn/excel.js";
 
 import {CBNUtils} from "../../elements/cbn-utils/CbnUtils";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 class TableDemo extends LitElement {
 
     static get properties() {
@@ -129,7 +130,7 @@ class TableDemo extends LitElement {
         `;
     }
 }
-customElements.define("table-demo", TableDemo);
+defineCustomTag("table-demo", TableDemo);
 
 
 

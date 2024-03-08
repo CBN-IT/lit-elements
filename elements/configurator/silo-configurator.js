@@ -11,6 +11,7 @@ import '/node_modules/lit-elements/elements/iron-icon/iron-icon.js';
 import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
 
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 function isNumberInput(field){
     return (field.type === "number" || ["double" ,"integer"].includes(field.dbType))
@@ -200,4 +201,4 @@ export class SiloConfigurator extends LitElement {
     }
 }
 
-customElements.define('silo-configurator', SiloConfigurator);
+defineCustomTag('silo-configurator', SiloConfigurator);

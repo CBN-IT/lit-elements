@@ -7,6 +7,7 @@ import '../paper-button/paper-button.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import {when} from "lit/directives/when";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class PaperIconDropdown extends LitElement {
 
@@ -166,7 +167,7 @@ export class PaperIconDropdown extends LitElement {
 
 }
 
-customElements.define('paper-icon-dropdown', PaperIconDropdown);
+defineCustomTag('paper-icon-dropdown', PaperIconDropdown);
 
 
 

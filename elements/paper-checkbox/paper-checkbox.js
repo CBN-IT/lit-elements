@@ -3,6 +3,7 @@ import {html, css} from 'lit'
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {classMap} from 'lit/directives/class-map.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperCheckbox extends PaperInputContainer {
 
@@ -147,7 +148,7 @@ class PaperCheckbox extends PaperInputContainer {
 
 }
 
-customElements.define('paper-checkbox', PaperCheckbox);
+defineCustomTag('paper-checkbox', PaperCheckbox);
 
 
 

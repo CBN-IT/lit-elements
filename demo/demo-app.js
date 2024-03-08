@@ -17,6 +17,7 @@ import "../elements/iron-icons/icons/maps/layers";
 import "../elements/iron-icons/icons/icons/add";
 import "../elements/iron-icons/icons/icons/settings";
 import "../elements/iron-icons/icons/icons/file_upload";
+import {defineCustomTag} from "../elements/cbn-utils/defineCustomTag";
 class DemoApp extends LitElement {
 
     static get properties() {
@@ -197,4 +198,4 @@ class DemoApp extends LitElement {
     }
 
 }
-customElements.define("demo-app", DemoApp);
+defineCustomTag("demo-app", DemoApp);

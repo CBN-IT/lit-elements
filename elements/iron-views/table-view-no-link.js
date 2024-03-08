@@ -10,6 +10,7 @@ import "../paper-reports-dropdown/paper-reports-dropdown.js";
 import "../iron-icons/icons/icons/add.js";
 import "../iron-icons/icons/cbn/excel.js";
 import {EmptyView} from "./empty-view";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 export class TableViewNoLink extends EmptyView {
@@ -163,7 +164,7 @@ export class TableViewNoLink extends EmptyView {
     }
 
 }
-customElements.define("table-view-no-link", TableViewNoLink);
+defineCustomTag("table-view-no-link", TableViewNoLink);
 
 
 

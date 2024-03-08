@@ -7,6 +7,7 @@ import "../paper-button/paper-button.js";
 import "../iron-icons/icons/hardware/keyboard_arrow_up";
 import "../iron-icons/icons/hardware/keyboard_arrow_down";
 import {map} from 'lit/directives/map.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class MultiForm extends LitElement {
 
@@ -170,4 +171,4 @@ export class MultiForm extends LitElement {
 
 }
 
-customElements.define('multi-form', MultiForm);
+defineCustomTag('multi-form', MultiForm);

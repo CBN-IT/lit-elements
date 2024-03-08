@@ -1,5 +1,6 @@
 "use strict";
 import { LitElement, html, css } from 'lit';
+import { defineCustomTag } from "../cbn-utils/defineCustomTag";
 export class EmptyView extends LitElement {
     static get properties() {
         return {
@@ -26,8 +27,8 @@ export class EmptyView extends LitElement {
         return true;
     }
     render() {
-        return html `               
-            empty-view     
+        return html `
+            empty-view
         `;
     }
     refreshPage(newPage, oldPage) {
@@ -45,5 +46,5 @@ export class EmptyView extends LitElement {
     onPageHide() {
     }
 }
-customElements.define("empty-view", EmptyView);
+defineCustomTag('empty-view', EmptyView);
 //# sourceMappingURL=empty-view.js.map

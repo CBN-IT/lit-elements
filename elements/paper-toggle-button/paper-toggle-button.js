@@ -2,6 +2,7 @@
 import {LitElement, html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-icon/iron-icon.js";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperToggleButton extends LitElement {
 
@@ -126,4 +127,4 @@ class PaperToggleButton extends LitElement {
     }
 }
 
-customElements.define("paper-toggle-button", PaperToggleButton);
+defineCustomTag("paper-toggle-button", PaperToggleButton);

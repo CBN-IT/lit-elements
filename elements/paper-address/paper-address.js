@@ -7,6 +7,7 @@ import '../iron-selector/iron-selector.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import '../iron-ajax/iron-ajax.js';
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperAddress extends PaperInputContainer {
 
@@ -511,7 +512,7 @@ class PaperAddress extends PaperInputContainer {
 
 }
 
-customElements.define('paper-address', PaperAddress);
+defineCustomTag('paper-address', PaperAddress);
 
 
 

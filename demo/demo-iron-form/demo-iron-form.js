@@ -4,6 +4,7 @@ import {flexLayoutClasses} from "../../elements/flex-layout/flex-layout-classes.
 import "../../elements/iron-form/iron-form.js";
 import "../../elements/iron-icons/icons/icons/add";
 import "../../elements/iron-icons/icons/icons/autorenew";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 class DemoIronForm extends LitElement {
 
     static get properties() {
@@ -301,7 +302,7 @@ class DemoIronForm extends LitElement {
 
 }
 
-customElements.define("iron-form-demo", DemoIronForm);
+defineCustomTag("iron-form-demo", DemoIronForm);
 
 
 

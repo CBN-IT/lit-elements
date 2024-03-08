@@ -1,6 +1,7 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
 import {CBNUtils} from "../cbn-utils/CbnUtils"
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class IronOverlay extends LitElement {
 
@@ -194,4 +195,4 @@ export class IronOverlay extends LitElement {
     }
 }
 
-customElements.define("iron-overlay", IronOverlay);
+defineCustomTag("iron-overlay", IronOverlay);

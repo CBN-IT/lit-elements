@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit'
 import "../iron-icons/icons/editor/format_color_fill";
 import "../paper-dialog/paper-dialog"
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 let colors = [
     '#ffebee', '#ffcdd2', '#ef9a9a', '#e57373', '#ef5350', '#f44336',
@@ -101,4 +102,4 @@ export class PaperColorPicker extends LitElement {
     }
 }
 
-customElements.define("paper-color-picker", PaperColorPicker)
+defineCustomTag("paper-color-picker", PaperColorPicker)

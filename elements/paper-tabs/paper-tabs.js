@@ -5,6 +5,7 @@ import '../iron-selector/iron-selector.js'
 import '../cbn-utils/CbnUtils.js'
 import {repeat} from 'lit/directives/repeat.js';
 import {CBNUtils} from "../cbn-utils/CbnUtils";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
 //
@@ -90,7 +91,7 @@ class PaperTabs extends LitElement {
 
 }
 
-customElements.define("paper-tabs", PaperTabs);
+defineCustomTag("paper-tabs", PaperTabs);
 
 
 

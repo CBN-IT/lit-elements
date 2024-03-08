@@ -9,6 +9,7 @@ import '../iron-overlay/iron-overlay.js';
 import "../iron-icons/icons/icons/arrow_drop_down.js";
 import {map} from 'lit/directives/map'
 import {sortCompareObj} from "../cbn-utils/compare";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 class PaperSelect extends PaperInputContainer {
 
     static get properties() {
@@ -540,7 +541,7 @@ class PaperSelect extends PaperInputContainer {
 
 }
 
-customElements.define('paper-select', PaperSelect);
+defineCustomTag('paper-select', PaperSelect);
 
 
 

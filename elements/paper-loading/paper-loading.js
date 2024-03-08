@@ -1,5 +1,6 @@
 "use strict";
 import {LitElement, html, css} from 'lit'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class PaperLoading extends LitElement {
 
@@ -97,7 +98,7 @@ class PaperLoading extends LitElement {
     }
 }
 
-customElements.define('paper-loading', PaperLoading);
+defineCustomTag('paper-loading', PaperLoading);
 
 
 

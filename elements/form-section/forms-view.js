@@ -1,5 +1,6 @@
 "use strict";
 import {TableViewWithLink} from '../iron-views/table-view-with-link.js'
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 class FormsView extends TableViewWithLink {
 
@@ -23,5 +24,5 @@ class FormsView extends TableViewWithLink {
     }
 }
 
-customElements.define('forms-view', FormsView);
+defineCustomTag('forms-view', FormsView);
 

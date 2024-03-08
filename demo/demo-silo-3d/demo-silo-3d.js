@@ -1,5 +1,6 @@
 import {css, html, LitElement} from "lit";
 import {CbnSilozWebgl} from "../../elements/siloz-webgl/siloz-webgl";
+import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
 
 
 export class DemoSilo extends LitElement {
@@ -3685,4 +3686,4 @@ export class DemoSilo extends LitElement {
 
 }
 
-customElements.define("silo-3d", DemoSilo)
+defineCustomTag("silo-3d", DemoSilo)

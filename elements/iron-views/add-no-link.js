@@ -6,6 +6,7 @@ import "../paper-table/paper-table.js";
 import "../paper-fab/paper-fab.js";
 import "../paper-dialog/paper-dialog.js";
 import {EmptyView} from "./empty-view";
+import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 export class AddNoLink extends EmptyView {
 
@@ -108,7 +109,7 @@ export class AddNoLink extends EmptyView {
 
 }
 
-customElements.define("add-no-link", AddNoLink);
+defineCustomTag("add-no-link", AddNoLink);
 
 
 
