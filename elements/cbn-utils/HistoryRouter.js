@@ -87,6 +87,9 @@ export class HistoryRouter {
         if (this.base && !url.startsWith("/" + this.base)) {
             url = `/${this.base}/${url}`;
         }
+        if (data === null || data === void 0 ? void 0 : data._id) {
+            url += "/" + data._id;
+        }
         this.pushState(data, null, url);
     }
 }
