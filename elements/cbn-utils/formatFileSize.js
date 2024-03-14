@@ -3,21 +3,26 @@
  * @param {Number} value in bytes
  * @returns {string}
  */
-module.exports.formatFileSize = value => {
+module.exports.formatFileSize = (value=0) => {
     if (value < 1024) {
         return "1KB"
     }
-    if (value / 1024 < 1024) {
-        return Math.floor(value / 1024) + "KB"
+    value /= 1024;
+    if (value < 100) {
+        return value.toFixed(value < 10 ? 1 : 0) + "KB"
     }
-    if (value / (1024 * 1024) < 1024) {
-        return Math.floor(value / (1024 * 1024)) + "MB"
+    value /= 1024;
+    if (value < 100) {
+        return value.toFixed(value < 10 ? 1 : 0) + "MB"
     }
-    if (value / (1024 * 1024 * 1024) < 1024) {
-        return Math.floor(value / (1024 * 1024 * 1024)) + "GB"
+    value /= 1024;
+    if (value < 100) {
+        return value.toFixed(value < 10 ? 1 : 0) + "GB"
     }
-    if (value / (1024 * 1024 * 1024 * 1024) < 1024) {
-        return Math.floor(value / (1024 * 1024 * 1024 * 1024)) + "TB"
+    value /= 1024;
+    if (value < 100) {
+        return value.toFixed(value < 10 ? 1 : 0) + "TB"
     }
-    return Math.floor(value / (1024 * 1024 * 1024 * 1024 * 1024)) + "PB"
+    value /= 1024;
+    return value.toFixed(value < 10 ? 1 : 0) + "PB"
 }
