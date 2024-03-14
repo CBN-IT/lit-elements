@@ -73,7 +73,7 @@ class PaperFile extends PaperInputContainer {
                 overflow: hidden;
                 padding: 2px 5px;
                 background-color: #E7E7E7;
-                color: rgba(0, 0, 0, 0.87);
+                color: black;
                 border-radius: 8px;
                 height: 20px;
                 z-index: 1;
@@ -90,7 +90,7 @@ class PaperFile extends PaperInputContainer {
             }
 
             .close-icon {
-                margin: 1px 10px;
+                margin: 1px 0 1px 4px
             }
 
             .close-icon:hover {
