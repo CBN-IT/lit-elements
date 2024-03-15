@@ -1,37 +1,40 @@
-function compare(a, b) {
-    if (!isNaN(Number(a)) && !isNaN(Number(b))) {
-        return Number(a) - Number(b)
+export function compare(a, b, insensitive = false) {
+    if ((typeof a === "number") && (typeof b === "number")) {
+        return a - b;
     }
-
-    a = padNumbers(a).toLowerCase();
-    b = padNumbers(b).toLowerCase();
-
-    if (a > b) {
-        return 1
-    } else if (a < b) {
-        return -1;
-    } else {
+    if (typeof a !== "string" || typeof b !== "string") {
         return 0;
     }
+    a = padNumbers(a);
+    b = padNumbers(b);
+    if (insensitive) {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+    }
+    else {
+        return a.localeCompare(b);
+    }
 }
-
-function padNumbers(a, digitsBeforeDot = 10, digitsAfterDot = 4) {
-    let paddingValue = "0".repeat(10);
+function padNumbers(a) {
+    const paddingValue = "0000000000";
     if (typeof a === "number") {
-        return (paddingValue + a).slice(-digitsBeforeDot) + "." + ("0".repeat(digitsAfterDot));
-    } else if (a === undefined || a === null || a === "") {
+        return (paddingValue + a).slice(-paddingValue.length);
+    }
+    else if (a === undefined || a === null || a === "") {
         return "";
-    } else if (typeof a === "string") {
-        a = a.replace(/(\d+)(?:\.(\d+))?/g, function (match, beforeDot, afterDot) {
+    }
+    else if (typeof a === "string") {
+        a = a.trim().replace(/(\d+)(?:\.(\d+))?/g, (match, beforeDot, afterDot) => {
             if (afterDot === undefined) {
-                return (paddingValue + beforeDot * 1).slice(-digitsBeforeDot) + "." + ("0".repeat(digitsAfterDot))
-            } else {
-                return (paddingValue + beforeDot * 1).slice(-digitsBeforeDot) + "." + (afterDot * 1 + paddingValue).substr(0, digitsAfterDot)
+                return (paddingValue + beforeDot * 1).slice(-paddingValue.length);
             }
-
+            else {
+                return (paddingValue + beforeDot * 1).slice(-paddingValue.length) + "." + (afterDot + paddingValue).substring(0, paddingValue.length);
+            }
         });
     }
     return a;
 }
-
-module.exports = {compare}
+export function sortCompareObj(key, { insensitive = false, ascending = true }) {
+    return (a, b) => (ascending ? 1 : -1) * compare(a[key], b[key], insensitive);
+}
+//# sourceMappingURL=compare.js.map
