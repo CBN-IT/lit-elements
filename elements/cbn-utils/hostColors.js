@@ -17,12 +17,12 @@ export const hostColors = css`
     }
     
     :host(.bgBlue) {
-        background-color: 1A3D6BFF
+        background-color: var(--blue-color);
         color: white;
     }
     
     :host(.blue) {
-        color: var(--blue-color)
+        color: var(--blue-color);
     }
     
     :host(.bgRed) {
