@@ -4,11 +4,13 @@ export function compare(a: CompareAcceptedTypes, b: CompareAcceptedTypes, insens
     if ((typeof a === "number") && (typeof b === "number")) {
         return a - b
     }
+
+    a = padNumbers(a);
+    b = padNumbers(b);
+
     if(typeof a !== "string" || typeof b !== "string"){
         return 0;
     }
-    a = padNumbers(a);
-    b = padNumbers(b);
 
     if (insensitive) {
         return a.toLowerCase().localeCompare(b.toLowerCase())
