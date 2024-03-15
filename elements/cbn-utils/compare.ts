@@ -6,6 +6,11 @@ export function compare(a: CompareAcceptedTypes, b: CompareAcceptedTypes, insens
     }
     a = padNumbers(a);
     b = padNumbers(b);
+
+    if(typeof a !== "string" || typeof b !== "string"){
+        return 0;
+    }
+
     if (insensitive) {
         return a.toLowerCase().localeCompare(b.toLowerCase())
     } else {
