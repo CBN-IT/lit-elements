@@ -17,7 +17,7 @@ export const hostColors = css`
     }
     
     :host(.bgBlue) {
-        background-color: var(--blue-color);
+        background-color: 1A3D6BFF
         color: white;
     }
     
