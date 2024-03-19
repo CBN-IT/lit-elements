@@ -82,7 +82,7 @@ export class HistoryRouter {
         // @ts-ignore
         let url = `${pathname}?_companyId=${encodeURIComponent(window.data._selectedCompany)}${param}`;
 
-        let splits = pathname.split('/').filter(item => item !== '' && item !== this.base);
+        let splits = pathname.split('/').filter(item => item !== '' && !this.base.split(/[/]/g).includes(item));
         return {
             page: decodeURIComponent(splits[0]),
             _id: splits[1] === undefined ? undefined : decodeURIComponent(splits[1]),
