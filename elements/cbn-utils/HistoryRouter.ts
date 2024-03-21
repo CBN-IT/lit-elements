@@ -8,11 +8,12 @@ export type Page = {
 
 export class HistoryRouter {
     urls: Page[] = [];
-    onShowPage: Function = () => {}
-    base:string=""
-    home:string=""
+    onShowPage: Function = () => {
+    }
+    base: string = ""
+    home: string = ""
 
-    constructor({ onShowPage, base, home}:{base?:string, home?:string, onPopState:Function, onShowPage:Function}) {
+    constructor({onShowPage, base, home}: { base?: string, home?: string, onPopState: Function, onShowPage: Function }) {
         this.onShowPage = onShowPage;
         this.base = base ?? "";
         this.home = home ?? "";
@@ -66,11 +67,12 @@ export class HistoryRouter {
         } else {
             console.log("back", event.state);
             this.urls.length = event.state + 1;
-            this.replaceState(null,null,window.location.pathname)
+            this.replaceState(null, null, window.location.pathname)
         }
     }
-    getCurrentPageFromPath(pathname:string, model:any={}) {
-        pathname = (pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base?`/${this.base}${this.home}`: this.home;
+
+    getCurrentPageFromPath(pathname: string, model: any = {}) {
+        pathname = (pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
         // @ts-ignore
         let globalParams = window.data.globalParams || {};
         // @ts-ignore

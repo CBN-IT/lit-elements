@@ -1,7 +1,8 @@
 export class HistoryRouter {
     constructor({ onShowPage, base, home }) {
         this.urls = [];
-        this.onShowPage = () => { };
+        this.onShowPage = () => {
+        };
         this.base = "";
         this.home = "";
         this.onShowPage = onShowPage;
