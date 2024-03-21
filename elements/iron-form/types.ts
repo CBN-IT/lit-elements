@@ -1,3 +1,4 @@
+import {increment} from "pwa-helpers/demo/actions/counter";
 
 export type CommonConfig = {
     class?: string,
@@ -7,6 +8,10 @@ export type CommonConfig = {
 export type CommonConfigWithLabel = CommonConfig & {
     label: string | object,
     name: string,
+}
+
+export function hasLabel(v: ConfigElem): v is ConfigElemWithLabel {
+    return ["date", "checkbox", "file", "select", "textarea", "button", "number", "text"].includes(v.type)
 }
 
 export type DatePickerConfigElem = CommonConfigWithLabel & {
@@ -113,10 +118,11 @@ export type Option = {
     label: string | unknown
 } | string
 
-export type ConfigElem = DatePickerConfigElem | CheckboxConfigElem | FileConfigElem |
-    SelectConfigElem | TextAreaConfigElem | ColorPickerConfigElem | ParagraphConfigElem |
-    ButtonConfigElem | InputConfigElem
+export type ConfigElemWithLabel = DatePickerConfigElem | CheckboxConfigElem | FileConfigElem |
+    SelectConfigElem | TextAreaConfigElem |
+    ButtonConfigElem | InputConfigElem;
 
+export type ConfigElem = ConfigElemWithLabel | ColorPickerConfigElem | ParagraphConfigElem
 export type Configs = {
     elements: ConfigElem[]
 }
