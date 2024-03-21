@@ -1,12 +1,16 @@
+
 export type CommonConfig = {
     class?: string,
     style?: string
 }
 
-export type DatePickerConfigElem = CommonConfig & {
-    type: "date",
+export type CommonConfigWithLabel = CommonConfig & {
+    label: string | object,
     name: string,
-    label: string | unknown,
+}
+
+export type DatePickerConfigElem = CommonConfigWithLabel & {
+    type: "date",
     required?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -16,20 +20,16 @@ export type DatePickerConfigElem = CommonConfig & {
     dbType: "string"
 }
 
-export type CheckboxConfigElem = CommonConfig & {
+export type CheckboxConfigElem = CommonConfigWithLabel & {
     type: "checkbox",
-    name: string,
-    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     defaultValue?: boolean,
     dbType: "boolean"
 }
 
-export type FileConfigElem = CommonConfig & {
+export type FileConfigElem = CommonConfigWithLabel & {
     type: "file",
-    name: string,
-    label: string | unknown,
     accept?: string,
     required?: boolean,
     disabled?: boolean,
@@ -37,10 +37,8 @@ export type FileConfigElem = CommonConfig & {
     dbType: "file"
 }
 
-export type SelectConfigElem = CommonConfig & {
+export type SelectConfigElem = CommonConfigWithLabel & {
     type: "select",
-    name: string,
-    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -56,10 +54,8 @@ export type SelectConfigElem = CommonConfig & {
     dbType: "string" | "list",
     saveLabel?: boolean
 }
-export type TextAreaConfigElem = CommonConfig & {
+export type TextAreaConfigElem = CommonConfigWithLabel & {
     type: "textarea",
-    name: string,
-    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -69,23 +65,9 @@ export type TextAreaConfigElem = CommonConfig & {
     autocomplete?: string,
     dbType: "string"
 }
-export type ColorPickerConfigElem = CommonConfig & {
-    type: "colorPicker",
-    name: string,
-    required?: boolean,
-    size?: number,
-    dbType: "string"
-}
-export type ParagraphConfigElem = CommonConfig & {
-    type: "paragraph",
-    name?: string,
-    text?: string | unknown,
-    html?: unknown
-}
-export type ButtonConfigElem = CommonConfig & {
+
+export type ButtonConfigElem = CommonConfigWithLabel & {
     type: "button",
-    name: string,
-    label: string | unknown,
     icon?: string,
     small?: boolean,
     smallest?: boolean,
@@ -95,10 +77,8 @@ export type ButtonConfigElem = CommonConfig & {
     event?: string
 }
 
-export type InputConfigElem = CommonConfig & {
+export type InputConfigElem = CommonConfigWithLabel & {
     type: "number" | "text",
-    name: string,
-    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     minLength?: number,
@@ -112,6 +92,20 @@ export type InputConfigElem = CommonConfig & {
     autocomplete?: boolean,
     defaultValue?: string | number,
     dbType: "string" | "integer" | "double"
+}
+
+export type ColorPickerConfigElem = CommonConfig & {
+    type: "colorPicker",
+    name: string,
+    required?: boolean,
+    size?: number,
+    dbType: "string"
+}
+export type ParagraphConfigElem = CommonConfig & {
+    type: "paragraph",
+    name?: string,
+    text?: string | unknown,
+    html?: unknown
 }
 
 export type Option = {
