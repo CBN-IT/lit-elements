@@ -75,7 +75,7 @@ export class PaperColorPicker extends LitElement {
     render() {
         return html`
             <div class="container vertical layout">
-                <paper-button class="blue" size="${this.size}" icon="format-color-fill" smallest style="color: ${this.value};" @click="${this.openPickerDialog}"></paper-button>
+                <paper-button class="blue" .iconSize="${this.size}" icon="format-color-fill" smallest style="color: ${this.value};" @click="${this.openPickerDialog}"></paper-button>
             </div>
             <paper-dialog class="dialog" .noActions="${true}">
                 <div slot="body" style="display: flex; flex-direction: column; flex-wrap: wrap; height: 200px">

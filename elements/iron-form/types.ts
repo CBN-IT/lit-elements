@@ -6,7 +6,7 @@ export type CommonConfig = {
 export type DatePickerConfigElem = CommonConfig & {
     type: "date",
     name: string,
-    label: string,
+    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -29,7 +29,7 @@ export type CheckboxConfigElem = CommonConfig & {
 export type FileConfigElem = CommonConfig & {
     type: "file",
     name: string,
-    label: string,
+    label: string | unknown,
     accept?: string,
     required?: boolean,
     disabled?: boolean,
@@ -40,7 +40,7 @@ export type FileConfigElem = CommonConfig & {
 export type SelectConfigElem = CommonConfig & {
     type: "select",
     name: string,
-    label?: string,
+    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -59,7 +59,7 @@ export type SelectConfigElem = CommonConfig & {
 export type TextAreaConfigElem = CommonConfig & {
     type: "textarea",
     name: string,
-    label: string,
+    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -72,16 +72,12 @@ export type TextAreaConfigElem = CommonConfig & {
 export type ColorPickerConfigElem = CommonConfig & {
     type: "colorPicker",
     name: string,
-    label?: string,
     required?: boolean,
-    validate?: boolean,
-    fromUser?: boolean,
     size?: number,
     dbType: "string"
 }
 export type ParagraphConfigElem = CommonConfig & {
     type: "paragraph",
-    label?: "string",
     name?: string,
     text?: string | unknown,
     html?: unknown
@@ -89,7 +85,7 @@ export type ParagraphConfigElem = CommonConfig & {
 export type ButtonConfigElem = CommonConfig & {
     type: "button",
     name: string,
-    label: string,
+    label: string | unknown,
     icon?: string,
     small?: boolean,
     smallest?: boolean,
@@ -102,7 +98,7 @@ export type ButtonConfigElem = CommonConfig & {
 export type InputConfigElem = CommonConfig & {
     type: "number" | "text",
     name: string,
-    label: string,
+    label: string | unknown,
     required?: boolean,
     disabled?: boolean,
     minLength?: number,
@@ -148,7 +144,7 @@ export type LoadingElem = {
 
 export type TableElem = {
     columns?: Column[],
-    items?:Item[],
+    items?: Item[],
     viewHieght?: number,
     rowHeight?: number,
     selectedItems: Item[],
