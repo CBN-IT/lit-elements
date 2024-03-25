@@ -365,13 +365,13 @@ export class IronApp extends LitElement {
                                            @iron-select="${this._onPageSelect.bind(this)}">
                                 ${map(this.menuSections, groupSection => html`
                                     <div class="group-section-title full-width">${groupSection.groupTitle}</div>
-                                    ${map(groupSection.sections, menuSection => html`
+                                    ${map(groupSection.sections, menuSection => menuSection.name?html`
                                         <a href="/${menuSection.name}" name="${menuSection.name}"
                                            class="menu-button horizontal layout center flex ${menuSection.class}" onclick="return false">
                                             <iron-icon icon="${menuSection.icon}" .svgIcon="${menuSection.svgIcon}"></iron-icon>
                                             ${menuSection.label}
                                         </a>
-                                    `)}
+                                    `:menuSection.html)}
                                 `)}
                             </iron-selector>
                         </div>
