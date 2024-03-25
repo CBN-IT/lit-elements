@@ -37,3 +37,4 @@ import './storage.js';
 import './waze.js';
 import './googleMaps.js';
 import './link.js';
+import './clipboard.js';
