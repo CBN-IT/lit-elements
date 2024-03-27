@@ -42,9 +42,7 @@ export class IronOverlay extends LitElement {
                     transform: translateZ(0);
                     visibility: hidden;
                 }
-                .container:not(.opened-overlay){
-                    
-                }
+                
                 .container.opened-overlay {
                     visibility: visible;
                     min-height: var(--iron-overlay-min-height, 50px);
