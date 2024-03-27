@@ -33,17 +33,20 @@ export class IronOverlay extends LitElement {
                 .container {
                     position: fixed;
                     overflow: auto;
-                    display: none;
+                    height: 0;
                     z-index: 2;
                     border-radius: 4px;
                     background-color: white;
                     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-                    height: 0;
-                    transition: height 0.1s;
+                    transition: height 0.15s;
+                    transform: translateZ(0);
+                    visibility: hidden;
                 }
-
+                .container:not(.opened-overlay){
+                    
+                }
                 .container.opened-overlay {
-                    display: block;
+                    visibility: visible;
                     min-height: var(--iron-overlay-min-height, 50px);
                 }
             `
@@ -57,6 +60,7 @@ export class IronOverlay extends LitElement {
         this.direction = 'bottom-right';
         this.padding = 10;
         this.positioningElement = this.previousElementSibling;
+        this._openedOverlay = false;
     }
 
 
@@ -88,6 +92,9 @@ export class IronOverlay extends LitElement {
     }
 
     _resizeContainer() {
+        if(!this._openedOverlay){
+            return;
+        }
         if (this.container) {
             let hostRect = this._getBoundingClientRect(this.positioningElement);
 
@@ -173,7 +180,7 @@ export class IronOverlay extends LitElement {
         if (!this.preventFocus) {
             this.focus();
         }
-        CBNUtils.async(this._resizeContainer.bind(this));
+        setTimeout(this._resizeContainer.bind(this));
     }
 
     _onClosingOverlay() {
