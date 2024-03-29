@@ -196,7 +196,7 @@ class PaperFile extends PaperInputContainer {
     get inputElement() {
         let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
         let totalFileSize = this._value.reduce((partialSum, item) => partialSum + (item.file instanceof File?0:item.size), 0);
-        let tooManyFiles = totalFileSize>10*1024*1024/*10mb*/
+        let tooManyFiles = totalFileSize > 5 * 1024 * 1024/*5mb*/
         return html`
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
@@ -214,7 +214,7 @@ class PaperFile extends PaperInputContainer {
                                 <a href="${url}" download="${filename}" onmousedown="event.stopPropagation()">
                                     ${when((!tooManyFiles && isImage), 
                                             ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
-                                            ()=>html`<iron-icon src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'></iron-icon>`,
+                                            ()=>html`<iron-icon .src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'></iron-icon>`,
                                     )}
                                 </a>
                                 <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
