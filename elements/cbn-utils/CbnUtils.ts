@@ -350,6 +350,9 @@ function escapeStr<T>(val:T):string|T {
 }
 
 const showLargeImg = (img:HTMLImageElement) => {
+    if(!img.src){
+        return;
+    }
     let bigImage = document.createElement("img") as HTMLImageElement;
     bigImage.className = "bigImage";
     bigImage.setAttribute("style", `position: fixed; top:0; bottom:0; left:0; right:0; pointer-events: none; z-index: 10000; margin:auto;width: auto; height: auto;max-width:75%;max-height:75%;`)

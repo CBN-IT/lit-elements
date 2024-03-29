@@ -2,6 +2,8 @@
 import {html, css} from 'lit'
 import {when} from 'lit/directives/when.js';
 import {map} from 'lit/directives/map'
+import {classMap} from "lit/directives/class-map.js";
+
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {PaperInputContainer} from '../paper-input/paper-input-container.js';
 import '../iron-selector/iron-selector.js';
@@ -9,10 +11,12 @@ import '../iron-icon/iron-icon.js';
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 import "../iron-icons/icons/icons/file_upload.js";
-import {formatFileSize} from "../cbn-utils/formatFileSize";
+import "../iron-icons/icons/image/image";
 import "../iron-icons/icons/icons/file_download";
-import {classMap} from "lit/directives/class-map.js";
+
+import {formatFileSize} from "../cbn-utils/formatFileSize";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+
 
 class PaperFile extends PaperInputContainer {
 
@@ -191,7 +195,8 @@ class PaperFile extends PaperInputContainer {
 
     get inputElement() {
         let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
-
+        let totalFileSize = this._value.reduce((partialSum, item) => partialSum + (item.file instanceof File?0:item.size), 0);
+        let tooManyFiles = totalFileSize>10*1024*1024/*10mb*/
         return html`
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
@@ -207,9 +212,9 @@ class PaperFile extends PaperInputContainer {
                         return html`
                             <div class="selected-option ${isValid?"":"invalid"}">
                                 <a href="${url}" download="${filename}" onmousedown="event.stopPropagation()">
-                                    ${when(isImage, 
+                                    ${when((!tooManyFiles && isImage), 
                                             ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
-                                            ()=>html`<iron-icon icon="file-download"></iron-icon>`,
+                                            ()=>html`<iron-icon src="${isImage?url:""}" icon="${isImage?"image":"file-download"}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'></iron-icon>`,
                                     )}
                                 </a>
                                 <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
