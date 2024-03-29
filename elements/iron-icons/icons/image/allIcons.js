@@ -154,3 +154,4 @@ import './wb_cloudy.js';
 import './wb_incandescent.js';
 import './wb_iridescent.js';
 import './wb_sunny.js';
+import './image_download.js';

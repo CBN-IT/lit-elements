@@ -11,7 +11,7 @@ import '../iron-icon/iron-icon.js';
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 import "../iron-icons/icons/icons/file_upload.js";
-import "../iron-icons/icons/image/image";
+import "../iron-icons/icons/image/image_download";
 import "../iron-icons/icons/icons/file_download";
 
 import {formatFileSize} from "../cbn-utils/formatFileSize";
@@ -214,7 +214,7 @@ class PaperFile extends PaperInputContainer {
                                 <a href="${url}" download="${filename}" onmousedown="event.stopPropagation()">
                                     ${when((!tooManyFiles && isImage), 
                                             ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
-                                            ()=>html`<iron-icon src="${isImage?url:""}" icon="${isImage?"image":"file-download"}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'></iron-icon>`,
+                                            ()=>html`<iron-icon src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'></iron-icon>`,
                                     )}
                                 </a>
                                 <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
