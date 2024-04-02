@@ -23,7 +23,7 @@ let settings = {
         "minifyStyles": true,
         "convertStyleToAttrs": true,
         "cleanupIds": false,
-        "removeRasterImages": true,
+        "removeRasterImages": false,
         "removeUselessDefs": true,
         "cleanupNumericValues": true,
         "cleanupListOfValues": true,
@@ -195,18 +195,6 @@ export class SiloCanvasDraw {
             grainAngle = atan((hGrainCenter - hGrainSide) / rSiloz);
             hCilindru = hGrainSide;
         }
-        /*
-
-        toDraw.cercuri.sort((a, b) => {
-            if (a.nr === 0) {
-                return 1;
-            }
-            if (b.nr === 0) {
-                return -1
-            }
-            return a.r - b.r
-        });
-        */
         for (let cerc of toDraw.cercuri) {
             cerc.offsetAngle = cerc.offsetAngle || 0;
             cerc.above = cerc.above || 0;
