@@ -58,7 +58,7 @@ export class HistoryRouter {
             this.replaceState(null, null, window.location.pathname);
         }
     }
-    getCurrentPageFromPath(pathname, model = {}) {
+    getCurrentPageFromPath(pathname, model = null) {
         pathname = (pathname.replace(/[/]/g, '') !== this.base || !this.base && pathname.replace(/[/]/g, '').length > 0) ? pathname : this.base ? `/${this.base}${this.home}` : this.home;
         // @ts-ignore
         let globalParams = window.data.globalParams || {};
