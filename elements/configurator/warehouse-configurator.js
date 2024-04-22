@@ -13,6 +13,7 @@ import "../iron-icons/icons/cbn/pdf";
 import "../iron-icons/icons/icons/save";
 import {WarehouseCanvasDraw} from "./WarehouseCanvasDraw";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 function isNumberInput(field){
     return (field.type === "number" || ["double" ,"integer"].includes(field.dbType))
@@ -163,10 +164,44 @@ export class WarehouseConfigurator extends LitElement {
                         ${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos||1) * vals.cost*5)}</b> &euro;
                     </span>
                 </div>
+                <br/><br/><br/>
+                <div id="floatingButtons">
+                    <paper-button class="bgGrey" icon="close" @click="${this.goToWarehouseConfigurator}">Cancel</paper-button>
+                    <paper-button class="bgGreen" icon="save" @click="${this.saveWarehouseConfig}">Save Warehouse Configuration</paper-button>
+                    <paper-button class="bgGreen" icon="pdf" @click="${()=>this.siloCanvasDraw.generatePdf()}">Genereaza PDF</paper-button>
+                </div>
 			`;
         } catch (e) {
             console.error(e);
         }
+    }
+
+    goToWarehouseConfigurator(){
+        CBNUtils.fireEvent(this, 'show-page', {page: "base-configurator"});
+    }
+
+    async saveWarehouseConfig() {
+        let form = this.shadowRoot.querySelector("#form");
+        if(!form.validate()){
+            CBNUtils.displayMessage("Please fix the errors in the form", "error", 15);
+            return;
+        }
+
+        let siloTypes = localStorage.getItem("siloTypes");
+        if (siloTypes == null) {
+            siloTypes = {};
+        } else {
+            siloTypes = JSON.parse(siloTypes);
+        }
+        console.log(this.toDraw);
+
+        siloTypes[this.toDraw.siloName] = this.toDraw;
+        localStorage.setItem("siloTypes", JSON.stringify(siloTypes));
+
+        CBNUtils.displayMessage("Warehouse config saved", "success", 5);
+        this.setDefaults();
+        this.requestUpdate();
+        CBNUtils.fireEvent(this, 'show-page', {page: "base-configurator"});
     }
 
     _formatNumber(val) {
