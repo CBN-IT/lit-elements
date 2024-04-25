@@ -61,7 +61,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
                 }
             }
         }
-        if(["hGrainSide", "hGrainCenter"].includes(name) ||name.endsWith(".above")){
+        if (["hGrainSide", "hGrainCenter", "floorClearance"].includes(name) || name.endsWith(".above")) {
             this._setDefaultsCerc(toDraw,true);
         }
 
