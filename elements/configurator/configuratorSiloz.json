@@ -5,10 +5,19 @@
       "dbType": "integer",
       "name": "nrSilos",
       "label": "Number of silos",
-      "class": "col-xs-6 col-sm-4 col-lg-2",
+      "class": "col-xs-3 col-sm-2 col-lg-1",
       "min": "1",
       "defaultValue": 1,
       "required": true
+    },
+    {
+      "type": "number",
+      "dbType": "integer",
+      "name": "gap",
+      "label": "Gap",
+      "class": "col-xs-3 col-sm-2 col-lg-1",
+      "min": "1",
+      "defaultValue": 1
     },
     {
       "type": "number",
