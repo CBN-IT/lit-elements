@@ -14,7 +14,7 @@
     {
       "type": "number",
       "dbType": "integer",
-      "name": "nr",
+      "name": "wireNr",
       "label": "No. Cables",
       "class": "col-xs-6 col-sm-2 col-lg-1",
       "min": "0",

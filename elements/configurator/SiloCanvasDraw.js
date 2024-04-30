@@ -201,7 +201,7 @@ export class SiloCanvasDraw {
             cerc.offsetX = cerc.offsetX || 0;
             cerc.offsetY = cerc.offsetY || 0;
             cerc.rSensorY = cerc.rSensorY || toDraw.rSensorY;
-            if (cerc.nr === 0) {
+            if (cerc.wireNr === 0) {
                 cerc.sensorNr = 0;
                 cerc.hCable = 0;
                 continue;
@@ -277,7 +277,7 @@ export class SiloCanvasDraw {
                     }
                     for (let i = 0; i < 4; i++) {
                         toDraw.circles[i] = {
-                            nr: defaultCircles[`circles.${i}.nr`] || 0,
+                            wireNr: defaultCircles[`circles.${i}.wireNr`] || 0,
                             r: defaultCircles[`circles.${i}.r`] || 0,
                             offsetAngle: defaultCircles[`circles.${i}.offsetAngle`] || 0,
                             above: defaultCircles[`circles.${i}.above`] || 0,
@@ -405,17 +405,17 @@ export class SiloCanvasDraw {
         let hasCenter = false;
         let nrCercuri = 0;
         for (let cerc of this.toDraw.circles) {
-            if (cerc.nr > 0) {
+            if (cerc.wireNr > 0) {
                 nrCercuri++;
             }
-            if (cerc.nr === 1 && cerc.r === 0) {
+            if (cerc.wireNr === 1 && cerc.r === 0) {
                 hasCenter = true;
             }
         }
 
         for (let i = 0; i < this.toDraw.circles.length; i++) {
             let cerc = this.toDraw.circles[i];
-            if (cerc.nr === 0) {
+            if (cerc.wireNr === 0) {
                 continue;
             }
             let rSensorY = cerc.rSensorY;
@@ -460,7 +460,7 @@ export class SiloCanvasDraw {
                 this.size - (hFloorStart + fClear) * scale + 10
             );
 
-            if (cerc.nr > 1) {
+            if (cerc.wireNr > 1) {
                 this.drawSonda({
                     ctx: ctx,
                     scale: scale,
@@ -1022,16 +1022,16 @@ export class SiloCanvasDraw {
 
 
 
-    drawCircle(ctx, c, nr) {
+    drawCircle(ctx, c, wireNr) {
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, 2 * PI, false);
         ctx.fill();
         ctx.stroke();
 
-        if (nr !== undefined) {
+        if (wireNr !== undefined) {
             ctx.font = this.fontSize + " " + this.fontFamily
             ctx.fillStyle = 'black';
-            ctx.fillText(nr + '', c.x, c.y);
+            ctx.fillText(wireNr + '', c.x, c.y);
         }
 
         ctx.beginPath();
@@ -1068,12 +1068,12 @@ export class SiloCanvasDraw {
         ctx.arc(this.size / 2, this.size / 2, this.size / 2, 0, 2 * PI, false);
         ctx.clip(region, 'evenodd');
 
-        let nr = 1;
+        let wireNr = 1;
         for (let i = 0; i < this.toDraw.circles.length; i++) {
             let cerc = this.toDraw.circles[i];
             ctx.lineWidth = 1;
             ctx.setLineDash([]);
-            for (let j = 0; j < cerc.nr; j++) {
+            for (let j = 0; j < cerc.wireNr; j++) {
                 let offsetAngleRad = (cerc.offsetAngle / 180) * PI;
                 ctx.fillStyle = hexToRGB(this.colors[i % this.colors.length], this.opacitySection);
                 ctx.lineWidth = 1;
@@ -1081,22 +1081,22 @@ export class SiloCanvasDraw {
                     ctx,
                     {
                         x:
-                            sin(((2 * PI) / cerc.nr) * j + offsetAngleRad) *
+                            sin(((2 * PI) / cerc.wireNr) * j + offsetAngleRad) *
                             (cerc.r * scale) +
                             this.size / 2 +
                             cerc.offsetX * scale,
                         y:
-                            cos(((2 * PI) / cerc.nr) * j - PI + offsetAngleRad) *
+                            cos(((2 * PI) / cerc.wireNr) * j - PI + offsetAngleRad) *
                             (cerc.r * scale) +
                             this.size / 2 +
                             cerc.offsetY * scale,
                         r: this.toDraw.rSensorX * scale
                     },
-                    nr++
+                    wireNr++
                 );
             }
 
-            if (cerc.r !== 0 && cerc.nr > 0) {
+            if (cerc.r !== 0 && cerc.wireNr > 0) {
                 ctx.setLineDash([3, 10]);
                 ctx.lineWidth = 3;
                 ctx.fillStyle = 'transparent';
@@ -1133,17 +1133,17 @@ export class SiloCanvasDraw {
             let cerc = this.toDraw.circles[i];
 
             ctx.fillStyle = 'white';
-            for (let i = 0; i < cerc.nr; i++) {
+            for (let i = 0; i < cerc.wireNr; i++) {
                 let offsetAngleRad = (cerc.offsetAngle / 180) * PI;
                 ctx.fillStyle = 'black';
                 this.drawCircleBlack(ctx, {
                     x:
-                        sin(((2 * PI) / cerc.nr) * i + offsetAngleRad) *
+                        sin(((2 * PI) / cerc.wireNr) * i + offsetAngleRad) *
                         (cerc.r * scale) +
                         this.size / 2 +
                         cerc.offsetX * scale,
                     y:
-                        cos(((2 * PI) / cerc.nr) * i - PI + offsetAngleRad) *
+                        cos(((2 * PI) / cerc.wireNr) * i - PI + offsetAngleRad) *
                         (cerc.r * scale) +
                         this.size / 2 +
                         cerc.offsetY * scale,
@@ -1190,9 +1190,9 @@ export class SiloCanvasDraw {
         let sensorNr = 0;
         let uncoveredArea = 0;
         for(let cerc of this.toDraw.circles){
-            sensorNr+=cerc.nr*cerc.sensorNr;
+            sensorNr+=cerc.wireNr*cerc.sensorNr;
             let rSensorY = cerc.rSensorY;
-            uncoveredArea += cerc.nr*cerc.sensorNr * ((rSensorY < 1.5) ?
+            uncoveredArea += cerc.wireNr*cerc.sensorNr * ((rSensorY < 1.5) ?
                 this._scale(rSensorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
                 this._scale(rSensorY, 1.5, 5, uncovered, 40 + this._scale(uncovered, 0, 100, 0, 40)));
         }

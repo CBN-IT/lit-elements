@@ -60,7 +60,7 @@ class DemoConfigurator extends LitElement {
     }
     render() {
         return html`
-            <warehouse-configurator></warehouse-configurator>
+            <silo-configurator></silo-configurator>
         `;
     }
 }

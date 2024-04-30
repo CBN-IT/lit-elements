@@ -2,7 +2,7 @@ import {Context} from 'canvas2svg';
 import {hexToRGB} from './hexToRGB.js';
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 
-const {PI, tan} = Math;
+const {PI, tan, atan} = Math;
 function degToRad(val){
     return val/180*PI
 }
@@ -28,26 +28,26 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
             toDraw.totalHeight = (
                 toDraw.cylinderHeight * 1 +
                 (toDraw.width / 2) *
-                Math.tan(degToRad(toDraw.roofAngle ))
+                tan(degToRad(toDraw.roofAngle ))
             ).toFixed(2) * 1;
             toDraw.hGrainCenter = toDraw.totalHeight-2
         }
         if (name === 'totalHeight') {
             if (value >= toDraw.cylinderHeight) {
-                toDraw.roofAngle = (Math.atan((value - toDraw.cylinderHeight * 1) / (toDraw.width / 2)) * 180 / Math.PI).toFixed(1) * 1;
+                toDraw.roofAngle = (atan((value - toDraw.cylinderHeight * 1) / (toDraw.width / 2)) * 180 / PI).toFixed(1) * 1;
             }
         }
         if (name === 'hGrainSide') {
             toDraw.cylinderHeight = value * 1+0.5 ;
-            toDraw.roofAngle = radToDeg(Math.atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2))).toFixed(1) * 1;
+            toDraw.roofAngle = radToDeg(atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2))).toFixed(1) * 1;
         }
         if (name === 'hGrainCenter') {
             toDraw.totalHeight = value * 1 + 3;
-            toDraw.roofAngle = radToDeg(Math.atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2)) ).toFixed(1) * 1;
+            toDraw.roofAngle = radToDeg(atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2)) ).toFixed(1) * 1;
         }
         if (name === 'width') {
             toDraw.columns = Math.round((value - 3) / toDraw.rSensorX);
-            toDraw.roofAngle = radToDeg(Math.atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2))).toFixed(1) * 1;
+            toDraw.roofAngle = radToDeg(atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2))).toFixed(1) * 1;
         }
         if (name === 'length') {
             toDraw.rows = Math.round((value - 3) / toDraw.rSensorX);
@@ -55,7 +55,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         if (["columns", "width"].includes(name)) {
             for (let i = 0; i < 5; i++) {
                 toDraw.circles[i] = {
-                    nr: Math.max(0, Math.min(2, toDraw.columns - i * 2)),
+                    wireNr: Math.max(0, Math.min(2, toDraw.columns - i * 2)),
                     r: Math.max(0, (toDraw.width / 2 - (toDraw.width / (toDraw.columns)) * (i+0.5)).toFixed(1) * 1),
                     above: 0.2
                 }
@@ -129,7 +129,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         this.drawRect(ctx, this.width / 2, this.height / 2, this.width, this.height);
         for (let j = 0; j < this.toDraw.circles.length; j++) {
             let cerc = this.toDraw.circles[j]
-            if (cerc.nr === 0) {
+            if (cerc.wireNr === 0) {
                 continue;
             }
             let x = cerc.r * scale;
