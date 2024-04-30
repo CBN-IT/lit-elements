@@ -1,4 +1,3 @@
-import {increment} from "pwa-helpers/demo/actions/counter";
 
 export type CommonConfig = {
     class?: string,
