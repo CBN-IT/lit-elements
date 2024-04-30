@@ -1,161 +1,161 @@
 {
   "6": {
-    "cercuri.0.nr": 1
+    "circles.0.nr": 1
   },
   "8": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 2.2
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 2.2
   },
   "10": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 2.9
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 2.9
   },
   "12": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 3.3
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 3.3
   },
   "14": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 5,
-    "cercuri.1.r": 4.9
+    "circles.0.nr": 1,
+    "circles.1.nr": 5,
+    "circles.1.r": 4.9
   },
   "16": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 6,
-    "cercuri.1.r": 5.6
+    "circles.0.nr": 1,
+    "circles.1.nr": 6,
+    "circles.1.r": 5.6
   },
   "18": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 7,
-    "cercuri.1.r": 6.1
+    "circles.0.nr": 1,
+    "circles.1.nr": 7,
+    "circles.1.r": 6.1
   },
   "20": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 2.9,
-    "cercuri.2.nr": 8,
-    "cercuri.2.r": 7.5
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 2.9,
+    "circles.2.nr": 8,
+    "circles.2.r": 7.5
   },
   "22": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 3.3,
-    "cercuri.2.nr": 9,
-    "cercuri.2.r": 8.2
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 3.3,
+    "circles.2.nr": 9,
+    "circles.2.r": 8.2
   },
   "24": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 3.4,
-    "cercuri.2.nr": 10,
-    "cercuri.2.r": 9
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 3.4,
+    "circles.2.nr": 10,
+    "circles.2.r": 9
   },
   "26": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 6,
-    "cercuri.1.r": 5.7,
-    "cercuri.2.nr": 11,
-    "cercuri.2.r": 10.4
+    "circles.0.nr": 1,
+    "circles.1.nr": 6,
+    "circles.1.r": 5.7,
+    "circles.2.nr": 11,
+    "circles.2.r": 10.4
   },
   "28": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 6,
-    "cercuri.1.r": 5.9,
-    "cercuri.2.nr": 12,
-    "cercuri.2.r": 11.2
+    "circles.0.nr": 1,
+    "circles.1.nr": 6,
+    "circles.1.r": 5.9,
+    "circles.2.nr": 12,
+    "circles.2.r": 11.2
   },
   "30": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 2.6,
-    "cercuri.2.nr": 7,
-    "cercuri.2.r": 7.5,
-    "cercuri.3.nr": 13,
-    "cercuri.3.r": 12.3
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 2.6,
+    "circles.2.nr": 7,
+    "circles.2.r": 7.5,
+    "circles.3.nr": 13,
+    "circles.3.r": 12.3
   },
   "32": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 3.2,
-    "cercuri.2.nr": 10,
-    "cercuri.2.r": 8.5,
-    "cercuri.3.nr": 15,
-    "cercuri.3.r": 13.5
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 3.2,
+    "circles.2.nr": 10,
+    "circles.2.r": 8.5,
+    "circles.3.nr": 15,
+    "circles.3.r": 13.5
   },
   "34": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 3.2,
-    "cercuri.2.nr": 10,
-    "cercuri.2.r": 8.5,
-    "cercuri.3.nr": 15,
-    "cercuri.3.r": 14.1
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 3.2,
+    "circles.2.nr": 10,
+    "circles.2.r": 8.5,
+    "circles.3.nr": 15,
+    "circles.3.r": 14.1
   },
   "36": {
-    "cercuri.0.nr": 0,
-    "cercuri.1.nr": 3,
-    "cercuri.1.r": 3.4,
-    "cercuri.2.nr": 10,
-    "cercuri.2.r": 9.2,
-    "cercuri.3.nr": 16,
-    "cercuri.3.r": 15
+    "circles.0.nr": 0,
+    "circles.1.nr": 3,
+    "circles.1.r": 3.4,
+    "circles.2.nr": 10,
+    "circles.2.r": 9.2,
+    "circles.3.nr": 16,
+    "circles.3.r": 15
   },
   "38": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 5,
-    "cercuri.1.r": 5.4,
-    "cercuri.2.nr": 11,
-    "cercuri.2.r": 10.7,
-    "cercuri.3.nr": 18,
-    "cercuri.3.r": 16.4
+    "circles.0.nr": 1,
+    "circles.1.nr": 5,
+    "circles.1.r": 5.4,
+    "circles.2.nr": 11,
+    "circles.2.r": 10.7,
+    "circles.3.nr": 18,
+    "circles.3.r": 16.4
   },
   "40": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 5,
-    "cercuri.1.r": 5.6,
-    "cercuri.2.nr": 11,
-    "cercuri.2.r": 11.3,
-    "cercuri.3.nr": 18,
-    "cercuri.3.r": 17
+    "circles.0.nr": 1,
+    "circles.1.nr": 5,
+    "circles.1.r": 5.6,
+    "circles.2.nr": 11,
+    "circles.2.r": 11.3,
+    "circles.3.nr": 18,
+    "circles.3.r": 17
   },
   "42": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 6,
-    "cercuri.1.r": 6,
-    "cercuri.2.nr": 12,
-    "cercuri.2.r": 12,
-    "cercuri.3.nr": 19,
-    "cercuri.3.r": 18
+    "circles.0.nr": 1,
+    "circles.1.nr": 6,
+    "circles.1.r": 6,
+    "circles.2.nr": 12,
+    "circles.2.r": 12,
+    "circles.3.nr": 19,
+    "circles.3.r": 18
   },
   "44": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 7,
-    "cercuri.1.r": 7,
-    "cercuri.2.nr": 13,
-    "cercuri.2.r": 13,
-    "cercuri.3.nr": 20,
-    "cercuri.3.r": 19
+    "circles.0.nr": 1,
+    "circles.1.nr": 7,
+    "circles.1.r": 7,
+    "circles.2.nr": 13,
+    "circles.2.r": 13,
+    "circles.3.nr": 20,
+    "circles.3.r": 19
   },
   "46": {
-    "cercuri.0.nr": 1,
-    "cercuri.1.nr": 8,
-    "cercuri.1.r": 8,
-    "cercuri.2.nr": 14,
-    "cercuri.2.r": 14,
-    "cercuri.3.nr": 21,
-    "cercuri.3.r": 20
+    "circles.0.nr": 1,
+    "circles.1.nr": 8,
+    "circles.1.r": 8,
+    "circles.2.nr": 14,
+    "circles.2.r": 14,
+    "circles.3.nr": 21,
+    "circles.3.r": 20
   },
   "48": {
-    "cercuri.0.nr": 3,
-    "cercuri.0.r": 3.3,
-    "cercuri.1.nr": 9,
-    "cercuri.1.r": 9,
-    "cercuri.2.nr": 15,
-    "cercuri.2.r": 15,
-    "cercuri.3.nr": 22,
-    "cercuri.3.r": 21
+    "circles.0.nr": 3,
+    "circles.0.r": 3.3,
+    "circles.1.nr": 9,
+    "circles.1.r": 9,
+    "circles.2.nr": 15,
+    "circles.2.r": 15,
+    "circles.3.nr": 22,
+    "circles.3.r": 21
   }
 }

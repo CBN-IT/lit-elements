@@ -47,7 +47,7 @@
     {
       "type": "number",
       "dbType": "integer",
-      "name": "nrSenzori",
+      "name": "sensorNr",
       "label": "Nr Sensors",
       "class": "col-xs-6 col-sm-2 col-lg-1",
       "min": "0",

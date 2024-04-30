@@ -46,15 +46,15 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
             toDraw.roofAngle = radToDeg(Math.atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2)) ).toFixed(1) * 1;
         }
         if (name === 'width') {
-            toDraw.columns = Math.round((value - 3) / toDraw.rSenzorX);
+            toDraw.columns = Math.round((value - 3) / toDraw.rSensorX);
             toDraw.roofAngle = radToDeg(Math.atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2))).toFixed(1) * 1;
         }
         if (name === 'length') {
-            toDraw.rows = Math.round((value - 3) / toDraw.rSenzorX);
+            toDraw.rows = Math.round((value - 3) / toDraw.rSensorX);
         }
         if (["columns", "width"].includes(name)) {
             for (let i = 0; i < 5; i++) {
-                toDraw.cercuri[i] = {
+                toDraw.circles[i] = {
                     nr: Math.max(0, Math.min(2, toDraw.columns - i * 2)),
                     r: Math.max(0, (toDraw.width / 2 - (toDraw.width / (toDraw.columns)) * (i+0.5)).toFixed(1) * 1),
                     above: 0.2
@@ -78,8 +78,8 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
                 this.toDraw[key] = value;
             }
         }
-        this.toDraw.rSiloz = toDraw.width / 2;
-        this.toDraw.dSiloz = toDraw.width;
+        this.toDraw.r = toDraw.width / 2;
+        this.toDraw.d = toDraw.width;
 
         this._setDefaultsCerc(this.toDraw);
 
@@ -108,7 +108,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         this.drawSenzor(ctx, {
             x:x,
             y:y,
-            r: this.toDraw.rSenzorX / 2 * scale,
+            r: this.toDraw.rSensorX / 2 * scale,
         });
         this.drawSenzor(ctx, {
             x:x,
@@ -127,8 +127,8 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
 
         let scale = this.size / Math.max(this.toDraw.width, this.toDraw.length);
         this.drawRect(ctx, this.width / 2, this.height / 2, this.width, this.height);
-        for (let j = 0; j < this.toDraw.cercuri.length; j++) {
-            let cerc = this.toDraw.cercuri[j]
+        for (let j = 0; j < this.toDraw.circles.length; j++) {
+            let cerc = this.toDraw.circles[j]
             if (cerc.nr === 0) {
                 continue;
             }
@@ -196,8 +196,8 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         let scale = this.size / Math.max(this.toDraw.width, this.toDraw.length);
         for (let i = 0; i < this.toDraw.rows; i++) {
             let y = (this.height / (this.toDraw.rows)) * (i + 0.5);
-            for (let j = 0; j < this.toDraw.cercuri.length; j++) {
-                let cerc = this.toDraw.cercuri[j]
+            for (let j = 0; j < this.toDraw.circles.length; j++) {
+                let cerc = this.toDraw.circles[j]
                 let x = cerc.r * scale;
                 this._drawColumnBlack({
                     ctx,
@@ -222,18 +222,18 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         this.drawSenzor(ctx, {
             x,
             y,
-            r: this.toDraw.rSenzorX / 2 * scale,
+            r: this.toDraw.rSensorX / 2 * scale,
         });
         ctx.fill();
         ctx.closePath();
     }
     drawBlack() {
         this.drawBlackByType();
-        let rSenzorY = this.toDraw.rSenzorY;
+        let rSensorY = this.toDraw.rSensorY;
         let uncovered = this.calcAreaUncovered();
-        const uncoveredArea = (rSenzorY < 1.5) ?
-            this._scale(rSenzorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
-            this._scale(rSenzorY, 1.5, 5, uncovered, 60 + this._scale(uncovered, 0, 100, 0, 40));
+        const uncoveredArea = (rSensorY < 1.5) ?
+            this._scale(rSensorY, 0.5, 1.5, this._scale(uncovered, 0, Math.min(100, uncovered * 2), 0, uncovered), uncovered) :
+            this._scale(rSensorY, 1.5, 5, uncovered, 60 + this._scale(uncovered, 0, 100, 0, 40));
 
         const hCon = this.toDraw.hGrainCenter - this.toDraw.hGrainSide;
         const cylinderVol = this.toDraw.width * this.toDraw.length * this.toDraw.hGrainSide;

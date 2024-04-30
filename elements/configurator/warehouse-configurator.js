@@ -1,10 +1,10 @@
 'use strict';
 import {LitElement, html, css} from 'lit';
-import {flexLayoutClasses} from '/node_modules/lit-elements/elements/flex-layout/flex-layout-classes.js';
-import {gridClasses} from '/node_modules/lit-elements/elements/grid-layout/grid-classes.js';
-import '/node_modules/lit-elements/elements/iron-ajax/iron-ajax.js';
-import '/node_modules/lit-elements/elements/iron-icon/iron-icon.js';
-import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
+import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
+import {gridClasses} from '../grid-layout/grid-classes.js';
+import '../iron-ajax/iron-ajax.js';
+import '../iron-icon/iron-icon.js';
+import '../paper-button/paper-button.js';
 import "../iron-icons/icons/cbn/pdf";
 import "../iron-icons/icons/icons/save";
 import {WarehouseCanvasDraw} from "./WarehouseCanvasDraw";
@@ -98,7 +98,7 @@ export class WarehouseConfigurator extends LitElement {
         config.elements.push(...window.data._configs.configuratorWarehouse.elements);
 
         let defaults = {
-            cercuri:[],
+            circles:[],
             type: "warehouse"
         }
         for (let field of config.elements) {
@@ -115,7 +115,7 @@ export class WarehouseConfigurator extends LitElement {
                 if (field.type === "paragraph" && field.text) {
                     field.text += (i + 1);
                 } else {
-                    field.name = `cercuri.${i}.${field.name}`;
+                    field.name = `circles.${i}.${field.name}`;
                 }
             }
             config.elements.push(...cerc.elements)

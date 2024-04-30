@@ -33,7 +33,7 @@
     {
       "type": "text",
       "dbType": "double",
-      "name": "rSiloz",
+      "name": "r",
       "label": "Silo Radius",
       "class": "hidden col-xs-6 col-sm-3 col-lg-2",
       "min": 1,
@@ -45,7 +45,7 @@
     {
       "type": "text",
       "dbType": "double",
-      "name": "dSiloz",
+      "name": "d",
       "label": "Silo Diameter",
       "class": "col-xs-12 col-sm-3 col-lg-2",
       "min": 2,

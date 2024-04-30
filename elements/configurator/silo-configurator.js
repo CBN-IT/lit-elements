@@ -1,14 +1,11 @@
 'use strict';
-import {
-    LitElement,
-    html,
-    css
-} from 'lit';
-import {flexLayoutClasses} from '/node_modules/lit-elements/elements/flex-layout/flex-layout-classes.js';
-import {gridClasses} from '/node_modules/lit-elements/elements/grid-layout/grid-classes.js';
-import '/node_modules/lit-elements/elements/iron-ajax/iron-ajax.js';
-import '/node_modules/lit-elements/elements/iron-icon/iron-icon.js';
-import '/node_modules/lit-elements/elements/paper-button/paper-button.js';
+import {LitElement, html, css} from 'lit';
+import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
+import {gridClasses} from '../grid-layout/grid-classes.js';
+import '../iron-ajax/iron-ajax.js';
+import '../iron-icon/iron-icon.js';
+import '../paper-button/paper-button.js';
+import '../iron-form/iron-form';
 
 import {SiloCanvasDraw} from "./SiloCanvasDraw";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
@@ -94,7 +91,7 @@ export class SiloConfigurator extends LitElement {
             numberConfigElements:this.numberConfigElements
         });
         //this.siloCanvasDraw.update(this.toDraw);
-        this.siloCanvasDraw.valueChange(this.toDraw, "dSiloz",this.toDraw.dSiloz);
+        this.siloCanvasDraw.valueChange(this.toDraw, "d",this.toDraw.d);
     }
 
     setDefaults() {
@@ -120,7 +117,7 @@ export class SiloConfigurator extends LitElement {
                 if (field.type === "paragraph" && field.text) {
                     field.text += (i + 1);
                 } else {
-                    field.name = `cercuri.${i}.${field.name}`;
+                    field.name = `circles.${i}.${field.name}`;
                 }
             }
             config.elements.push(...cerc.elements)
