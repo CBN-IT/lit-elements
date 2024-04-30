@@ -276,14 +276,11 @@ export class SiloCanvasDraw {
                         toDraw.circles = [];
                     }
                     for (let i = 0; i < 4; i++) {
+                        let circle = toDraw.circles[i]||{};
                         toDraw.circles[i] = {
-                            ...(toDraw.circles[i]||{}),
-                            wireNr: defaultCircles[`circles.${i}.wireNr`] || 0,
-                            r: defaultCircles[`circles.${i}.r`] || 0,
-                            offsetAngle: defaultCircles[`circles.${i}.offsetAngle`] || 0,
-                            above: defaultCircles[`circles.${i}.above`] || 0,
-                            offsetX: defaultCircles[`circles.${i}.offsetX`] || 0,
-                            offsetY: defaultCircles[`circles.${i}.offsetY`] || 0
+                            ...(circle),
+                            wireNr: defaultCircles[`circles.${i}.wireNr`] ?? circle.wireNr ?? 0,
+                            r: defaultCircles[`circles.${i}.r`] || circle.wireNr || 0,
                         }
                     }
                     break;
@@ -314,6 +311,14 @@ export class SiloCanvasDraw {
         }
         this.width = this.size;
         this.height = this.size;
+        for (let i = 0; i < 4; i++) {
+            if (!this.toDraw.circles[i]) {
+                this.toDraw.circles.push({
+                    wireNr: 0,
+                    r: 0
+                })
+            }
+        }
         this._setDefaultsCerc(this.toDraw);
 
         return this.optimise(serialized);
