@@ -277,6 +277,7 @@ export class SiloCanvasDraw {
                     }
                     for (let i = 0; i < 4; i++) {
                         toDraw.circles[i] = {
+                            ...(toDraw.circles[i]||{}),
                             wireNr: defaultCircles[`circles.${i}.wireNr`] || 0,
                             r: defaultCircles[`circles.${i}.r`] || 0,
                             offsetAngle: defaultCircles[`circles.${i}.offsetAngle`] || 0,
