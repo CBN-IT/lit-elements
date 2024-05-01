@@ -274,3 +274,337 @@ export const gridClasses = css`
 
     /*</editor-fold>*/
 `;
+
+export const gridFlexClasses = css`
+  .col-xl-flex-1, .col-xl-flex-10, .col-xl-flex-11, .col-xl-flex-12, .col-xl-flex-2, .col-xl-flex-3, .col-xl-flex-4, .col-xl-flex-5, .col-xl-flex-7, .col-xl-flex-6, .col-xl-flex-8, .col-xl-flex-9,
+  .col-lg-flex-1, .col-lg-flex-10, .col-lg-flex-11, .col-lg-flex-12, .col-lg-flex-2, .col-lg-flex-3, .col-lg-flex-4, .col-lg-flex-5, .col-lg-flex-7, .col-lg-flex-6, .col-lg-flex-8, .col-lg-flex-9,
+  .col-md-flex-1, .col-md-flex-10, .col-md-flex-11, .col-md-flex-12, .col-md-flex-2, .col-md-flex-3, .col-md-flex-4, .col-md-flex-5, .col-md-flex-7, .col-md-flex-6, .col-md-flex-8, .col-md-flex-9,
+  .col-sm-flex-1, .col-sm-flex-10, .col-sm-flex-11, .col-sm-flex-12, .col-sm-flex-2, .col-sm-flex-3, .col-sm-flex-4, .col-sm-flex-5, .col-sm-flex-7, .col-sm-flex-6, .col-sm-flex-8, .col-sm-flex-9,
+  .col-xs-flex-1, .col-xs-flex-10, .col-xs-flex-11, .col-xs-flex-12, .col-xs-flex-2, .col-xs-flex-3, .col-xs-flex-4, .col-xs-flex-5, .col-xs-flex-7, .col-xs-flex-6, .col-xs-flex-8, .col-xs-flex-9 {
+    box-sizing: border-box;
+  }
+
+  /*<editor-fold desc="Extra Small Screen .col-xs-">*/
+
+  .col-xs-flex-12 {
+    flex: 12;
+    min-width: 100%;
+  }
+
+  .col-xs-flex-11 {
+    flex: 11;
+    min-width: 91.66666667%;
+  }
+
+  .col-xs-flex-10 {
+    flex: 10;
+    min-width: 83.33333333%;
+  }
+
+  .col-xs-flex-9 {
+    flex: 9;
+    min-width: 75%;
+  }
+
+  .col-xs-flex-8 {
+    flex: 8;
+    min-width: 66.66666667%;
+  }
+
+  .col-xs-flex-7 {
+    flex: 7;
+    min-width: 58.33333333%;
+  }
+
+  .col-xs-flex-6 {
+    flex: 6;
+    min-width: 50%;
+  }
+
+  .col-xs-flex-5 {
+    flex: 5;
+    min-width: 41.66666667%;
+  }
+
+  .col-xs-flex-4 {
+    flex: 4;
+    min-width: 33.33333333%;
+  }
+
+  .col-xs-flex-3 {
+    flex: 3;
+    min-width: 25%;
+  }
+
+  .col-xs-flex-2 {
+    flex: 2;
+    min-width: 16.66666667%;
+  }
+
+  .col-xs-flex-1 {
+    flex: 1;
+    min-width: 8.33333333%;
+  }
+
+  /*</editor-fold>*/
+
+  /*<editor-fold desc="Small Screen .col-sm- min-width: 768px">*/
+  @media (min-width: 768px) {
+    .col-sm-flex-12 {
+      flex: 12;
+      min-width: 100%;
+    }
+
+    .col-sm-flex-11 {
+      flex: 11;
+      min-width: 91.66666667%;
+    }
+
+    .col-sm-flex-10 {
+      flex: 10;
+      min-width: 83.33333333%;
+    }
+
+    .col-sm-flex-9 {
+      flex: 9;
+      min-width: 75%;
+    }
+
+    .col-sm-flex-8 {
+      flex: 8;
+      min-width: 66.66666667%;
+    }
+
+    .col-sm-flex-7 {
+      flex: 7;
+      min-width: 58.33333333%;
+    }
+
+    .col-sm-flex-6 {
+      flex: 6;
+      min-width: 50%;
+    }
+
+    .col-sm-flex-5 {
+      flex: 5;
+      min-width: 41.66666667%;
+    }
+
+    .col-sm-flex-4 {
+      flex: 4;
+      min-width: 33.33333333%;
+    }
+
+    .col-sm-flex-3 {
+      flex: 3;
+      min-width: 25%;
+    }
+
+    .col-sm-flex-2 {
+      flex: 2;
+      min-width: 16.66666667%;
+    }
+
+    .col-sm-flex-1 {
+      flex: 1;
+      min-width: 8.33333333%;
+    }
+  }
+
+  /*</editor-fold>*/
+
+  /*<editor-fold desc="Medium Screen .col-md- min-width: 992px">*/
+  @media (min-width: 992px) {
+    .col-md-flex-12 {
+      flex: 12;
+      min-width: 100%;
+    }
+
+    .col-md-flex-11 {
+      flex: 11;
+      min-width: 91.66666667%;
+    }
+
+    .col-md-flex-10 {
+      flex: 10;
+      min-width: 83.33333333%;
+    }
+
+    .col-md-flex-9 {
+      flex: 9;
+      min-width: 75%;
+    }
+
+    .col-md-flex-8 {
+      flex: 8;
+      min-width: 66.66666667%;
+    }
+
+    .col-md-flex-7 {
+      flex: 7;
+      min-width: 58.33333333%;
+    }
+
+    .col-md-flex-6 {
+      flex: 6;
+      min-width: 50%;
+    }
+
+    .col-md-flex-5 {
+      flex: 5;
+      min-width: 41.66666667%;
+    }
+
+    .col-md-flex-4 {
+      flex: 4;
+      min-width: 33.33333333%;
+    }
+
+    .col-md-flex-3 {
+      flex: 3;
+      min-width: 25%;
+    }
+
+    .col-md-flex-2 {
+      flex: 2;
+      min-width: 16.66666667%;
+    }
+
+    .col-md-flex-1 {
+      flex: 1;
+      min-width: 8.33333333%;
+    }
+  }
+
+  /*</editor-fold>*/
+
+  /*<editor-fold desc="Large Screen .col-lg- min-width: 1200px">*/
+  @media (min-width: 1200px) {
+    .col-lg-flex-12 {
+      flex: 12;
+      min-width: 100%;
+    }
+
+    .col-lg-flex-11 {
+      flex: 11;
+      min-width: 91.66666667%;
+    }
+
+    .col-lg-flex-10 {
+      flex: 10;
+      min-width: 83.33333333%;
+    }
+
+    .col-lg-flex-9 {
+      flex: 9;
+      min-width: 75%;
+    }
+
+    .col-lg-flex-8 {
+      flex: 8;
+      min-width: 66.66666667%;
+    }
+
+    .col-lg-flex-7 {
+      flex: 7;
+      min-width: 58.33333333%;
+    }
+
+    .col-lg-flex-6 {
+      flex: 6;
+      min-width: 50%;
+    }
+
+    .col-lg-flex-5 {
+      flex: 5;
+      min-width: 41.66666667%;
+    }
+
+    .col-lg-flex-4 {
+      flex: 4;
+      min-width: 33.33333333%;
+    }
+
+    .col-lg-flex-3 {
+      flex: 3;
+      min-width: 25%;
+    }
+
+    .col-lg-flex-2 {
+      flex: 2;
+      min-width: 16.66666667%;
+    }
+
+    .col-lg-flex-1 {
+      flex: 1;
+      min-width: 8.33333333%;
+    }
+  }
+
+  /*</editor-fold>*/
+
+  /*<editor-fold desc="Extra Large Screen .col-xl- min-width: 1600px">*/
+  @media (min-width: 1600px) {
+    .col-xl-flex-12 {
+      flex: 12;
+      min-width: 100%;
+    }
+
+    .col-xl-flex-11 {
+      flex: 11;
+      min-width: 91.66666667%;
+    }
+
+    .col-xl-flex-10 {
+      flex: 10;
+      min-width: 83.33333333%;
+    }
+
+    .col-xl-flex-9 {
+      flex: 9;
+      min-width: 75%;
+    }
+
+    .col-xl-flex-8 {
+      flex: 8;
+      min-width: 66.66666667%;
+    }
+
+    .col-xl-flex-7 {
+      flex: 7;
+      min-width: 58.33333333%;
+    }
+
+    .col-xl-flex-6 {
+      flex: 6;
+      min-width: 50%;
+    }
+
+    .col-xl-flex-5 {
+      flex: 5;
+      min-width: 41.66666667%;
+    }
+
+    .col-xl-flex-4 {
+      flex: 4;
+      min-width: 33.33333333%;
+    }
+
+    .col-xl-flex-3 {
+      flex: 3;
+      min-width: 25%;
+    }
+
+    .col-xl-flex-2 {
+      flex: 2;
+      min-width: 16.66666667%;
+    }
+
+    .col-xl-flex-1 {
+      flex: 1;
+      min-width: 8.33333333%;
+    }
+  }
+
+  /*</editor-fold>*/
+`;

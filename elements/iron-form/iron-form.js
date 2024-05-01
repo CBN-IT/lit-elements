@@ -2,7 +2,7 @@
 import {LitElement, html, css} from 'lit';
 import {live} from 'lit/directives/live.js';
 import {repeat} from 'lit/directives/repeat.js';
-import {gridClasses} from "../grid-layout/grid-classes.js";
+import {gridClasses, gridFlexClasses} from "../grid-layout/grid-classes.js";
 
 import './../paper-input/paper-input.js';
 import './../paper-color-picker/paper-color-picker';
@@ -56,7 +56,7 @@ export class IronForm extends LitElement {
     }
 
     static get styles() {
-        return [gridClasses, flexLayoutClasses, this.styleElement]
+        return [gridClasses,gridFlexClasses, flexLayoutClasses, this.styleElement]
     }
 
     static get styleElement() {
