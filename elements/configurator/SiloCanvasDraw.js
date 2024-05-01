@@ -230,14 +230,32 @@ export class SiloCanvasDraw {
             }
         }
 
+        if (name === 'type') {
+            if (value !== "silo") {
+                [toDraw.roofAngle, toDraw.floorAngle] = [0, toDraw.roofAngle || toDraw.floorAngle || 30];
+            }
+            if (value !== "squareSilo") {
+                toDraw.length = toDraw.width;
+            }
+        }
+
+        if (name === 'width') {
+            toDraw.d = value ;
+            toDraw.r = value / 2;
+            toDraw.length = value;
+        }
         if (name === 'r') {
             toDraw.d = value * 2;
+            toDraw.width = value * 2;
+            toDraw.length = value * 2;
         }
         if (name === 'd') {
             toDraw.r = value / 2;
+            toDraw.width = value;
+            toDraw.length = value;
         }
 
-        if (['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d"].includes(name)) {
+        if (['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d", "width", "length", 'type'].includes(name)) {
             toDraw.totalHeight = (
                 toDraw.cylinderHeight * 1 +
                 toDraw.r *
@@ -251,7 +269,6 @@ export class SiloCanvasDraw {
                 toDraw.hRoofCutout = (hCon / 3).toFixed(1) * 1;
                 toDraw.siloHeight = (toDraw.totalHeight - toDraw.hRoofCutout).toFixed(1) * 1;
             }
-            this._setDefaultsCerc(toDraw, true);
         }
 
         if (["totalHeight", "siloHeight"].includes(name)) {
@@ -263,15 +280,17 @@ export class SiloCanvasDraw {
             }
         }
 
-        if(['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d","totalHeight", "siloHeight",
-            "floorClearance", "rSensorY"].includes(name) || name.endsWith(".rSensorY")) {
-            //recalculate the lenth of the cables
+        if(['cylinderHeight', 'roofAngle', 'floorAngle',
+            "r", "d", "width", "length",
+            "totalHeight", "siloHeight",
+            "floorClearance", "rSensorY", 'type'].includes(name) || name.endsWith(".rSensorY")) {
+            //recalculate the length of the cables
             this._setDefaultsCerc(toDraw, true);
         }
 
-        if (['d', 'r'].includes(name)) {
+        if (['d', 'r', "width", "length", 'type'].includes(name)) {
             for (const [maxR, defaultCircles] of Object.entries(this.defaultCircleValues)) {
-                if (Math.round(toDraw.r * 2) <= Number(maxR)) {
+                if (Math.round(toDraw.width / 2 * 2) <= Number(maxR)) {
                     if (!toDraw.circles) {
                         toDraw.circles = [];
                     }
@@ -279,8 +298,8 @@ export class SiloCanvasDraw {
                         let circle = toDraw.circles[i]||{};
                         toDraw.circles[i] = {
                             ...(circle),
-                            wireNr: defaultCircles[`circles.${i}.wireNr`] ?? circle.wireNr ?? 0,
-                            r: defaultCircles[`circles.${i}.r`] || circle.wireNr || 0,
+                            wireNr: defaultCircles[`circles.${i}.wireNr`] || 0,
+                            r: defaultCircles[`circles.${i}.r`] || 0,
                         }
                     }
                     break;
@@ -294,23 +313,33 @@ export class SiloCanvasDraw {
     }
 
     draw(toDraw, {serialized = false} = {}) {
+        let scale = this.size / Math.max(toDraw.width, toDraw.length);
+        this.width = Math.round(toDraw.width * scale);
+        this.height = Math.round(toDraw.length * scale);
+
         this.toDraw = toDraw;
         for (let [key, value] of Object.entries(this.defaults)) {
             if (this.toDraw[key] == null) {
                 this.toDraw[key] = value;
             }
         }
-        if (!this.toDraw.r) {
-            this.toDraw.r = this.toDraw.d / 2;
-        }
-        if (!this.toDraw.d) {
+        if (this.toDraw.r) {
             this.toDraw.d = this.toDraw.r * 2;
+            this.toDraw.width = this.toDraw.r * 2;
+            this.toDraw.length = this.toDraw.length || (this.toDraw.r * 2);
+        } else if (this.toDraw.d) {
+            this.toDraw.r = this.toDraw.d / 2;
+            this.toDraw.width = this.toDraw.d;
+            this.toDraw.length = this.toDraw.length || this.toDraw.d;
+        } else if (this.toDraw.width) {
+            this.toDraw.r = this.toDraw.width / 2;
+            this.toDraw.d = this.toDraw.width;
+            this.toDraw.length = this.toDraw.length || this.toDraw.width;
         }
+
         if (!this.toDraw.siloHeight) {
             this.toDraw.siloHeight = this.toDraw.totalHeight;
         }
-        this.width = this.size;
-        this.height = this.size;
         for (let i = 0; i < 4; i++) {
             if (!this.toDraw.circles[i]) {
                 this.toDraw.circles.push({
@@ -320,7 +349,7 @@ export class SiloCanvasDraw {
             }
         }
         this._setDefaultsCerc(this.toDraw);
-
+        this.ctxSectiune = new Context({width: this.width, height: this.height});
         return this.optimise(serialized);
 
     }
@@ -1025,9 +1054,6 @@ export class SiloCanvasDraw {
         ctx.closePath();
     }
 
-
-
-
     drawCircle(ctx, c, wireNr) {
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, 2 * PI, false);
@@ -1044,16 +1070,22 @@ export class SiloCanvasDraw {
         ctx.arc(c.x, c.y, 3, 0, 2 * PI, false);
         ctx.fill();
     }
-
+    drawRect(ctx, x, y, width, length) {
+        ctx.beginPath();
+        ctx.rect(x - width / 2, y - length / 2, width, length);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath()
+    }
     drawSection() {
         let ctx = this.ctxSectiune;
         ctx.strokeStyle = 'black';
-        ctx.clearRect(0, 0, this.size, this.size);
-        ctx.lineWidth = 8;
+        ctx.clearRect(0, 0, this.width, this.height);
+        ctx.lineWidth = 2;
         ctx.fillStyle = '#ececec';
         ctx.setLineDash([]);
-        let scale = this.size / 2 / this.toDraw.r;
 
+        let scale = this.size / Math.max(this.toDraw.width, this.toDraw.length);
         ctx.save();
         ctx.transform(
             (this.size - 60) / this.size,
@@ -1063,16 +1095,27 @@ export class SiloCanvasDraw {
             30,
             30
         );
+        if (this.toDraw.type === "squareSilo") {
+            this.drawRect(ctx, this.width / 2, this.height / 2, this.width, this.height);
+            ctx.beginPath();
+            let x = this.width / 2,
+                y = this.height / 2,
+                width = this.width,
+                length = this.height;
+            ctx.rect(x - width / 2, y - length / 2, width, length);
+            ctx.clip();
 
-        this.drawCircle(ctx, {
-            x: this.size / 2,
-            y: this.size / 2,
-            r: this.size / 2
-        });
+        } else {
+            this.drawCircle(ctx, {
+                x: this.size / 2,
+                y: this.size / 2,
+                r: this.size / 2
+            });
+            ctx.beginPath();
+            ctx.arc(this.size / 2, this.size / 2, this.size / 2, 0, 2 * PI, false);
+            ctx.clip('evenodd');
+        }
 
-        let region = new Path2D();
-        ctx.arc(this.size / 2, this.size / 2, this.size / 2, 0, 2 * PI, false);
-        ctx.clip(region, 'evenodd');
 
         let wireNr = 1;
         for (let i = 0; i < this.toDraw.circles.length; i++) {
@@ -1089,12 +1132,12 @@ export class SiloCanvasDraw {
                         x:
                             sin(((2 * PI) / cerc.wireNr) * j + offsetAngleRad) *
                             (cerc.r * scale) +
-                            this.size / 2 +
+                            this.width / 2 +
                             cerc.offsetX * scale,
                         y:
                             cos(((2 * PI) / cerc.wireNr) * j - PI + offsetAngleRad) *
                             (cerc.r * scale) +
-                            this.size / 2 +
+                            this.height / 2 +
                             cerc.offsetY * scale,
                         r: this.toDraw.rSensorX * scale
                     },
@@ -1107,8 +1150,8 @@ export class SiloCanvasDraw {
                 ctx.lineWidth = 3;
                 ctx.fillStyle = 'transparent';
                 this.drawCircle(ctx, {
-                    x: this.size / 2 + cerc.offsetX * scale,
-                    y: this.size / 2 + cerc.offsetY * scale,
+                    x: this.width / 2 + cerc.offsetX * scale,
+                    y: this.height / 2 + cerc.offsetY * scale,
                     r: cerc.r * scale
                 });
             }

@@ -92,13 +92,6 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         //we dont want the marker
     }
 
-    drawRect(ctx, x, y, width, length) {
-        ctx.beginPath();
-        ctx.rect(x - width / 2, y - length / 2, width, length);
-        ctx.fill();
-        ctx.stroke();
-    }
-
     _drawColumn({ctx, x, y, scale, color}){
         ctx.setLineDash([]);
         ctx.fillStyle = hexToRGB(color, this.opacitySection);

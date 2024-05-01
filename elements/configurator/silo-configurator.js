@@ -91,7 +91,7 @@ export class SiloConfigurator extends LitElement {
             numberConfigElements:this.numberConfigElements
         });
         //this.siloCanvasDraw.update(this.toDraw);
-        this.siloCanvasDraw.valueChange(this.toDraw, "d",this.toDraw.d);
+        this.siloCanvasDraw.valueChange(this.toDraw, "length",this.toDraw.length);
     }
 
     setDefaults() {
@@ -101,13 +101,15 @@ export class SiloConfigurator extends LitElement {
         let config = {elements: []};
         config.elements.push(...window.data._configs.configuratorSiloz.elements);
 
-        let defaults = {type: "silo"}
+        let defaults = {}
         for (let field of config.elements) {
             if (field.defaultValue !== null &&
-                field.defaultValue !== undefined &&
-                isNumberInput(field)) {
-
-                defaults[field.name] = Number(field.defaultValue);
+                field.defaultValue !== undefined) {
+                if (isNumberInput(field)) {
+                    defaults[field.name] = Number(field.defaultValue);
+                } else {
+                    defaults[field.name] = field.defaultValue;
+                }
             }
         }
 
@@ -122,7 +124,6 @@ export class SiloConfigurator extends LitElement {
             }
             config.elements.push(...cerc.elements)
         }
-
         this.config = config;
         this.numberConfigElements = this.config.elements.filter((field) => isNumberInput(field)).map((elem) => elem.name)
         this.defaultCircleValues = window.data._configs.defaultCircleValues;
@@ -166,6 +167,7 @@ export class SiloConfigurator extends LitElement {
             `;
         } catch (e) {
             console.error(e);
+            return e.message;
         }
     }
 

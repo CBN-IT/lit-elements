@@ -22,8 +22,6 @@ window.data={
     }
 }
 
-console.log(window.data._configs)
-
 class DemoConfigurator extends LitElement {
 
     static get properties() {
@@ -60,7 +58,7 @@ class DemoConfigurator extends LitElement {
     }
     render() {
         return html`
-            <warehouse-configurator></warehouse-configurator>
+            <silo-configurator></silo-configurator>
         `;
     }
 }
