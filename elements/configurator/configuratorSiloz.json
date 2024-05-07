@@ -28,7 +28,7 @@
       "dbCollection": "locations",
       "options": [
         {
-          "value": "silo",
+          "value": "steelSilo",
           "label": "Siloz Tabla"
         },
         {
@@ -43,11 +43,11 @@
       "itemValueProperty": "value",
       "itemLabelProperty": "label",
       "isDropdownMenu": true,
-      "defaultValue": "silo",
+      "defaultValue": "steelSilo",
       "class": "col-xs-6 col-sm-3 col-lg-3",
       "required": true,
       "toShow": {
-        "silo": [
+        "steelSilo": [
           "r","d"
         ],
         "circleSilo": [
@@ -59,7 +59,7 @@
         ]
       },
       "toHide": {
-        "silo": [
+        "steelSilo": [
           "width",
           "length"
         ],

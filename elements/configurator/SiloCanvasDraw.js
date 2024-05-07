@@ -314,6 +314,39 @@ export class SiloCanvasDraw {
 
     draw(toDraw, {serialized = false} = {}) {
         this.toDraw = toDraw;
+
+        if (!this.toDraw.type || this.toDraw.type === "silo") {
+            this.toDraw.type = "steelSilo"
+        }
+
+        let rename = {
+            "rSenzorY": "rSensorY",
+            "rSenzorX": "rSensorX",
+            "rSiloz": "r",
+            "dSiloz": "d",
+            "cercuri": "circles",
+            "nrSenzori": "sensorNr",
+            "nr": "wireNr",
+        }
+
+        for (let [key, newKey] of Object.entries(rename)) {
+            if (this.toDraw[key] !== undefined) {
+                this.toDraw[newKey] = this.toDraw[key];
+                delete this.toDraw[key];
+            }
+        }
+        if (!this.toDraw.circles) {
+            this.toDraw.circles = [];
+        }
+        for (let [key, newKey] of Object.entries(rename)) {
+            for (let circle of this.toDraw.circles) {
+                if (circle[key] !== undefined) {
+                    circle[newKey] = circle[key];
+                    delete circle[key];
+                }
+            }
+        }
+
         for (let [key, value] of Object.entries(this.defaults)) {
             if (this.toDraw[key] == null) {
                 this.toDraw[key] = value;
