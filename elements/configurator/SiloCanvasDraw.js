@@ -280,15 +280,7 @@ export class SiloCanvasDraw {
             }
         }
 
-        if(['cylinderHeight', 'roofAngle', 'floorAngle',
-            "r", "d", "width", "length",
-            "totalHeight", "siloHeight",
-            "floorClearance", "rSensorY", 'type'].includes(name) || name.endsWith(".rSensorY")) {
-            //recalculate the length of the cables
-            this._setDefaultsCerc(toDraw, true);
-        }
-
-        if (['d', 'r', "width", "length", 'type'].includes(name)) {
+        if (['d', 'r', "width", "length"].includes(name)) {
             for (const [maxR, defaultCircles] of Object.entries(this.defaultCircleValues)) {
                 if (Math.round(toDraw.width / 2 * 2) <= Number(maxR)) {
                     if (!toDraw.circles) {
@@ -306,17 +298,21 @@ export class SiloCanvasDraw {
                 }
             }
         }
-        if (name.endsWith(".above") || name.endsWith(".r")) {
+        if(['cylinderHeight', 'roofAngle', 'floorAngle',
+            "r", "d", "width", "length",
+            "totalHeight", "siloHeight",
+            "floorClearance", "rSensorY", 'type'].includes(name) ||
+            name.endsWith(".rSensorY") ||
+            name.endsWith(".above") ||
+            name.endsWith(".r")
+        ) {
+            //recalculate the length of the cables
             this._setDefaultsCerc(toDraw, true);
         }
         return {...toDraw}
     }
 
     draw(toDraw, {serialized = false} = {}) {
-        let scale = this.size / Math.max(toDraw.width, toDraw.length);
-        this.width = Math.round(toDraw.width * scale);
-        this.height = Math.round(toDraw.length * scale);
-
         this.toDraw = toDraw;
         for (let [key, value] of Object.entries(this.defaults)) {
             if (this.toDraw[key] == null) {
@@ -349,6 +345,10 @@ export class SiloCanvasDraw {
             }
         }
         this._setDefaultsCerc(this.toDraw);
+
+        let scale = this.size / Math.max(toDraw.width, toDraw.length);
+        this.width = Math.round(toDraw.width * scale);
+        this.height = Math.round(toDraw.length * scale);
         this.ctxSectiune = new Context({width: this.width, height: this.height});
         return this.optimise(serialized);
 
