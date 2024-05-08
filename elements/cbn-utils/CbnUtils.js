@@ -385,7 +385,7 @@ export const CBNUtils = {
             }, ms);
         });
     },
-    displayMessage(message, type, timeoutSec) {
+    displayMessage(message, type = "success", timeoutSec) {
         this.fireEvent(window, 'display-message', {
             message: message,
             type: type,

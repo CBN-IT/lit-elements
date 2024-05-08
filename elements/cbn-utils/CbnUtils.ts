@@ -390,7 +390,7 @@ export const CBNUtils = {
             }, ms);
         });
     },
-    displayMessage(message:unknown, type:"success"|"warning"|"error", timeoutSec?:number) {
+    displayMessage(message: unknown, type: "success" | "warning" | "error" = "success", timeoutSec?: number) {
         this.fireEvent(window, 'display-message',
             {
                 message: message,
