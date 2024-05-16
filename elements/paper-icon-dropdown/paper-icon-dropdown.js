@@ -3,7 +3,6 @@ import {html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {map} from 'lit/directives/map'
 import '../iron-selector/iron-selector.js';
-import '../paper-button/paper-button.js';
 import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import {when} from "lit/directives/when";

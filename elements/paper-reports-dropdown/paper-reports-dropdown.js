@@ -139,7 +139,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
         if (this.isNative) {
             return html`
                 <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
+                    <paper-button icon="${this.icon}" class="bgBlue" @click="${this._openDropdown}">Rapoarte</paper-button>
                     <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                         <option disabled selected></option>
                         ${map(this._options, (item, index) => html`
@@ -168,7 +168,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
 
             return html`
                 <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
+                    <paper-button icon="${this.icon}" class="bgBlue" @click="${this._openDropdown}">Rapoarte</paper-button>
                 </div>
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <div>
@@ -196,7 +196,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
         } else {
             return html`
                 <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
+                    <paper-button icon="${this.icon}" class="bgBlue" @click="${this._openDropdown}">Rapoarte</paper-button>
                 </div>
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <iron-selector @iron-select="${this._onIronSelect}">
