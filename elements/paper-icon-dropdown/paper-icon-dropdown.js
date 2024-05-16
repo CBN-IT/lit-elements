@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit'
+import {html, css} from 'lit'
 import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import {map} from 'lit/directives/map'
 import '../iron-selector/iron-selector.js';
@@ -8,12 +8,18 @@ import '../iron-icon/iron-icon.js';
 import '../iron-overlay/iron-overlay.js';
 import {when} from "lit/directives/when";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {PaperButton} from "../paper-button/paper-button";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
+import {hostColors} from "../cbn-utils/hostColors";
 
-export class PaperIconDropdown extends LitElement {
+export class PaperIconDropdown extends PaperButton {
 
     static get properties() {
         return {
             icon: {type: String},
+            iconSize:{type:Number},
+            svgIcon: {type: Object},
+
             direction: {type: String},
             eventToFire: {type: String},
             options: {type: Array},
@@ -30,22 +36,12 @@ export class PaperIconDropdown extends LitElement {
         this.isNative = this._isNative();
         this.direction = 'bottom-right';
     }
-
     static get styles() {
-        return [this.styleElement, flexLayoutClasses];
+        return [flexLayoutClasses, hostColors, this.styleElement, this.stylePaperIconDropdown];
     }
-
-    static get styleElement() {
+    static get stylePaperIconDropdown() {
         // language=CSS
         return css`
-            :host {
-                display: inline-block;
-            }
-
-            .container {
-                position: relative;
-            }
-
             .option {
                 padding: 10px;
                 background-color: white;
@@ -77,26 +73,24 @@ export class PaperIconDropdown extends LitElement {
                 border: none;
                 font-size: 16px;
             }
-
-            paper-fab {
-                position: relative;
-            }
         `
     }
 
     render() {
         return html`
-            <div class="container vertical layout">
-                <paper-button icon="${this.icon}" style="background: var(--blue-color)" @click="${this._openDropdown}">Rapoarte</paper-button>
-                ${when(this.isNative,
-                        () => html`
-                            <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
-                                <option disabled selected></option>
-                                ${map(this._options, (item, index) => html`
-                                    <option value="${index}">${item.label}</option>
-                                `)}
-                            </select>
+            <div class="container horizontal layout center" @click="${this._openDropdown}">
+                <iron-icon icon="${this.icon}" .svgIcon="${this.svgIcon}" .size="${this.iconSize}"></iron-icon>
+                <div class="text">
+                    <slot></slot>
+                </div>
+                ${when(this.isNative, () => html`
+                    <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
+                        <option disabled selected></option>
+                        ${map(this._options, (item, index) => html`
+                            <option value="${index}">${item.label}</option>
                         `)}
+                    </select>
+                `)}
             </div>
             <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                 <iron-selector @iron-select="${this._onIronSelect}">

@@ -3,6 +3,7 @@ import {LitElement, html} from "lit";
 import {flexLayoutClasses} from "../elements/flex-layout/flex-layout-classes.js";
 import "../elements/paper-button/paper-button"
 import "../elements/paper-color-picker/paper-color-picker"
+import "../elements/paper-icon-dropdown/paper-icon-dropdown"
 import "../elements/paper-checkbox/paper-checkbox"
 import "../elements/iron-overlay/iron-overlay"
 import "../elements/iron-selector/iron-selector"
@@ -38,6 +39,10 @@ class DemoApp extends LitElement {
 
 
     render() {
+        const paperIconDropdownOptions = [
+            "Option 1", "Option 2", "Option 3", "Option 4"
+        ]
+
         return html`
             <style>              
                 :host{
@@ -187,7 +192,11 @@ class DemoApp extends LitElement {
             <div class="container">
                 <div class="title" style=" margin-right: 3em">paper-color-picker</div>
                 <paper-color-picker></paper-color-picker>
-
+            </div>
+            <div class="container">
+                <div class="title" style=" margin-right: 3em">paper-icon-dropdown</div>
+                <paper-icon-dropdown icon="assignment" class="bgBlue" .options="${paperIconDropdownOptions}">Rapoarte</paper-icon-dropdown>
+                <paper-icon-dropdown icon="assignment" class="bgGreen" .options="${paperIconDropdownOptions}" small></paper-icon-dropdown>
             </div>
             <div class="container">
                 <div class="title" style=" margin-right: 3em">paper-checkbox</div>

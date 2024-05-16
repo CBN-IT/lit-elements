@@ -6,19 +6,13 @@ import "../iron-icon/iron-icon.js";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 
 
-class PaperButton extends LitElement {
+export class PaperButton extends LitElement {
 
     static get properties() {
         return {
-            icon: {
-                type: String
-            },
-            iconSize:{
-                type:Number
-            },
-            svgIcon: {
-                type: Object
-            }
+            icon: {type: String},
+            iconSize:{type:Number},
+            svgIcon: {type: Object}
         };
     }
 
@@ -39,11 +33,11 @@ class PaperButton extends LitElement {
                 font-family: inherit;
                 font-size: inherit;
                 padding: 2px 5px;
-                color: white;
                 border-radius: 3px;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 background: white;
+                color: var(--black-color, black);
             }
 
             :host:after {
