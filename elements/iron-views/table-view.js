@@ -118,7 +118,7 @@ export class TableView extends EmptyView {
         `
     }
     get templateAddButton(){
-        return html`<paper-button icon="add" @click="${this._addDocument}" style="background: var(--green-color)">Adauga</paper-button>`
+        return html`<paper-button icon="add" @click="${this._addDocument}" class="bgGreen">Adauga</paper-button>`
     }
     render() {
         return html`            

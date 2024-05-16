@@ -71,7 +71,6 @@ class PaperDialog extends LitElement {
             }
 
             .close-button {
-                background: var(--red-color);
                 margin: 0 0 0 10px;
             }
 
@@ -98,7 +97,7 @@ class PaperDialog extends LitElement {
                     <h3 class="flex">
                         <slot name="header"></slot>
                     </h3>
-                    <paper-button small class="close-button" small icon="close" @click="${this._cancelClickHeaderButton}"></paper-button>
+                    <paper-button small class="bgRed close-button" small icon="close" @click="${this._cancelClickHeaderButton}"></paper-button>
                 </div>
                 <div id="body" class="flex-auto">
                     <slot name="body"></slot>

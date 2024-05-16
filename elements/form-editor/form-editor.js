@@ -1070,7 +1070,7 @@ class FormEditor extends LitElement {
                 <div class="newItems" type="checkbox" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">Checkbox</div>
                 <div class="newItems" type="file" draggable="true" @dragstart="${this._dragstart}" @dragend="${this._dragend}">File</div>
                 <div style="flex:1;"></div>
-                <paper-button icon="check-circle" style="background: var(--app-secondary-color, green);" @click="${this._submit}">Submit</paper-button>
+                <paper-button icon="check-circle" class="bgGreen" @click="${this._submit}">Submit</paper-button>
             </div>
             <div id="existingItemsContainer" class="container">
                 ${repeat(this._json.elements, (el) => el.name, (el) => html`
