@@ -155,7 +155,9 @@ export class TableView extends EmptyView {
         CBNUtils.stopLoading();
     }
     _displayReportsDropdown() {
-        return this.reports && this.reports.length > 0 ? html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}" class="bgBlue"></paper-reports-dropdown>` : '';
+        return this.reports && this.reports.length > 0 ?
+            html`<paper-reports-dropdown .options="${this.reports}" .table="${this.table}" class="bgBlue">Rapoarte</paper-reports-dropdown>` :
+            '';
     }
     async _addDocument() {
         this._openDialog();
