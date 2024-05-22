@@ -91,6 +91,12 @@ export class PaperIconDropdown extends PaperButton {
                     </select>
                 `)}
             </div>
+            ${this._templateOverlay}
+        `;
+    }
+
+    get _templateOverlay(){
+        return html`
             <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                 <iron-selector @iron-select="${this._onIronSelect}">
                     ${map(this._options, (item) => when(item.type,
@@ -107,7 +113,7 @@ export class PaperIconDropdown extends PaperButton {
                             `))}
                 </iron-selector>
             </iron-overlay>
-        `;
+        `
     }
 
     firstUpdated(changedProperties) {

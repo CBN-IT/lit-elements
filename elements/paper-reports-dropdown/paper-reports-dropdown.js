@@ -11,8 +11,12 @@ import "../iron-icons/icons/cbn/pdf.js";
 import "../iron-icons/icons/cbn/generic.js";
 import "../iron-icons/icons/cbn/word.js";
 import "../iron-icons/icons/cbn/xml.js";
+import "../iron-icons/icons/icons/arrow_drop_down";
+
 import {when} from "lit/directives/when";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
+
 
 
 class PaperReportsDropdown extends PaperIconDropdown {
@@ -101,6 +105,9 @@ class PaperReportsDropdown extends PaperIconDropdown {
             [icon="arrow-drop-down"] {
                 transform: rotate(-90deg)
             }
+            paper-button {
+                margin:0;
+            }
         `
     }
 
@@ -114,7 +121,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
 
     _selectedOptionByValue(value) {
         CBNUtils.fireEvent(this, 'get-report', {
-            keys: this.table.selectedItems,
+            keys: this.table?.selectedItems||[],
             report: value
         });
     }
@@ -122,7 +129,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
     _getReport(event) {
         let path = event.currentTarget.path;
         CBNUtils.fireEvent(this, 'get-report', {
-            keys: this.table.selectedItems,
+            keys: this.table?.selectedItems||[],
             report: this._options.find(value => value._path === path)
         });
     }
@@ -135,27 +142,14 @@ class PaperReportsDropdown extends PaperIconDropdown {
         this.ironOverlay.openOverlay();
     }
 
-    render() {
-        if (this.isNative) {
-            return html`
-                <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" class="bgBlue" @click="${this._openDropdown}">Rapoarte</paper-button>
-                    <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
-                        <option disabled selected></option>
-                        ${map(this._options, (item, index) => html`
-                            <option value="${index}">${item.label}</option>
-                        `)}
-                    </select>
-                </div>
-            `
-        }
-
+    get _templateOverlay(){
         let hasGroups = false;
         for (let option of this._options) {
             if (option.groupName) {
                 hasGroups = true;
             }
         }
+
         if (hasGroups) {
             let groups = {};
             for (let option of this._options) {
@@ -165,11 +159,7 @@ class PaperReportsDropdown extends PaperIconDropdown {
                 groups[option.groupName || ""].push(option);
             }
             groups = Object.values(groups).sort((a, b) => (a[0].groupName || "").localeCompare(b[0].groupName || ""));
-
             return html`
-                <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" class="bgBlue" @click="${this._openDropdown}">Rapoarte</paper-button>
-                </div>
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <div>
                         ${map(groups, arr => html`
@@ -195,23 +185,20 @@ class PaperReportsDropdown extends PaperIconDropdown {
             `;
         } else {
             return html`
-                <div class="container vertical layout">
-                    <paper-button icon="${this.icon}" class="bgBlue" @click="${this._openDropdown}">Rapoarte</paper-button>
-                </div>
                 <iron-overlay .positioningElement="${this}" .direction="${this.direction}">
                     <iron-selector @iron-select="${this._onIronSelect}">
                         ${map(this._options, (item) => when(item.type,
-                                () => html`
-                                    <div class="option horizontal layout center" style="padding:7px">
-                                        <iron-icon icon="${item.type}" size="30"></iron-icon>
-                                        ${item.label}
-                                    </div>
-                                `,
-                                () => html`
-                                    <div class="option">
-                                        ${item.label}
-                                    </div>
-                                `))}
+                            () => html`
+                                <div class="option horizontal layout center" style="padding:7px">
+                                    <iron-icon icon="${item.type}" size="30"></iron-icon>
+                                    ${item.label}
+                                </div>
+                            `,
+                            () => html`
+                                <div class="option">
+                                    ${item.label}
+                                </div>
+                            `))}
                     </iron-selector>
                 </iron-overlay>
             `;
