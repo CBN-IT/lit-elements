@@ -27,8 +27,7 @@
       "label": "Name",
       "class": "col-xs-12 col-sm-12 col-lg-8",
       "required": false,
-      "minLength": 3,
-      "defaultValue": "Magazie 1000t"
+      "minLength": 3
     },
     {
       "type": "text",
