@@ -138,8 +138,8 @@ export class WarehouseConfigurator extends LitElement {
                     @value-changed="${this.valueChanged}"
                 ></iron-form>
                 <div id="svgContainer">
-                    ${svgSiloz}
-                    ${svgSectiune}
+                    <div class="svgContainer">${svgSiloz}</div>
+                    <div class="svgContainer">${svgSectiune}</div>
                 </div>
                 
                 <div style="">

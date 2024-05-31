@@ -76,6 +76,24 @@ export class SiloConfigurator extends LitElement {
             .hidden{
                 display: none !important;
             }
+            .svgContainer{
+                overflow: visible;
+                max-width: 100%;
+                max-height: 100%;
+                flex:1;
+            }
+            .svgContainer:hover>svg{
+                position: fixed;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                pointer-events: none;
+                z-index: 10000;
+                background-color: rgb(255 255 255 / 58%);
+                width: 100%;
+                height: 100%;
+            }
         `;
     }
 
@@ -143,8 +161,8 @@ export class SiloConfigurator extends LitElement {
                             @value-changed="${this.valueChanged}"
                     ></iron-form>
                     <div id="svgContainer">
-                        ${svgSiloz}
-                        ${svgSectiune}
+                        <div class="svgContainer">${svgSiloz}</div>
+                        <div class="svgContainer">${svgSectiune}</div>
                     </div>
                     
                     <div style="">
