@@ -39,3 +39,4 @@ import './googleMaps.js';
 import './link.js';
 import './clipboard.js';
 import './hardhat.js';
+import './database.js';
