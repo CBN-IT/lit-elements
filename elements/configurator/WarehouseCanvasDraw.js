@@ -69,19 +69,81 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
     }
 
     draw(toDraw, {serialized=false}={}) {
-        let scale = this.size / Math.max(toDraw.width, toDraw.length);
-        this.width = Math.round(toDraw.width * scale);
-        this.height = Math.round(toDraw.length * scale);
         this.toDraw = toDraw;
+
+        let rename = {
+            "rSenzorY": "rSensorY",
+            "rSenzorX": "rSensorX",
+            "rSiloz": "r",
+            "dSiloz": "d",
+            "cercuri": "circles",
+            "nrSenzori": "sensorNr",
+            "nr": "wireNr",
+        }
+
+        for (let [key, newKey] of Object.entries(rename)) {
+            if (this.toDraw[key] !== undefined) {
+                this.toDraw[newKey] = this.toDraw[key];
+                delete this.toDraw[key];
+            }
+        }
+        if (this.toDraw.r) {
+            this.toDraw.d = this.toDraw.r * 2;
+            this.toDraw.width = this.toDraw.r * 2;
+            this.toDraw.length = this.toDraw.length || (this.toDraw.r * 2);
+        } else if (this.toDraw.d) {
+            this.toDraw.r = this.toDraw.d / 2;
+            this.toDraw.width = this.toDraw.d;
+            this.toDraw.length = this.toDraw.length || this.toDraw.d;
+        } else if (this.toDraw.width) {
+            this.toDraw.r = this.toDraw.width / 2;
+            this.toDraw.d = this.toDraw.width;
+            this.toDraw.length = this.toDraw.length || this.toDraw.width;
+        }
         for (let [key, value] of Object.entries(this.defaults)) {
             if (this.toDraw[key] == null) {
                 this.toDraw[key] = value;
             }
         }
-        this.toDraw.r = toDraw.width / 2;
-        this.toDraw.d = toDraw.width;
+        if (this.toDraw.width) {
+            this.toDraw.r = this.toDraw.width / 2;
+            this.toDraw.d = this.toDraw.width;
+            this.toDraw.length = this.toDraw.length || this.toDraw.width;
+        }
 
-        this._setDefaultsCerc(this.toDraw);
+        if (!this.toDraw.circles) {
+            this.toDraw.circles = [];
+            for (let i = 0; i < 5; i++) {
+                toDraw.circles[i] = {
+                    wireNr: Math.max(0, Math.min(2, toDraw.columns - i * 2)),
+                    r: Math.max(0, (toDraw.width / 2 - (toDraw.width / (toDraw.columns)) * (i + 0.5)).toFixed(1) * 1),
+                    above: 0.2
+                }
+            }
+            this._setDefaultsCerc(this.toDraw, true);
+        } else {
+            for (let [key, newKey] of Object.entries(rename)) {
+                for (let circle of this.toDraw.circles) {
+                    if (circle[key] !== undefined) {
+                        circle[newKey] = circle[key];
+                        delete circle[key];
+                    }
+                }
+            }
+            this._setDefaultsCerc(this.toDraw);
+        }
+        console.log(this.toDraw.circles);
+
+
+
+
+        let scale = this.size / Math.max(toDraw.width, toDraw.length);
+        this.width = Math.round(toDraw.width * scale);
+        this.height = Math.round(toDraw.length * scale);
+
+
+
+
 
 
         this.ctxSectiune = new Context({width: this.width, height: this.height});

@@ -37,19 +37,6 @@ export class WarehouseConfigurator extends LitElement {
                 flex-shrink: 0;
             }
 
-            #svgContainer {
-                display: flex;
-                flex-wrap: wrap;
-                min-height: 400px;
-                flex: 1 0 1px;
-            }
-
-            svg {
-                flex:1;
-                max-width: 100%;
-                max-height: 100%;
-            }
-
             .red {
                 color: #700;
             }
@@ -74,41 +61,95 @@ export class WarehouseConfigurator extends LitElement {
             .hidden{
                 display: none !important;
             }
+
+
+            .svgContainer{
+                overflow: visible;
+                width: 500px;
+                height: 250px;
+                display:flex;
+            }
+            
+            svg {
+                pointer-events: none;
+            }
+            .svgContainer:hover>svg{
+                position: fixed;
+                z-index: 10000;
+                background-color: rgb(255 255 255 / 58%);
+            }
+
+
+            @media (orientation: landscape) {
+                .svgContainer:hover>svg{
+                    top:0;
+                    bottom:0;
+                    left:0;
+                    width: 50%;
+                    height: 100%;
+                }
+                .svgContainer:hover>svg:last-child{
+                    left:50%;
+                }
+            }
+
+            @media (orientation: portrait) {
+                .svgContainer:hover>svg{
+                    top:0;
+                    left:0;
+                    right:0;
+                    width: 100%;
+                    height: 50%;
+                }
+                .svgContainer:hover>svg:last-child{
+                    top:50%;
+                }
+            }
+            
         `;
     }
 
     constructor() {
         super();
+        this.toDraw = {type: "warehouse"};
         this.init();
     }
     init(){
-        this.setDefaults();
+        this.initConfigs();
+        let defaults = this.getDefaults();
         this.warehouseCanvasDraw = new WarehouseCanvasDraw({
             numberConfigElements: this.numberConfigElements,
-            fontSize:"20px"
+            fontSize:"20px",
+            defaultValues: defaults
         });
-        this.warehouseCanvasDraw.valueChange(this.toDraw, "columns", this.toDraw.columns);
+        //console.log(defaults)
+        //this.warehouseCanvasDraw.valueChange(this.toDraw, "columns", this.toDraw.columns);
     }
 
-    setDefaults() {
+    getDefaults(){
+        let config = this.config;
+
+        let defaults = {}
+        for (let field of config.elements) {
+            if (field.defaultValue !== null &&
+                field.defaultValue !== undefined) {
+                if (isNumberInput(field)) {
+                    defaults[field.name] = Number(field.defaultValue);
+                } else {
+                    defaults[field.name] = field.defaultValue;
+                }
+            }
+        }
+        return defaults;
+    }
+
+    initConfigs() {
         this._id = undefined;
         this._path = undefined;
 
         let config = {elements: []};
         config.elements.push(...window.data._configs.configuratorWarehouse.elements);
 
-        let defaults = {
-            circles:[],
-            type: "warehouse"
-        }
-        for (let field of config.elements) {
-            if (field.defaultValue !== null &&
-                field.defaultValue !== undefined &&
-                isNumberInput(field)) {
-
-                defaults[field.name] = Number(field.defaultValue);
-            }
-        }
         for (let i = 0; i < 5; i++) {
             let cerc = JSON.parse(JSON.stringify(window.data._configs.configuratorCercWarehouse));
             for (let field of cerc.elements) {
@@ -122,7 +163,7 @@ export class WarehouseConfigurator extends LitElement {
         }
         this.config = config;
         this.numberConfigElements = this.config.elements.filter((field) => isNumberInput(field)).map((elem) => elem.name)
-        this.toDraw = defaults;
+        this.defaultCircleValues = window.data._configs.defaultCircleValues;
     }
 
     render() {
@@ -137,9 +178,9 @@ export class WarehouseConfigurator extends LitElement {
                     .noSubmitButton="${true}"
                     @value-changed="${this.valueChanged}"
                 ></iron-form>
-                <div id="svgContainer">
-                    <div class="svgContainer">${svgSiloz}</div>
-                    <div class="svgContainer">${svgSectiune}</div>
+                <div class="svgContainer">
+                    ${svgSiloz}
+                    ${svgSectiune}
                 </div>
                 
                 <div style="">
@@ -162,6 +203,7 @@ export class WarehouseConfigurator extends LitElement {
 			`;
         } catch (e) {
             console.error(e);
+            return e.message;
         }
     }
 

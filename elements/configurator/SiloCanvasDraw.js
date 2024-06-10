@@ -2,6 +2,7 @@ import {Context} from 'canvas2svg';
 import {hexToRGB} from './hexToRGB.js';
 import {optimize} from 'svgo/dist/svgo.browser.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js'
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 const {PI, tan, cos, sin, atan} = Math;
 
@@ -118,7 +119,8 @@ export class SiloCanvasDraw {
                     ctxCanvas,
                     defaultCircleValues = {},
                     numberConfigElements = [],
-                    minDistBelowRoof = 0
+                    minDistBelowRoof = 0,
+                    defaultValues={}
                 } = {}) {
         if (ctxCanvas) {
             this.ctxCanvas = ctxCanvas
@@ -148,6 +150,7 @@ export class SiloCanvasDraw {
             'roofAngle': 30,
             "floorAngle": 0,
             "floorClearance": 1,
+            ...defaultValues
         }
         this.image = new Image();
         this.image.onload = function () {
@@ -299,9 +302,9 @@ export class SiloCanvasDraw {
             }
         }
         if(['cylinderHeight', 'roofAngle', 'floorAngle',
-            "r", "d", "width", "length",
-            "totalHeight", "siloHeight",
-            "floorClearance", "rSensorY", 'type'].includes(name) ||
+                "r", "d", "width", "length",
+                "totalHeight", "siloHeight",
+                "floorClearance", "rSensorY", 'type'].includes(name) ||
             name.endsWith(".rSensorY") ||
             name.endsWith(".above") ||
             name.endsWith(".r")
@@ -311,6 +314,7 @@ export class SiloCanvasDraw {
         }
         return {...toDraw}
     }
+
 
     draw(toDraw, {serialized = false} = {}) {
         this.toDraw = toDraw;
@@ -335,23 +339,7 @@ export class SiloCanvasDraw {
                 delete this.toDraw[key];
             }
         }
-        if (!this.toDraw.circles) {
-            this.toDraw.circles = [];
-        }
-        for (let [key, newKey] of Object.entries(rename)) {
-            for (let circle of this.toDraw.circles) {
-                if (circle[key] !== undefined) {
-                    circle[newKey] = circle[key];
-                    delete circle[key];
-                }
-            }
-        }
 
-        for (let [key, value] of Object.entries(this.defaults)) {
-            if (this.toDraw[key] == null) {
-                this.toDraw[key] = value;
-            }
-        }
         if (this.toDraw.r) {
             this.toDraw.d = this.toDraw.r * 2;
             this.toDraw.width = this.toDraw.r * 2;
@@ -369,6 +357,42 @@ export class SiloCanvasDraw {
         if (!this.toDraw.siloHeight) {
             this.toDraw.siloHeight = this.toDraw.totalHeight;
         }
+
+        for (let [key, value] of Object.entries(this.defaults)) {
+            if (this.toDraw[key] == null) {
+                this.toDraw[key] = value;
+            }
+        }
+
+        if (!this.toDraw.circles) {
+            this.toDraw.circles = [];
+            for (const [maxR, defaultCircles] of Object.entries(this.defaultCircleValues)) {
+                if (Math.round(toDraw.width / 2 * 2) <= Number(maxR)) {
+                    if (!toDraw.circles) {
+                        toDraw.circles = [];
+                    }
+                    for (let i = 0; i < 4; i++) {
+                        let circle = toDraw.circles[i]||{};
+                        toDraw.circles[i] = {
+                            ...(circle),
+                            wireNr: defaultCircles[`circles.${i}.wireNr`] || 0,
+                            r: defaultCircles[`circles.${i}.r`] || 0,
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        for (let [key, newKey] of Object.entries(rename)) {
+            for (let circle of this.toDraw.circles) {
+                if (circle[key] !== undefined) {
+                    circle[newKey] = circle[key];
+                    delete circle[key];
+                }
+            }
+        }
+
+
         for (let i = 0; i < 4; i++) {
             if (!this.toDraw.circles[i]) {
                 this.toDraw.circles.push({
@@ -1294,27 +1318,5 @@ export class SiloCanvasDraw {
             uncovered: uncoveredArea,
             cost: ((volume * uncoveredArea) / 100.0) * (this.toDraw.pricePerT || 200) * 0.75
         };
-    }
-
-    generatePdf() {
-        let vals = this.drawBlack();
-        //Acoperire silozuri
-        //https://monitorizare-siloz.appspot.com/admin/reports-view
-        CBNUtils.generateReport({
-            hashReport: 'ahRlfm1vbml0b3JpemFyZS1zaWxvenITCxIGU2FibG9uGICAwPazrp0KDA',
-            params: {
-                details: JSON.stringify({
-                    project: this.toDraw.project || this.toDraw.siloName || "",
-                    to: this.toDraw.to || "",
-                    description: "",
-                    showMonitoredVolume: true
-                }),
-                svgSiloz: this.ctxSiloz.getSerializedSvg(true),
-                svgSectiune: this.ctxSectiune.getSerializedSvg(true),
-                uncoveredArea: vals.uncovered,
-                lossCostObj: JSON.stringify(vals),
-                config: JSON.stringify(this.toDraw)
-            }
-        });
     }
 }

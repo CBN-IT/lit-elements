@@ -38,20 +38,6 @@ export class SiloConfigurator extends LitElement {
                 flex-shrink: 0;
             }
 
-            #svgContainer {
-                display: flex;
-                flex-wrap: wrap;
-                max-width: 800px;
-                min-height: 200px;
-                flex: 1 0 1px;
-            }
-
-            svg {
-                flex:1;
-                max-width: 100%;
-                max-height: 100%;
-            }
-
             .red {
                 color: #700;
             }
@@ -76,48 +62,74 @@ export class SiloConfigurator extends LitElement {
             .hidden{
                 display: none !important;
             }
+
+
             .svgContainer{
                 overflow: visible;
-                max-width: 100%;
-                max-height: 100%;
-                flex:1;
+                width: 500px;
+                height: 250px;
+                display:flex;
+            }
+            
+            svg {
+                pointer-events: none;
             }
             .svgContainer:hover>svg{
                 position: fixed;
-                top:0;
-                bottom:0;
-                left:0;
-                right:0;
-                pointer-events: none;
                 z-index: 10000;
                 background-color: rgb(255 255 255 / 58%);
-                width: 100%;
-                height: 100%;
             }
+
+
+            @media (orientation: landscape) {
+                .svgContainer:hover>svg{
+                    top:0;
+                    bottom:0;
+                    left:0;
+                    width: 50%;
+                    height: 100%;
+                }
+                .svgContainer:hover>svg:last-child{
+                    left:50%;
+                }
+            }
+
+            @media (orientation: portrait) {
+                .svgContainer:hover>svg{
+                    top:0;
+                    left:0;
+                    right:0;
+                    width: 100%;
+                    height: 50%;
+                }
+                .svgContainer:hover>svg:last-child{
+                    top:50%;
+                }
+            }
+            
         `;
     }
 
     constructor() {
         super();
+        this.toDraw = {type: "steelSilo"};
         this.init();
     }
 
     init(){
-        this.setDefaults();
+        this.initConfigs();
+        let defaults = this.getDefaults();
+
         this.siloCanvasDraw = new SiloCanvasDraw({
             defaultCircleValues:this.defaultCircleValues,
-            numberConfigElements:this.numberConfigElements
+            numberConfigElements:this.numberConfigElements,
+            defaultValues: defaults
         });
-        //this.siloCanvasDraw.update(this.toDraw);
-        this.siloCanvasDraw.valueChange(this.toDraw, "length",this.toDraw.length);
+        this.siloCanvasDraw.valueChange(this.toDraw, "length", this.toDraw.length);
     }
 
-    setDefaults() {
-        this._id = undefined;
-        this._path = undefined;
-
-        let config = {elements: []};
-        config.elements.push(...window.data._configs.configuratorSiloz.elements);
+    getDefaults(){
+        let config = this.config;
 
         let defaults = {}
         for (let field of config.elements) {
@@ -130,6 +142,15 @@ export class SiloConfigurator extends LitElement {
                 }
             }
         }
+        return defaults;
+    }
+
+    initConfigs() {
+        this._id = undefined;
+        this._path = undefined;
+
+        let config = {elements: []};
+        config.elements.push(...window.data._configs.configuratorSiloz.elements);
 
         for (let i = 0; i < 4; i++) {
             let cerc = JSON.parse(JSON.stringify(window.data._configs.configuratorCerc));
@@ -145,43 +166,42 @@ export class SiloConfigurator extends LitElement {
         this.config = config;
         this.numberConfigElements = this.config.elements.filter((field) => isNumberInput(field)).map((elem) => elem.name)
         this.defaultCircleValues = window.data._configs.defaultCircleValues;
-        this.toDraw = defaults;
     }
 
     render() {
         try {
             let {vals,svgSiloz,svgSectiune} = this.siloCanvasDraw.draw(this.toDraw);
             return html`
-                    <iron-form
-                            id="form"
-                            .config="${this.config}"
-                            .model="${this.toDraw}"
-                            @saved-form="${this._onSavedForm}"
-                            .noSubmitButton="${true}"
-                            @value-changed="${this.valueChanged}"
-                    ></iron-form>
-                    <div id="svgContainer">
-                        <div class="svgContainer">${svgSiloz}</div>
-                        <div class="svgContainer">${svgSectiune}</div>
-                    </div>
-                    
-                    <div style="">
-                        Monitored volume:
-                        <span class="green">
+                <iron-form
+                        id="form"
+                        .config="${this.config}"
+                        .model="${this.toDraw}"
+                        @saved-form="${this._onSavedForm}"
+                        .noSubmitButton="${true}"
+                        @value-changed="${this.valueChanged}"
+                ></iron-form>
+                <div class="svgContainer">
+                    ${svgSiloz}
+                    ${svgSectiune}
+                </div>
+
+                <div style="">
+                    Monitored volume:
+                    <span class="green">
 						    ${(100 - vals.uncovered).toFixed(1)}% covered
 						</span>,
-                        <span class="red">
+                    <span class="red">
                             ${vals.uncovered.toFixed(1)}% uncovered
                         </span>
-                    </div>
-                    <div style="">
-                        Worst case loss:
-                        <span class="red">
+                </div>
+                <div style="">
+                    Worst case loss:
+                    <span class="red">
 							${this.toDraw.nrSilos}silos * ${vals.uncovered.toFixed(1)}% *
 							${this._formatNumber(vals.volume)}m<sup>3</sup> * 0.75t/m<sup>3</sup> *
 							${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos || 1) * vals.cost * 5)}</b> &euro;
 						</span>
-                    </div>
+                </div>
             `;
         } catch (e) {
             console.error(e);
