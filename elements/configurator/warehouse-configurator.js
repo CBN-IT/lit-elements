@@ -69,16 +69,16 @@ export class WarehouseConfigurator extends LitElement {
                 height: 250px;
                 display:flex;
             }
-            
+
             svg {
                 pointer-events: none;
             }
+            
             .svgContainer:hover>svg{
                 position: fixed;
                 z-index: 10000;
                 background-color: rgb(255 255 255 / 58%);
             }
-
 
             @media (orientation: landscape) {
                 .svgContainer:hover>svg{
@@ -105,7 +105,6 @@ export class WarehouseConfigurator extends LitElement {
                     top:50%;
                 }
             }
-            
         `;
     }
 
@@ -171,18 +170,18 @@ export class WarehouseConfigurator extends LitElement {
             let {vals,svgSiloz,svgSectiune} = this.warehouseCanvasDraw.draw(this.toDraw);
             return html`
                 <iron-form
-                    id="form"
-                    .config="${this.config}"
-                    .model="${this.toDraw}"
-                    @saved-form="${this._onSavedForm}"
-                    .noSubmitButton="${true}"
-                    @value-changed="${this.valueChanged}"
+                        id="form"
+                        .config="${this.config}"
+                        .model="${this.toDraw}"
+                        @saved-form="${this._onSavedForm}"
+                        .noSubmitButton="${true}"
+                        @value-changed="${this.valueChanged}"
                 ></iron-form>
                 <div class="svgContainer">
                     ${svgSiloz}
                     ${svgSectiune}
                 </div>
-                
+
                 <div style="">
                     Monitored volume:
                     <span class="green">
@@ -200,7 +199,7 @@ export class WarehouseConfigurator extends LitElement {
                         ${this.toDraw.pricePerT || 200}&euro;/t * 5years = <b>${this._formatNumber((this.toDraw.nrSilos||1) * vals.cost*5)}</b> &euro;
                     </span>
                 </div>
-			`;
+            `;
         } catch (e) {
             console.error(e);
             return e.message;

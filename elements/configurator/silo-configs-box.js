@@ -33,7 +33,7 @@ class SiloConfigsBox extends LitElement {
                 --min-dialog-height: 90%;
                 --min-dialog-width: 90%;
             }
-            
+
             .svgContainer{
                 overflow: visible;
                 width: 200px;
@@ -49,8 +49,7 @@ class SiloConfigsBox extends LitElement {
                 z-index: 10000;
                 background-color: rgb(255 255 255 / 58%);
             }
-            
-            
+
             @media (orientation: landscape) {
                 .svgContainer:hover>svg{
                     top:0;
@@ -76,9 +75,7 @@ class SiloConfigsBox extends LitElement {
                     top:50%;
                 }
             }
-            
-            
-            
+
             .siloConfig{
                 border:1px solid grey;
                 cursor: pointer;
@@ -214,7 +211,7 @@ class SiloConfigsBox extends LitElement {
                 delete config.config[key]
             }
         }
-        this.modelEdit = config;
+        this.modelEdit = JSON.parse(JSON.stringify(config));
         this.siloConfiguratorDialog.open();
     }
 

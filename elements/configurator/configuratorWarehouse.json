@@ -103,7 +103,7 @@
       "class": "hidden col-xs-4 col-sm-2 col-lg-2",
       "min": "0",
       "max": "85",
-      "defaultValue": 23,
+      "defaultValue": 23.4,
       "required": true
     },
     {

@@ -87,7 +87,11 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
                 delete this.toDraw[key];
             }
         }
-        if (this.toDraw.r) {
+        if (this.toDraw.width) {
+            this.toDraw.r = this.toDraw.width / 2;
+            this.toDraw.d = this.toDraw.width;
+            this.toDraw.length = this.toDraw.length || this.toDraw.width;
+        } else if (this.toDraw.r) {
             this.toDraw.d = this.toDraw.r * 2;
             this.toDraw.width = this.toDraw.r * 2;
             this.toDraw.length = this.toDraw.length || (this.toDraw.r * 2);
@@ -95,10 +99,6 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
             this.toDraw.r = this.toDraw.d / 2;
             this.toDraw.width = this.toDraw.d;
             this.toDraw.length = this.toDraw.length || this.toDraw.d;
-        } else if (this.toDraw.width) {
-            this.toDraw.r = this.toDraw.width / 2;
-            this.toDraw.d = this.toDraw.width;
-            this.toDraw.length = this.toDraw.length || this.toDraw.width;
         }
         for (let [key, value] of Object.entries(this.defaults)) {
             if (this.toDraw[key] == null) {
@@ -132,19 +132,10 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
             }
             this._setDefaultsCerc(this.toDraw);
         }
-        console.log(this.toDraw.circles);
-
-
-
 
         let scale = this.size / Math.max(toDraw.width, toDraw.length);
         this.width = Math.round(toDraw.width * scale);
         this.height = Math.round(toDraw.length * scale);
-
-
-
-
-
 
         this.ctxSectiune = new Context({width: this.width, height: this.height});
         return this.optimise(serialized);
