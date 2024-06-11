@@ -7,6 +7,7 @@ import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import './silo-configurator';
 import './warehouse-configurator';
 import {createRef, ref} from "lit/directives/ref.js";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 
 let nf0 = new Intl.NumberFormat('en-EN', {style: 'decimal', useGrouping: true, minimumFractionDigits: 0, maximumFractionDigits: 0});
@@ -215,9 +216,15 @@ class SiloConfigsBox extends LitElement {
         this.siloConfiguratorDialog.open();
     }
 
-    _saveConfig() {
+    _saveConfig(event) {
+        event.stopPropagation();
+
         let sc = this._configuratorRef.value
-        CBNUtils.fireEvent(this, "save-click", sc.value);
+        CBNUtils.fireEvent(this, "save-click", {
+            ...sc.value,
+            _id: this.modelEdit._id,
+            _path: this.modelEdit._path,
+        });
         this.siloConfiguratorDialog.close();
     }
 
