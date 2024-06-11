@@ -232,9 +232,7 @@ class SiloConfigsBox extends LitElement {
         event?.stopPropagation();
 
         let config = this.siloConfigs.find(v => v._path === path);
-        if (confirm("Esti sigur ca doresti sa stergi aceasta definitie de siloz?")) {
             CBNUtils.fireEvent(this, "delete-click", config);
-        }
     }
 }
 
