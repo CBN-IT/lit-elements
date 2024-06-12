@@ -110,7 +110,7 @@ class SiloConfig extends LitElement {
                             <div style="padding:0 5px;">HS:${v.config.hGrainSide}m</div>
                             <div style="padding:0 5px;">HC:${v.config.hGrainCenter}</div>
                             ${v.config.circles?.filter(cerc => cerc.nr > 0).map(cerc => html`
-                                <div>${v.config.nrSilos || 1}*${v.config.rows}*${cerc.wireNr}=</div>
+                                <div>${v.config.nrSilos || 1} * ${v.config.rows} * ${cerc.wireNr}=</div>
                                 <div>${(v.config.nrSilos || 1) * v.config.rows * cerc.wireNr}buc</div>
                                 <div>${cerc.hCable.toFixed(1)}m</div>
                                 <div>${cerc.sensorNr}s(${v.config.rSenzorY}m)</div>
