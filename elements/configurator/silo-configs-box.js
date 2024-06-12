@@ -229,10 +229,10 @@ class SiloConfigsBox extends LitElement {
     }
 
     delete(path, event) {
-        event?.stopPropagation();
+        event?.stopPropagation();/*we are sending same event that we got from paper-dialog*/
 
         let config = this.siloConfigs.find(v => v._path === path);
-            CBNUtils.fireEvent(this, "delete-click", config);
+        CBNUtils.fireEvent(this, "delete-click", config);
     }
 }
 

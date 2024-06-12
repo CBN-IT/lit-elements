@@ -25,7 +25,6 @@
       "type": "select",
       "name": "type",
       "dbType": "string",
-      "dbCollection": "locations",
       "options": [
         {
           "value": "steelSilo",
