@@ -40,3 +40,4 @@ import './link.js';
 import './clipboard.js';
 import './hardhat.js';
 import './database.js';
+import './change.js';
