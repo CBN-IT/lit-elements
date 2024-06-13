@@ -73,7 +73,7 @@ export class WarehouseConfigurator extends LitElement {
             svg {
                 pointer-events: none;
             }
-            
+
             .svgContainer:hover>svg{
                 position: fixed;
                 z-index: 10000;
