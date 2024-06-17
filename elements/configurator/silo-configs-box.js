@@ -68,7 +68,7 @@ class SiloConfigsBox extends LitElement {
     _getTemplateSiloConfig(v) {
         return html`
             <silo-config .siloConfig="${v}">
-                <paper-button slot="button" icon="edit" class="blue" smallest margin-left-right  @click="${(event) => this.edit(v._path, event)}"></paper-button>
+                <paper-button slot="button" icon="edit" class="blue" smallest margin-left-right  @click="${(event) => this.edit(v, event)}"></paper-button>
                 <paper-button slot="button" icon="delete" class="red" smallest margin-left-right  @click="${(event) => this.delete(v._path, event)}"></paper-button>
             </silo-config>
         `;
@@ -93,10 +93,9 @@ class SiloConfigsBox extends LitElement {
         this.siloConfiguratorDialog.open();
     }
 
-    edit(path, event) {
+    edit(config, event) {
         event?.stopPropagation();
 
-        let config = this.siloConfigs.find(v => v._path === path);
         let sc = this._configuratorRef.value
 
         for (let key of Object.keys(config.config)) {
