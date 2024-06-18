@@ -103,7 +103,9 @@ class SiloConfigsBox extends LitElement {
                 delete config.config[key]
             }
         }
+        let _path = config._path;
         this.modelEdit = JSON.parse(JSON.stringify(config));
+        this.modelEdit._path = _path;
         this.siloConfiguratorDialog.open();
     }
 
