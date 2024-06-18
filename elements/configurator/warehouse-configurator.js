@@ -89,8 +89,12 @@ export class WarehouseConfigurator extends LitElement {
             .svgCheckbox:checked {
                 top: 0;
                 left: 0;
+                width: 100vw;
+                height: 100vh;
                 position: fixed;
                 z-index: 1000;
+                display: inline-block;
+                opacity: 0;
             }
 
             .svgCheckbox:checked + .svgContainer > svg {
