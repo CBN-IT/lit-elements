@@ -71,13 +71,8 @@ export class SiloConfigurator extends LitElement {
 
 
             .svgCheckbox {
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                display: inline-block;
+                display: none;
                 position: absolute;
-                width: 100%;
-                height: 100%;
                 cursor: pointer;
             }
 
