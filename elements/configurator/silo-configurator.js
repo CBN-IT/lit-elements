@@ -70,7 +70,7 @@ export class SiloConfigurator extends LitElement {
             }
 
 
-            .svgImage {
+            .svgCheckbox {
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
@@ -93,21 +93,21 @@ export class SiloConfigurator extends LitElement {
                 pointer-events: none;
             }
 
-            .svgImage:checked {
+            .svgCheckbox:checked {
                 top: 0;
                 left: 0;
                 position: fixed;
                 z-index: 1000;
             }
 
-            .svgImage:checked + .svgContainer > svg {
+            .svgCheckbox:checked + .svgContainer > svg {
                 position: fixed;
                 z-index: 10000;
                 background-color: rgb(255 255 255 / 58%);
             }
 
             @media (orientation: landscape) {
-                .svgImage:checked + .svgContainer > svg {
+                .svgCheckbox:checked + .svgContainer > svg {
                     top: 0;
                     bottom: 0;
                     left: 0;
@@ -115,13 +115,13 @@ export class SiloConfigurator extends LitElement {
                     height: 100%;
                 }
 
-                .svgImage:checked + .svgContainer > svg:last-child {
+                .svgCheckbox:checked + .svgContainer > svg:last-child {
                     left: 50%;
                 }
             }
 
             @media (orientation: portrait) {
-                .svgImage:checked + .svgContainer > svg {
+                .svgCheckbox:checked + .svgContainer > svg {
                     top: 0;
                     left: 0;
                     right: 0;
@@ -129,7 +129,7 @@ export class SiloConfigurator extends LitElement {
                     height: 50%;
                 }
 
-                .svgImage:checked + .svgContainer > svg:last-child {
+                .svgCheckbox:checked + .svgContainer > svg:last-child {
                     top: 50%;
                 }
             }
@@ -208,7 +208,7 @@ export class SiloConfigurator extends LitElement {
                         @value-changed="${this.valueChanged}"
                 ></iron-form>
                 <label class="checkBox-label" @click="${(event)=>event.stopPropagation()}">
-                    <input type="checkbox" class="svgImage">
+                    <input type="checkbox" class="svgCheckbox">
                     <div class="svgContainer" @click="${(event)=>event.stopPropagation()}">
                         ${svgSiloz ? svgSiloz : ""}
                         ${svgSectiune ? svgSectiune : ""}
