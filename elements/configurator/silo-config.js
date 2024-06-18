@@ -25,50 +25,77 @@ class SiloConfig extends LitElement {
         // language=CSS
         return css`
 
-            .svgContainer{
+            .checkBox-label {
+                position: relative;
+                box-sizing: border-box;
+            }
+
+
+            .svgImage {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                display: inline-block;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+            .svgContainer {
                 overflow: visible;
                 width: 200px;
                 height: 100px;
-                display:flex;
+                display: flex;
             }
 
             svg {
                 pointer-events: none;
             }
-            .svgContainer:hover>svg{
+
+            .svgImage:checked {
+                top: 0;
+                left: 0;
+                position: fixed;
+                z-index: 1000;
+            }
+
+            .svgImage:checked + .svgContainer > svg {
                 position: fixed;
                 z-index: 10000;
                 background-color: rgb(255 255 255 / 58%);
             }
 
             @media (orientation: landscape) {
-                .svgContainer:hover>svg{
-                    top:0;
-                    bottom:0;
-                    left:0;
+                .svgImage:checked + .svgContainer > svg {
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
                     width: 50%;
                     height: 100%;
                 }
-                .svgContainer:hover>svg:last-child{
-                    left:50%;
+
+                .svgImage:checked + .svgContainer > svg:last-child {
+                    left: 50%;
                 }
             }
 
             @media (orientation: portrait) {
-                .svgContainer:hover>svg{
-                    top:0;
-                    left:0;
-                    right:0;
+                .svgImage:checked + .svgContainer > svg {
+                    top: 0;
+                    left: 0;
+                    right: 0;
                     width: 100%;
                     height: 50%;
                 }
-                .svgContainer:hover>svg:last-child{
-                    top:50%;
+
+                .svgImage:checked + .svgContainer > svg:last-child {
+                    top: 50%;
                 }
             }
 
-            .siloConfig{
-                border:1px solid grey;
+            .siloConfig {
+                border: 1px solid grey;
                 cursor: pointer;
             }
         `;
@@ -76,17 +103,20 @@ class SiloConfig extends LitElement {
 
     constructor() {
         super();
-        this.siloConfig = {config:{}}
+        this.siloConfig = {config: {}}
     }
 
     render() {
         let v = this.siloConfig
         return html`
             <div class="horizontal layout siloConfig" @click="${this._click}">
-                <div class="svgContainer" @click="${(event)=>event.stopPropagation()}">
-                    ${v.svgSiloz ? unsafeSVG(v.svgSiloz) : ""}
-                    ${v.svgSectiune ? unsafeSVG(v.svgSectiune) : ""}
-                </div>
+                <label class="checkBox-label" @click="${(event) => event.stopPropagation()}">
+                    <input type="checkbox" class="svgImage">
+                    <div class="svgContainer" @click="${(event) => event.stopPropagation()}">
+                        ${v.svgSiloz ? unsafeSVG(v.svgSiloz) : ""}
+                        ${v.svgSectiune ? unsafeSVG(v.svgSectiune) : ""}
+                    </div>
+                </label>
                 <div class="flex">
                     <div>${v.config.nrSilos}x ${v.config.siloName} ${v.config.marca ? `(${v.config.marca})` : ""}</div>
                     ${v.config.type !== "warehouse" && v.config.defineSilo !== false ? html`

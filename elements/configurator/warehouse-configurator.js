@@ -62,6 +62,23 @@ export class WarehouseConfigurator extends LitElement {
                 display: none !important;
             }
 
+            .checkBox-label {
+                position: relative;
+                box-sizing: border-box;
+            }
+
+
+            .svgImage {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                display: inline-block;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
 
             .svgContainer{
                 overflow: visible;
@@ -74,35 +91,44 @@ export class WarehouseConfigurator extends LitElement {
                 pointer-events: none;
             }
 
-            .svgContainer:hover>svg{
+            .svgImage:checked {
+                top: 0;
+                left: 0;
+                position: fixed;
+                z-index: 1000;
+            }
+
+            .svgImage:checked + .svgContainer > svg {
                 position: fixed;
                 z-index: 10000;
                 background-color: rgb(255 255 255 / 58%);
             }
 
             @media (orientation: landscape) {
-                .svgContainer:hover>svg{
-                    top:0;
-                    bottom:0;
-                    left:0;
+                .svgImage:checked + .svgContainer > svg {
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
                     width: 50%;
                     height: 100%;
                 }
-                .svgContainer:hover>svg:last-child{
-                    left:50%;
+
+                .svgImage:checked + .svgContainer > svg:last-child {
+                    left: 50%;
                 }
             }
 
             @media (orientation: portrait) {
-                .svgContainer:hover>svg{
-                    top:0;
-                    left:0;
-                    right:0;
+                .svgImage:checked + .svgContainer > svg {
+                    top: 0;
+                    left: 0;
+                    right: 0;
                     width: 100%;
                     height: 50%;
                 }
-                .svgContainer:hover>svg:last-child{
-                    top:50%;
+
+                .svgImage:checked + .svgContainer > svg:last-child {
+                    top: 50%;
                 }
             }
         `;
@@ -177,10 +203,13 @@ export class WarehouseConfigurator extends LitElement {
                         .noSubmitButton="${true}"
                         @value-changed="${this.valueChanged}"
                 ></iron-form>
-                <div class="svgContainer">
-                    ${svgSiloz}
-                    ${svgSectiune}
-                </div>
+                <label class="checkBox-label" @click="${(event)=>event.stopPropagation()}">
+                    <input type="checkbox" class="svgImage">
+                    <div class="svgContainer" @click="${(event)=>event.stopPropagation()}">
+                        ${svgSiloz ? svgSiloz : ""}
+                        ${svgSectiune ? svgSectiune : ""}
+                    </div>
+                </label>
 
                 <div style="">
                     Monitored volume:
