@@ -15,7 +15,7 @@ class PaperTabs extends LitElement {
         return {
             pages: {type: Array},
             selectedTab: {type: Number},
-            wrap: {type: String}
+            wrap: {type: Boolean}
         };
     }
 
@@ -57,7 +57,7 @@ class PaperTabs extends LitElement {
         super();
         this.pages = [];
         this.selectedTab = 0;
-        this.wrap = ""
+        this.wrap = false
 
     }
 
