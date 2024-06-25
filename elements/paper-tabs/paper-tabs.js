@@ -14,7 +14,8 @@ class PaperTabs extends LitElement {
     static get properties() {
         return {
             pages: {type: Array},
-            selectedTab: {type: Number}
+            selectedTab: {type: Number},
+            wrap: {type: Boolean}
         };
     }
 
@@ -45,6 +46,10 @@ class PaperTabs extends LitElement {
                 background-color: var(--selected-menu-color, #1ac6b4);
                 border-bottom: 3px solid var(--app-primary-color, black);
             }
+            
+            .wrap{
+                flex-wrap: wrap;
+            }
         `
     }
 
@@ -52,6 +57,8 @@ class PaperTabs extends LitElement {
         super();
         this.pages = [];
         this.selectedTab = 0;
+        this.wrap = false
+
     }
 
 
@@ -64,7 +71,7 @@ class PaperTabs extends LitElement {
                             <div class="flex paper-tab vertical layout center center-justified">${page}</div>`
                 )}
             </iron-selector>
-            <iron-selector .selected="${this.selectedTab}" class="flex vertical layout" isPages>
+            <iron-selector .selected="${this.selectedTab}" class="flex vertical layout ${this.wrap? wrap:''}" isPages>
                 <slot></slot>
             </iron-selector>
         `;
