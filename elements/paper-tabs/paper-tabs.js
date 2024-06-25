@@ -64,7 +64,7 @@ class PaperTabs extends LitElement {
 
     render() {
         return html`
-            <iron-selector .selected="${this.selectedTab}" slot="menu-buttons" class="horizontal layout ${this.wrap}" @iron-select="${this._onPageSelect.bind(this)}">
+            <iron-selector .selected="${this.selectedTab}" slot="menu-buttons" class="horizontal layout ${this.wrap? "wrap":""}" @iron-select="${this._onPageSelect.bind(this)}">
                 ${repeat(this.pages,
                         page => page,
                         page => html`
