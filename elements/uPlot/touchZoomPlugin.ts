@@ -42,16 +42,48 @@ function storePos(t:Position, e:TouchEvent, rect:DOMRect) {
         t.d = Math.sqrt(t.dx * t.dx + t.dy * t.dy);
     }
 }
+function clamp(nRange: number, nMin: number, nMax: number, fRange:number, fMin:number, fMax:number) {
+    if (nRange > fRange) {
+        nMin = fMin;
+        nMax = fMax;
+    } else if (nMin < fMin) {
+        nMin = fMin;
+        nMax = fMin + nRange;
+    } else if (nMax > fMax) {
+        nMax = fMax;
+        nMin = fMax - nRange;
+    }
+
+    return [nMin, nMax];
+}
 
 /**
  * Plugin for uPlot for zooming in and out with touch
  */
 export function touchZoomPlugin({xZoom = false, yZoom = false}):uPlot.Plugin {
+    let xMin: number;
+    let xMax: number;
+    let yMin: number;
+    let yMax: number;
+    let xRange: number;
+    let yRange: number;
+    let rect: DOMRect;
+
     return {
         hooks: {
+            setData: (u) => {
+                xMin = u.data[0][0];
+                xMax = u.data[0][u.data[0].length - 1];
+                yMin = u.scales.y.min;
+                yMax = u.scales.y.max;
+
+                xRange = xMax - xMin;
+                yRange = yMax - yMin;
+                let plot = u.over;
+                rect = plot.getBoundingClientRect();
+            },
             init:(u)=>{
                 let over = u.over;
-                let rect: DOMRect;
                 let oxRange: number;
                 let oyRange: number;
                 let xVal: number;
@@ -83,10 +115,12 @@ export function touchZoomPlugin({xZoom = false, yZoom = false}):uPlot.Plugin {
                     let nxRange = oxRange * xFactor;
                     let nxMin = xVal - leftPct * nxRange;
                     let nxMax = nxMin + nxRange;
+                    [nxMin, nxMax] = clamp(nxRange, nxMin, nxMax, xRange, xMin, xMax);
 
                     let nyRange = oyRange * yFactor;
                     let nyMin = yVal - btmPct * nyRange;
                     let nyMax = nyMin + nyRange;
+                    [nyMin, nyMax] = clamp(nyRange, nyMin, nyMax, yRange, yMin, yMax);
 
                     u.batch(() => {
                         if (xZoom) {
@@ -104,8 +138,8 @@ export function touchZoomPlugin({xZoom = false, yZoom = false}):uPlot.Plugin {
                     });
                 }
 
-                function touchmove(e:TouchEvent) {
-                    storePos(to, e, rect);
+                function touchmove(event:TouchEvent) {
+                    storePos(to, event, rect);
 
                     if (!rafPending) {
                         rafPending = true;
@@ -113,10 +147,11 @@ export function touchZoomPlugin({xZoom = false, yZoom = false}):uPlot.Plugin {
                     }
                 }
 
-                over.addEventListener("touchstart",  (e:TouchEvent)=> {
+                over.addEventListener("touchstart",  (event:TouchEvent)=> {
+                    event.preventDefault();/*to prevent zoom and movement*/
                     rect = over.getBoundingClientRect();
 
-                    storePos(fr, e, rect);
+                    storePos(fr, event, rect);
 
                     oxRange = u.scales.x.max - u.scales.x.min;
                     oyRange = u.scales.y.max - u.scales.y.min;
@@ -130,7 +165,7 @@ export function touchZoomPlugin({xZoom = false, yZoom = false}):uPlot.Plugin {
                     document.addEventListener("touchmove", touchmove, {passive: true});
                 });
 
-                over.addEventListener("touchend", (e)=> {
+                over.addEventListener("touchend", (event)=> {
                     document.removeEventListener("touchmove", touchmove);
                 });
             }
