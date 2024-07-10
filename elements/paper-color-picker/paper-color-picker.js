@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit'
 import "../iron-icons/icons/editor/format_color_fill";
 import "../paper-dialog/paper-dialog"
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 let colors = [
     '#ffebee', '#ffcdd2', '#ef9a9a', '#e57373', '#ef5350', '#f44336',
@@ -41,6 +42,7 @@ export class PaperColorPicker extends LitElement {
         return {
             size: {type: String},
             value: {type: String},
+            name: {type: String},
         }
     }
 
@@ -49,6 +51,7 @@ export class PaperColorPicker extends LitElement {
         super();
         this.size = "35"
         this.value ="black"
+        this.value =""
     }
 
     static get styles() {
@@ -80,7 +83,7 @@ export class PaperColorPicker extends LitElement {
             <paper-dialog class="dialog" .noActions="${true}">
                 <div slot="body" style="display: flex; flex-direction: column; flex-wrap: wrap; height: 200px">
                     ${colors.map( v=> html `
-                    <span class="color" .value="${v}" style="width: 20px; height: 20px; background-color: ${v}; cursor: pointer;" @click="${(e) => this.pickColor(e)}"></span>`)}
+                        <span class="color" .value="${v}" style="width: 20px; height: 20px; background-color: ${v}; cursor: pointer;" @click="${this.pickColor}"></span>`)}
                 </div>
             </paper-dialog>
         `
@@ -98,7 +101,13 @@ export class PaperColorPicker extends LitElement {
     pickColor(e){
         let color = e.currentTarget.value
         this.colorPalette.close()
-        this.value = color
+        this.value = color;
+        CBNUtils.fireEvent(this, 'value-changed', {
+            name: this.name,
+            value: this.value,
+            isValid: true,
+            fromUser: true
+        });
     }
 }
 
