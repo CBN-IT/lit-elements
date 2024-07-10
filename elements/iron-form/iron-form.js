@@ -374,8 +374,7 @@ export class IronForm extends LitElement {
 
     _onValueChanged(event) {
         event.detail.form = this;
-        let name = event.detail.name;
-        let value = event.detail.value;
+        let {name, value, fromUser, isValid} = event.detail.name;
         if (name.match(/^([^.]+)\.([0-9]+)$/)) {
             let newValue;
             let [n, idx] = name.split(".");
@@ -425,7 +424,15 @@ export class IronForm extends LitElement {
                     }
                 }
             });
-        })
+        });
+        let otherInputs = [...this.renderRoot.querySelectorAll('[name="' + name + '"]')];
+        if (otherInputs.length > 1 && fromUser && isValid) {
+            otherInputs
+                .filter(input => input !== event.target)
+                .forEach(input => {
+                    input.value = value;
+                })
+        }
     }
 
     getInput(name) {
