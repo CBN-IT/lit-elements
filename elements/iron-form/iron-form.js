@@ -374,7 +374,7 @@ export class IronForm extends LitElement {
 
     _onValueChanged(event) {
         event.detail.form = this;
-        let {name, value, fromUser, isValid} = event.detail.name;
+        let {name, value, fromUser, isValid} = event.detail;
         if (name.match(/^([^.]+)\.([0-9]+)$/)) {
             let newValue;
             let [n, idx] = name.split(".");
