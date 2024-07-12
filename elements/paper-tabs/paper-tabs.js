@@ -50,12 +50,6 @@ class PaperTabs extends LitElement {
             .wrap{
                 flex-wrap: wrap;
             }
-
-            @media (max-width: 550px) {
-                :host {
-                    flex-direction: column-reverse;
-                }
-            }
         `
     }
 
