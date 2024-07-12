@@ -16,7 +16,6 @@ class PaperTabs extends LitElement {
             pages: {type: Array},
             selectedTab: {type: Number},
             wrap: {type: Boolean},
-            onMobile: {type: Boolean}
         };
     }
 
@@ -51,6 +50,12 @@ class PaperTabs extends LitElement {
             .wrap{
                 flex-wrap: wrap;
             }
+
+            @media (max-width: 550px) {
+                :host {
+                    flex-direction: column-reverse;
+                }
+            }
         `
     }
 
@@ -59,16 +64,13 @@ class PaperTabs extends LitElement {
         this.pages = [];
         this.selectedTab = 0;
         this.wrap = false;
-        this.onMobile = false;
-
-
     }
 
 
     render() {
 
         return html`
-            <iron-selector .selected="${this.selectedTab}" slot="menu-buttons" class="horizontal layout ${this.wrap? "wrap":""}" style="order:${ this.onMobile? 1:""}" @iron-select="${this._onPageSelect.bind(this)}">
+            <iron-selector .selected="${this.selectedTab}" slot="menu-buttons" class="horizontal layout ${this.wrap? "wrap":""}" @iron-select="${this._onPageSelect.bind(this)}">
                 ${repeat(this.pages,
             page => page,
             page => html`
