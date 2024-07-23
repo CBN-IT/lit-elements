@@ -1,23 +1,16 @@
 "use strict";
 import {LitElement, html} from 'lit'
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 class IronSelector extends LitElement {
 
     static get properties() {
         return {
-            attrForSelected: {
-                type: String
-            },
-            selected: {
-                type: String
-            },
-            isPages: {
-                type: Boolean
-            },
-            items: {
-                type: Array
-            }
+            attrForSelected: {type: String},
+            selected: {type: String},
+            isPages: {type: Boolean},
+            items: {type: Array}
         };
     }
 
@@ -30,7 +23,7 @@ class IronSelector extends LitElement {
 
     render() {
         return html`
-            <slot @slotchange="${this.changedItems}"></slot> 
+            <slot @slotchange="${this.changedItems}"></slot>
         `;
     }
 
@@ -93,8 +86,10 @@ class IronSelector extends LitElement {
         if (selected === undefined || !this.items || this.items.length === 0) {
             return;
         }
+        let isAnythingSelected = false;
         this.items.forEach((item, index) => {
-            if (this.attrForSelected ? item.getAttribute('name') === selected : index === selected) {
+            if (this.attrForSelected ? item.getAttribute(this.attrForSelected) === selected : index === selected) {
+                isAnythingSelected=true;
                 if (this.isPages) {
                     item.style.display = 'flex';
                 } else {
@@ -108,6 +103,9 @@ class IronSelector extends LitElement {
                 }
             }
         });
+        if(!isAnythingSelected){
+            CBNUtils.fireEvent(this, 'iron-select-not-found', {selected: this.selected});
+        }
         if (!preventEvent) {
             CBNUtils.fireEvent(this, 'iron-select', {selected: this.selected});
         }
