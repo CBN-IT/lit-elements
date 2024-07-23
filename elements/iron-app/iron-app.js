@@ -291,6 +291,14 @@ export class IronApp extends LitElement {
         return [];
     }
 
+
+    get home() {
+        return "";
+    }
+    get fallbackPage() {
+        return this.home;
+    }
+
     constructor() {
         super();
         window.historyRouter = new HistoryRouter({
@@ -343,7 +351,14 @@ export class IronApp extends LitElement {
                         <slot name="toolbar"></slot>
                     </div>
                     <div class="flex vertical layout right-side-bottom">
-                        <iron-selector class="flex vertical layout" attrForSelected="name" .selected="${this.page}" slot="pages" isPages>
+                        <iron-selector
+                                class="flex vertical layout"
+                                attrForSelected="name"
+                                .selected="${this.page}"
+                                slot="pages"
+                                isPages
+                                @iron-select-not-found="${()=> historyRouter.showPage(this.fallbackPage || this.home)}"
+                        >
                             ${this.views}
                         </iron-selector>
                     </div>
