@@ -68,7 +68,8 @@ class SiloConfigsBox extends LitElement {
     _getTemplateSiloConfig(v) {
         return html`
             <silo-config .siloConfig="${v}">
-                <paper-button slot="button" icon="edit" class="blue" smallest margin-left-right  @click="${(event) => this.edit(v, event)}"></paper-button>
+                <paper-button slot="button" icon="edit" class="blue" smallest margin-left-right  @click="${(event) => this.editOrCopy(v, event, "editEvent")}"></paper-button>
+                <paper-button slot="button" icon="content-copy" class="green" smallest margin-left-right  @click="${(event) => this.editOrCopy(v, event, "copyEvent")}"></paper-button>
                 <paper-button slot="button" icon="delete" class="red" smallest margin-left-right  @click="${(event) => this.delete(v._path, event)}"></paper-button>
             </silo-config>
         `;
@@ -93,7 +94,7 @@ class SiloConfigsBox extends LitElement {
         this.siloConfiguratorDialog.open();
     }
 
-    edit(config, event) {
+    editOrCopy(config, event, configEvent) {
         event?.stopPropagation();
 
         let sc = this._configuratorRef.value
@@ -105,7 +106,12 @@ class SiloConfigsBox extends LitElement {
         }
         let _path = config._path;
         this.modelEdit = JSON.parse(JSON.stringify(config));
-        this.modelEdit._path = _path;
+        if(configEvent === "editEvent"){
+            this.modelEdit._path = _path;
+        } else if(configEvent === "copyEvent"){
+            delete this.modelEdit._path
+            delete this.modelEdit._id
+        }
         this.siloConfiguratorDialog.open();
     }
 
