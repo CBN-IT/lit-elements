@@ -42,6 +42,7 @@ export class PaperSignaturePad extends LitElement {
 
             paper-dialog {
                 --min-dialog-width: calc(100% - 60px);
+                --min-dialog-height: calc(100% - 60px);
             }
 
 
@@ -136,9 +137,7 @@ export class PaperSignaturePad extends LitElement {
 
     resizeCanvas() {
         this.canvas.width = this.container.offsetWidth - 20;
-        let height = this.canvas.width - this.buttonContainer.offsetHeight;
-        this.canvas.height = this.canvas.width <= 350 ? height : this.canvas.width * (2 / 5) - this.buttonContainer.offsetHeight;
-        this.signaturePad.clear();
+        this.canvas.height = this.container.offsetHeight- this.buttonContainer.offsetHeight;
     }
 }
 
