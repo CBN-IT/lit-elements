@@ -2,10 +2,11 @@
 import {LitElement, html, css} from 'lit'
 import "../../elements/paper-signature-pad/paper-signature-pad"
 import {defineCustomTag} from "../../elements/cbn-utils/defineCustomTag";
+import "../../elements/paper-button/paper-button"
 class DemoPaperSignaturePad extends LitElement {
 constructor() {
     super();
-this.size = "24"
+this.size = "35"
 }
     static get styles(){
         return css`

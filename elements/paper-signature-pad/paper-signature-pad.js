@@ -17,16 +17,14 @@ export class PaperSignaturePad extends LitElement {
             value: {type: String},
             name: {type: String},
             signatureImg: {type: String},
-            signatureButtonSize: {type: Number}
         }
     }
 
 
     constructor() {
         super();
-        this.size = 24
+        this.size = "35"
         this.signatureImg = ""
-        this.signatureButtonSize = 35
     }
 
     static get styles() {
@@ -84,7 +82,7 @@ export class PaperSignaturePad extends LitElement {
             <div class="container vertical layout">
                 <slot name="signatureButton" @click="${this.openSignatureDialog}">
                     <paper-button
-                            .iconSize="${this.signatureButtonSize}"
+                            .iconSize="${this.size}"
                             icon="gesture"
                             class="bgBlue"
                             small
@@ -97,8 +95,8 @@ export class PaperSignaturePad extends LitElement {
                 <div slot="body" class="canvas-container">
                     <canvas></canvas>
                     <div class="buttons">
-                        <paper-button class="bgRed" .iconSize="${this.size}" icon="clear" @click="${this.clearPad}">Clear</paper-button>
-                        <paper-button class="bgGreen" .iconSize="${this.size}" icon="check" @click="${this.saveSignature}">Save</paper-button>
+                        <paper-button class="bgRed" icon="clear" @click="${this.clearPad}">Clear</paper-button>
+                        <paper-button class="bgGreen" icon="check" @click="${this.saveSignature}">Save</paper-button>
                     </div>
                 </div>
             </paper-dialog>
@@ -135,6 +133,9 @@ export class PaperSignaturePad extends LitElement {
         if (!this.signaturePad.isEmpty()) {
             this.signatureImg = this.signaturePad.toDataURL();
             this.signatureDialog.close()
+            CBNUtils.fireEvent(this, 'savedSignature', {
+                signature: this.signatureImg
+            })
         } else {
             CBNUtils.displayMessage("Please sign", "error", 10)
         }
@@ -143,7 +144,7 @@ export class PaperSignaturePad extends LitElement {
 
     resizeCanvas() {
         this.canvas.width = this.container.offsetWidth - 20
-        this.canvas.height = this.container.offsetHeight -this.buttonContainer.offsetHeight
+        this.canvas.height = this.container.offsetHeight - this.buttonContainer.offsetHeight
     }
 }
 
