@@ -40,15 +40,27 @@ export class PaperSignaturePad extends LitElement {
                 height: 100%;
             }
 
+            paper-dialog {
+                --min-dialog-width: calc(100% - 60px);
+            }
+
+
             .container {
+                min-width: 100%;
+                min-height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-sizing: border-box;
+            }
+
+            .canvas-container {
                 min-width: 100%;
                 min-height: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                padding: 0 10px;
-                box-sizing: border-box;
             }
 
             .buttons {
@@ -95,12 +107,13 @@ export class PaperSignaturePad extends LitElement {
             penColor: "black"
         });
 
-        this.resizeCanvas()
+
     }
 
     openSignatureDialog() {
         this.signaturePad.clear();
         this.signatureDialog.open()
+        this.resizeCanvas()
     }
 
     clearPad() {
@@ -118,11 +131,12 @@ export class PaperSignaturePad extends LitElement {
 
 
     resizeCanvas() {
-        this.canvas.width = this.container.offsetWidth - 20;
-        if (this.buttonContainer) {
-            this.canvas.height = this.canvas.width * (3 / 5) - this.buttonContainer.offsetHeight;
+        if (this.buttonContainer && this.container) {
+            this.canvas.width = this.container.offsetWidth - 20;
+            let height = this.canvas.width  - this.buttonContainer.offsetHeight;
+            this.canvas.height = this.canvas.width <=350 ? height : this.canvas.width * (2 / 5) - this.buttonContainer.offsetHeight;
         }
-
+        this.canvas.style.border = '1px solid rgba(0, 0, 0, 0.25)'
         this.signaturePad.clear();
     }
 }
