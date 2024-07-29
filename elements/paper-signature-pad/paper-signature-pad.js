@@ -68,6 +68,10 @@ export class PaperSignaturePad extends LitElement {
                 display: flex;
                 justify-content: space-between;
             }
+
+            canvas {
+                border: 1px solid rgba(0, 0, 0, 0.25);
+            }
         `
     }
 
@@ -131,12 +135,9 @@ export class PaperSignaturePad extends LitElement {
 
 
     resizeCanvas() {
-        if (this.buttonContainer && this.container) {
-            this.canvas.width = this.container.offsetWidth - 20;
-            let height = this.canvas.width  - this.buttonContainer.offsetHeight;
-            this.canvas.height = this.canvas.width <=350 ? height : this.canvas.width * (2 / 5) - this.buttonContainer.offsetHeight;
-        }
-        this.canvas.style.border = '1px solid rgba(0, 0, 0, 0.25)'
+        this.canvas.width = this.container.offsetWidth - 20;
+        let height = this.canvas.width - this.buttonContainer.offsetHeight;
+        this.canvas.height = this.canvas.width <= 350 ? height : this.canvas.width * (2 / 5) - this.buttonContainer.offsetHeight;
         this.signaturePad.clear();
     }
 }
