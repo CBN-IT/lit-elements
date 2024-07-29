@@ -16,15 +16,17 @@ export class PaperSignaturePad extends LitElement {
             size: {type: String},
             value: {type: String},
             name: {type: String},
-            signatureImg: {type: String}
+            signatureImg: {type: String},
+            signatureButtonSize: {type: Number}
         }
     }
 
 
     constructor() {
         super();
-        this.size = "24"
+        this.size = 24
         this.signatureImg = ""
+        this.signatureButtonSize = 35
     }
 
     static get styles() {
@@ -72,8 +74,6 @@ export class PaperSignaturePad extends LitElement {
 
             canvas {
                 border: 1px solid rgba(0, 0, 0, 0.25);
-                width: 100%;
-                height: 100%;
             }
         `
     }
@@ -82,14 +82,18 @@ export class PaperSignaturePad extends LitElement {
     render() {
         return html`
             <div class="container vertical layout">
-                <paper-button
-                        icon="gesture"
-                        class="bgBlue"
-                        @click="${this.openSignatureDialog}">
-                    Signature
-                </paper-button>
+                <slot name="signatureButton" @click="${this.openSignatureDialog}">
+                    <paper-button
+                            .iconSize="${this.signatureButtonSize}"
+                            icon="gesture"
+                            class="bgBlue"
+                            small
+                            style="width: fit-content; height: fit-content;">
+                    </paper-button>
+                </slot>
             </div>
             <paper-dialog id="signatureDialog" noActions>
+                <div slot="header">Semnează aici.</div>
                 <div slot="body" class="canvas-container">
                     <canvas></canvas>
                     <div class="buttons">
@@ -106,6 +110,7 @@ export class PaperSignaturePad extends LitElement {
         super.firstUpdated(changedProperties);
         this.canvas = this.shadowRoot.querySelector('canvas');
         this.container = this.shadowRoot.querySelector('.canvas-container');
+        this.buttonContainer = this.shadowRoot.querySelector('.buttons');
         this.signatureDialog = this.shadowRoot.querySelector('#signatureDialog');
         this.signaturePad = new SignaturePad(this.canvas, {
             minWidth: 1,
@@ -138,6 +143,7 @@ export class PaperSignaturePad extends LitElement {
 
     resizeCanvas() {
         this.canvas.width = this.container.offsetWidth - 20
+        this.canvas.height = this.container.offsetHeight -this.buttonContainer.offsetHeight
     }
 }
 
