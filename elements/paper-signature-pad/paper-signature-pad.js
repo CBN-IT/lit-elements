@@ -2,8 +2,12 @@ import {LitElement, html, css} from 'lit'
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 import SignaturePad from "signature_pad";
 import '../paper-button/paper-button';
-import "../iron-icons/icons/icons/clear"
-import "../iron-icons/icons/icons/check"
+import '../paper-dialog/paper-dialog';
+import "../iron-icons/icons/icons/clear";
+import "../iron-icons/icons/icons/check";
+import "../iron-icons/icons/icons/gesture";
+import {CBNUtils} from "../cbn-utils/CbnUtils";
+
 export class PaperSignaturePad extends LitElement {
 
     static get properties() {
@@ -11,7 +15,7 @@ export class PaperSignaturePad extends LitElement {
             size: {type: String},
             value: {type: String},
             name: {type: String},
-            signatureImg:{type: String}
+            signatureImg: {type: String}
         }
     }
 
@@ -23,7 +27,7 @@ export class PaperSignaturePad extends LitElement {
     }
 
     static get styles() {
-        return [ this.styleElement];
+        return [this.styleElement];
     }
 
     static get styleElement() {
@@ -36,15 +40,14 @@ export class PaperSignaturePad extends LitElement {
             }
 
             .container {
-                width: fit-content;
-                height: fit-content;
+                min-width: 100%;
+                min-height: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                padding: 5px 10px;
-                background-color: #ebebeb;
-                box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+                padding: 0 10px;
+                box-sizing: border-box;
             }
 
             .buttons {
@@ -52,7 +55,6 @@ export class PaperSignaturePad extends LitElement {
                 display: flex;
                 justify-content: space-between;
             }
-
         `
     }
 
@@ -60,37 +62,68 @@ export class PaperSignaturePad extends LitElement {
     render() {
         return html`
             <div class="container vertical layout">
-                <canvas></canvas>
-                <div class="buttons">
-                    <paper-button class="bgRed" .iconSize="${this.size}" icon="clear" @click="${this.clearPad}">Clear</paper-button>
-                    <paper-button class="bgGreen" .iconSize="${this.size}" icon="check" @click="${this.saveSignature}">Save</paper-button>
-                </div>
-                
+                <paper-button
+                        icon="gesture"
+                        class="bgBlue"
+                        @click="${this.openSignatureDialog}">
+                    Signature
+                </paper-button>
             </div>
+            <paper-dialog id="signatureDialog" noActions>
+                <div slot="body" class="canvas-container">
+                    <canvas></canvas>
+                    <div class="buttons">
+                        <paper-button class="bgRed" .iconSize="${this.size}" icon="clear" @click="${this.clearPad}">Clear</paper-button>
+                        <paper-button class="bgGreen" .iconSize="${this.size}" icon="check" @click="${this.saveSignature}">Save</paper-button>
+                    </div>
+                </div>
+
+            </paper-dialog>
         `
     }
 
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
-        let canvas = this.shadowRoot.querySelector('canvas');
-         this.signaturePad = new SignaturePad(canvas, {
-             minWidth: 1,
-             maxWidth: 2,
-             penColor: "black",
-             backgroundColor: "white"
-         });
+        this.canvas = this.shadowRoot.querySelector('canvas');
+        this.container = this.shadowRoot.querySelector('.canvas-container');
+        this.signatureDialog = this.shadowRoot.querySelector('#signatureDialog');
+        this.buttonContainer = this.shadowRoot.querySelector('.buttons');
+        this.signaturePad = new SignaturePad(this.canvas, {
+            minWidth: 1,
+            maxWidth: 2,
+            penColor: "black"
+        });
+
+        this.resizeCanvas()
     }
 
-    clearPad(){
+    openSignatureDialog() {
+        this.signaturePad.clear();
+        this.signatureDialog.open()
+    }
+
+    clearPad() {
         this.signaturePad.clear()
     }
 
-    saveSignature(){
-        if(!this.signaturePad.isEmpty()){
-            this.signatureImg =  this.signaturePad.toDataURL();
+    saveSignature() {
+        if (!this.signaturePad.isEmpty()) {
+            this.signatureImg = this.signaturePad.toDataURL();
+            this.signatureDialog.close()
+        } else {
+            CBNUtils.displayMessage("Please sign.", "error", 10)
         }
     }
 
+
+    resizeCanvas() {
+        this.canvas.width = this.container.offsetWidth - 20;
+        if (this.buttonContainer) {
+            this.canvas.height = this.canvas.width * (3 / 5) - this.buttonContainer.offsetHeight;
+        }
+
+        this.signaturePad.clear();
+    }
 }
 
 defineCustomTag("paper-signature-pad", PaperSignaturePad)
