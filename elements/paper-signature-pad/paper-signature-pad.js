@@ -7,6 +7,7 @@ import "../iron-icons/icons/icons/clear";
 import "../iron-icons/icons/icons/check";
 import "../iron-icons/icons/icons/gesture";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
+import '../paper-toast/paper-toast'
 
 export class PaperSignaturePad extends LitElement {
 
@@ -77,8 +78,8 @@ export class PaperSignaturePad extends LitElement {
                         <paper-button class="bgGreen" .iconSize="${this.size}" icon="check" @click="${this.saveSignature}">Save</paper-button>
                     </div>
                 </div>
-
             </paper-dialog>
+            <paper-toast></paper-toast>
         `
     }
 
@@ -111,7 +112,7 @@ export class PaperSignaturePad extends LitElement {
             this.signatureImg = this.signaturePad.toDataURL();
             this.signatureDialog.close()
         } else {
-            CBNUtils.displayMessage("Please sign.", "error", 10)
+            CBNUtils.displayMessage("Please sign", "error", 10)
         }
     }
 
