@@ -26,7 +26,7 @@ class SiloConfigsBox extends LitElement {
         return css`
             :host{
                 --min-dialog-height: 90%;
-                --min-dialog-width: 90%;
+                --min-dialog-width: clamp(200px, 97%, 1500px);
             }
         `;
     }

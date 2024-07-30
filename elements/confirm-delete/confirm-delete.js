@@ -43,7 +43,7 @@ class ConfirmDelete extends LitElement {
         // language=CSS
         return css`
             paper-dialog {
-                --min-dialog-width: 350px;
+                --min-dialog-width: clamp(200px, 95%, 500px);
             }
         `;
     }

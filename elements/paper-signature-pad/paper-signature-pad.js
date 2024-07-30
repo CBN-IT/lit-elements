@@ -41,7 +41,7 @@ export class PaperSignaturePad extends LitElement {
             }
 
             paper-dialog {
-                --min-dialog-width: 95%;
+                --min-dialog-width: clamp(200px, 95%, 700px);
                 --min-dialog-height: 350px;
             }
 
