@@ -115,8 +115,6 @@ export class PaperSignaturePad extends LitElement {
             maxWidth: 2,
             penColor: "black"
         });
-
-
     }
 
     openSignatureDialog() {
