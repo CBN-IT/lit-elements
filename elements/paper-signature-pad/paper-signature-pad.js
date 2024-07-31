@@ -131,14 +131,73 @@ export class PaperSignaturePad extends LitElement {
 
     saveSignature() {
         if (!this.signaturePad.isEmpty()) {
-            this.signatureImg = this.signaturePad.toDataURL();
-            this.signatureDialog.close()
-            CBNUtils.fireEvent(this, 'savedSignature', {
-                signature: this.signatureImg
+            let croppedCanvas = this.cropSignatureCanvas(this.canvas)
+
+            croppedCanvas.toBlob((blob) => {
+                this.signatureImg = window.URL.createObjectURL(blob);
+                // let anchorSignature = this.getBlobUrl(blob);
+                this.signatureDialog.close();
+
+                CBNUtils.fireEvent(this, 'savedSignature', {
+                    signatureUrl: this.signatureImg,
+                    blob: blob
+                });
             })
         } else {
             CBNUtils.displayMessage("Please sign", "error", 10)
         }
+    }
+
+    // getBlobUrl(data){
+    // let url = window.URL.createObjectURL(data);
+    // let anchor = document.createElement('a');
+    //     anchor.href = url;
+    //     anchor.target = '_blank';
+    //     anchor.click();
+
+    // return url
+    // }
+
+
+    cropSignatureCanvas(canvas) {
+        // First duplicate the canvas to not alter the original
+        let croppedCanvas = document.createElement('canvas'),
+            croppedCtx = croppedCanvas.getContext('2d');
+
+        croppedCanvas.width = canvas.width;
+        croppedCanvas.height = canvas.height;
+        croppedCtx.drawImage(canvas, 0, 0);
+
+        // Next do the actual cropping
+        let w = croppedCanvas.width,
+            h = croppedCanvas.height,
+            pix = {x: [], y: []},
+            imageData = croppedCtx.getImageData(0, 0, croppedCanvas.width, croppedCanvas.height),
+            x, y, index;
+
+        for (y = 0; y < h; y++) {
+            for (x = 0; x < w; x++) {
+                index = (y * w + x) * 4;
+                if (imageData.data[index + 3] > 0) {
+                    pix.x.push(x);
+                    pix.y.push(y);
+
+                }
+            }
+        }
+        pix.x.sort((a, b) => a - b);
+        pix.y.sort((a, b) => a - b);
+        let n = pix.x.length - 1;
+
+        w = pix.x[n] - pix.x[0];
+        h = pix.y[n] - pix.y[0];
+        let cut = croppedCtx.getImageData(pix.x[0], pix.y[0], w, h);
+
+        croppedCanvas.width = w;
+        croppedCanvas.height = h;
+        croppedCtx.putImageData(cut, 0, 0);
+
+        return croppedCanvas
     }
 
 
