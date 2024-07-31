@@ -33,7 +33,7 @@ class PaperHelp extends LitElement {
             }
 
             paper-dialog {
-                --min-dialog-width: 500px;
+                --min-dialog-width: clamp(200px, 95%, 700px);
             }
 
             .full-width {
