@@ -148,6 +148,8 @@ export class PaperSignaturePad extends LitElement {
     }
 
     loadSignature(url) {
+        //await signaturePad.fromDataURL(url, { ratio: 1 })
+        //fromDataURL works the same, but we want to center the signature in the canvas
         return new Promise((resolve, reject) => {
             let image = new Image();
             image.crossOrigin = "anonymous"
