@@ -137,7 +137,6 @@ export class PaperSignaturePad extends LitElement {
                 this.signatureImg = window.URL.createObjectURL(blob);
                 // let anchorSignature = this.getBlobUrl(blob);
                 this.signatureDialog.close();
-
                 CBNUtils.fireEvent(this, 'savedSignature', {
                     signatureUrl: this.signatureImg,
                     blob: blob
@@ -149,7 +148,7 @@ export class PaperSignaturePad extends LitElement {
     }
 
     loadSignature(url) {
-        try {
+        return new Promise((resolve, reject) => {
             let image = new Image();
             image.crossOrigin = "anonymous"
             image.onload = () => {
@@ -158,12 +157,13 @@ export class PaperSignaturePad extends LitElement {
                 let y = (this.canvas.height - image.height) / ratio / 2;
                 this.signaturePad._ctx.drawImage(image, x, y, image.width / ratio, image.height / ratio);
                 this.signaturePad._isEmpty = false;
+                resolve();
+            };
+            image.onerror = (error) => {
+                reject(error);
             };
             image.src = url;
-
-        } catch (e) {
-            console.error(e)
-        }
+        });
     }
 
     cropSignatureCanvas(canvas) {
