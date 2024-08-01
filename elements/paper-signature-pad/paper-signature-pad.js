@@ -119,11 +119,10 @@ export class PaperSignaturePad extends LitElement {
 
     openSignatureDialog() {
 
-        this.signaturePad.clear();
-        this.loadSignature(this.url)
-
         this.signatureDialog.open()
         this.resizeCanvas()
+        this.signaturePad.clear();
+        CBNUtils.fireEvent(this, "openDialog", "")
     }
 
     clearPad() {
@@ -148,16 +147,6 @@ export class PaperSignaturePad extends LitElement {
             CBNUtils.displayMessage("Please sign", "error", 10)
         }
     }
-
-    // getBlobUrl(data){
-    // let url = window.URL.createObjectURL(data);
-    // let anchor = document.createElement('a');
-    //     anchor.href = url;
-    //     anchor.target = '_blank';
-    //     anchor.click();
-
-    // return url
-    // }
 
     loadSignature(url) {
         try {
@@ -222,8 +211,8 @@ export class PaperSignaturePad extends LitElement {
     resizeCanvas() {
         let ratio = Math.max(window.devicePixelRatio || 1, 1);
 
-        this.canvas.style.width = (this.container.offsetWidth - 20)+"px";
-        this.canvas.style.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight)+"px"
+        this.canvas.style.width = (this.container.offsetWidth - 20) + "px";
+        this.canvas.style.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight) + "px"
         this.canvas.width = (this.container.offsetWidth - 20) * ratio
         this.canvas.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight) * ratio
 
