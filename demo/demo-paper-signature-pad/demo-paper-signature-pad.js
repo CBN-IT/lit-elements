@@ -33,9 +33,12 @@ class DemoPaperSignaturePad extends LitElement {
             <paper-toast></paper-toast>
         `;
     }
+
     loadSignature() {
         let url = "https://storage.googleapis.com/arendas-ro.appspot.com/2024/08/01/1722501903624_semnatura.png"
-        this.renderRoot.querySelector("paper-signature-pad").loadSignature(url)
+        if (url !== "") {
+            this.renderRoot.querySelector("paper-signature-pad").loadSignature(url)
+        }
     }
 }
 
