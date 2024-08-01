@@ -25,6 +25,7 @@ this.size = "35"
     render() {
         return html`
             <paper-signature-pad size="${this.size}"></paper-signature-pad>
+            <paper-toast></paper-toast>
         `;
     }
 }

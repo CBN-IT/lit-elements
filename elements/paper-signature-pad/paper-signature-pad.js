@@ -100,7 +100,6 @@ export class PaperSignaturePad extends LitElement {
                     </div>
                 </div>
             </paper-dialog>
-            <paper-toast></paper-toast>
         `
     }
 
