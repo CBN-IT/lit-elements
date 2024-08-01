@@ -17,6 +17,7 @@ export class PaperSignaturePad extends LitElement {
             value: {type: String},
             name: {type: String},
             signatureImg: {type: String},
+            url: {type: String}
         }
     }
 
@@ -117,7 +118,10 @@ export class PaperSignaturePad extends LitElement {
     }
 
     openSignatureDialog() {
+
         this.signaturePad.clear();
+        this.loadSignature(this.url)
+
         this.signatureDialog.open()
         this.resizeCanvas()
     }
@@ -155,6 +159,23 @@ export class PaperSignaturePad extends LitElement {
     // return url
     // }
 
+    loadSignature(url) {
+        try {
+            let image = new Image();
+            image.crossOrigin = "anonymous"
+            image.onload = () => {
+                let ratio = Math.max(window.devicePixelRatio || 1, 1);
+                let x = (this.canvas.width - image.width) / ratio / 2;
+                let y = (this.canvas.height - image.height) / ratio / 2;
+                this.signaturePad._ctx.drawImage(image, x, y, image.width / ratio, image.height / ratio);
+                this.signaturePad._isEmpty = false;
+            };
+            image.src = url;
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     cropSignatureCanvas(canvas) {
         // First duplicate the canvas to not alter the original
@@ -199,8 +220,14 @@ export class PaperSignaturePad extends LitElement {
 
 
     resizeCanvas() {
-        this.canvas.width = this.container.offsetWidth - 20
-        this.canvas.height = this.container.offsetHeight - this.buttonContainer.offsetHeight
+        let ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+        this.canvas.style.width = (this.container.offsetWidth - 20)+"px";
+        this.canvas.style.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight)+"px"
+        this.canvas.width = (this.container.offsetWidth - 20) * ratio
+        this.canvas.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight) * ratio
+
+        this.canvas.getContext("2d").scale(ratio, ratio);
     }
 }
 

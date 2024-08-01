@@ -24,7 +24,9 @@ this.size = "35"
 
     render() {
         return html`
-            <paper-signature-pad size="${this.size}"></paper-signature-pad>
+            <paper-signature-pad size="${this.size}" 
+                                 url="https://storage.googleapis.com/arendas-ro.appspot.com/2024/08/01/1722501903624_semnatura.png">
+            </paper-signature-pad>
             <paper-toast></paper-toast>
         `;
     }
