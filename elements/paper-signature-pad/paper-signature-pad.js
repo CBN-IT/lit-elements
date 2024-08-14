@@ -17,6 +17,7 @@ export class PaperSignaturePad extends LitElement {
             value: {type: String},
             name: {type: String},
             signatureImg: {type: String},
+            url: {type: String}
         }
     }
 
@@ -100,7 +101,6 @@ export class PaperSignaturePad extends LitElement {
                     </div>
                 </div>
             </paper-dialog>
-            <paper-toast></paper-toast>
         `
     }
 
@@ -115,14 +115,14 @@ export class PaperSignaturePad extends LitElement {
             maxWidth: 2,
             penColor: "black"
         });
-
-
     }
 
     openSignatureDialog() {
-        this.signaturePad.clear();
+
         this.signatureDialog.open()
         this.resizeCanvas()
+        this.signaturePad.clear();
+        CBNUtils.fireEvent(this, "openDialog", "")
     }
 
     clearPad() {
@@ -131,20 +131,94 @@ export class PaperSignaturePad extends LitElement {
 
     saveSignature() {
         if (!this.signaturePad.isEmpty()) {
-            this.signatureImg = this.signaturePad.toDataURL();
-            this.signatureDialog.close()
-            CBNUtils.fireEvent(this, 'savedSignature', {
-                signature: this.signatureImg
+            let croppedCanvas = this.cropSignatureCanvas(this.canvas)
+
+            croppedCanvas.toBlob((blob) => {
+                this.signatureImg = window.URL.createObjectURL(blob);
+                // let anchorSignature = this.getBlobUrl(blob);
+                this.signatureDialog.close();
+                CBNUtils.fireEvent(this, 'savedSignature', {
+                    signatureUrl: this.signatureImg,
+                    blob: blob
+                });
             })
         } else {
             CBNUtils.displayMessage("Please sign", "error", 10)
         }
     }
 
+    loadSignature(url) {
+        //await signaturePad.fromDataURL(url, { ratio: 1 })
+        //fromDataURL works the same, but we want to center the signature in the canvas
+        return new Promise((resolve, reject) => {
+            let image = new Image();
+            image.crossOrigin = "anonymous"
+            image.onload = () => {
+                let ratio = Math.max(window.devicePixelRatio || 1, 1);
+                let x = (this.canvas.width - image.width) / ratio / 2;
+                let y = (this.canvas.height - image.height) / ratio / 2;
+                this.signaturePad._ctx.drawImage(image, x, y, image.width / ratio, image.height / ratio);
+                this.signaturePad._isEmpty = false;
+                resolve();
+            };
+            image.onerror = (error) => {
+                reject(error);
+            };
+            image.src = url;
+        });
+    }
+
+    cropSignatureCanvas(canvas) {
+        // First duplicate the canvas to not alter the original
+        let croppedCanvas = document.createElement('canvas'),
+            croppedCtx = croppedCanvas.getContext('2d');
+
+        croppedCanvas.width = canvas.width;
+        croppedCanvas.height = canvas.height;
+        croppedCtx.drawImage(canvas, 0, 0);
+
+        // Next do the actual cropping
+        let w = croppedCanvas.width,
+            h = croppedCanvas.height,
+            pix = {x: [], y: []},
+            imageData = croppedCtx.getImageData(0, 0, croppedCanvas.width, croppedCanvas.height),
+            x, y, index;
+
+        for (y = 0; y < h; y++) {
+            for (x = 0; x < w; x++) {
+                index = (y * w + x) * 4;
+                if (imageData.data[index + 3] > 0) {
+                    pix.x.push(x);
+                    pix.y.push(y);
+
+                }
+            }
+        }
+        pix.x.sort((a, b) => a - b);
+        pix.y.sort((a, b) => a - b);
+        let n = pix.x.length - 1;
+
+        w = pix.x[n] - pix.x[0];
+        h = pix.y[n] - pix.y[0];
+        let cut = croppedCtx.getImageData(pix.x[0], pix.y[0], w, h);
+
+        croppedCanvas.width = w;
+        croppedCanvas.height = h;
+        croppedCtx.putImageData(cut, 0, 0);
+
+        return croppedCanvas
+    }
+
 
     resizeCanvas() {
-        this.canvas.width = this.container.offsetWidth - 20
-        this.canvas.height = this.container.offsetHeight - this.buttonContainer.offsetHeight
+        let ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+        this.canvas.style.width = (this.container.offsetWidth - 20) + "px";
+        this.canvas.style.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight) + "px"
+        this.canvas.width = (this.container.offsetWidth - 20) * ratio
+        this.canvas.height = (this.container.offsetHeight - this.buttonContainer.offsetHeight) * ratio
+
+        this.canvas.getContext("2d").scale(ratio, ratio);
     }
 }
 
