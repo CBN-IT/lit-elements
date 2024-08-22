@@ -121,14 +121,14 @@ class PaperReportsDropdown extends PaperIconDropdown {
     }
 
     _selectedOptionByValue(report) {
-        let keys = this.table?.selectedItems||[]
+        let keys = (this.table?.selectedItems||[]).map(item => (item._path ?? item._hash));
         ReportUtils.generateReport(report, keys)
     }
 
     _getReport(event) {
         let path = event.currentTarget.path;
         let report = this._options.find(value => value._path === path);
-        let keys = this.table?.selectedItems||[]
+        let keys = (this.table?.selectedItems||[]).map(item => (item._path ?? item._hash))
         ReportUtils.generateReport(report, keys)
     }
 
