@@ -4,6 +4,7 @@ import {flexLayoutClasses} from "../flex-layout/flex-layout-classes.js";
 import "../iron-form/iron-form.js";
 import "../paper-dialog/paper-dialog.js";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {ReportUtils} from "./ReportUtils";
 
 function escapeStr(val) {
     if (val === undefined || val === null) {
@@ -47,6 +48,31 @@ class GetReport extends LitElement {
                 bottom: 10px;
                 right: 70px;
             }
+
+            [icon="dashboard"] {
+                color: #2a5699;
+            }
+
+            [icon="word"] {
+                color: #2a5699;
+            }
+
+            [icon="excel"] {
+                color: #207245;
+            }
+
+            [icon="pdf"] {
+                color: #D50000
+            }
+
+            [icon="html"] {
+                color: #e44d26;
+            }
+
+            [icon="xml"] {
+                color: #727d0f;
+            }
+
         `
     }
 
@@ -57,15 +83,18 @@ class GetReport extends LitElement {
     }
 
     firstUpdated() {
+        ReportUtils.registerGetReport(this);
         window.addEventListener('get-report', this._getReport.bind(this));
-        this.dialog = this.shadowRoot.querySelector('.dialog');
+        this.dialog = this.shadowRoot.querySelector('#reportsDialog');
     }
 
     render() {
         return html`
-            <paper-dialog class="dialog" .noActions="${true}">
-                <iron-form slot="body" preventSubmit .config="${this.config}" .model="${this.model}" url="/GetReport"
-                           @pre-submit="${this._generateRequest}"></iron-form>
+            <paper-dialog id="reportsDialog" .noActions="${true}">
+                <div slot="header">${this.report?.numeSablon}</div>
+                <iron-form slot="body" preventSubmit .config="${this.config}" .model="${this.model}" noSubmitButton>
+                    <paper-button icon="${this.report?.tipGenerare}" slot="button" border @click="${this._openReport}">Genereaza raport</paper-button>
+                </iron-form>
             </paper-dialog>
         `;
     }
@@ -121,6 +150,40 @@ class GetReport extends LitElement {
             </html>
         `;
         iframe.contentDocument.write(html);
+    }
+
+    generateReport(report, keys=[]){
+        this.model = {
+            keys: keys
+        };
+        this.report = report;
+
+        if(report.contentParametri){
+            this.config = JSON.parse(report.contentParametri)
+            this.model = {};
+            this.report = report;
+            this.dialog.open();
+        } else{
+            this._openReport()
+        }
+    }
+    _openReport(){
+        let report = this.report;
+        let params = this.model;
+
+        this.dialog.close();
+        let urlObj = new URL("https://raport.cbn-it.ro/");
+
+        let urlSearchParams = urlObj.searchParams;
+        //urlSearchParams.append("_companyId", window.data._selectedCompany);
+        urlSearchParams.append("namespace", window.data._selectedCompany);
+        urlSearchParams.append("hashReport", report._hash);
+        Object.entries(params).map(([key, value]) => urlSearchParams.append(key, value));
+
+        let urlSearchParamsStr = urlSearchParams.toString();
+        if (urlSearchParamsStr.length < 2000) {
+            window.open(urlObj);
+        }
     }
 }
 

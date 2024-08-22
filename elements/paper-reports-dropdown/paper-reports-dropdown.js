@@ -16,6 +16,7 @@ import "../iron-icons/icons/icons/arrow_drop_down";
 import {when} from "lit/directives/when";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
+import {ReportUtils} from "../get-report/ReportUtils";
 
 
 
@@ -119,19 +120,16 @@ class PaperReportsDropdown extends PaperIconDropdown {
         this.icon = 'chart';
     }
 
-    _selectedOptionByValue(value) {
-        CBNUtils.fireEvent(this, 'get-report', {
-            keys: this.table?.selectedItems||[],
-            report: value
-        });
+    _selectedOptionByValue(report) {
+        let keys = this.table?.selectedItems||[]
+        ReportUtils.generateReport(report, keys)
     }
 
     _getReport(event) {
         let path = event.currentTarget.path;
-        CBNUtils.fireEvent(this, 'get-report', {
-            keys: this.table?.selectedItems||[],
-            report: this._options.find(value => value._path === path)
-        });
+        let report = this._options.find(value => value._path === path);
+        let keys = this.table?.selectedItems||[]
+        ReportUtils.generateReport(report, keys)
     }
 
     _openDropdown() {
