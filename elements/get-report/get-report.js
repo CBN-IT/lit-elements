@@ -156,14 +156,13 @@ class GetReport extends LitElement {
         this.model = {
             keys: keys
         };
-        this.report = report;
+        this.report = typeof report === 'string' ? window.data._reports.find(r => [r._path, r._hash].includes(report)) : report;
+        this.report._hash = this.report._hash ? this.report._hash : `${window.data._appId}/${this.report._path}`;
 
-        if(report.contentParametri){
+        if (report.contentParametri) {
             this.config = JSON.parse(report.contentParametri)
-            this.model = {};
-            this.report = report;
             this.dialog.open();
-        } else{
+        } else {
             this._openReport()
         }
     }
@@ -175,9 +174,9 @@ class GetReport extends LitElement {
         let urlObj = new URL("https://raport.cbn-it.ro/");
 
         let urlSearchParams = urlObj.searchParams;
-        //urlSearchParams.append("_companyId", window.data._selectedCompany);
+        urlSearchParams.append("_companyId", window.data._selectedCompany);
         urlSearchParams.append("namespace", window.data._selectedCompany);
-        urlSearchParams.append("hashReport", report._hash);
+        urlSearchParams.append("hashReport", report._hash || report._path);
         Object.entries(params).map(([key, value]) => {
             if (value instanceof Array) {
                 for (let v of value) {
