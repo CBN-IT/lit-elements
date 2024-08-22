@@ -184,7 +184,7 @@ class GetReport extends LitElement {
                     urlSearchParams.append(key, v)
                 }
             } else {
-                urlSearchParams.append(key, v)
+                urlSearchParams.append(key, value)
             }
         });
 
