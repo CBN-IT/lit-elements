@@ -178,7 +178,15 @@ class GetReport extends LitElement {
         //urlSearchParams.append("_companyId", window.data._selectedCompany);
         urlSearchParams.append("namespace", window.data._selectedCompany);
         urlSearchParams.append("hashReport", report._hash);
-        Object.entries(params).map(([key, value]) => urlSearchParams.append(key, value));
+        Object.entries(params).map(([key, value]) => {
+            if (value instanceof Array) {
+                for (let v of value) {
+                    urlSearchParams.append(key, v)
+                }
+            } else {
+                urlSearchParams.append(key, v)
+            }
+        });
 
         let urlSearchParamsStr = urlSearchParams.toString();
         if (urlSearchParamsStr.length < 2000) {
