@@ -23,7 +23,7 @@ dayjs.extend(customParseFormat);
 
 function makeFunction(text,defaultFct, params){
     if(!text){
-        return defaultFct?.bind(...params);;
+        return defaultFct?.bind(...params);
     }
     let str = `
         try {
