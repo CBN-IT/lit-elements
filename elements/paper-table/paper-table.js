@@ -15,6 +15,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import {compare} from "../cbn-utils/compare";
 import {repeat} from 'lit/directives/repeat'
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
+import {ReportUtils} from "../get-report/ReportUtils";
 
 
 
@@ -25,7 +26,8 @@ function makeFunction(text,defaultFct, params){
         return defaultFct?.bind(...params);;
     }
     let str = `
-        try { 
+        try {
+            console.log(item);
             return ${text} 
         } catch (e) {
             console.error(e);
@@ -33,7 +35,7 @@ function makeFunction(text,defaultFct, params){
     `
     try {
         return new Function(
-            "column", "dayjs", "html",
+            "column", "dayjs", "html", "ReportUtils",
             "item", str).bind(...params);
     } catch (e) {
         if (defaultFct) {
@@ -315,9 +317,9 @@ class PaperTable extends LitElement {
             columns.forEach(column => {
                 column.sortType = column.sortType || 0;
                 column.icon = this._getIcon(column.sortType);
-                column._templateFunction = makeFunction(column.template, undefined, [this, column, dayjs, html]);
-                column._valueFunction = makeFunction(column.value, this._formatValue, [this, column, dayjs, html]);
-                column._styleFunction = makeFunction(column.styleFunction, undefined, [this, column, dayjs, html]);
+                column._templateFunction = makeFunction(column.template, undefined, [this, column, dayjs, html, ReportUtils]);
+                column._valueFunction = makeFunction(column.value, this._formatValue, [this, column, dayjs, html, ReportUtils]);
+                column._styleFunction = makeFunction(column.styleFunction, undefined, [this, column, dayjs, html, ReportUtils]);
             });
             this._columns = columns;
         }
@@ -833,7 +835,7 @@ class PaperTable extends LitElement {
         }
     }
 
-    _formatValue(column, dayjs, html, item) {
+    _formatValue(column, dayjs, html, ReportUtils, item) {
         let splits = column.name.split(".");
         let toReturn = item;
         for (let i = 0; i < splits.length; i++) {
@@ -860,6 +862,3 @@ class PaperTable extends LitElement {
 }
 
 defineCustomTag('paper-table', PaperTable);
-
-
-
