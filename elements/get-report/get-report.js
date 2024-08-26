@@ -168,30 +168,51 @@ class GetReport extends LitElement {
     }
     _openReport(){
         let report = this.report;
-        let params = this.model;
-
+        let params = {
+            _companyId: window.data._selectedCompany,
+            namespace: window.data._selectedCompany,
+            hashReport: report._hash || report._path,
+        };
         this.dialog.close();
-        let urlObj = new URL("https://raport.cbn-it.ro/");
-
-        let urlSearchParams = urlObj.searchParams;
-        urlSearchParams.append("_companyId", window.data._selectedCompany);
-        urlSearchParams.append("namespace", window.data._selectedCompany);
-        urlSearchParams.append("hashReport", report._hash || report._path);
-        Object.entries(params).map(([key, value]) => {
-            if (value instanceof Array) {
-                for (let v of value) {
-                    urlSearchParams.append(key, v)
-                }
-            } else {
-                urlSearchParams.append(key, value)
-            }
-        });
-
-        let urlSearchParamsStr = urlSearchParams.toString();
-        if (urlSearchParamsStr.length < 2000) {
-            window.open(urlObj);
-        }
+        openWindowWithPostRequest(this.model, params)
     }
 }
+function openWindowWithPostRequest(body, params) {
+    let url = new URL("https://raport.cbn-it.ro/");
+    Object.entries(params).map(([key, value]) => {
+        if (value instanceof Array) {
+            for (let v of value) {
+                url.searchParams.append(key, v)
+            }
+        } else {
+            url.searchParams.append(key, value)
+        }
+    });
 
+    let form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", url);
+    form.setAttribute("target","_blank");
+
+    Object.entries(body).map(([key, value]) => {
+        if (value instanceof Array) {
+            for (let v of value) {
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = v;
+                form.appendChild(input);
+            }
+        } else {
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            form.appendChild(input);
+        }
+    });
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+}
 defineCustomTag("get-report", GetReport);
