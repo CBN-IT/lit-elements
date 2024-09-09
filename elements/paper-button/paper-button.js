@@ -175,8 +175,8 @@ export class PaperButton extends LitElement {
                 transform: translateX(-100%);
             }
 
-            :host(:hover) .tooltip-container.hidden {
-                display: none;
+            .hidden {
+                display: none !important;
             }
 
         `
