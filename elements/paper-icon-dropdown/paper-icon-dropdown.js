@@ -10,7 +10,7 @@ import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 import {PaperButton} from "../paper-button/paper-button";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 import {hostColors} from "../cbn-utils/hostColors";
-import {buttonTooltipClasses} from "../../../../web/utils/tooltip";
+import {buttonTooltipClasses} from "../tooltipClasses";
 
 export class PaperIconDropdown extends PaperButton {
 
