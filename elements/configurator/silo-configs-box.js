@@ -68,8 +68,12 @@ class SiloConfigsBox extends LitElement {
     _getTemplateSiloConfig(v) {
         return html`
             <silo-config .siloConfig="${v}">
-                <paper-button slot="button" icon="edit" class="blue" smallest margin-left-right  @click="${(event) => this.edit(v, event)}"></paper-button>
-                <paper-button slot="button" icon="content-copy" class="green" smallest margin-left-right  @click="${(event) => this.copy(v, event)}"></paper-button>
+                <paper-button slot="button" icon="edit" class="blue tooltip-left" smallest margin-left-right  @click="${(event) => this.edit(v, event)}">
+                    <div slot="tooltip">Edit silo configuration</div>
+                </paper-button>
+                <paper-button slot="button" icon="content-copy" class="green tooltip-left" smallest margin-left-right @click="${(event) => this.copy(v, event)}">
+                    <div slot="tooltip">Make a copy</div>
+                </paper-button>
                 <paper-button slot="button" icon="delete" class="red" smallest margin-left-right  @click="${(event) => this.delete(v._path, event)}"></paper-button>
             </silo-config>
         `;
