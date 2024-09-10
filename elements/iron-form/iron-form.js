@@ -56,7 +56,7 @@ export class IronForm extends LitElement {
     }
 
     static get styles() {
-        return [gridClasses,gridFlexClasses, flexLayoutClasses, this.styleElement]
+        return [gridClasses, gridFlexClasses, flexLayoutClasses, this.styleElement]
     }
 
     static get styleElement() {
@@ -80,7 +80,7 @@ export class IronForm extends LitElement {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                overflow-y: auto;
+                overflow-y: var(--iron-form-container-overflow, auto);
                 align-items: flex-start;
             }
 
@@ -337,9 +337,10 @@ export class IronForm extends LitElement {
                             ?margin-left-right="${elementConfig["margin-left-right"] || false}"
                             .iconSize="${elementConfig["iconSize"] || ""}"
                             @click="${(e) => {
-                                CBNUtils.fireEvent(e.currentTarget, elementConfig.event, {form: this})
-                            }}"
+                    CBNUtils.fireEvent(e.currentTarget, elementConfig.event, {form: this})
+                }}"
                     >${elementConfig.text}
+                        ${elementConfig.tooltip ?html` <div slot="tooltip">${elementConfig.tooltip}</div>` : ""}
                     </paper-button>`
             }
             default: {
@@ -365,7 +366,7 @@ export class IronForm extends LitElement {
                             .value="${forceWrite(value)}"
                             .autocomplete="${elementConfig.autocomplete || this.autocomplete}"
                             .inputmode="${elementConfig.inputmode || (["integer", "double"].includes(elementConfig.dbType) ? "numeric" : "")}"
-                            .pattern="${elementConfig.pattern || ("integer"=== elementConfig.dbType?"^[-+]?[0-9]*$":"")}"
+                            .pattern="${elementConfig.pattern || ("integer" === elementConfig.dbType ? "^[-+]?[0-9]*$" : "")}"
                     ></paper-input>`
             }
         }
