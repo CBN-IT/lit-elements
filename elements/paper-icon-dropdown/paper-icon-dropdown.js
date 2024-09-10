@@ -10,6 +10,7 @@ import {defineCustomTag} from "../cbn-utils/defineCustomTag";
 import {PaperButton} from "../paper-button/paper-button";
 import {CBNUtils} from "../cbn-utils/CbnUtils";
 import {hostColors} from "../cbn-utils/hostColors";
+import {buttonTooltipClasses} from "../../../../web/utils/tooltip";
 
 export class PaperIconDropdown extends PaperButton {
 
@@ -36,7 +37,7 @@ export class PaperIconDropdown extends PaperButton {
         this.direction = 'bottom-right';
     }
     static get styles() {
-        return [flexLayoutClasses, hostColors, this.styleElement, this.stylePaperIconDropdown];
+        return [flexLayoutClasses, hostColors, this.styleElement, this.stylePaperIconDropdown, buttonTooltipClasses];
     }
     static get stylePaperIconDropdown() {
         // language=CSS
@@ -79,9 +80,9 @@ export class PaperIconDropdown extends PaperButton {
         return html`
             <div class="container horizontal layout center" @click="${this._openDropdown}">
                 <iron-icon icon="${this.icon}" .svgIcon="${this.svgIcon}" .size="${this.iconSize}"></iron-icon>
-                <div class="text">
-                    <slot></slot>
+                <slot class="text"></slot>
                 </div>
+            <slot name="tooltip" class="tooltip-container hidden" @slotchange="${this.handleSlotChange}"></slot>
                 ${when(this.isNative, () => html`
                     <select style="display:${this.isNative ? 'block' : 'none'}" class="native-input" @change="${this._onChange}">
                         <option disabled selected></option>

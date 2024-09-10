@@ -47,7 +47,8 @@ export class MultiForm extends LitElement {
             }
 
             .form > iron-form {
-                flex: 1
+                flex: 1;
+                --iron-form-container-overflow: visible;
             }
 
             .form > paper-button {
