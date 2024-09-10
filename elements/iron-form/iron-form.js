@@ -80,7 +80,7 @@ export class IronForm extends LitElement {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                overflow: var(--iron-form-container-overflow, hidden);
+                overflow: var(--iron-form-container-overflow, auto);
                 align-items: flex-start;
             }
 
