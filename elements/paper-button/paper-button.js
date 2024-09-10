@@ -4,7 +4,7 @@ import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import {hostColors} from '../cbn-utils/hostColors.js';
 import "../iron-icon/iron-icon.js";
 import {defineCustomTag} from "../cbn-utils/defineCustomTag";
-import {buttonTooltipClasses} from "../../../../web/utils/tooltip";
+import {buttonTooltipClasses} from "../tooltipClasses";
 
 
 export class PaperButton extends LitElement {
