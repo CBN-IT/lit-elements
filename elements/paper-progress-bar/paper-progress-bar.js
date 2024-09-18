@@ -37,11 +37,10 @@ export class PaperProgressBar extends LitElement {
                 height:fit-content;
                 --progress-border: var(--yellow-color);
                 --progress-background:  var(--yellow-color);
-                --progress-bar-width: 150px;
             }
             
             .progress-container {
-                width: var(--progress-bar-width); 
+                width: var(--progress-bar-width, 150px); 
                 background-color: #f1f1f1;
                 border-radius: 20px;
                 border: 2px solid rgb(from var(--progress-border) r g b / 0.8);
