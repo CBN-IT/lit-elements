@@ -2,6 +2,7 @@
 import {LitElement, html} from "lit";
 import {flexLayoutClasses} from "../elements/flex-layout/flex-layout-classes.js";
 import "../elements/paper-button/paper-button"
+import "../elements/paper-progress-bar/paper-progress-bar"
 import "../elements/paper-color-picker/paper-color-picker"
 import "../elements/paper-icon-dropdown/paper-icon-dropdown"
 import "../elements/paper-reports-dropdown/paper-reports-dropdown"
@@ -521,6 +522,10 @@ class DemoApp extends LitElement {
             <div class="container">
                 <div class="title" style=" margin-right: 3em">paper-color-picker</div>
                 <paper-color-picker></paper-color-picker>
+            </div>
+            <div class="container">
+                <div class="title" style=" margin-right: 3em">paper-progress-bar</div>
+                <paper-progress-bar></paper-progress-bar>
             </div>
             <div class="container">
                 <div class="title" style=" margin-right: 3em">paper-icon-dropdown</div>
