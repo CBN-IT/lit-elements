@@ -37,6 +37,7 @@ export class PaperProgressBar extends LitElement {
                 height:fit-content;
                 --progress-border: var(--yellow-color);
                 --progress-background:  var(--yellow-color);
+                --progress-border-radius: 15px 0 0 15px;
             }
             
             .progress-container {
@@ -54,7 +55,7 @@ export class PaperProgressBar extends LitElement {
             .progress-bar {
                 height: 100%;
                 background-color: rgb(from var(--progress-background) r g b / 0.4);
-                border-radius: 15px 0 0 15px;
+                border-radius: var(--progress-border-radius);
             }
 
             .progress-text {
@@ -96,6 +97,7 @@ export class PaperProgressBar extends LitElement {
             this.updateProgressColors('transparent', 'var(--red-color)');
         } else if (progress === 0) {
             this.updateProgressColors('var(--green-color)', 'var(--green-color)');
+            this.style.setProperty('--progress-border-radius', "15px");
         } else {
             this.updateProgressColors('var(--yellow-color)', 'var(--yellow-color)');
         }
