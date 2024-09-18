@@ -77,7 +77,7 @@ export class PaperProgressBar extends LitElement {
         return html`
             <div class="progress-container">
                 <div class="progress-bar"></div>
-                <div class="progress-text">${this.doneQuantity} / ${this.todoQuantity}  x</div>
+                <div class="progress-text">${this.doneQuantity} / ${this.todoQuantity}</div>
             </div>
         `
     }
