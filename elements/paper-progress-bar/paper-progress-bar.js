@@ -52,7 +52,7 @@ export class PaperProgressBar extends LitElement {
             }
 
             .progress-bar {
-                height: 30px;
+                height: 100%;
                 background-color: rgb(from var(--progress-background) r g b / 0.4);
                 border-radius: 15px 0 0 15px;
             }
