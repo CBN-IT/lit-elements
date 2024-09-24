@@ -35,6 +35,9 @@ class PaperTabs extends LitElement {
             .paper-tab {
                 font-weight: bold;
                 height: 40px;
+                border-right: 1px solid var(--app-primary-color, black);
+                border-bottom: 3px solid transparent;
+                box-sizing: border-box;
             }
 
             .paper-tab:hover {
