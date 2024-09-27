@@ -148,21 +148,23 @@ export function touchZoomPlugin({xZoom = false, yZoom = false}):uPlot.Plugin {
                 }
 
                 over.addEventListener("touchstart",  (event:TouchEvent)=> {
-                    event.preventDefault();/*to prevent zoom and movement*/
-                    rect = over.getBoundingClientRect();
+                    if (event.touches.length === 2) {
+                        event.preventDefault();/*to prevent zoom and movement*/
+                        rect = over.getBoundingClientRect();
 
-                    storePos(fr, event, rect);
+                        storePos(fr, event, rect);
 
-                    oxRange = u.scales.x.max - u.scales.x.min;
-                    oyRange = u.scales.y.max - u.scales.y.min;
+                        oxRange = u.scales.x.max - u.scales.x.min;
+                        oyRange = u.scales.y.max - u.scales.y.min;
 
-                    let left = fr.x;
-                    let top = fr.y;
+                        let left = fr.x;
+                        let top = fr.y;
 
-                    xVal = u.posToVal(left, "x");
-                    yVal = u.posToVal(top, "y");
+                        xVal = u.posToVal(left, "x");
+                        yVal = u.posToVal(top, "y");
 
-                    document.addEventListener("touchmove", touchmove, {passive: true});
+                        document.addEventListener("touchmove", touchmove, {passive: true});
+                    }
                 });
 
                 over.addEventListener("touchend", (event)=> {
