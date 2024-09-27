@@ -1,5 +1,5 @@
 "use strict";
-import {LitElement, html, css} from 'lit'
+import {LitElement, html, css, nothing} from 'lit'
 import {flexLayoutClasses} from '../flex-layout/flex-layout-classes.js';
 import {hostColors} from '../cbn-utils/hostColors.js';
 import "../iron-icon/iron-icon.js";
@@ -105,7 +105,7 @@ export class PaperButton extends LitElement {
     render() {
         return html`
             <div class="container horizontal layout center">
-                <iron-icon icon="${this.icon}" .svgIcon="${this.svgIcon}" .size="${this.iconSize}"></iron-icon>
+                ${this.icon || this.svgIcon? html`<iron-icon icon="${this.icon}" .svgIcon="${this.svgIcon}" .size="${this.iconSize}"></iron-icon>`:nothing}
                 <div class="text">
                     <slot></slot>
                 </div>
