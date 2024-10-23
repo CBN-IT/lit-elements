@@ -91,9 +91,9 @@ class GetReport extends LitElement {
     render() {
         return html`
             <paper-dialog id="reportsDialog" .noActions="${true}">
-                <div slot="header">${this.report?.numeSablon}</div>
+                <div slot="header">${this.report?.numeSablon ?? this.report?.reportName}</div>
                 <iron-form slot="body" preventSubmit .config="${this.config}" .model="${this.model}" noSubmitButton>
-                    <paper-button icon="${this.report?.tipGenerare}" slot="button" border @click="${this._openReport}">Genereaza raport</paper-button>
+                    <paper-button icon="${this.report?.tipGenerare ?? this.report?.type}" slot="button" border @click="${this._openReport}">Genereaza raport</paper-button>
                 </iron-form>
             </paper-dialog>
         `;
@@ -159,8 +159,8 @@ class GetReport extends LitElement {
         this.report = typeof report === 'string' ? window.data._reports.find(r => [r._path, r._hash].includes(report)) : report;
         this.report._hash = this.report._hash ? this.report._hash : `${window.data._appId}/${this.report._path}`;
 
-        if (report.contentParametri) {
-            this.config = JSON.parse(report.contentParametri)
+        if (report.contentParametri ?? report.params) {
+            this.config = JSON.parse(report.contentParametri ?? report.params)
             this.dialog.open();
         } else {
             this._openReport()
