@@ -27,7 +27,7 @@ function makeFunction(text,defaultFct, params){
     }
     let str = `
         try {
-            console.log(item);
+            /*console.log(item);*/
             return ${text} 
         } catch (e) {
             console.error(e);
