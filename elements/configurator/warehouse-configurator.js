@@ -65,6 +65,8 @@ export class WarehouseConfigurator extends LitElement {
             .checkBox-label {
                 position: relative;
                 box-sizing: border-box;
+                width: fit-content;
+                cursor:pointer;
             }
 
 
