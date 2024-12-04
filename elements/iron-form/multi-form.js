@@ -109,7 +109,7 @@ export class MultiForm extends LitElement {
         `;
     }
 
-    copyConfig() {
+    copyConfig(model) {
         return ({
             elements: [
                 ...this.config.elements
@@ -122,11 +122,11 @@ export class MultiForm extends LitElement {
             //to call all the Value Changed events.
             setTimeout(() => this.forms.forEach(form => form.requestUpdate()));
             for (let i = this.configs.length; i < this.model.length; i++) {
-                this.configs.push(this.copyConfig());
+                this.configs.push(this.copyConfig(this.model[i]));
             }
         }
         if (changedProperties.has('config')) {
-            this.configs = this.model.map(v => this.copyConfig());
+            this.configs = this.model.map(v => this.copyConfig(v));
         }
     }
 
@@ -162,7 +162,7 @@ export class MultiForm extends LitElement {
 
     addForm() {
         this.model.push(JSON.parse(JSON.stringify(this.defaultSubModel)));
-        this.configs.push(this.copyConfig());
+        this.configs.push(this.copyConfig(this.model.at(-1)));
         this.requestUpdate();
     }
 
