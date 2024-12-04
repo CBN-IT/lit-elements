@@ -145,7 +145,10 @@ export class SiloCanvasDraw {
         this.defaults = {
             "rSensorY": 1.5,
             "rSensorX": 3,
-            "grainAngle": 23,/*https://www.ars.usda.gov/research/publications/publication/*/
+            "grainAngle": 23,/*
+            https://www.ars.usda.gov/research/publications/publication/?seqNo115=328459
+            https://agridrydryers.com/wp-content/uploads/2019/01/repose_angles.pdf
+            */
             "hRoofCutout": 0,
             'roofAngle': 30,
             "floorAngle": 0,
