@@ -82,24 +82,7 @@ export class MultiForm extends LitElement {
 
     render() {
         return html`
-            ${map(this.model, (model, index) => html`
-                <div class="form">
-                    <iron-form
-                            .config="${this.configs[index]}"
-                            .model="${model}"
-                            .noSubmitButton="${true}"
-                    ></iron-form>
-                    ${this.canReorder ? html`
-                        <div style="display: flex;flex-direction: column;justify-content: space-around;">
-                            <paper-button icon="keyboard-arrow-up" class="bgBlue" style="height:14px" small no-margin
-                                          @click="${() => this.moveUp(index)}"></paper-button>
-                            <paper-button icon="keyboard-arrow-down" class="bgGreen" style="height:14px" small no-margin
-                                          @click="${() => this.moveDown(index)}"></paper-button>
-                        </div>
-                    ` : ""}
-                    <paper-button icon="delete" class="red" small no-margin @click="${() => this.deleteForm(index)}"></paper-button>
-                </div>
-            `)}
+            ${map(this.model, (model, idx) => this._templateForm(model, this.configs[idx], idx))}
             <div style="display: flex;align-items: center;">
                 <div @click="${this.addForm}" style="width: fit-content;">
                     <slot></slot>
@@ -107,6 +90,30 @@ export class MultiForm extends LitElement {
                 <slot name="otherButtons"></slot>
             </div>
         `;
+    }
+
+    _templateForm(model, config, idx){
+        return html`
+            <div class="form">
+                <iron-form
+                    .config="${config}"
+                        .model="${model}"
+                        .noSubmitButton="${true}"
+                ></iron-form>
+                ${this.canReorder ? this._templateUpDownButtons(idx) : ""}
+                <paper-button icon="delete" class="red" small no-margin @click="${() => this.deleteForm(idx)}"></paper-button>
+            </div>
+        `
+    }
+    _templateUpDownButtons(idx){
+        return html`
+            <div style="display: flex;flex-direction: column;justify-content: space-around;">
+                <paper-button icon="keyboard-arrow-up" class="bgBlue" style="height:14px" small no-margin
+                              @click="${() => this.moveUp(idx)}"></paper-button>
+                <paper-button icon="keyboard-arrow-down" class="bgGreen" style="height:14px" small no-margin
+                              @click="${() => this.moveDown(idx)}"></paper-button>
+            </div>
+        `
     }
 
     copyConfig(model) {
@@ -157,6 +164,15 @@ export class MultiForm extends LitElement {
             this.configs.splice(index, 1);
             this.requestUpdate();
             CBNUtils.fireEvent(this, "deleted-form", {index, model});
+        }
+    }
+
+    async updateConfig(form, config){
+        let idx = this.forms.indexOf(form);
+        if(idx !== -1){
+            this.configs.splice(idx, 1, config);
+            this.requestUpdate();
+            await this.updateComplete;
         }
     }
 
