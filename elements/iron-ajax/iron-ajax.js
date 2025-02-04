@@ -162,7 +162,8 @@ class IronAjax extends LitElement {
                 value.map((subValue, index) => {
                     if (subValue instanceof Object) {
                         if (subValue['file']) {
-                            formData.append(prefix ? `${prefix}.${key}` : key, subValue['file']);
+                            //encode the filename as UTF-8. It will be decoded on server side
+                            formData.append(prefix ? `${prefix}.${key}` : key, subValue['file'], encodeURIComponent(subValue['file'].name));
                         } else {
                             this._apendToFormData(subValue, prefix ? `${prefix}.${key}.${index}` : `${key}.${index}`, formData);
                         }
@@ -174,7 +175,8 @@ class IronAjax extends LitElement {
                 if (value.constructor.name === "Decimal") {
                     formData.append(prefix ? `${prefix}.${key}` : key, value.toNumber());
                 } else if (value['file']) {
-                    formData.append(prefix ? `${prefix}.${key}` : key, value['file']);
+                    //encode the filename as UTF-8. It will be decoded on server side
+                    formData.append(prefix ? `${prefix}.${key}` : key, value['file'], encodeURIComponent(value['file'].name));
                 } else {
                     this._apendToFormData(value, prefix ? `${prefix}.${key}` : key, formData);
                 }
