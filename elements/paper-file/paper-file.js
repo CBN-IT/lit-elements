@@ -211,10 +211,10 @@ class PaperFile extends PaperInputContainer {
                         let isValid = MIMEtype.test(item.type);
                         return html`
                             <div class="selected-option ${isValid?"":"invalid"}">
-                                <a href="${url}" download="${filename}" onmousedown="event.stopPropagation()">
+                                <a href="${url}" download="${filename}" @mousedown="${(event)=>event.stopPropagation()}">
                                     ${when((!tooManyFiles && isImage), 
-                                            ()=>html`<img src="${url}" alt="${item.label}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)' class="optionImage"/>`,
-                                            ()=>html`<iron-icon .src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" onmouseover='showLargeImg(this)' onmouseout='showSmallImg(this)'></iron-icon>`,
+                                            ()=>html`<img src="${url}" alt="${item.label}" @mouseover='${(event) => window.showLargeImg(event.target)}' @mouseout='${(event) => window.showSmallImg(event.target)}' class="optionImage"/> `,
+                                            ()=>html`<iron-icon .src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" @mouseover='${(event) => window.showLargeImg(event.target)}' @mouseout='${(event) => window.showSmallImg(event.target)}' ></iron-icon>`,
                                     )}
                                 </a>
                                 <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>

@@ -230,9 +230,9 @@ class PaperSelect extends PaperInputContainer {
                 images = [images];
             }
             return map(images, image => {
-                return html`<img src="${typeof image === 'string' ? image : image.url}" 
-                                 onmouseover='showLargeImg(this)' 
-                                 onmouseout='showSmallImg(this)'
+                return html`<img src="${typeof image === 'string' ? image : image.url}"
+                                 @mouseover='${(event) => window.showLargeImg(event.target)}'
+                                 @mouseout='${(event) => window.showSmallImg(event.target)}'
                                  class="optionImage"/>`
             })
         }
