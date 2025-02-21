@@ -194,41 +194,49 @@ class PaperFile extends PaperInputContainer {
     }
 
     get inputElement() {
-        let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
-        let totalFileSize = this._value.reduce((partialSum, item) => partialSum + (item.file instanceof File?0:item.size), 0);
-        let tooManyFiles = totalFileSize > 5 * 1024 * 1024/*5mb*/
+
         return html`
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
-                    ${map(this._value, (item, index) => {
-                        let extension = item.label.substring(item.label.lastIndexOf('.') + 1);
-                        let filename = item.label.substring(0, item.label.lastIndexOf('.'));
-                        let url = item.url;
-                        let isImage = item.type.startsWith("image/");
-                        if (item.file instanceof File) {
-                            url = URL.createObjectURL(item.file)
-                        }
-                        let isValid = MIMEtype.test(item.type);
-                        return html`
-                            <div class="selected-option ${isValid?"":"invalid"}">
-                                <a href="${url}" download="${filename}" @mousedown="${(event)=>event.stopPropagation()}">
-                                    ${when((!tooManyFiles && isImage), 
-                                            ()=>html`<img src="${url}" alt="${item.label}" @mouseover='${(event) => window.showLargeImg(event.target)}' @mouseout='${(event) => window.showSmallImg(event.target)}' class="optionImage"/> `,
-                                            ()=>html`<iron-icon .src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" @mouseover='${(event) => window.showLargeImg(event.target)}' @mouseout='${(event) => window.showSmallImg(event.target)}' ></iron-icon>`,
-                                    )}
-                                </a>
-                                <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
-                                <span>.${extension}</span>
-                                <span>(${formatFileSize(item.size)})</span>
-                                <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
-                            </div>
-                        `
-                    })}
+                    ${map(this._value, this._templateItem)}
                 </div>
                 <iron-icon icon="file-upload"></iron-icon>
                 <input type="file" class="input input-file" ?multiple="${this.multiple}" accept="${this.accept}"/>
             </div>                
         `;
+    }
+
+    _templateItem(item, index){
+        let MIMEtype = new RegExp(this.accept.replace('*', '.\*').replace(/,\s*/g, "|"));
+        let totalFileSize = this._value.reduce((partialSum, item) => partialSum + (item.file instanceof File ? 0 : item.size), 0);
+        let tooManyFiles = totalFileSize > 5 * 1024 * 1024/*5mb*/
+
+        let extension = item.label.substring(item.label.lastIndexOf('.') + 1);
+        let filename = item.label.substring(0, item.label.lastIndexOf('.'));
+        let url = item.url;
+        let isImage = item.type.startsWith("image/");
+        if (item.file instanceof File) {
+            url = URL.createObjectURL(item.file)
+        }
+        let isValid = MIMEtype.test(item.type);
+        return html`
+            <div class="selected-option ${isValid?"":"invalid"}">
+                <a href="${url}" download="${filename}" @mousedown="${(event)=>event.stopPropagation()}">
+                    ${when((!tooManyFiles && isImage), ()=>this._templateImg(item, url,isImage), ()=>this._templateNonImg(item, url,isImage),)}
+                </a>
+                <span class="option-label" @mousedown="${this._allowSelection}" title="${item.label}">${filename}</span>
+                <span>.${extension}</span>
+                <span>(${formatFileSize(item.size)})</span>
+                <div class="close-icon" @mousedown="${(event) => this._deleteItem(event, item, index)}">&#10006;</div>
+            </div>
+        `
+    }
+
+    _templateImg(item, url, isImage){
+        return html`<img src="${url}" alt="${item.label}" @mouseover='${(event) => window.showLargeImg(event.target)}' @mouseout='${(event) => window.showSmallImg(event.target)}' class="optionImage"/> `
+    }
+    _templateNonImg(item, url, isImage){
+        return html`<iron-icon .src="${isImage?url:""}" icon="${isImage?"image-download":"file-download"}" @mouseover='${(event) => window.showLargeImg(event.target)}' @mouseout='${(event) => window.showSmallImg(event.target)}' ></iron-icon>`
     }
 
     _allowSelection(event) {
@@ -281,7 +289,7 @@ class PaperFile extends PaperInputContainer {
 
     _deleteItem(event, item, index) {
         this._value.splice(index, 1);
-        this.validate(this._value);
+        this.validate(this._value, true);
         this.requestUpdate();
         event.stopPropagation();
         this.blur()
@@ -305,11 +313,11 @@ class PaperFile extends PaperInputContainer {
         }
 
         this._value = this.multiple ? [...this._value, ...processedFiles] : [processedFiles[0]];
-        this.validate(this._value);
+        this.validate(this._value, true);
         this.clearInput();
     }
 
-    validate(value) {
+    validate(value, fromUser) {
         if (this.disabled && fromUser) {
             return false;
         }
