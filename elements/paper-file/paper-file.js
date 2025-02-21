@@ -198,7 +198,7 @@ class PaperFile extends PaperInputContainer {
         return html`
             <div class="select-container horizontal layout center flex">
                 <div class="horizontal layout wrap flex" style="overflow: hidden">                                       
-                    ${map(this._value, this._templateItem)}
+                    ${map(this._value, this._templateItem.bind(this))}
                 </div>
                 <iron-icon icon="file-upload"></iron-icon>
                 <input type="file" class="input input-file" ?multiple="${this.multiple}" accept="${this.accept}"/>
