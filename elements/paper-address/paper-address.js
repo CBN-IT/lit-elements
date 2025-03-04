@@ -36,7 +36,7 @@ class PaperAddress extends PaperInputContainer {
     }
 
     get url() {
-        return 'https://siruta-v2-dot-cbn-adresa.appspot.com/searchAddress';
+        return 'https://cbn-adresa.appspot.com/searchAddress';
     }
 
     constructor() {
