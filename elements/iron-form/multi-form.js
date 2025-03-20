@@ -127,10 +127,8 @@ export class MultiForm extends LitElement {
     willUpdate(changedProperties) {
         if (changedProperties.has('model')) {
             //to call all the Value Changed events.
-            setTimeout(() => this.forms.forEach(form => form.requestUpdate()));
-            for (let i = this.configs.length; i < this.model.length; i++) {
-                this.configs.push(this.copyConfig(this.model[i]));
-            }
+            //setTimeout(() => this.forms.forEach(form => form.requestUpdate()));
+            this.configs = this.model.map(v => this.copyConfig(v));
         }
         if (changedProperties.has('config')) {
             this.configs = this.model.map(v => this.copyConfig(v));
