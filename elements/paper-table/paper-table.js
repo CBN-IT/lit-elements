@@ -237,7 +237,7 @@ class PaperTable extends LitElement {
         this.headerHeight = 62;
         this.columns = [];
         this.items = [];
-
+        this._filteredItems = [];
         this.__onClick = this._onClick.bind(this);
         this.__onCheckboxClick = this._onCheckboxClick.bind(this);
         this.__onMouseDown = this._onMouseDown.bind(this);
