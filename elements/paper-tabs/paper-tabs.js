@@ -53,6 +53,9 @@ class PaperTabs extends LitElement {
             .wrap{
                 flex-wrap: wrap;
             }
+            #pages{
+                overflow: var(--paper-tabs-pages-overflow, initial);
+            }
         `
     }
 
@@ -67,14 +70,24 @@ class PaperTabs extends LitElement {
     render() {
 
         return html`
-            <iron-selector .selected="${this.selectedTab}" slot="menu-buttons" class="horizontal layout ${this.wrap? "wrap":""}" @iron-select="${this._onPageSelect.bind(this)}">
-                ${repeat(this.pages,
-            page => page,
-            page => html`
-                            <div class="flex paper-tab vertical layout center center-justified">${page}</div>`
-        )}
+            <iron-selector
+                    id="tabs"
+                    .selected="${this.selectedTab}" 
+                    slot="menu-buttons" 
+                    class="horizontal layout ${this.wrap? "wrap":""}" 
+                    @iron-select="${this._onPageSelect.bind(this)}"
+            >
+                ${repeat(this.pages, tabName => tabName, tabName => html`
+                    <div class="flex paper-tab vertical layout center center-justified">${tabName}</div>
+                `)}
             </iron-selector>
-            <iron-selector .selected="${this.selectedTab}" class="flex vertical layout " isPages>
+            
+            <iron-selector
+                    id="pages"
+                    .selected="${this.selectedTab}" 
+                    class="flex vertical layout " 
+                    isPages
+            >
                 <slot></slot>
             </iron-selector>
         `;
