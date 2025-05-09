@@ -168,9 +168,14 @@ class GetReport extends LitElement {
     }
     _openReport(){
         let report = this.report;
+        let _companyId = window.data._selectedCompany;
+        if (this.model._companyId) {
+            _companyId = this.model._companyId
+            delete this.model._companyId;
+        }
         let params = {
-            _companyId: window.data._selectedCompany,
-            namespace: window.data._selectedCompany,
+            _companyId: _companyId,
+            namespace: _companyId,
             hashReport: report._hash || report._path,
         };
         this.dialog.close();
