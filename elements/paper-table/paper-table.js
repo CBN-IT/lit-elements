@@ -701,7 +701,9 @@ class PaperTable extends LitElement {
                         return template.includes(searchItem);
                     }
                 }
-                dayjs(value).format("YYYY-MM-DD").includes(searchItem)
+                searchItem=searchItem.replace(/[./-]/g, "-")
+                return dayjs(value).format("YYYY-MM-DD").includes(searchItem) ||
+                    dayjs(value).format("DD-MM-YYYY").includes()
 
             } else if (typeof value === "boolean" || typeof value === "number") {
                 return value.toString().toLowerCase().includes(searchItem)
