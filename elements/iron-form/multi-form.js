@@ -24,6 +24,9 @@ export class MultiForm extends LitElement {
             },
             canReorder: {
                 type: Boolean
+            },
+            canDelete: {
+                type: Boolean
             }
         }
     }
@@ -68,6 +71,13 @@ export class MultiForm extends LitElement {
             .form:not(:last-of-type) {
                 margin-bottom: var(--multi-form-form-margin-bottom, 15px);
             }
+
+            .upDownButtonsContainer {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                margin-right: 3px;
+            }
         `;
     }
 
@@ -78,6 +88,7 @@ export class MultiForm extends LitElement {
         this.defaultSubModel = {};
         this.configs = [this.config];
         this.canReorder = false;
+        this.canDelete = true;
     }
 
     render() {
@@ -101,18 +112,25 @@ export class MultiForm extends LitElement {
                         .noSubmitButton="${true}"
                 ></iron-form>
                 ${this.canReorder ? this._templateUpDownButtons(idx) : ""}
-                <paper-button icon="delete" class="red" small no-margin @click="${() => this.deleteForm(idx)}"></paper-button>
+                ${this.canDelete ? this._templateDeleteButton(idx) : ""}
+                
             </div>
         `
     }
     _templateUpDownButtons(idx){
         return html`
-            <div style="display: flex;flex-direction: column;justify-content: space-around;">
+            <div class="upDownButtonsContainer">
                 <paper-button icon="keyboard-arrow-up" class="bgBlue" style="height:14px" small no-margin
                               @click="${() => this.moveUp(idx)}"></paper-button>
                 <paper-button icon="keyboard-arrow-down" class="bgGreen" style="height:14px" small no-margin
                               @click="${() => this.moveDown(idx)}"></paper-button>
             </div>
+        `
+    }
+
+    _templateDeleteButton(idx){
+        return html`
+            <paper-button icon="delete" class="red" small no-margin @click="${() => this.deleteForm(idx)}"></paper-button>
         `
     }
 
