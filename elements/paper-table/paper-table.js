@@ -224,8 +224,37 @@ class PaperTable extends LitElement {
                 --input-padding: 0;
                 width: 18px;
             }
-            [hidden]{
-                display: none!important;
+
+            [hidden], .hidden {
+                display: none !important;
+            }
+
+            #context-menu {
+                position: fixed;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                padding: 5px;
+                cursor: pointer;
+            }
+
+            .context-menu-item {
+                padding: 5px 10px;
+                border-bottom: 1px solid #eee;
+                white-space: nowrap;
+            }
+            .context-menu-item:hover {
+                background-color: #f0f0f0
+            }
+
+            #context-menu-dialog {
+                --input-padding: 10px 2px 0px 2px;
+                --input-container-padding: 2px 1px 0px 3px;
+                --input-label-left: 4px;
+                --input-label-max-width: calc(100% - 2px);
+                --input-container-min-height: 30px;
+                --multi-form-form-margin-bottom: 2px;
             }
         `;
     }
@@ -243,17 +272,114 @@ class PaperTable extends LitElement {
         this.__onMouseDown = this._onMouseDown.bind(this);
         this.__onDblClick = this._onDblClick.bind(this);
         this.__onScroll = this._onScroll.bind(this);
+        this.configFormColumns = {
+            "elements": [
+                {
+                    "label": "ID",
+                    "type": "text",
+                    "name": "name",
+                    "required": true,
+                    "class": "col-xs-flex-4",
+                    "style":"min-width:200px;",
+                    "dbType": "string",
+                    "disabled": true
+                },
+                {
+                    "label": "Nume Coloana",
+                    "type": "text",
+                    "name": "title",
+                    "required": false,
+                    "class": "col-xs-flex-4",
+                    "style":"min-width:200px;",
+                    "dbType": "string",
+                },
+                {
+                    "label": "Latime Maxima",
+                    "type": "number",
+                    "name": "maxWidth",
+                    "style":"width:130px;",
+                    "dbType": "integer",
+                    "step": "1",
+                },
+                {
+                    "label": "Ascuns",
+                    "type": "checkbox",
+                    "name": "hidden",
+                    "dbType": "boolean",
+                    "style":"width:100px;",
+                },
+            ]
+        }
+        this.columnOrder = [];
+    }
 
+    get _templateContextMenu(){
+        return html`
+            <div id="context-menu" class="hidden">
+                <div class="context-menu-item" @click="${this.editColumns}">Editare Coloane</div>
+                <div class="context-menu-item" @click="${this.saveXls}">Salveaza ca Excel</div>
+            </div>
+            <paper-dialog id="context-menu-dialog" @save-click="${this.saveColumns}"> 
+                <div slot="header" class="header">Editare Coloane Tabel ${this.collection}</div>   
+                <div slot="body">
+                    <multi-form id="context-menu-form"
+                                slot="body" 
+                                .config="${this.configFormColumns}" 
+                                .model="${this.columnOrder}"
+                                canReorder
+                                .canDelete="${false}"
+                                noSubmitButton
+                                @saved-form="${this._onSavedForm}" 
+                                @value-changed="${this.onValueChanged}"
+                                .deleteForm="${()=>{}}"
+                    ></multi-form>
+                </div>
+                <div slot="button">
+                    <paper-button icon="close" class="bgBlue" @click="${this.resetColumns}">Reseteaza coloane</paper-button>
+                </div>
+            </paper-dialog>
+        `
+    }
+
+    _templateTH(column, index) {
+        if (column.hidden) {
+            return ""
+        }
+        return html`
+            <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
+                <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
+                    <div class="flex">${column.title}</div>
+                    ${when(column.sortable, () => this._templateSortable(column, index))}
+                </div>
+                <div class="head-input">
+                    ${when(column.filterable, () => this._templateFilterable(column, index))}
+                </div>
+            </div>
+        `
+    }
+
+    _templateSortable(column, index) {
+        return html`
+            <div>
+                <iron-icon icon="${column.icon}"></iron-icon>
+            </div>
+        `
+    }
+
+    _templateFilterable(column, index) {
+        return html`<input @input="${event => this._setFilter(event, column, index)}"/>`
     }
 
     render() {
         return html`
+            ${this._templateContextMenu}
+            
             <div class="container">
                 <div class="table">
                     <div class="row-group">
                         <div class="bottom"></div>
                     </div>
-                    <div class="thead-group">
+                    <div class="thead-group" @contextmenu="${this.openContextMenu}" >
                         <div class="thead-row">
                             <div class="thead-cell thead-cell-nr">
                                 <div>${this._selectedItemsNumber}</div>
@@ -264,28 +390,84 @@ class PaperTable extends LitElement {
                             </div>
                             ${repeat(this._columns,
                                     column => column.name,
-                                    (column, index) => html`
-                                <div class="thead-cell" style="${CBNUtils.isNoE(column.width) ? "" : "width:" + column.width + "px;"}">
-                                    <div class="head-title horizontal layout" @click="${event => this._setSort(event, column, index)}">
-                                        <div class="flex">${column.title}</div>
-                                        ${when(column.sortable,
-                                        () => html`
-                                            <div>
-                                                <iron-icon icon="${column.icon}"></iron-icon>
-                                            </div>
-                                        `)}
-                                    </div>
-                                    <div class="head-input">
-                                        ${when(column.filterable,
-                                                () => html`<input @input="${event => this._setFilter(event, column, index)}"/>`)}
-                                    </div>
-                                </div>
-                            `)}
+                                    (column, index)=>this._templateTH(column, index))}
                         </div>
                     </div>
                 </div>
             </div>
         `;
+    }
+
+    openContextMenu(event) {
+        if(event.target.tagName === "INPUT"){
+            return;
+        }
+        // Prevent the default context menu from appearing
+        event.preventDefault();
+        let contextMenu = this.renderRoot.querySelector("#context-menu");
+
+        console.log("open context menu")
+        contextMenu.classList.remove("hidden");
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.left = `${event.clientX}px`;
+        document.addEventListener("click", ()=>{
+            console.log("close context menu")
+            contextMenu.classList.add("hidden");
+        }, {once:true})
+    }
+
+    editColumns(){
+        this.renderRoot.querySelector("#context-menu-dialog").open();
+    }
+    async saveColumns(){
+        CBNUtils.startLoading()
+        await (await fetch(`/SaveTableColumns?_companyId=${encodeURIComponent(window.data._selectedCompany)}`,{
+            "headers": {
+                "cache-control": "no-cache",
+                "content-type": "application/json",
+            },
+            "method": "POST",
+            body: JSON.stringify({
+                columns: this.columnOrder,
+                collection: this.collection
+            })
+        })).json();
+        CBNUtils.stopLoading();
+        this.renderRoot.querySelector("#context-menu-dialog").close();
+
+        let newColumns = JSON.parse(JSON.stringify(this.originalColumns));
+        if (newColumns instanceof Array) {
+            newColumns = {columns: newColumns};
+        }
+        newColumns.order = this.columnOrder
+        this.setColumns(newColumns);
+        //this._updateFilteredItems()
+        //this.updateAllRows();
+        CBNUtils.fireEvent(this, "reload-items");
+    }
+    async resetColumns(){
+        CBNUtils.startLoading()
+        await (await fetch(`/SaveTableColumns?_companyId=${encodeURIComponent(window.data._selectedCompany)}`,{
+            "headers": {
+                "cache-control": "no-cache",
+                "content-type": "application/json",
+            },
+            "method": "POST",
+            body: JSON.stringify({
+                columns: [],
+                collection: this.collection
+            })
+        })).json();
+        CBNUtils.stopLoading();
+        this.renderRoot.querySelector("#context-menu-dialog").close();
+
+        let newColumns = JSON.parse(JSON.stringify(this.originalColumns));
+        if (newColumns instanceof Array) {
+            newColumns = {columns: newColumns};
+        }
+        newColumns.order = []
+        this.setColumns(newColumns);
+        CBNUtils.fireEvent(this, "reload-items");
     }
 
     firstUpdated(changedProperties) {
@@ -308,21 +490,77 @@ class PaperTable extends LitElement {
     }
 
     setColumns(config) {
-        if (config) {
+        if (!config) {
+            return;
+        }
+        if (this.originalColumns === config) {
+            return;
+        }
+        this.originalColumns = config;
+        config = JSON.parse(JSON.stringify(config));
             let columns = config.columns ? config.columns : config;
             this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
-            if (this._columns === columns) {
-                return;
+        this.columnOrder = config.order ?? [];
+        this.fields = new Set(config.fields??[]);
+        columns.forEach(column => {
+            let found = this.columnOrder.some(co => co.name === column.name)
+            if (!found) {
+                this.columnOrder.push({
+                    name: column.name,
+                    title: column.title
+                })
             }
-            columns.forEach(column => {
-                column.sortType = column.sortType || 0;
-                column.icon = this._getIcon(column.sortType);
-                column._templateFunction = makeFunction(column.template, undefined, [this, column, dayjs, html, ReportUtils]);
-                column._valueFunction = makeFunction(column.value, this._formatValue, [this, column, dayjs, html, ReportUtils]);
-                column._styleFunction = makeFunction(column.styleFunction, undefined, [this, column, dayjs, html, ReportUtils]);
-            });
-            this._columns = columns;
-        }
+        })
+
+
+        columns.sort((a, b) => {
+            let orderA = this.columnOrder.findIndex(co => co.name === a.name);
+            let orderB = this.columnOrder.findIndex(co => co.name === b.name);
+            if (orderA === -1) {
+                orderA = Number.MAX_SAFE_INTEGER;
+            }
+            if (orderB === -1) {
+                orderB = Number.MAX_SAFE_INTEGER;
+            }
+            return orderA - orderB;
+
+        });
+        this.columnOrder.forEach((co, index) => {
+            let column = columns.find(c => c.name === co.name);
+            if (co.hidden) {
+                column.styleFunction = "'display:none;'";
+                column.hidden = true;
+            } else {
+                if (column.fields) {
+                    column.fields.forEach(f => {
+                        this.fields.add(f);
+                    })
+                } else {
+                    this.fields.add(column.name);
+                }
+
+            }
+            if (co.title) {
+                column.title = co.title;
+            }
+            if (co.maxWidth) {
+                if (column.styleFunction) {
+                    column.styleFunction += "+'max-width: " + co.maxWidth + "px;overflow: hidden;'";
+                } else {
+                    column.styleFunction = "'max-width: " + co.maxWidth + "px;overflow: hidden;'";
+                }
+                column.width = co.maxWidth;
+            }
+        })
+
+        columns.forEach(column => {
+            column.sortType = column.sortType || 0;
+            column.icon = this._getIcon(column.sortType);
+            column._templateFunction = makeFunction(column.template, undefined, [this, column, dayjs, html, ReportUtils]);
+            column._valueFunction = makeFunction(column.value, this._formatValue, [this, column, dayjs, html, ReportUtils]);
+            column._styleFunction = makeFunction(column.styleFunction, undefined, [this, column, dayjs, html, ReportUtils]);
+        });
+        this._columns = columns;
     }
 
     setItems(items) {
@@ -614,6 +852,8 @@ class PaperTable extends LitElement {
         }
         if (column['styleFunction']) {
             cell.style = column._styleFunction(model);
+        } else {
+            cell.style = "";
         }
     }
 
