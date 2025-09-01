@@ -137,9 +137,11 @@ export class TableView extends EmptyView {
                 class="flex paper-material" 
                 .columns="${this.columns}" 
                 .items="${this.items}" 
+                .collection="${this.collection}" 
                 @dbl-click="${this._onDblClick}" 
                 @delete-item="${this._deleteItem}"
                 @cbn-table-select="${this._onTableSelect}"
+                    @reload-items="${()=>this._getItems()}"
             ></paper-table>
         `;
     }
@@ -162,8 +164,12 @@ export class TableView extends EmptyView {
     async _addDocument() {
         this._openDialog();
     }
+    get defaultModel() {
+        return {};
+    }
+
     _openDialog() {
-        this.model = {};
+        this.model = this.defaultModel;
         this.dialog.open();
     }
 
@@ -215,6 +221,10 @@ export class TableView extends EmptyView {
         this._getItems();
     }
 
+    get fields(){
+        return [...this.table.fields]
+
+    }
 }
 
 defineCustomTag("table-view", TableView);
