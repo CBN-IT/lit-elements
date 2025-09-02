@@ -94,6 +94,10 @@ export class IronForm extends LitElement {
             .hidden {
                 display: none !important;
             }
+
+            .highlight {
+                background-color: rgba(255, 187, 0, 0.5);
+            }
         `;
     }
 
@@ -445,10 +449,16 @@ export class IronForm extends LitElement {
      * @param name
      * @param value
      */
-    changeInputValue(name, value) {
+    changeInputValue(name, value, highlight = false) {
         let input = this.getInput(name);
         if (input) {
             input['value'] = value;
+            if(highlight){
+                input.classList.add("highlight");
+                setTimeout(() => {
+                    input.classList.remove("highlight");
+                }, 200);
+            }
         }
     }
 
