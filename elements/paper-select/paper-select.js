@@ -165,7 +165,6 @@ class PaperSelect extends PaperInputContainer {
         this._value = [];
         this._options = [];
         this._filteredOptions = [];
-        this.isNative = this._isNative();
         this.addEventListener('click', this._onClick.bind(this));
     }
     _getNativeSelect() {
@@ -249,10 +248,6 @@ class PaperSelect extends PaperInputContainer {
         if (changedProperties.has('focused') && this.focused) {
             this._filterOptions();
         }
-        if (changedProperties.has('freeText') && this.freeText) {
-            this.isNative = false;
-        }
-
     }
 
     set value(value) {
@@ -323,11 +318,6 @@ class PaperSelect extends PaperInputContainer {
 
         }) : [];
         this._options.sort(sortCompareObj("__label", {insensitive: true}))
-        if (this._options.length > 100) {
-            this.isNative = false;
-        } else {
-            this.isNative = this._isNative()
-        }
         this._putLabels();
         this._filterOptions();
         setTimeout(() => {
@@ -339,13 +329,22 @@ class PaperSelect extends PaperInputContainer {
     get options() {
         return this._options;
     }
-
-    _isNative() {
+    get isNative(){
+        if (this._options.length > 100) {
+            return false;
+        }
+        if (this.freeText) {
+            return false;
+        }
+        if (this.multiple) {
+            return false;
+        }
         const ua = window.navigator.userAgent;
         return (/[mM]obi/i.test(ua) || /[tT]ablet/i.test(ua) || /[aA]ndroid/i.test(ua));
     }
 
     _onChange(event) {
+        console.log(event)
         if (this.disabled) {
             return;
         }
