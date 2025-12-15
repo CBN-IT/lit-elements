@@ -147,13 +147,13 @@ export class SiloConfigurator extends LitElement {
     init(){
         this.initConfigs();
         let defaults = this.getDefaults();
-
         this.siloCanvasDraw = new SiloCanvasDraw({
             defaultCircleValues:this.defaultCircleValues,
             numberConfigElements:this.numberConfigElements,
             defaultValues: defaults
         });
-        this.siloCanvasDraw.valueChange(this.toDraw, "length", this.toDraw.length);
+        //this.toDraw = {...defaults};
+        this.siloCanvasDraw.valueChange(this.toDraw, "length", this.toDraw.length ?? defaults.length);
     }
 
     getDefaults(){

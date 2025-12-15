@@ -58,7 +58,7 @@ class DemoConfigurator extends LitElement {
     }
     render() {
         return html`
-            <silo-configurator></silo-configurator>
+            <silo-configurator .toDraw="${ {type: "steelSilo"} }"></silo-configurator>
         `;
     }
 }
