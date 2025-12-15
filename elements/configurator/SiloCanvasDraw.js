@@ -1,8 +1,7 @@
 import {Context} from 'canvas2svg';
 import {hexToRGB} from './hexToRGB.js';
-import {optimize} from 'svgo/dist/svgo.browser.js';
+import { optimize } from 'svgo/browser';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js'
-import {CBNUtils} from "../cbn-utils/CbnUtils";
 
 const {PI, tan, cos, sin, atan} = Math;
 
@@ -54,7 +53,7 @@ let settings = {
         "removeDesc": true,
         "removeDimensions": true,
         "removeStyleElement": true,
-        "removeScriptElement": true,
+        "removeScripts": true,
         "removeOffCanvasPaths": true
     },
     "gzip": false,
