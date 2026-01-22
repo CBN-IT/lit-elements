@@ -167,14 +167,14 @@ export class SiloCanvasDraw {
     calcDimensions(toDraw) {
         let hCilindru = toDraw.cylinderHeight;
         let roofAngleRad = degToRad(toDraw.roofAngle);
-        let floorAngleRad = degToRad(toDraw.floorAngle);
+        let floorAngleRad = degToRad(toDraw.floorAngle ?? 0);
         let hCon = toDraw.r * tan(roofAngleRad);
         let hConFloor = toDraw.r * tan(floorAngleRad);
         let hTot = hCilindru + hCon + hConFloor;
         let scale = this.size / Math.max(hTot, 2 * toDraw.r);
         let fClear = toDraw.floorClearance /*/ cos((toDraw.floorAngle * PI) / 180)*/;
-        let hFloorCutout = toDraw.hFloorCutout;
-        let hRoofCutout = toDraw.hRoofCutout;
+        let hFloorCutout = toDraw.hFloorCutout ?? 0;
+        let hRoofCutout = toDraw.hRoofCutout ?? 0;
         let cutoutReinforced = 0.3;
         let cutoutRoofX = (hRoofCutout + cutoutReinforced) / tan(roofAngleRad);
         let cutoutFloorX = (hFloorCutout + cutoutReinforced) / tan(floorAngleRad);
