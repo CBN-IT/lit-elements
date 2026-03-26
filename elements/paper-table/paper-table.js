@@ -319,17 +319,17 @@ class PaperTable extends LitElement {
                 <div class="context-menu-item" @click="${this.editColumns}">Editare Coloane</div>
                 <div class="context-menu-item" @click="${this.saveXls}">Salveaza ca Excel</div>
             </div>
-            <paper-dialog id="context-menu-dialog" @save-click="${this.saveColumns}"> 
-                <div slot="header" class="header">Editare Coloane Tabel ${this.collection}</div>   
+            <paper-dialog id="context-menu-dialog" @save-click="${this.saveColumns}">
+                <div slot="header" class="header">Editare Coloane Tabel ${this.collection}</div>
                 <div slot="body">
                     <multi-form id="context-menu-form"
-                                slot="body" 
-                                .config="${this.configFormColumns}" 
+                                slot="body"
+                                .config="${this.configFormColumns}"
                                 .model="${this.columnOrder}"
                                 canReorder
                                 .canDelete="${false}"
                                 noSubmitButton
-                                @saved-form="${this._onSavedForm}" 
+                                @saved-form="${this._onSavedForm}"
                                 @value-changed="${this.onValueChanged}"
                                 .deleteForm="${()=>{}}"
                     ></multi-form>
@@ -373,7 +373,6 @@ class PaperTable extends LitElement {
     render() {
         return html`
             ${this._templateContextMenu}
-            
             <div class="container">
                 <div class="table">
                     <div class="row-group">
@@ -498,8 +497,8 @@ class PaperTable extends LitElement {
         }
         this.originalColumns = config;
         config = JSON.parse(JSON.stringify(config));
-            let columns = config.columns ? config.columns : config;
-            this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
+        let columns = config.columns ? config.columns : config;
+        this._rowStyle = config.style ? new Function(`return ${config.style}`)() : undefined;
         this.columnOrder = config.order ?? [];
         this.fields = new Set(config.fields??[]);
         columns.forEach(column => {
@@ -556,7 +555,9 @@ class PaperTable extends LitElement {
         columns.forEach(column => {
             column.sortType = column.sortType || 0;
             column.icon = this._getIcon(column.sortType);
-            column._templateFunction = makeFunction(column.template, undefined, [this, column, dayjs, html, ReportUtils]);
+
+            column._highlightFilterFunction = makeFunction(column.highlightFilter, this._highlightItemFunction, [this, column, dayjs, html, ReportUtils]);
+            column._templateFunction = makeFunction(column.template, this._defaultTemplateFunction, [this, column, dayjs, html, ReportUtils]);
             column._valueFunction = makeFunction(column.value, this._formatValue, [this, column, dayjs, html, ReportUtils]);
             column._styleFunction = makeFunction(column.styleFunction, undefined, [this, column, dayjs, html, ReportUtils]);
         });
@@ -686,11 +687,7 @@ class PaperTable extends LitElement {
         let cell = document.createElement("div");
         cell.classList.add("cell");
         cell.style.height = this.rowHeight + "px";
-        if (column.template) {
-            render(column._templateFunction(model), cell);
-        } else {
-            cell.textContent = column._valueFunction(model);
-        }
+        render(column._templateFunction(model), cell);
         if (column["style"]) {
             cell.style = column["style"];
         }
@@ -845,11 +842,7 @@ class PaperTable extends LitElement {
     }
 
     _updateCell(cell, column, model) {
-        if (column.template) {
-            render(column._templateFunction(model), cell);
-        } else {
-            cell.textContent = column._valueFunction(model);
-        }
+        render(column._templateFunction(model), cell);
         if (column['styleFunction']) {
             cell.style = column._styleFunction(model);
         } else {
@@ -935,15 +928,13 @@ class PaperTable extends LitElement {
                 return false;
             }
             if (value instanceof Date) {
-                if (column.template) {
-                    let template = column._templateFunction(item);
-                    if (typeof template === "string") {
-                        return template.includes(searchItem);
-                    }
+                let template = column._templateFunction(item);
+                if (typeof template === "string") {
+                    return template.includes(searchItem);
                 }
                 searchItem=searchItem.replace(/[./-]/g, "-")
                 return dayjs(value).format("YYYY-MM-DD").includes(searchItem) ||
-                    dayjs(value).format("DD-MM-YYYY").includes()
+                    dayjs(value).format("DD-MM-YYYY").includes(searchItem)
 
             } else if (typeof value === "boolean" || typeof value === "number") {
                 return value.toString().toLowerCase().includes(searchItem)
@@ -1086,6 +1077,65 @@ class PaperTable extends LitElement {
         return toReturn;
     }
 
+    _defaultTemplateFunction(column, dayjs, html, ReportUtils, item) {
+        let value = column._valueFunction(item);
+
+        if (value instanceof Array) {
+            if(column.filterValue){
+                value.sort((a, b) => getOccurrences(column.filterValue,b).length - getOccurrences(column.filterValue,a).length)
+            }
+            return html`
+                <div title='${value.join('\n')}'>
+                    ${column.filterValue && value.length<=4?
+                value.map(v=>html`<span style='border: 2px solid orange;border-top-width: 0;border-bottom-width: 0;border-radius:20px;padding: 0 3px;'>${this._highlightFunction(column,v)}</span>` )
+                : [
+                    value.length>0?html`<span style='border: 2px solid orange;border-top-width: 0;border-bottom-width: 0;border-radius:20px;padding: 0 3px;'>${this._highlightFunction(column,value[0])}</span>`:'',
+                    value.length>1?html`<span style='border: 1px solid orange;border-radius:30px;padding: 0 3px;background-color: #ffdea2;'>+${value.length-1}</span>`:''
+                ]
+            }
+                </div>
+            `
+        }
+
+
+        if (value instanceof Date) {
+            value = dayjs(value).format("DD.MM.YYYY");
+        }
+        if (typeof value === "boolean" || typeof value === "number") {
+            value = value.toString()
+        }
+
+        if (column.filterValue) {
+            return this._highlightFunction(column, value);
+        }
+        return value;
+    }
+
+    _highlightFunction(column, item) {
+        if(CBNUtils.isNoE(column.filterValue)){
+            return item;
+        }
+        let found = getOccurrences(column.filterValue, item)
+
+        let returnArray = [];
+        let lastIndex = 0;
+        for(let i = 0; i < found.length; i++){
+            if(found[i].startIndex > lastIndex){
+                returnArray.push(item.substring(lastIndex, found[i].startIndex));
+            }
+            lastIndex = found[i].endIndex;
+            returnArray.push(column._highlightFilterFunction(item.substring(found[i].startIndex, found[i].endIndex)));
+        }
+        if(lastIndex < item.length){
+            returnArray.push(item.substring(lastIndex));
+        }
+        return returnArray;
+    }
+
+    _highlightItemFunction(column, dayjs, html, ReportUtils, item){
+        return html`<span style="background-color:#ffdea2;text-decoration: underline;">${item}</span>`
+    }
+
     async saveXls() {
         let data = [
             this._columns.map((col) => col.title),
@@ -1102,5 +1152,42 @@ class PaperTable extends LitElement {
     }
 
 }
+
+function getOccurrences(filterValue, item) {
+    let value = CBNUtils.removeDiacritics(item.toLowerCase());
+    let searchItems = filterValue.split(/[ \t]+/g);
+    let found = [];
+    for (let searchItem of searchItems) {
+        if (searchItem === "") {
+            continue
+        }
+        let startIndex = 0;
+        let endIndex = 0;
+        while (value.indexOf(searchItem, endIndex) >= 0) {
+            startIndex = value.indexOf(searchItem, endIndex);
+            endIndex = startIndex + searchItem.length;
+            found.push({startIndex, endIndex});
+        }
+    }
+    return found
+}
+function mergeOverlappingIntervals(intervals) {
+    // sort
+    intervals.sort((a, b) => a.startIndex - b.startIndex);
+
+    let previous = intervals[0];
+    let result = [previous];
+
+    for (let i = 1; i < intervals.length; i++) {
+        let current = intervals[i];
+        if (previous.endIndex >= current.startIndex) {
+            previous.endIndex = previous.endIndex > current.endIndex ? previous.endIndex : current.endIndex;
+        } else {
+            result.push(current);
+            previous = current;
+        }
+    }
+    return result;
+};
 
 defineCustomTag('paper-table', PaperTable);
