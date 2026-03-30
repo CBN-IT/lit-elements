@@ -54,7 +54,17 @@ class AddReport extends AddWithLink {
             </paper-tabs>
         `;
     }
-
+    shouldUpdate(changedProperties) {
+        super.shouldUpdate(changedProperties);
+        let element = this.config.elements.find(v=>v.name==="importTemplates");
+        if (element && window.data._reports) {
+            element.options = window.data._reports.map(v => ({
+                value: v._path,
+                label: v.reportName
+            }));
+        }
+        return true;
+    }
     _onValueChanged(event) {
         this.model[event.detail.name] = event.detail.value;
     }
