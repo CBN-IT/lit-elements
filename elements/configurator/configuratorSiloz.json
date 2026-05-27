@@ -196,13 +196,13 @@
     {
       "type": "text",
       "dbType": "double",
-      "name": "hRoofCutout",
-      "label": "Roof Cutout",
+      "name": "hRoof",
+      "label": "Roof Height",
       "class": "col-xs-6 col-sm-flex-1",
       "min": 0,
       "max": 7,
       "step": 0.1,
-      "defaultValue": 0.3,
+      "defaultValue": 4,
       "required": true,
       "disabled": false
     },
@@ -221,8 +221,8 @@
     {
       "type": "text",
       "dbType": "double",
-      "name": "hFloorCutout",
-      "label": "Floor Cutout",
+      "name": "hFloor",
+      "label": "Floor Height",
       "class": "col-xs-6 col-sm-flex-1",
       "min": 0,
       "max": 7,

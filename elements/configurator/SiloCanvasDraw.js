@@ -118,7 +118,7 @@ export class SiloCanvasDraw {
                     ctxCanvas,
                     defaultCircleValues = {},
                     numberConfigElements = [],
-                    minDistBelowRoof = 0,
+                    minDistBelowRoof = 0.8,
                     defaultValues={}
                 } = {}) {
         if (ctxCanvas) {
@@ -149,6 +149,7 @@ export class SiloCanvasDraw {
             https://agridrydryers.com/wp-content/uploads/2019/01/repose_angles.pdf
             */
             "hRoofCutout": 0,
+            "hFloorCutout":0,
             'roofAngle': 30,
             "floorAngle": 0,
             "floorClearance": 1,
@@ -168,31 +169,36 @@ export class SiloCanvasDraw {
         let hCilindru = toDraw.cylinderHeight;
         let roofAngleRad = degToRad(toDraw.roofAngle);
         let floorAngleRad = degToRad(toDraw.floorAngle ?? 0);
-        let hCon = toDraw.r * tan(roofAngleRad);
+        let hConRoof = toDraw.r * tan(roofAngleRad);
         let hConFloor = toDraw.r * tan(floorAngleRad);
-        let hTot = hCilindru + hCon + hConFloor;
+        let hTot = hCilindru + hConRoof + hConFloor;
         let scale = this.size / Math.max(hTot, 2 * toDraw.r);
         let fClear = toDraw.floorClearance /*/ cos((toDraw.floorAngle * PI) / 180)*/;
-        let hFloorCutout = toDraw.hFloorCutout ?? 0;
-        let hRoofCutout = toDraw.hRoofCutout ?? 0;
-        let cutoutReinforced = 0.3;
-        let cutoutRoofX = (hRoofCutout + cutoutReinforced) / tan(roofAngleRad);
-        let cutoutFloorX = (hFloorCutout + cutoutReinforced) / tan(floorAngleRad);
+
+        let cutoutHeight = Math.max((toDraw.hRoof - hConRoof), 0.3);
+        let cutoutWitdh = Math.abs(toDraw.r - (toDraw.hRoof - cutoutHeight) / tan(roofAngleRad));
+
+        let hFloorCutout = hConFloor - toDraw.hFloor;
+        let hRoofCutout = hConRoof - toDraw.hRoof;
+        let cutoutFloorWidth = hFloorCutout / tan(floorAngleRad);
+
         return {
             hCilindru,
-            hCon,
+            hConRoof,
             hConFloor,
             hTot,
             scale,
             fClear,
             roofAngleRad,
             floorAngleRad,
-            hFloorCutout,
-            hRoofCutout,
             r: toDraw.r,
-            cutoutRoofX,
-            cutoutFloorX,
-            cutoutReinforced
+            cutoutWitdh,
+            cutoutFloorWidth,
+            cutoutHeight,
+            hRoof: toDraw.hRoof,
+            hFloor: toDraw.hFloor,
+            hRoofCutout,
+            hFloorCutout
         }
     }
 
@@ -227,7 +233,7 @@ export class SiloCanvasDraw {
             let hRoof = (r - cerc.r) * tan(grainAngle);
             let hFloorClr = (r - cerc.r) * tan(floorAngleRad);
             let cutoutCercRoofH = hRoofCutout - Math.min(cerc.r * tan(roofAngleRad), hRoofCutout);
-            let cutoutCercFloorH = hFloorCutout - Math.min(cerc.r * tan(floorAngleRad), hFloorCutout);
+            let cutoutCercFloorH =  hFloorCutout - Math.min(cerc.r * tan(floorAngleRad), hFloorCutout);
 
             cerc.hCable = (hCilindru + hRoof + hFloorClr - fClear + cerc.above - cutoutCercRoofH - cutoutCercFloorH).toFixed(1) * 1;
             //always leave at least 1m below roof
@@ -245,16 +251,14 @@ export class SiloCanvasDraw {
             }
         }
 
-        if (['floorAngle'].includes(name) && toDraw.floorAngle > 0) {
-            toDraw.hFloorCutout = 0.3;
-        }
-        if (['roofAngle'].includes(name) && toDraw.roofAngle > 0) {
-            toDraw.hRoofCutout = 0.3;
-        }
 
         if (name === 'type') {
             if (value !== "silo" && value !== "steelSilo") {
                 [toDraw.roofAngle, toDraw.floorAngle] = [0, toDraw.roofAngle || toDraw.floorAngle || 30];
+                [toDraw.hRoof, toDraw.hFloor] = [0, toDraw.hFloor || toDraw.hRoof];
+            } else {
+                [toDraw.floorAngle, toDraw.roofAngle] = [0, toDraw.roofAngle || toDraw.floorAngle || 30];
+                [toDraw.hFloor, toDraw.hRoof] = [0, toDraw.hFloor || toDraw.hRoof];
             }
             if (value !== "squareSilo") {
                 toDraw.length = toDraw.width;
@@ -277,47 +281,51 @@ export class SiloCanvasDraw {
             toDraw.length = value;
         }
 
+        let hConRoof = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
+        let hFloor = toDraw.r * Math.tan((toDraw.floorAngle / 180) * Math.PI);
+        if (toDraw.hRoofCutout) {
+            toDraw.hRoof = (hConRoof - toDraw.hRoofCutout).toFixed(1) * 1;
+            delete toDraw.hRoofCutout
+        }
+        if (!toDraw.hRoof) {
+            toDraw.hRoof = 0;
+        }
+
+        if (toDraw.hFloorCutout) {
+            toDraw.hFloor = (hFloor - toDraw.hFloorCutout).toFixed(1) * 1;
+            delete toDraw.hFloorCutout
+        }
+        if (!toDraw.hFloor) {
+            toDraw.hFloor = 0;
+        }
+        if(["floorAngle"].includes(name)){
+            let floorAngleRad = degToRad(toDraw.floorAngle ?? 0);
+            toDraw.hFloor = (toDraw.r * tan(floorAngleRad)).toFixed(1)*1 - 0.3;
+        }
+
         if (['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d", "width", "length", 'type'].includes(name)) {
             toDraw.totalHeight = (
                 toDraw.cylinderHeight * 1 +
-                toDraw.r *
-                Math.tan((toDraw.roofAngle / 180) * Math.PI) +
-                toDraw.r *
-                Math.tan((toDraw.floorAngle / 180) * Math.PI)
+                hConRoof +
+                hFloor
             ).toFixed(1) * 1;
-            toDraw.hRoofCutout = (toDraw.totalHeight - toDraw.siloHeight - toDraw.hFloorCutout).toFixed(1) * 1;
-
-            let hCon = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
-            if (toDraw.hRoofCutout > hCon / 3) {
-                toDraw.hRoofCutout = (hCon / 3).toFixed(1) * 1;
-            }
-            if (toDraw.hRoofCutout < 0.3) {
-                toDraw.hRoofCutout = 0.3;
-            }
-
-
-            toDraw.siloHeight = (toDraw.totalHeight - toDraw.hRoofCutout - toDraw.hFloorCutout).toFixed(1) * 1;
         }
 
-        if (['hRoofCutout','hFloorCutout'].includes(name)) {
-            toDraw.totalHeight = (
+        if (['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d", "width", "length", 'type', "hRoof", "hFloor"].includes(name)) {
+            toDraw.siloHeight = (
                 toDraw.cylinderHeight * 1 +
-                toDraw.r *
-                Math.tan((toDraw.roofAngle / 180) * Math.PI) +
-                toDraw.r *
-                Math.tan((toDraw.floorAngle / 180) * Math.PI)
+                toDraw.hRoof * 1 +
+                toDraw.hFloor * 1
             ).toFixed(1) * 1;
-            toDraw.siloHeight = (toDraw.totalHeight - toDraw.hRoofCutout - toDraw.hFloorCutout).toFixed(1) * 1;
+        }
+        if (['siloHeight'].includes(name)) {
+            toDraw.cylinderHeight = (
+                toDraw.siloHeight * 1 -
+                toDraw.hRoof * 1 -
+                toDraw.hFloor * 1
+            ).toFixed(1) * 1;
         }
 
-        if (["totalHeight", "siloHeight"].includes(name)) {
-            if (toDraw.siloHeight > toDraw.totalHeight) {
-                toDraw.hRoofCutout = 0.3;
-                toDraw.siloHeight = toDraw.totalHeight - toDraw.hRoofCutout - toDraw.hFloorCutout;
-            } else {
-                toDraw.hRoofCutout = (toDraw.totalHeight - toDraw.siloHeight - toDraw.hFloorCutout).toFixed(1) * 1;
-            }
-        }
 
         if (['d', 'r', "width", "length"].includes(name)) {
             for (const [maxR, defaultCircles] of Object.entries(this.defaultCircleValues)) {
@@ -341,7 +349,7 @@ export class SiloCanvasDraw {
                 "r", "d", "width", "length",
                 "totalHeight", "siloHeight",
                 "floorClearance", "rSensorY", 'type',
-                'hRoofCutout', 'hFloorCutout'].includes(name) ||
+                'hRoof', 'hFloor'].includes(name) ||
             name.endsWith(".rSensorY") ||
             name.endsWith(".above") ||
             name.endsWith(".r")
@@ -520,8 +528,7 @@ export class SiloCanvasDraw {
 
     drawMain() {
         let ctx = this.ctxSiloz;
-        const {hCilindru, hCon, hConFloor, scale, fClear, hFloorCutout, cutoutReinforced, floorAngleRad} = this.calcDimensions(this.toDraw);
-        let cutoutFloorX = (hFloorCutout + cutoutReinforced) / tan(floorAngleRad);
+        const {hCilindru, hConRoof, hConFloor, scale, fClear, hFloorCutout, cutoutFloorWidth} = this.calcDimensions(this.toDraw);
 
         ctx.strokeStyle = 'black';
         ctx.clearRect(0, 0, this.size, this.size);
@@ -550,7 +557,7 @@ export class SiloCanvasDraw {
                 continue;
             }
             let rSensorY = cerc.rSensorY;
-            let hFloorStart = cerc.r * tan(degToRad(this.toDraw.floorAngle))+ (cerc.r < cutoutFloorX ? hFloorCutout : 0);
+            let hFloorStart = cerc.r < cutoutFloorWidth ? hFloorCutout : cerc.r * tan(degToRad(this.toDraw.floorAngle));
 
             ctx.strokeStyle = this.colors[i % this.colors.length];
 
@@ -605,7 +612,7 @@ export class SiloCanvasDraw {
                     r: cerc.r,
                     nrCerc: i,
                     nrCercuri,
-                    maxH: this.size - (hCilindru + hCon + hConFloor) * scale,
+                    maxH: this.size - (hCilindru + hConRoof + hConFloor) * scale,
                     drawDistanceBetweenSensors: false,
 
                 });
@@ -618,7 +625,7 @@ export class SiloCanvasDraw {
             ctx.setLineDash([10, 10]);
             ctx.moveTo(
                 this.size / 2,
-                this.size - (hCilindru + hCon + hConFloor) * scale
+                this.size - (hCilindru + hConRoof + hConFloor) * scale
             );
             ctx.lineTo(this.size / 2, this.size);
             ctx.stroke();
@@ -802,7 +809,7 @@ export class SiloCanvasDraw {
     }
 
     drawAcoperisSiloz(ctx) {
-        const {hCilindru, hCon, hConFloor, scale, r, hRoofCutout, cutoutReinforced, cutoutRoofX} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hConRoof, hConFloor, scale, r, hRoof, cutoutHeight, cutoutWitdh} = this.calcDimensions(this.toDraw);
 
         let extraCornerX = r / 20;
         let extraCornerY = tan(degToRad(this.toDraw.roofAngle)) * extraCornerX;
@@ -815,19 +822,14 @@ export class SiloCanvasDraw {
             this.size - (hCilindru + hConFloor - extraCornerY) * scale
         );
 
-        if (hCon > 0 && hRoofCutout > 0) {
+        if (hConRoof > 0) {
             ctx.lineTo(
-                0.5 * this.size - cutoutRoofX * scale,
-                this.size - (hCilindru + hCon + hConFloor - (hRoofCutout + cutoutReinforced)) * scale
+                0.5 * this.size - cutoutWitdh * scale,
+                this.size - (hCilindru + hConFloor + hRoof - cutoutHeight) * scale
             );
             ctx.lineTo(
-                0.5 * this.size + cutoutRoofX * scale,
-                this.size - (hCilindru + hCon + hConFloor - (hRoofCutout + cutoutReinforced)) * scale
-            );
-        } else {
-            ctx.lineTo(
-                0.5 * this.size,
-                this.size - (hCilindru + hCon + hConFloor) * scale
+                0.5 * this.size + cutoutWitdh * scale,
+                this.size - (hCilindru + hConFloor + hRoof - cutoutHeight) * scale
             );
         }
 
@@ -838,9 +840,14 @@ export class SiloCanvasDraw {
         ctx.stroke();
         ctx.closePath();
 
-        if (hCon > 0 && hRoofCutout > 0) {
+        if (hConRoof > 0) {
             ctx.beginPath();
-            ctx.rect(0.5 * this.size - cutoutRoofX * scale, this.size - (hCilindru + hCon + hConFloor - (hRoofCutout)) * scale, cutoutRoofX * 2 * scale, cutoutReinforced * scale);
+            ctx.rect(
+                0.5 * this.size - cutoutWitdh * scale,
+                this.size - (hCilindru + hConFloor + hRoof) * scale,
+                cutoutWitdh * 2 * scale,
+                cutoutHeight * scale
+            );
             ctx.fillStyle = "black";
             ctx.fill();
         }
@@ -856,19 +863,19 @@ export class SiloCanvasDraw {
         });
     }
     drawFundSiloz(ctx) {
-        const {hConFloor, scale, fClear, r, hFloorCutout, cutoutReinforced, cutoutFloorX} = this.calcDimensions(this.toDraw);
-
+        const {hConFloor, scale, fClear, r, hFloorCutout,  cutoutFloorWidth} = this.calcDimensions(this.toDraw);
+        let cutoutReinforced = 0.3
         ctx.beginPath();
         ctx.lineWidth = 4;
         ctx.setLineDash([]);
         ctx.moveTo(this.size / 2 - r * scale, this.size - hConFloor * scale);
         if (hConFloor > 0 && hFloorCutout > 0) {
             ctx.lineTo(
-                this.size / 2 - cutoutFloorX * scale,
+                this.size / 2 - cutoutFloorWidth * scale,
                 this.size - (hFloorCutout + cutoutReinforced) * scale
             );
             ctx.lineTo(
-                this.size / 2 + cutoutFloorX * scale,
+                this.size / 2 + cutoutFloorWidth * scale,
                 this.size - (hFloorCutout + cutoutReinforced) * scale
             );
         } else {
@@ -876,11 +883,17 @@ export class SiloCanvasDraw {
         }
 
         ctx.lineTo(this.size / 2 + r * scale, this.size - hConFloor * scale);
+
         ctx.stroke();
         ctx.closePath();
         if (hConFloor > 0 && hFloorCutout > 0) {
             ctx.beginPath();
-            ctx.rect(0.5 * this.size - cutoutFloorX * scale, this.size - (hFloorCutout + cutoutReinforced) * scale, cutoutFloorX * 2 * scale, cutoutReinforced * scale);
+            ctx.rect(
+                0.5 * this.size - cutoutFloorWidth * scale,
+                this.size - (hFloorCutout + cutoutReinforced) * scale,
+                cutoutFloorWidth * 2 * scale,
+                cutoutReinforced * scale
+            );
             ctx.fillStyle = "black";
             ctx.fill();
             ctx.closePath();
@@ -898,11 +911,11 @@ export class SiloCanvasDraw {
 
         if (hConFloor > 0 && hFloorCutout > 0) {
             ctx.lineTo(
-                this.size / 2 - cutoutFloorX * scale,
+                this.size / 2 - cutoutFloorWidth * scale,
                 this.size - (hFloorCutout + fClear) * scale
             );
             ctx.lineTo(
-                this.size / 2 + cutoutFloorX * scale,
+                this.size / 2 + cutoutFloorWidth * scale,
                 this.size - (hFloorCutout  + fClear) * scale
             );
         } else {
@@ -944,8 +957,8 @@ export class SiloCanvasDraw {
     }
     drawPeretiSiloz(ctx) {
         const {
-            hCilindru, hCon, hConFloor, scale, r, hRoofCutout, cutoutReinforced,
-            hFloorCutout, cutoutRoofX, cutoutFloorX
+            hCilindru, hConRoof, hConFloor, scale, r, hRoofCutout, cutoutHeight,
+            hFloorCutout, cutoutWitdh, cutoutFloorWidth
         } = this.calcDimensions(this.toDraw);
 
         ctx.beginPath();
@@ -957,19 +970,19 @@ export class SiloCanvasDraw {
             this.size / 2 - r * scale,
             this.size - (hCilindru + hConFloor) * scale
         );
-        if (hCon > 0 && hRoofCutout > 0) {
+        if (hConRoof > 0 && hRoofCutout > 0) {
             ctx.lineTo(
-                0.5 * this.size - cutoutRoofX * scale,
-                this.size - (hCilindru + hCon + hConFloor - (hRoofCutout + cutoutReinforced)) * scale
+                0.5 * this.size - cutoutWitdh * scale,
+                this.size - (hCilindru + hConRoof + hConFloor - (hRoofCutout + cutoutHeight)) * scale
             );
             ctx.lineTo(
-                0.5 * this.size + cutoutRoofX * scale,
-                this.size - (hCilindru + hCon + hConFloor - (hRoofCutout + cutoutReinforced)) * scale
+                0.5 * this.size + cutoutWitdh * scale,
+                this.size - (hCilindru + hConRoof + hConFloor - (hRoofCutout + cutoutHeight)) * scale
             );
         } else {
             ctx.lineTo(
                 0.5 * this.size,
-                this.size - (hCilindru + hCon + hConFloor) * scale
+                this.size - (hCilindru + hConRoof + hConFloor) * scale
             );
         }
         ctx.lineTo(
@@ -981,12 +994,12 @@ export class SiloCanvasDraw {
 
         if (hConFloor > 0 && hFloorCutout > 0) {
             ctx.lineTo(
-                this.size / 2 + cutoutFloorX * scale,
-                this.size - (hFloorCutout + cutoutReinforced) * scale-2
+                this.size / 2 + cutoutFloorWidth * scale,
+                this.size - (hFloorCutout + cutoutHeight) * scale-2
             );
             ctx.lineTo(
-                this.size / 2 - cutoutFloorX * scale,
-                this.size - (hFloorCutout + cutoutReinforced) * scale-2
+                this.size / 2 - cutoutFloorWidth * scale,
+                this.size - (hFloorCutout + cutoutHeight) * scale-2
             );
         } else {
             ctx.lineTo(
@@ -1016,19 +1029,19 @@ export class SiloCanvasDraw {
     }
 
     drawGrain(ctx) {
-        let {hCilindru, hCon, hConFloor, scale, r, hRoofCutout, hFloorCutout, cutoutReinforced, cutoutFloorX} = this.calcDimensions(this.toDraw);
+        let {hCilindru, hRoof, hConFloor, scale, r, hRoofCutout, hFloorCutout, cutoutHeight, cutoutFloorWidth} = this.calcDimensions(this.toDraw);
         let {hGrainCenter, hGrainSide} = this.toDraw;
 
         let grainAngle = this.toDraw.grainAngle;
         let hConGrain = r * tan(degToRad(grainAngle));
-        hCon = hCon - hRoofCutout - 1;
-        if (hConGrain > hCon) {
-            hCilindru -= hConGrain - hCon;
-            hCon = hConGrain
+        hRoof -= hRoofCutout + 0.5;
+        if (hConGrain > hRoof) {
+            hCilindru -= hConGrain - hRoof;
+            hRoof = hConGrain
         }
         if (hGrainCenter && hGrainSide) {
             hCilindru = hGrainSide;
-            hCon = hGrainCenter - hGrainSide;
+            hRoof = hGrainCenter - hGrainSide;
         }
 
 
@@ -1046,7 +1059,7 @@ export class SiloCanvasDraw {
         //top center
         ctx.arcTo(
             0.5 * this.size,
-            this.size - (hCilindru + hCon + hConFloor) * scale,
+            this.size - (hCilindru + hRoof + hConFloor) * scale,
 
             this.size / 2 + r * scale,
             this.size - (hCilindru + hConFloor) * scale,
@@ -1066,12 +1079,12 @@ export class SiloCanvasDraw {
         //bottom center
         if (hConFloor > 0 && hFloorCutout > 0) {
             ctx.lineTo(
-                this.size / 2 + cutoutFloorX * scale,
-                this.size - (hFloorCutout + cutoutReinforced) * scale-2
+                this.size / 2 + cutoutFloorWidth * scale,
+                this.size - (hFloorCutout + cutoutHeight) * scale-2
             );
             ctx.lineTo(
-                this.size / 2 - cutoutFloorX * scale,
-                this.size - (hFloorCutout + cutoutReinforced) * scale-2
+                this.size / 2 - cutoutFloorWidth * scale,
+                this.size - (hFloorCutout + cutoutHeight) * scale-2
             );
         } else {
             ctx.lineTo(
@@ -1101,13 +1114,13 @@ export class SiloCanvasDraw {
         this.drawSiloRadiusMarker(ctx);
     }
     drawTotalHeightMarker(ctx){
-        const {hCilindru, hCon, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hConRoof, hConFloor, scale, r, hFloorCutout, hRoofCutout} = this.calcDimensions(this.toDraw);
         //draw silo height marker
         this.drawText({
             ctx,
             text: (this.toDraw.siloHeight || this.toDraw.totalHeight).toFixed(1) + 'm',
             x: this.size / 2 + r * scale -5,
-            y: this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale + 10,
+            y: this.size - (hCilindru + hConFloor + hConRoof - hRoofCutout) * scale + 10,
             angle: -PI / 2,
             textAlign: 'right',
             color:"black"
@@ -1115,17 +1128,17 @@ export class SiloCanvasDraw {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
-        ctx.moveTo(this.size / 2 + r * scale + 20, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
-        ctx.lineTo(this.size / 2 + r * scale + 40, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
-        ctx.lineTo(this.size / 2 + r * scale + 40, this.size);
-        ctx.lineTo(this.size / 2 + r * scale + 20, this.size);
+        ctx.moveTo(this.size / 2 + r * scale + 20, this.size - (hCilindru + hConFloor + hConRoof - hRoofCutout) * scale);
+        ctx.lineTo(this.size / 2 + r * scale + 40, this.size - (hCilindru + hConFloor + hConRoof - hRoofCutout) * scale);
+        ctx.lineTo(this.size / 2 + r * scale + 40, this.size - hFloorCutout * scale);
+        ctx.lineTo(this.size / 2 + r * scale + 20, this.size - hFloorCutout * scale);
 
         ctx.stroke();
         ctx.closePath();
 
     }
     drawCylinderHeightMarker(ctx){
-        const {hCilindru, hCon, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hConRoof, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutHeight} = this.calcDimensions(this.toDraw);
         // draw cylinder heigth marker
         this.drawText({
             ctx,
@@ -1147,22 +1160,22 @@ export class SiloCanvasDraw {
         ctx.closePath();
     }
     drawRoofHeightMarker(ctx){
-        const {hCilindru, hCon, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hRoof,hConRoof, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutHeight} = this.calcDimensions(this.toDraw);
         //draw roof heigth marker
         if (this.toDraw.roofAngle > 0) {
             this.drawText({
                 ctx,
-                text: (hCon - hRoofCutout).toFixed(1) + 'm',
+                text: (hRoof).toFixed(1) + 'm',
                 x: this.size / 2 - r * scale - 50,
-                y: this.size - (hCilindru + hConFloor + (hCon - hRoofCutout)/2) * scale ,
+                y: this.size - (hCilindru + hConFloor + (hRoof)/2) * scale ,
                 angle: -PI / 2,
                 textAlign: 'center'
             });
             ctx.beginPath();
             ctx.strokeStyle = "black";
             ctx.lineWidth = 1;
-            ctx.moveTo(this.size / 2 - r * scale - 20, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
-            ctx.lineTo(this.size / 2 - r * scale - 40, this.size - (hCilindru + hConFloor + hCon - hRoofCutout) * scale);
+            ctx.moveTo(this.size / 2 - r * scale - 20, this.size - (hCilindru + hConFloor + hRoof) * scale);
+            ctx.lineTo(this.size / 2 - r * scale - 40, this.size - (hCilindru + hConFloor + hRoof) * scale);
             ctx.lineTo(this.size / 2 - r * scale - 40, this.size - (hCilindru + hConFloor) * scale);
             ctx.lineTo(this.size / 2 - r * scale - 20, this.size - (hCilindru + hConFloor) * scale);
 
@@ -1171,13 +1184,13 @@ export class SiloCanvasDraw {
         }
     }
     drawFloorHeightMarker(ctx){
-        const {hCilindru, hCon, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const { hFloor, scale, r, hConFloor, hFloorCutout} = this.calcDimensions(this.toDraw);
         if (this.toDraw.floorAngle > 0) {
             this.drawText({
                 ctx,
-                text: (hConFloor).toFixed(1) + 'm',
+                text: (hFloor).toFixed(1) + 'm',
                 x: this.size / 2 - r * scale - 50,
-                y: this.size - (hConFloor / 2) * scale ,
+                y: this.size - (hFloor / 2 + hFloorCutout) * scale ,
                 angle: -PI / 2,
                 textAlign: 'center'
             });
@@ -1186,15 +1199,15 @@ export class SiloCanvasDraw {
             ctx.lineWidth = 1;
             ctx.moveTo(this.size / 2 - r * scale - 20, this.size - hConFloor * scale);
             ctx.lineTo(this.size / 2 - r * scale - 40, this.size - hConFloor * scale);
-            ctx.lineTo(this.size / 2 - r * scale - 40, this.size);
-            ctx.lineTo(this.size / 2 - r * scale - 20, this.size);
+            ctx.lineTo(this.size / 2 - r * scale - 40, this.size - hFloorCutout * scale);
+            ctx.lineTo(this.size / 2 - r * scale - 20, this.size - hFloorCutout * scale);
 
             ctx.stroke();
             ctx.closePath();
         }
     }
     drawSiloRadiusMarker(ctx){
-        const {hCilindru, hCon, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutReinforced} = this.calcDimensions(this.toDraw);
+        const {hCilindru, hConRoof, hConFloor, scale, r, roofAngleRad, hRoofCutout, cutoutHeight} = this.calcDimensions(this.toDraw);
         //draw silo radius
         this.drawText({
             ctx,
@@ -1413,10 +1426,10 @@ export class SiloCanvasDraw {
             uncoveredArea = 100;
         }
         const radius = this.toDraw.r;
-        const hCon = this.toDraw.r * tan(degToRad(this.toDraw.roofAngle));
+        const hConRoof = this.toDraw.r * tan(degToRad(this.toDraw.roofAngle));
         const hConFloor = this.toDraw.r * tan(degToRad(this.toDraw.floorAngle));
         const cylinderVol = PI * radius * radius * this.toDraw.cylinderHeight;
-        const topVol = (PI * radius * radius * (hCon - 2)) / 3;
+        const topVol = (PI * radius * radius * (hConRoof - 2)) / 3;
         const bottomVol = (PI * radius * radius * hConFloor) / 3;
         const volume = cylinderVol + topVol + bottomVol;
         return {
