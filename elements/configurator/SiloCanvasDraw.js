@@ -241,6 +241,39 @@ export class SiloCanvasDraw {
         }
     }
 
+
+    checkMissingValues(toDraw) {
+        let hConRoof = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
+        let hConFloor = toDraw.r * Math.tan((toDraw.floorAngle / 180) * Math.PI);
+
+        if (toDraw.hFloorCutout !== undefined) {
+            toDraw.hFloor = (hConFloor - toDraw.hFloorCutout).toFixed(1) * 1;
+            delete toDraw.hFloorCutout
+        }
+        if (toDraw.hFloor === undefined) {
+            if (toDraw.floorAngle > 0) {
+                toDraw.hFloor = hConFloor.toFixed(1) * 1;
+            } else {
+                toDraw.hFloor = 0;
+            }
+        }
+
+
+
+        if (toDraw.hRoofCutout !== undefined) {
+            toDraw.hRoof = (hConRoof - toDraw.hRoofCutout).toFixed(1) * 1;
+            delete toDraw.hRoofCutout
+        }
+        if (toDraw.hRoof === undefined) {
+            if (toDraw.roofAngle > 0) {
+                let hRoof = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
+                toDraw.hRoof = hRoof.toFixed(1) * 1;
+            } else {
+                toDraw.hRoof = 0;
+            }
+        }
+    }
+
     valueChange(toDraw, name, value) {
         if (this.numberConfigElements.includes(name)) {
             if (name.includes(".")) {
@@ -283,21 +316,17 @@ export class SiloCanvasDraw {
 
         let hConRoof = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
         let hFloor = toDraw.r * Math.tan((toDraw.floorAngle / 180) * Math.PI);
-        if (toDraw.hRoofCutout) {
-            toDraw.hRoof = (hConRoof - toDraw.hRoofCutout).toFixed(1) * 1;
-            delete toDraw.hRoofCutout
-        }
         if (!toDraw.hRoof) {
             toDraw.hRoof = 0;
         }
+        if (toDraw.hFloor === undefined) {
+            if (toDraw.floorAngle > 0) {
+                toDraw.hFloor = hFloor.toFixed(1) * 1;
+            } else {
+                toDraw.hFloor = 0;
+            }
+        }
 
-        if (toDraw.hFloorCutout) {
-            toDraw.hFloor = (hFloor - toDraw.hFloorCutout).toFixed(1) * 1;
-            delete toDraw.hFloorCutout
-        }
-        if (!toDraw.hFloor) {
-            toDraw.hFloor = 0;
-        }
         if(["floorAngle"].includes(name)){
             let floorAngleRad = degToRad(toDraw.floorAngle ?? 0);
             toDraw.hFloor = (toDraw.r * tan(floorAngleRad)).toFixed(1)*1 - 0.3;
@@ -362,6 +391,7 @@ export class SiloCanvasDraw {
 
 
     draw(toDraw, {serialized = false} = {}) {
+        this.checkMissingValues(toDraw);
         this.toDraw = toDraw;
 
         if (!this.toDraw.type || this.toDraw.type === "silo") {

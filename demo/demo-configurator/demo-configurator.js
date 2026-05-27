@@ -57,8 +57,81 @@ class DemoConfigurator extends LitElement {
     firstUpdated() {
     }
     render() {
+        let obj = {
+            "type": "steelSilo",
+            "nrSilos": 1,
+            "pricePerT": 200,
+            "d": 8,
+            "r": 4,
+            "width": 8,
+            "length": 8,
+            "cylinderHeight": 11.76,
+            "siloHeight": 18,
+            "roofAngle": 30,
+            "totalHeight": 18.1,
+            "hRoofCutout": 0.1,
+            "floorAngle": 45,
+            "floorClearance": 1,
+            "rSensorY": 1.5,
+            "rSensorX": 3,
+            "grainAngle": 23,
+            "circles": [
+                {
+                    "wireNr": 0,
+                    "r": 0,
+                    "offsetAngle": 0,
+                    "above": 0,
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "rSensorY": 1.5,
+                    "hCable": 0,
+                    "sensorNr": 0
+                },
+                {
+                    "wireNr": 3,
+                    "r": 2.2,
+                    "offsetAngle": 0,
+                    "above": 0,
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "rSensorY": 1.5,
+                    "hCable": 13.6,
+                    "sensorNr": 10
+                },
+                {
+                    "wireNr": 0,
+                    "r": 0,
+                    "offsetAngle": 0,
+                    "above": 0,
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "rSensorY": 1.5,
+                    "sensorNr": 0,
+                    "hCable": 0
+                },
+                {
+                    "wireNr": 0,
+                    "r": 0,
+                    "offsetAngle": 0,
+                    "above": 0,
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "rSensorY": 1.5,
+                    "sensorNr": 0,
+                    "hCable": 0
+                }
+            ],
+            "defineSilo": true,
+            "marca": "",
+            "marca_label": "",
+            "capacitate": "",
+            "type_label": "Siloz Tabla",
+            "siloName": ""
+        }
+
+
         return html`
-            <silo-configurator .toDraw="${ {type: "steelSilo"} }"></silo-configurator>
+            <silo-configurator .toDraw="${ obj }"></silo-configurator>
         `;
     }
 }
