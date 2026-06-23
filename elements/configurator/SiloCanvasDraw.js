@@ -258,16 +258,16 @@ export class SiloCanvasDraw {
             }
         }
 
-
-
-        if (toDraw.hRoofCutout !== undefined) {
-            toDraw.hRoof = (hConRoof - toDraw.hRoofCutout).toFixed(1) * 1;
-            delete toDraw.hRoofCutout
-        }
         if (toDraw.hRoof === undefined) {
             if (toDraw.roofAngle > 0) {
-                let hRoof = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
-                toDraw.hRoof = hRoof.toFixed(1) * 1;
+                if (toDraw.hRoofCutout !== undefined) {
+                    toDraw.hRoof = (hConRoof - toDraw.hRoofCutout).toFixed(1) * 1;
+                    delete toDraw.hRoofCutout
+
+                } else {
+                    let hRoof = toDraw.r * Math.tan((toDraw.roofAngle / 180) * Math.PI);
+                    toDraw.hRoof = hRoof.toFixed(1) * 1;
+                }
             } else {
                 toDraw.hRoof = 0;
             }
@@ -332,7 +332,7 @@ export class SiloCanvasDraw {
             toDraw.hFloor = (toDraw.r * tan(floorAngleRad)).toFixed(1)*1 - 0.3;
         }
 
-        if (['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d", "width", "length", 'type'].includes(name)) {
+        if (['hFloor','hRoof','roofAngle', 'floorAngle', "r", "d", "width", "length", 'type'].includes(name)) {
             toDraw.totalHeight = (
                 toDraw.cylinderHeight * 1 +
                 hConRoof +
@@ -340,17 +340,19 @@ export class SiloCanvasDraw {
             ).toFixed(1) * 1;
         }
 
-        if (['cylinderHeight', 'roofAngle', 'floorAngle', "r", "d", "width", "length", 'type', "hRoof", "hFloor"].includes(name)) {
+        if (['roofAngle', 'floorAngle', "r", "d", "width", "length", 'type', "hRoof", "hFloor"].includes(name)) {
             toDraw.siloHeight = (
                 toDraw.cylinderHeight * 1 +
                 toDraw.hRoof * 1 +
                 toDraw.hFloor * 1
             ).toFixed(1) * 1;
         }
-        if (['siloHeight'].includes(name)) {
-            toDraw.cylinderHeight = (
+
+
+        if (['siloHeight', "cylinderHeight"].includes(name)) {
+            toDraw.hRoof = (
                 toDraw.siloHeight * 1 -
-                toDraw.hRoof * 1 -
+                toDraw.cylinderHeight * 1 -
                 toDraw.hFloor * 1
             ).toFixed(1) * 1;
         }
