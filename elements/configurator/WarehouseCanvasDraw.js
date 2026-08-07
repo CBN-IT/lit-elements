@@ -13,6 +13,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
     constructor(args) {
         super(args);
         this.minDistBelowRoof = 0.3;
+        this.minCutoutHeight = 0;
     }
     valueChange(toDraw, name, value) {
         if (this.numberConfigElements.includes(name)) {
@@ -39,10 +40,12 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
         }
         if (name === 'hGrainSide') {
             toDraw.cylinderHeight = value * 1+0.5 ;
+            toDraw.hRoof = toDraw.totalHeight - toDraw.cylinderHeight;
             toDraw.roofAngle = radToDeg(atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2))).toFixed(1) * 1;
         }
         if (name === 'hGrainCenter') {
             toDraw.totalHeight = value * 1 + 3;
+            toDraw.hRoof = toDraw.totalHeight - toDraw.cylinderHeight;
             toDraw.roofAngle = radToDeg(atan((toDraw.totalHeight - toDraw.cylinderHeight * 1) / (toDraw.width / 2)) ).toFixed(1) * 1;
         }
         if (name === 'width') {

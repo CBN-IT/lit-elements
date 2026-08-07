@@ -16,7 +16,8 @@
     "demo/demo-paper-color-picker/demo-paper-color-picker.html",
     "demo/demo-paper-progress-bar/demo-paper-progress-bar.html",
     "demo/demo-silo-3d/demo-silo-3d.html",
-    "demo/demo-configurator/demo-configurator.html",
+    "demo/demo-configurator/demo-silo-configurator.html",
+    "demo/demo-configurator/demo-warehouse-configurator.html",
     "demo/demo-paper-signature-pad/demo-paper-signature-pad.html",
     "index.html"
   ],

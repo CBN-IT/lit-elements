@@ -22,7 +22,7 @@ window.data={
     }
 }
 
-class DemoConfigurator extends LitElement {
+class DemoSiloConfigurator extends LitElement {
 
     static get properties() {
         return {
@@ -135,7 +135,7 @@ class DemoConfigurator extends LitElement {
         `;
     }
 }
-defineCustomTag("demo-configurator", DemoConfigurator);
+defineCustomTag("demo-silo-configurator", DemoSiloConfigurator);
 
 
 
