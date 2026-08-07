@@ -72,6 +72,7 @@ export class WarehouseCanvasDraw extends SiloCanvasDraw {
     }
 
     draw(toDraw, {serialized=false}={}) {
+        this.checkMissingValues(toDraw);
         this.toDraw = toDraw;
 
         let rename = {
