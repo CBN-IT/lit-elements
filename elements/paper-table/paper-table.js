@@ -526,6 +526,10 @@ class PaperTable extends LitElement {
         });
         this.columnOrder.forEach((co, index) => {
             let column = columns.find(c => c.name === co.name);
+            if (!column) {
+                console.log("missing column", co)
+                return;
+            }
             if (co.hidden) {
                 column.styleFunction = "'display:none;'";
                 column.hidden = true;
