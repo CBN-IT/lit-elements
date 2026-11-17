@@ -29,7 +29,7 @@ class AddReport extends AddWithLink {
 
     constructor() {
         super();
-        this.pages = ['Config', 'Code', 'Params'];
+        this.pages = ['Config', 'Report Code',"Response Code", 'Params'];
         this.collection = 'report';
         this._bindedSaveFormFromKeyDown = this._saveFormFromKeyDown.bind(this);
         this.saveUrl="/SaveReport";
@@ -50,6 +50,7 @@ class AddReport extends AddWithLink {
                     <iron-form class="flex" .config="${this.config}" .model="${this.model}" .url="${this.saveUrl}" .collection="${this.collection}" @saved-form="${this._onSavedForm}"></iron-form>
                 </div>
                 <ace-editor class="flex" name="code" .value="${this.model.code}" mode="ace/mode/typescript" theme="ace/theme/dracula" fontSize="14" @value-changed="${this._onValueChanged}"></ace-editor>
+                <ace-editor class="flex" name="responseCode" .value="${this.model.responseCode}" mode="ace/mode/typescript" theme="ace/theme/dracula" fontSize="14" @value-changed="${this._onValueChanged}"></ace-editor>
                 <ace-editor class="flex" name="params" .value="${this.model.params}" mode="ace/mode/json" theme="ace/theme/dracula" fontSize="14" @value-changed="${this._onValueChanged}"></ace-editor>          
             </paper-tabs>
         `;
